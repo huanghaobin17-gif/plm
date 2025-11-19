@@ -1,0 +1,77 @@
+<?php if($menuData = get_menu_name('BaseSetting','Menu','getMenuLists')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getMenuLists = "{$getMenuLists}";
+</script>
+<style>
+    .menu_left{
+        width: 52%;
+        float: left;
+    }
+    .menu_right{
+        width: 44%;
+        float: right;
+    }
+    .dHead {
+        height:35px;
+        line-height: 35px;
+        width:120px;
+        text-align: center;
+        margin-left: 60px;
+        margin-top: 5px;
+        cursor: pointer;
+        border: 1px solid #C9C9C9;
+        background-color: #fff;
+        color: #555;
+    }
+    .dHead:hover{
+        border: 1px solid #009688;
+    }
+    p{height: auto !important;}
+</style>
+<div class="layui-fluid" id="LAY-BaseSetting-User-getUserList">
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <blockquote class="layui-elem-quote cusquote1" style="width: auto;">
+                    排序规则仅对同一级别菜单起作用，不同级别菜单的排序互相不影响。修改菜单后，请更新系统缓存，并退出系统重新登录进行初始化操作。菜单停用后，对应功能将无法进行操作！
+                </blockquote>
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                    <!--<div class="dHead">-->
+                        <!--展开或折叠全部-->
+                    <!--</div>-->
+                </div>
+                <div class="layui-card-body">
+                    <div class="menu_left">
+                        <table class="layui-hidden" lay-filter="getMenuData" id="getMenuLists"></table>
+                    </div>
+                    <div class="menu_right">
+                        <div class="layui-hidden" id="sonLists" lay-filter="sonData"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<script type="text/html" id="status">-->
+    <!--{{# if(d.level == 1){ }}-->
+    <!--<input type="checkbox" name="stauts" value="{{d.menuid}}" lay-skin="switch" lay-text="停用|启用" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>-->
+    <!--{{# } }}-->
+<!--</script>-->
+<!--<script type="text/html" id="status1">-->
+    <!--<input type="checkbox" name="stauts" value="{{d.menuid}}" lay-skin="switch" lay-text="停用|启用" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>-->
+<!--</script>-->
+<script>
+    layui.use('basesetting/menu/menu', layui.factory('basesetting/menu/menu'));
+</script>
+
+
+

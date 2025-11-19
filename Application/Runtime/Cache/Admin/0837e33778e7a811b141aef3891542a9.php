@@ -1,0 +1,101 @@
+<?php if (!defined('THINK_PATH')) exit(); if($menuData = get_menu_name('Statistics','StatisRepair','repairAnalysis')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var repairAnalysis = "<?php echo ($repairAnalysis); ?>";
+</script>
+<div class="layui-fluid" id="LAY-Statistics-StatisRepair-repairAnalysis">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">完成日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly value="<?php echo ($start_date); ?>" style="cursor: pointer;" name="startDate" id="repairAnalysisS" lay-verify="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly value="<?php echo ($end_date); ?>" style="cursor: pointer;" name="endDate" id="repairAnalysisE" lay-verify="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="repairAnalysisSearch" id="repairAnalysisSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" lay-submit="" lay-filter="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                <div class="layui-row" style="padding-right: 15px;">
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo grid-demo-bg1">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">科室维修费用</div>
+                                <div class="div-chart-show-pic">
+                                    <div id="departFee" class="div-chart-show-pic-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">故障类型维修费用</div>
+                                <div class="div-chart-show-pic">
+                                    <div id="faultType" class="div-chart-show-pic-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">设备分类维修费用</div>
+                                <div class="div-chart-show-pic">
+                                    <div id="cateFee" class="div-chart-show-pic-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab layui-tab-brief"  lay-filter="docDemoTabBrief1">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">科室维修费用</li>
+                        <li>故障类型维修费用</li>
+                        <li>设备分类维修费用</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <table id="departFeeLists" lay-filter="departFeeData"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <table id="faultTypeLists" lay-filter="faultTypeData"></table>
+                        </div>
+                        <div class="layui-tab-item">
+                            <table id="cateFeeLists" lay-filter="cateFeeData"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisRepair/repairAnalysis', layui.factory('statistics/statisRepair/repairAnalysis'));
+</script>

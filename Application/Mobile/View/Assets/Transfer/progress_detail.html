@@ -1,0 +1,197 @@
+<include file="Public:head"/>
+<title>转科进程详情</title>
+<style>
+    .companyHideDetail,.approvesHideDetail{
+        display: none;
+    }
+    .layui-table tr th{width: 24%;}
+    .red{color: #FF5722}
+    .green{color: #85AB70}
+    .assetsHideDetail{display: none;}
+    .layui-card-body{padding: 0}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+    .layui-timeline{padding-left: 3rem;width: 80%;}
+    .timelineContentDiv{overflow: hidden;margin-top: 0.5rem;}
+    .layui-timeline-title span{font-size: 1rem;margin-right: 1rem;}
+    .layui-timeline-item:before{left: 0.1875rem;width: 3px;}
+    .newTips{width: 2rem;height: 1.125rem;border: 1px solid #ebebeb;border-radius: 4px;position: absolute;color: #fff;font-size: 12px;display: inline-block;top: -1px;left: -2.875rem;background-color: #0af;line-height: 18px;text-align: center;  }
+    .newTips:before{box-sizing: content-box;width: 0;height: 0;position: absolute;top: 4px;left: 2.03rem;padding: 0;border-bottom: 5px solid transparent;border-top: 5px solid transparent;border-left: 10px solid #0af;border-right: 4px solid transparent;display: block;content: "";z-index: 12;}
+    .layui-timeline-item:before{display: none;!important;}/*先屏蔽layui自带时间线*/
+    .layui-timeline-item:first-child:before{display: none;!important;}/*先屏蔽layui自带时间线*/
+    .line{background-color: #9e9e9e;position: absolute;left: 0.2812rem;width: 1px;z-index: 6666;top: 1rem;}
+    .layui-timeline-title{margin-bottom: 0;font-weight: normal;}
+    .layui-card-body .layui-table{margin: 0;}
+    .partsTable .layui-table tbody tr:first-child td{text-align: center;}
+    .partsTable .layui-table tr td{width: auto;}
+    .partsTable .layui-table tbody tr td{text-align: left;}
+
+    .suggestIconDiv{
+        position: absolute;
+        right: 1rem;
+        top: -0.5rem;
+    }
+    .suggestIcon{
+        width: 2.5rem;
+    }
+    .layui-timeline-axis{margin-top:0;left: -6px;}
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asArr.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$asArr.serialnum}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--审批-->
+    <notempty name="approves">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">审批信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-table" lay-even>
+                    <tbody>
+                    <volist name="approves" id="app">
+                        <?php if($i!=1){?>
+                        <?php $approvesDivClass='approvesHideDetail'; ?>
+                        <?php }else{ ?>
+                        <?php $approvesDivClass=''; ?>
+                        <?php }   ?>
+                        <tr class="{$approvesDivClass}">
+                            <th>审批人</th>
+                            <td>{$app.approver}</td>
+                        </tr>
+                        <tr class="{$approvesDivClass}">
+                            <th>审批时间</th>
+                            <td>{$app.approve_time|date="Y-m-d H:i",###}</td>
+                        </tr>
+                        <tr class="{$approvesDivClass}">
+                            <th>审批意见</th>
+                            <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                                <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                <else/>
+                                <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                            </if>
+                        </tr>
+                        <tr class="{$approvesDivClass}">
+                            <th>备注</th>
+                            <td>{$app.remark}</td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+            <?php if(count($approves)>1){ ?>
+            <div class="layui-card" style="margin-top: 0;">
+                <div class="moreButton">
+                    <a class="moreDetailButton" data-detailClass="approvesHideDetail">加载更多</a>
+                </div>
+                <div class="moreButton" style="display: none;">
+                    <a class="hideDetailButton" data-detailClass="approvesHideDetail">收起</a>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+    </notempty>
+
+
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备转科进程</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body mgt1rem">
+            <ul class="layui-timeline">
+                <volist name="line" id="v">
+                    <li class="layui-timeline-item">
+                        <div class="line"></div>
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">{$v.statusName} {$v.date}</h3>
+                            <div class="timelineContentDiv">
+                                {$v.user}({$v.telephone}) {$v.text}
+                            </div>
+                        </div>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+
+<script src="__PUBLIC__/mobile/js/weui/showImages.js"></script>
+<script>
+    <notempty name="repArr['pic_url']">
+    var pic_url = {$repArr.pic_url};
+    var photos = $.photoBrowser({
+        items: pic_url
+    });
+    </notempty>
+
+    $("#showImages").click(function(){
+        photos.open();
+    });
+
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //初始化下方导航栏菜单
+        menuListSpread();
+
+
+        /*时间线预处理*/
+        var timeLineObj = $(".layui-timeline-item");
+        timeLineObj.each(function(k,v){
+            var thisLine = $(v).children('.line');
+            thisLine.css('height',$(v).height()+5);
+        });
+        /**/
+    });
+    $(".layui-timeline-content").first().append('<span class="newTips">最新</span>');
+    $(".newTips").siblings('.layui-timeline-title').css('color','#0af');
+</script>
+<script>
+    //播放停止语音
+    var audio = document.getElementById("audio");
+    if(audio){
+        var btn = document.getElementById("media");
+        btn.onclick = function () {
+            if (audio.paused) { //判断当前的状态是否为暂停，若是则点击播放，否则暂停
+                audio.play();
+            }else{
+                audio.pause();
+            }
+        };
+    }
+</script>

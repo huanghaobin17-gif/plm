@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="card-html-bg">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-allocationPlan .table thead th {
+        text-align: center
+    }
+    #LAY-Patrol-Patrol-allocationPlan .cusquote{
+        background-color: #fff;
+        padding:5px;
+        font-size: 12px;
+        color:red;
+    }
+    .rctemplate,.xctemplate,.pmtemplate{
+        text-align: left;
+    }
+    #LAY-Patrol-Patrol-allocationPlan .layui-table tr th{text-align: center !important;}
+    .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{
+     top: 50%;
+     transform: translateY(-50%);
+}
+</style>
+<!--内容部分-->
+<div id="LAY-Patrol-Patrol-allocationPlan">
+    <div class="layui-tab layui-tab-card" lay-filter="allocationPlanTab" style="margin: 0 auto;">
+        <div class="layui-row" style="margin:15px 10px 0 10px;">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <blockquote class="layui-elem-quote cusquote">
+                        巡查保养计划制定说明<br/>
+                        1、要对设备进行保养，需要对该设备进行模板绑定。每个设备最多可以绑定三个模板，制定计划的时候选择其中一个模板<br/>
+                        2、周期计划：在设定的执行日期范围内，按照设定的周期数，在每个周期开始的那天，系统自动生成该周期计划（不管上一周期是否已完成或验收）<br/>
+                        3、非周期计划：选择非周期计划的，则为一次性计划
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-content" style="padding-top: 0;">
+            <form class="layui-form layui-form-pane" action="">
+            <div class="layui-row margin-top-15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header"><div class="fl"><i class="layui-icon">&#xe62d;</i> 设备列表</div></div>
+                        <div class="layui-card-body">
+                            <input type="hidden" name="assnum" value=""/>
+                            <input type="hidden" name="remark" value=""/>
+                            <input type="hidden" name="level" value="{$level}"/>
+                            <input type="hidden" name="hospital_id" value=""/>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">计划名称：</label>
+                                    <div class="layui-input-inline planname" style="width: 300px;">
+                                        <input type="text" name="patrol_name"  value="" readonly class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">计划日期：</label>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <input class="layui-input formatDate" placeholder="开始日期" style="cursor: pointer;" readonly name="startDate">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <input class="layui-input formatDate" placeholder="结束日期" style="cursor: pointer;" readonly name="endDate">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" pane="">
+                                    <label class="layui-form-label" style="width: 110px;">周期计划：</label>
+                                    <div class="layui-input-block" style="width: 54px;">
+                                        <input type="checkbox" name="is_cycle" value="1" lay-skin="switch" lay-filter="switchTest" lay-text="是|否">
+                                        <!--是时“周期”为必填，否时“周期”不显示-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" pane="" id="cycle" style="display: none;width: 420px;">
+                                    <label class="layui-form-label">周期单位</label>
+                                    <div class="layui-input-block" style="margin-left: 130px;">
+                                        <if condition="$level eq 1">
+                                            <input type="radio" name="unit" value="day" title="天" checked>
+                                            <else/>
+                                            <input type="radio" name="unit" value="day" title="天">
+                                        </if>
+                                        <if condition="$level eq 2">
+                                            <input type="radio" name="unit" value="week" title="周" checked>
+                                            <else/>
+                                            <input type="radio" name="unit" value="week" title="周">
+                                        </if>
+                                        <if condition="$level eq 3">
+                                            <input type="radio" name="unit" value="month" title="月" checked>
+                                            <else/>
+                                            <input type="radio" name="unit" value="month" title="月">
+                                        </if>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" id="cycle_setting" style="display: none;">
+                                    <label class="layui-form-label">周期设置</label>
+                                    <div class="layui-input-inline">
+                                        <input type="number" name="cycle_setting" value="1" placeholder="请输入正整数" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        在设定的执行日期内，每
+                                        <span class="num">1</span>
+                                        <if condition="$level eq 1"><span class="unit">天</span><elseif condition="$level eq 2"/><span class="unit">周</span><else/><span class="unit">月</span></if>生成一个周期计划
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="patrol_assets" lay-filter="patrol_assets"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row margin-top-15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form-item">
+                                <div style="text-align: center">
+                                    <button class="layui-btn layui-btn-primary" lay-submit id="back"> 返回上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="saveCurLevel" id="saveCurLevel"><i class="layui-icon">&#xe609;</i> 确定创建计划</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrol/allocationPlan', layui.factory('controller/patrol/patrol/allocationPlan'));
+</script>

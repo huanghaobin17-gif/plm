@@ -1,0 +1,64 @@
+<?php if (!defined('THINK_PATH')) exit(); if($menuData = get_menu_name('Statistics','StatisRepair','engineerEva')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var engineerEva = "<?php echo ($engineerEva); ?>";
+</script>
+<div class="layui-fluid" id="LAY-Statistics-StatisRepair-engineerEva">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">验收日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly value="<?php echo ($start_date); ?>" style="cursor: pointer;" name="startDate" id="engineerEvaS" lay-verify="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly value="<?php echo ($end_date); ?>" style="cursor: pointer;" name="endDate" id="engineerEvaE" lay-verify="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="engineerEvaSearch" id="engineerEvaSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" lay-submit="" lay-filter="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                <div class="layui-row">
+                    <div class="layui-col-xs6 layui-col-md12 tb-padding" style="padding-right: 15px;">
+                        <div class="grid-demo grid-demo-bg2">
+                            <div class="grid-demo grid-demo-bg1">
+                                <div class="hidden-contant">暂无相关数据</div>
+                                <div id="engineer_eva" class="div-chart-show-workjob"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="engineerEvaLists" lay-filter="engineerEvaData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisRepair/engineerEva', layui.factory('statistics/statisRepair/engineerEva'));
+</script>

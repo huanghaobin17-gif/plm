@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>借调审批流程</title>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <blockquote class="layui-elem-quote-sm">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">设备名称：</td>
+            <td>{$assets.assets}</td>
+            <td class="text-right">设备编号：</td>
+            <td>{$assets.assnum}</td>
+        </tr>
+        <tr>
+            <td class="text-right">规格/型号：</td>
+            <td>{$assets.model}</td>
+            <td class="text-right">品牌：</td>
+            <td>{$assets.brand}</td>
+        </tr>
+        <tr>
+            <td class="text-right">产品序列号：</td>
+            <td>{$assets.serialnum}</td>
+            <td class="text-right">生产厂家：</td>
+            <td>{$assets.factory}</td>
+        </tr>
+        <tr>
+            <td class="text-right">所属科室：</td>
+            <td>{$assets.department}</td>
+            <td class="text-right">设备管理员：</td>
+            <td>{$assets.assetsrespon}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备原值：</td>
+            <td>{$assets.buy_price}</td>
+            <td class="text-right">设备状态：</td>
+            <td>{$assets.statusName}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            借调附属设备明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <blockquote class="layui-elem-quote-sm">
+        借调申请信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">流水号：</td>
+            <td>{$borrow.borrow_num}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请科室：</td>
+            <td>{$borrow.department}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请人：</td>
+            <td>{$borrow.apply_username}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请时间：</td>
+            <td>{$borrow.apply_time}</td>
+        </tr>
+        <tr>
+            <td class="text-right">预计归还时间：</td>
+            <td>{$borrow.estimate_back}</td>
+        </tr>
+        <tr>
+            <td class="text-right">借用原因：</td>
+            <td>{$borrow.borrow_reason}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+    <notempty name="approve">
+        <volist name="approve" id="vo">
+            <if condition="$i eq 1">
+                <blockquote class="layui-elem-quote-sm">借出科室审批</blockquote>
+                <else/>
+                <blockquote class="layui-elem-quote-sm">设备科审批</blockquote>
+            </if>
+            <table class="layui-table" lay-even="" lay-size="sm">
+                <colgroup>
+                    <col width="120">
+                    <col>
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td class="text-right">审批人：</td>
+                    <td>{$vo.approver}</td>
+                    <td class="text-right">审批时间：</td>
+                    <td>{$vo.approve_time}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">审批状态：</td>
+                    <td>{$vo.is_adoptName}</td>
+                    <td class="text-right">审批意见：</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </volist>
+    </notempty>
+
+
+
+
+
+
+    <fieldset class="layui-elem-field layui-field-title"><legend>审批单</legend></fieldset>
+
+    <form action="" class="layui-form" style="margin-top: 10px;">
+        <input type="hidden" name="borid" value="{$borrow.borid}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">审批状态：</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="is_adopt" value="1" title="通过" checked="">
+                    <input type="radio" name="is_adopt" value="2" title="不通过">
+                </div>
+            </div> 
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>审批意见：</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">审批人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="proposer" readonly class="layui-input" value="{$approver}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审批时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="proposer_time" readonly class="layui-input" value="{$approve_time}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="submit" lay-filter="submit"><i class="layui-icon">&#xe609;</i>立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">清空重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var approveBorrowUrl='{$approveBorrowUrl}'
+</script>
+<script>
+    layui.use('controller/assets/borrow/approveBorrow', layui.factory('controller/assets/borrow/approveBorrow'));
+</script>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计量检定结果录入</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        th{ text-align: right!important;}
+        .layui-unselect, .layui-form-select{ width: 200px!important;}
+    </style>
+</head>
+<body>
+    <div class="containDiv">
+        <blockquote class="layui-elem-quote">计划基本信息</blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+            <colgroup>
+                <col width="15%">
+                <col width="35%">
+                <col width="15%">
+                <col width="35%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>计划编号：</th>
+                <td colspan="3">{$data.plan_num}</td>
+            </tr>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$data.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$data.assets}</td>
+            </tr>
+            <tr>
+                <th>规格 / 型号：</th>
+                <td>{$data.model}</td>
+                <th>单位：</th>
+                <td>{$data.unit}</td>
+            </tr>
+            <tr>
+                <th>生产厂商：</th>
+                <td>{$data.factory}</td>
+                <th>产品序列号：</th>
+                <td>{$data.productid}</td>
+            </tr>
+            <tr>
+                <th>所属科室：</th>
+                <td>{$data.department}</td>
+                <th>设备数量：</th>
+                <td>{$data.asset_count}</td>
+            </tr>
+            <tr>
+                <th>计量分类：</th>
+                <td>{$data.mcategory}</td>
+                <th>计量周期(月)：</th>
+                <td>{$data.cycle}</td>
+            </tr>
+            <tr>
+                <th>检定方式：</th>
+                <td>{$data.test_way_name}</td>
+                <th>计量负责人：</th>
+                <td>{$data.respo_user}</td>
+            </tr>
+            <tr>
+                <th>提前提醒天数：</th>
+                <td>{$data.remind_day}</td>
+                <th>制定日期：</th>
+                <td>{$data.adddate}</td>
+            </tr>
+            <tr>
+                <th>计划制定人：</th>
+                <td>{$data.adduser}</td>
+                <th>计划状态：</th>
+                <td>{$data.statusName}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="3">{$data.remark}</td>
+            </tr>
+            </tbody>
+        </table>
+        <blockquote class="layui-elem-quote">检测信息</blockquote>
+        <form action="" class="layui-form">
+            <input type="hidden" name="mpid" value="{$resultData.mpid}">
+            <input type="hidden" name="mrid" value="{$resultData.mrid}">
+            <table class="layui-table" lay-skin="nob">
+                <colgroup>
+                    <col width="150">
+                    <col width="280">
+                    <col width="180">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th><span class="rquireCoin">* </span>本次检定日期：</th>
+                        <td>
+                            <input class="layui-input" id="nowDate" name="this_date" readonly value="{$resultData.this_date}"
+                                   style="cursor: pointer;">
+                        </td>
+                        <th><span class="rquireCoin">* </span>证书编号：</th>
+                        <td><input type="text" class="layui-input" style="width: 200px;" name="report_num" value="{$resultData.report_num}"></td>
+                    </tr>
+                    <tr>
+                        <th>下次检测日期：</th>
+                        <td>
+                            <input class="layui-input" readonly style="cursor: pointer;" >
+                        </td>
+                        <th><span class="rquireCoin">* </span>检定结果：</th>
+                        <td>
+                            <select name="result" id="">
+                                <if condition="$resultData.result eq 1">
+                                    <option value="1" selected>合格</option>
+                                    <option value="0">不合格</option>
+                                    <else/>
+                                    <option value="1">合格</option>
+                                    <option value="0" selected>不合格</option>
+                                </if>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>检定机构：</th>
+                        <td><input type="text" class="layui-input" name="company" value="{$resultData.company}"></td>
+                        <th>计量费用：</th>
+                        <td><input type="text" class="layui-input" name="money" value="{$resultData.money}" style="width: 200px;"></td>
+                    </tr>
+                    <tr>
+                        <th>检定人：</th>
+                        <td><input type="text" class="layui-input" value="{$resultData.test_person}" name="test_person"></td>
+                        <th>审核人：</th>
+                        <td><input type="text" class="layui-input" value="{$resultData.auditor}" name="auditor" style="width: 200px;"></td>
+                    </tr>
+                    <tr>
+                        <th>备注：</th>
+                        <td colspan="3">
+                            <textarea placeholder="请输入内容" class="layui-textarea" name="remark">{$resultData.remark}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <blockquote class="layui-elem-quote">附件信息</blockquote>
+
+
+            <button style="margin: 5px;" type="button" class="layui-btn layui-btn-xs fr" id="file_url" name="file_url">
+                <i class="layui-icon">&#xe67c;</i>本地上传
+            </button>
+            <span class="rquireCoin fr" style="margin-top: 5px;">&nbsp;&nbsp;提示 : 只可以上传word文档、PDF文件、扫描图片上传</span>
+
+
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td>文件名称</td>
+                        <td>提交人</td>
+                        <td>提交日期</td>
+                        <td>操作</td>
+                    </tr>
+                </thead>
+                <tbody class="file_url">
+                <notempty name="resultFiles">
+                    <volist name="resultFiles" id="vo">
+                        <tr>
+                            <td class="formerly">{$vo.name}</td>
+                            <td>{$vo.adduser}</td>
+                            <td>{$vo.adddate}</td>
+                            <td class="fileName">{$vo.operation}</td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr class="nofile">
+                        <td colspan="4" style="text-align: center;">暂无相关数据</td>
+                    </tr>
+                </notempty>
+                </tbody>
+            </table>
+
+            <div class="ilayui-form-item tbcenter" style=" margin-top: 50px;">
+                <button class="layui-btn" lay-submit lay-filter="doResult"><i class="layui-icon">&#xe609;</i>提交修改结果</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    function delDoRenewaFile(a) {
+        $(a).parent().parent().remove();
+        layer.msg('删除成功', {icon: 1}, 1000);
+    }
+    layui.use('controller/metering/metering/editMeteringResult', layui.factory('controller/metering/metering/editMeteringResult'));
+</script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css?v={:mt_rand(1,54561)}">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css?v={:mt_rand(1,54561)}" />
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/common.css?v={:mt_rand(1,54561)}" />
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/lang.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/layer/layer.js?v={:mt_rand(1,54561)}"></script>
+    <link rel="stylesheet" href="__PUBLIC__/layer/layui/css/layui.css?v={:mt_rand(1,54561)}">
+    <script src="__PUBLIC__/layer/layui/layui.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/layer/lay/modules/laydate.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+    <style>
+        .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+        .layui-table{ margin-top: 0px; margin-bottom: 20px;}
+        .layui-form-pane .layui-form-label{width: 110px;!important;}
+        .layui-table th, .layui-table td{text-align: center}
+        .layui-table th, .layui-table td{text-align: center}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-elem-quote">相关文件:</div>
+    <table class="layui-table" lay-even>
+        <tbody>
+            <tr>
+                <td>
+                    <if condition="$type eq pdf or $type eq PDF">
+                        <a class="media" href="{$src}"></a>
+                        <else />
+                        <img src="{$src}">
+                    </if>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use(['layer', 'form'], function() {
+        var form = layui.form();
+    });
+    $(function() {
+        $('a.media').media({width:800, height:600});
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<style>
+    @page {
+        margin: 20px auto 0;
+        font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+    }
+    #repair_report .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{border-color: #666;}
+    #repair_report td, th {
+        text-align: center !important;
+    }
+
+    #repair_report th {
+        font-weight: bold !important;
+    }
+
+    #repair_report .no-padding-td .layui-input {
+        border: none;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #repair_report em {
+        font-size: 12px;
+    }
+
+    #repair_report .layui-form-checkbox[lay-skin=primary] i {
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+    }
+
+    #repair_report .layui-form-checkbox span {
+        font-size: 12px;
+    }
+
+    #repair_report .layui-form-checkbox[lay-skin=primary] span {
+        line-height: 16px;
+        padding-right: 0 !important;
+    }
+
+    #repair_report .layui-form-checkbox span {
+        padding: 0 3px;
+    }
+
+    #repair_report .text-align-left {
+        text-align: left !important;
+    }
+
+    #repair_report .layui-table[lay-size=sm] td,
+    #repair_report .layui-table[lay-size=sm] th {
+        padding: 5px !important;
+    }
+
+    #repair_report .logo {
+        height: 60px;
+        position: absolute;
+        top: 35px;
+    }
+
+    #repair_report .fault_css {
+        border: 1px solid #e6e6e6;
+        width: auto;
+        margin-bottom: 3px;
+        margin-left: 10px;
+        padding: 0 3px;
+        float: left;
+    }
+</style>
+<if condition="$pages eq 1">
+    <div class="layui-fluid batch_print_repair_report" style="min-height: 1190px;margin-top: {$marget_top}px;">
+        <else/>
+        <div class="layui-fluid batch_print_repair_report" style="min-height: 2420px;margin-top: {$marget_top}px;">
+</if>
+
+<div class="layui-row">
+    <h2 style="text-align: center; margin-bottom: 15px;">{$title}维修报告</h2>
+    <notempty name="imageUrl">
+        <img src="{$imageUrl}" class="logo">
+    </notempty>
+    <div class="fr" style="width: 230px;">
+        <span>表单编号:<em>{$repArr.repnum}</em></span>
+    </div>
+    <div class="clear"></div>
+    <div class="fr" style="width: 230px;">
+        <span>制表日期:<em>{$date}</em></span>
+    </div>
+    <br/>
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="100">
+            <col width="180">
+            <col width="100">
+            <col width="140">
+            <col width="100">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">一、设备基本信息</th>
+        </tr>
+        <tr>
+            <th>设备名称</th>
+            <td><em>{$asArr.assets}</em></td>
+            <th>设备品牌</th>
+            <td>{$asArr.brand}</td>
+            <th>单位</th>
+            <td>{$asArr.unit}</td>
+        </tr>
+        <tr>
+            <th>设备编号</th>
+            <td><em>{$asArr.assnum}</em></td>
+            <th>规格型号</th>
+            <td>{$asArr.model}</td>
+            <th>产品序列号</th>
+            <td>{$asArr.serialnum}</td>
+        </tr>
+        <tr>
+            <th>使用科室</th>
+            <td>{$asArr.department}</td>
+            <th>设备分类</th>
+            <td>{$asArr.category}</td>
+            <th>保修截止日期</th>
+            <td>{$asArr.guarantee_date}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="100">
+            <col width="110">
+            <col width="150">
+            <col width="120">
+            <col width="120">
+            <col width="">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">二、报修申请信息</th>
+        </tr>
+        <tr>
+            <th>报修人</th>
+            <td>{$repArr.applicant}</td>
+            <th>联系电话</th>
+            <td>{$repArr.applicant_tel}</td>
+            <th>报修时间</th>
+            <td>{$repArr.applicant_time}</td>
+        </tr>
+        <tr>
+            <th>故障描述</th>
+            <td class="text-align-left" colspan="6">{$repArr.breakdown}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="100">
+            <col width="110">
+            <col width="120">
+            <col width="150">
+            <col width="120">
+            <col width="">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">三、维修接单与检修信息</th>
+        </tr>
+        <tr>
+            <th>接单人</th>
+            <td>{$repArr.response}</td>
+            <th>接单时间</th>
+            <td>{$repArr.response_date}</td>
+            <th>预计修复日期</th>
+            <td>{$repArr.expect_time}</td>
+        </tr>
+        <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+            <tr>
+                <th>解决方式</th>
+                <td class="text-align-left" colspan="5">现场解决</td>
+            </tr>
+            <else/>
+            <tr>
+                <th>解决方式</th>
+                <td colspan="2">非现场解决</td>
+                <th>维修性质</th>
+                <td colspan="2">{$repArr.repTypeName}</td>
+            </tr>
+        </if>
+
+        <notempty name="companyLast">
+            <tr>
+                <th>第三方公司</th>
+                <td colspan="2">{$companyLast.offer_company}</td>
+                <th>发票</th>
+                <td colspan="2">{$companyLast.invoice}</td>
+            </tr>
+            <tr>
+                <th>第三方联系人</th>
+                <td>{$companyLast.offer_contacts}</td>
+                <th>第三方联系电话</th>
+                <td>{$companyLast.telphone}</td>
+                <th>到货/服务周期</th>
+                <td>{$companyLast.cycle}</td>
+            </tr>
+            <tr>
+                <th>最后决定者</th>
+                <td>{$companyLast.decision_user}</td>
+                <th>最后决定日期</th>
+                <td colspan="4" class="text-align-left">{$companyLast.decision_adddate}</td>
+            </tr>
+
+            <tr>
+                <th>选择原因说明</th>
+                <td class="text-align-left" colspan="5">{$companyLast.decision_reasion}</td>
+            </tr>
+        </notempty>
+        <if condition="$repArr['repair_type'] EQ C('REPAIR_TYPE_IS_GUARANTEE_NAME')">
+            <tr>
+                <th>维修厂家</th>
+                <td>{$repArr.repair}</td>
+                <th>维修公司联系人</th>
+                <td>{$repArr.repa_user}</td>
+                <th>维修公司联系电话</th>
+                <td>{$repArr.repa_tel}</td>
+            </tr>
+        </if>
+        <tr>
+            <th>故障问题</th>
+            <td class="text-align-left" colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+        </tr>
+        <tr>
+            <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                <th>处理详情</th>
+                <td class="text-align-left" colspan="5">{$repArr.dispose_detail}</td>
+                <else/>
+                <th>检修备注</th>
+                <td class="text-align-left" colspan="5">{$repArr.repair_remark}</td>
+            </if>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="100">
+            <col width="190">
+            <col width="190">
+            <col width="120">
+            <col width="">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">四、配件使用信息</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">序号</th>
+            <th style="text-align: center">配件名称</th>
+            <th style="text-align: center">型号</th>
+            <th style="text-align: center;">数量</th>
+            <th style="text-align: center;">总价</th>
+        </tr>
+        <empty name="parts">
+            <tr>
+                <td colspan="6" style="text-align: center">暂无相关数据</td>
+            </tr>
+            <else/>
+            <volist name="parts" id="v">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$v.parts}</td>
+                    <td>{$v.part_model}</td>
+                    <td>{$v.part_num}</td>
+                    <td>{$v.price_sum}</td>
+                </tr>
+            </volist>
+        </empty>
+        </tbody>
+    </table>
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="100">
+            <col width="120">
+            <col width="140">
+            <col width="100">
+            <col width="">
+        </colgroup>
+        <tr>
+            <th colspan="5" class="text-left">五、审核信息</th>
+        </tr>
+        <tr>
+            <th style="text-align: center">序号</th>
+            <th>审核人</th>
+            <th>审核时间</th>
+            <th>审核状态</th>
+            <th>审核意见</th>
+        </tr>
+        <tbody>
+        <empty name="approves">
+            <tr>
+                <td colspan="5">无审批记录</td>
+            </tr>
+            <else/>
+            <volist name="approves" id="app">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$app.approver}</td>
+                    <td>{$app.approve_time}</td>
+                    <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                        <td>通过</td>
+                        <else/>
+                        <td>未通过</td>
+                    </if>
+                    <td class="text-align-left">{$app.remark}</td>
+                </tr>
+            </volist>
+        </empty>
+        </tbody>
+    </table>
+
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="100">
+            <col width="110">
+            <col width="120">
+            <col width="100">
+            <col width="120">
+            <col width="">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">六、维修处理信息</th>
+        </tr>
+        <tr>
+            <th>维修工程师</th>
+            <td>{$repArr.response}</td>
+            <th>联系电话</th>
+            <td>{$repArr.response_tel}</td>
+            <th>总维修费用及工时</th>
+            <td>{$repArr.actual_price}(元) ：{$repArr.working_hours}(小时)</td>
+        </tr>
+        <tr>
+            <th>协助工程师</th>
+            <td>{$repArr.assist_engineer}</td>
+            <th>联系电话</th>
+            <td>{$repArr.assist_engineer_tel}</td>
+            <th>维修完成时间</th>
+            <td>{$repArr.engineer_time}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col width="80">
+            <col width="220">
+            <col width="80">
+            <col width="220">
+            <col width="80">
+            <col width="220">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="6" class="text-left">七、验收信息</th>
+        </tr>
+        <tr>
+            <th>验收人</th>
+            <td>{$repArr.checkperson}</td>
+            <th>验收时间</th>
+            <td>{$repArr.checkdate}</td>
+            <th>是否修复</th>
+            <td>
+                <if condition="$repArr['over_status'] EQ 0">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    未修复
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    未修复
+                </if>
+                <if condition="$repArr['over_status'] EQ 1">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    已修复
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    已修复
+                </if>
+            </td>
+        </tr>
+        <tr>
+            <th>服务态度</th>
+            <td>
+                <if condition="$repArr['service_attitude'] EQ 0">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                </if>
+                <if condition="$repArr['service_attitude'] EQ 1">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                </if>
+                <if condition="$repArr['service_attitude'] EQ 2">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                </if>
+            </td>
+            <th>技术水平</th>
+            <td>
+                <if condition="$repArr['technical_level'] EQ 0">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                </if>
+                <if condition="$repArr['technical_level'] EQ 1">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                </if>
+                <if condition="$repArr['technical_level'] EQ 2">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                </if>
+            </td>
+            <th>响应时效</th>
+            <td>
+                <if condition="$repArr['response_efficiency'] EQ 0">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    非常满意
+                </if>
+                <if condition="$repArr['response_efficiency'] EQ 1">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    满意
+                </if>
+                <if condition="$repArr['response_efficiency'] EQ 2">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji23"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                    <else/>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22"
+                       style="position: relative;top: 2px; padding-right: 2px;"></i>
+                    一般
+                </if>
+            </td>
+        </tr>
+        <tr>
+            <th>意见/建议</th>
+            <td colspan="6" class="text-align-left">{$repArr.check_remark}</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+        <colgroup>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="3" class="text-left">八、经办工程师及验收人员意见及签字</th>
+        </tr>
+        <tr>
+            <th>维修工程师意见及签字</th>
+            <th>设备科意见及签字</th>
+            <th>验收科室意见及签字</th>
+        </tr>
+        <tr>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span
+                    <if condition="$repautograph">
+                        <else/>
+                        style="padding-right: 100px;"
+                    </if>
+                    >签字：</span><img src="{$repautograph}">
+                    <span>日期：{$repautograph_time}</span>
+                </p>
+            </td>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span
+                    <if condition="$departautograph">
+                        <else/>
+                        style="padding-right: 100px;"
+                    </if>
+                    >签字：</span><img src="{$departautograph}">
+                    <span>日期：{$departautograph_time}</span>
+                </p>
+            </td>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span
+                    <if condition="$checkautograph">
+                        <else/>
+                        style="padding-right: 100px;"
+                    </if>
+                    >签字：</span><img src="{$checkautograph}">
+                    <span>日期：{$checkautograph_time}</span>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>

@@ -1,0 +1,204 @@
+<title>配件入库列表</title>
+<style>
+    #LAY-Repair-RepairParts-partsInWareList .layui-table-cell {
+        padding: 0;
+        height: auto;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .layui-table-fixed th{
+        height:61px;
+    }
+
+
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td td{
+        line-height: 20px;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .QualificationsTd {
+        text-align: center;
+        border-right: none;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td{
+        min-height: 40px;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .inware_parts {
+        border-bottom: 1px solid #e6e6e6;
+        width: 215px;
+        text-align: center;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table .inware_parts span{
+        width:214px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tbody tr:last-child .inware_parts,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tbody tr:last-child .inware_parts{
+        border-bottom: none;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inware_supplier {
+        border-bottom: 1px solid #e6e6e6;
+        width: 240px;
+        text-align: center;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table .inware_supplier span{
+        width:239px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tbody tr:last-child .inware_supplier,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tbody tr:last-child .inware_supplier{
+        border-bottom: none;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inware_parts_model {
+        width: 170.5px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table .inware_parts_model span{
+        width:169px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tr:last-child .inware_parts_model,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tr:last-child .inware_parts_model{
+        border-bottom: none;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .inwarePrice {
+        width: 94px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tr:last-child .inwarePrice,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tr:last-child .inwarePrice{
+        width: 94px;
+        border-bottom: none;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .inwareSum {
+        width: 79px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tr:last-child .inwareSum,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tr:last-child .inwareSum{
+        width: 79px;
+        border-bottom: none;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareTotal {
+        width: 100px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+        border-right: none;
+    }
+    #LAY-Repair-RepairParts-partsInWareList .inwareDetail_table tr:last-child .inwareTotal,
+    #LAY-Repair-RepairParts-partsInWareList .table_center_td tr:last-child .inwareTotal{
+        border-bottom: none;
+    }
+
+    #LAY-Repair-RepairParts-partsInWareList .layui-table-header .inwareDetail_table .inwareTotal {
+        border-top: 1px solid #e6e6e6;
+    }
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+</script>
+<div class="layui-fluid" id="LAY-Repair-RepairParts-partsInWareList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">入库单号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="partsInWareListInware_num" placeholder="请输入入库单号" name="inware_num">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商：</label>
+                                <div class="layui-input-inline">
+                                    <select name="supplierId" lay-search>
+                                        <option value="">请选择供应商</option>
+                                        <volist name="supplierInfo" id="v">
+                                            <option value="{$v.olsid}">{$v.sup_name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">入库日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" readonly name="startDate" id="partsInWareListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" readonly name="endDate" id="partsInWareListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="partsInWareListSearch" lay-filter="partsInWareListSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 配件入库列表（配件入库后，但尚未进行过出库操作的，可以退回到入库状态进行修改，与维修单没关联的可以进行删除）
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="partsInWareList" lay-filter="partsInWareData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Repair-RepairParts-partsInWareListbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Repair','RepairParts','partsInWare')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addPartsInWare" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var partsInWareListUrl = '{$partsInWareListUrl}';
+</script>
+<script>
+    layui.use('repair/repairParts/partsInWareList', layui.factory('repair/repairParts/partsInWareList'));
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #showBtn{
+            display: none;
+        }
+    </style>
+    <script>
+        //解决ie placeholder兼容性
+        $(function(){ $('input, textarea').placeholder(); });
+        var addWare = "{$addWare}";
+    </script>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 新增入库单</div>
+                <div class="layui-card-body" style="padding: 0 15px;">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span class="rquireCoin">*</span> 入库人：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" value="{$username}" readonly autocomplete="off" placeholder="请输入入库人" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span class="rquireCoin">*</span> 入库日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="in_date" id="in_date" readonly value="{$nowday}" lay-verify="in_date|required" autocomplete="off" placeholder="请选择入库日期" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><span class="rquireCoin">*</span> 供应商：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group" id="dic_assets_sel">
+                                        <input type="text" class="form-control bsSuggest" lay-verify="supplier_name|required" name="supplier_name" id="dic_supplier" placeholder="请输入供应商" />
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding: 0 15px;">
+                    <table style="margin-top: -10px;" id="addWareLists" lay-filter="addWareData"></table>
+                </div>
+                <div id="showBtn">
+                    <div class="layui-form-item" style="padding: 0 15px;">
+                        <label class="layui-form-label" style="width: 48px;">备注：</label>
+                        <div class="layui-input-block" style="margin-left: 78px;">
+                            <input type="text" name="in_desc" lay-verify="in_desc" autocomplete="off" placeholder="请输入备注" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                        <button class="layui-btn" type="button" value="" lay-submit lay-filter="addWare">
+                            <i class="layui-icon" >&#xe609;</i> 提交
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">
+                            <i class="layui-icon">ဂ</i> 重置
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var nowday = "{$nowday}";
+    layui.use('controller/purchases/purchaseCheck/addWare', layui.factory('controller/purchases/purchaseCheck/addWare'));
+</script>

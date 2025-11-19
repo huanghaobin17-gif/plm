@@ -1,0 +1,161 @@
+<?php if (!defined('THINK_PATH')) exit();?><style>
+    /*多选框样式*/
+    .SumoSelect > .CaptionCont > span.placeholder {
+        text-align: left;
+        line-height: 18px !important;
+    }
+    .search{
+        width: 172px;
+    }
+    .optWrapper{
+        width: 192px !important;
+    }
+</style>
+<style>
+    #LAY-Qualities-Quality-qualityDetailList td,#LAY-Qualities-Quality-qualityDetailList th{ text-align: center!important;}
+    #LAY-Qualities-Quality-qualityDetailList th{ font-weight: bold!important;}
+    #LAY-Qualities-Quality-qualityDetailList .no-padding-td .layui-input {
+        border: none;
+        height: 40px;
+        line-height: 40px;
+    }
+    #LAY-Qualities-Quality-qualityDetailList em{
+        font-size: 12px;
+    }
+
+    #printTem .layui-form-checkbox[lay-skin=primary] i {
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+    }
+    #LAY-Qualities-Quality-qualityDetailList .layui-form-checkbox span{
+        font-size: 12px;
+    }
+    #LAY-Qualities-Quality-qualityDetailList .layui-form-checkbox[lay-skin=primary] span{
+        line-height: 16px;
+        padding-right: 0px!important;
+    }
+    #LAY-Qualities-Quality-qualityDetailList .layui-form-checkbox span{
+        padding: 0px 3px;
+    }
+    #LAY-Qualities-Quality-qualityDetailList .layui-table[lay-size=sm] td,#LAY-Qualities-Quality-qualityDetailList .layui-table[lay-size=sm] th{
+        padding: 5px!important;
+    }
+    #LAY-Qualities-Quality-qualityDetailList #uploadpic{
+        display: none;
+        padding-top: 400px;
+    }
+</style>
+<script>
+    var qualityDetailList = "<?php echo ($qualityDetailList); ?>";
+</script>
+<?php if($menuData = get_menu_name('Qualities','Quality','qualityDetailList')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Qualities-Quality-qualityDetailList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form">
+                            <div class="layui-form-item spacingBalance">
+                                <div class="layui-inline">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">设备名称：</label>
+                                        <div class="layui-input-inline">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bsSuggest" id="getAssetsPlanDetail"  placeholder="请输入设备名称" name="assets">
+                                                <div class="input-group-btn">
+                                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">设备编号：</label>
+                                        <div class="layui-input-inline">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control bsSuggest" id="getAssetsPlanDetailAssnum"  placeholder="请输入设备编号" name="assnum">
+                                                <div class="input-group-btn">
+                                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <div class="layui-form-label">执行方式：</div>
+                                        <div class="layui-input-inline">
+                                            <select name="isSycle" lay-verify="">
+                                                <option value="">全部</option>
+                                                <option value="0">非周期执行</option>
+                                                <option value="1">周期执行</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <div class="layui-form-label">计划状态：</div>
+                                        <div class="layui-input-inline">
+                                            <select name="status" lay-verify="">
+                                                <option value="">全部</option>
+                                                <option value="1">执行中</option>
+                                                <option value="2">已暂停</option>
+                                                <option value="3">已完成</option>
+                                                <option value="4">已结束</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 320px;">
+                                        <label class="layui-form-label" style="width: 80px;border-right: none;">计划科室：</label>
+                                        <div class="layui-input-inline">
+                                            <select xm-select="qualityDetailListDepartment" xm-select-search="">
+                                                <?php if(is_array($department)): $i = 0; $__LIST__ = $department;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button class="layui-btn" lay-submit="" lay-filter="searchPlan">
+                                            <i class="layui-icon">&#xe615;</i> 搜 索
+                                        </button>
+                                        <button type="reset" lay-submit="" lay-filter="resetPlan" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 计划列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="qualityDetailList" lay-filter="qualityDetailData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="printTem" style="width: 794px!important; margin: auto;display: none;">
+
+</div>
+<script type="text/html" id="LAY-Qualities-Quality-qualityDetailListToolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="batchPrint"><i class="layui-icon layui-icon-zprinter-l l-icon-in-btn"></i>一键打印设备模板</button>
+    </div>
+</script>
+<script src="/Public/js/jquery.PrintArea.js" type="text/javascript"></script>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('qualities/quality/qualityDetailList', layui.factory('qualities/quality/qualityDetailList'));
+</script>

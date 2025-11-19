@@ -1,0 +1,43 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{ background:#FFFFFF;}
+fieldset{ border:#CCCCCC 1px solid; padding:10px; margin:10px;}
+legend{ padding:0 10px; font-weight:bold;}
+font{ color:red;}
+.red_border{ border:red 1px solid;}
+.info{ font-size:12px; font-family:"宋体"}
+.info tr,.rinfo_tr{ height:45px;}
+.input,.select{ padding:5px; margin:0px 5px; border:1px solid #cccccc; width:171px;}
+.select{ padding:5px; max-width:183px;}
+.radio{vertical-align:bottom;}
+label{ position:relative; margin:5px; padding:5px 0px;}
+label span{ padding-left:5px;}
+.rdo_input{padding:6px; border:none}
+.add_ks_input{ background:url(../images/arrow_on.png) #FFFFFF 160px no-repeat;}
+.add_ks_input:hover{ background:url(../images/arrow_down.png) #FFFFFF 160px no-repeat;}
+.long_input{padding:5px; margin:0px 5px; border:1px solid #cccccc; width:462px;}
+.t_input{ background:url(../images/calendar.gif) #ffffff 155px no-repeat}
+.remart_input{ max-width:500px; max-height:60px;min-width:500px; min-height:60px;}
+.f_red{ color:red; padding:5px;}
+
+.dropdown-shebei{position:absolute;z-index:1000;display:none;min-width:345px;margin:2px 0 0;background-color:#ffffff;}
+.dropdown-guobie,.dropdown-glkeshi{ right:30px}
+.open .dropdown-shebei{display:block;}
+
+.dklist_tr{ background:#fff; line-height:20px;}
+.dklist_tr:hover{ background:#eee;}
+table tr.dkt_tr{ background:#029BE2 ; color:#FFFFFF; height:auto;}
+.dropdown-keshi tr td,.dropdown-glkeshi tr td,.dropdown-shebei tr td,.dropdown-pinpai tr td,.dropdown-chandi tr td,.dropdown-guobie tr td{ padding:2px;}
+.dgbdlayer { display: block; clear: both; overflow-x: hidden; overflow-y: auto; border-bottom: 1px solid #aaa; font-family:"宋体" }
+.dgbdlayer table{}
+.dgbdlayer table tr{cursor:pointer; height:auto;}
+
+.zj_select{border:1px solid #e5e5e5; padding:5px; }
+.search_btn{color:#FFFFFF; border:#029BE2; padding:3px 15px 3px 30px; margin-left:40px; cursor:pointer; background:#029BE2 url(../images/search.png) 10px no-repeat; font-family:"Microsoft Yahei";}
+.search_btn:hover{ background:#1273a3  url(../images/search.png) 10px no-repeat; border:#1273a3}
+.add_btn{color:#FFFFFF; border:#029BE2; padding:3px 15px 3px 30px; margin-left:40px; cursor:pointer; background:#029BE2 url(../images/add.png) 10px no-repeat; font-family:"Microsoft Yahei";}
+.add_btn:hover{ background:#1273a3 url(../images/add.png) 10px no-repeat; border:#1273a3}
+
+
+.sremark{ width:513px; padding:5px;}
+

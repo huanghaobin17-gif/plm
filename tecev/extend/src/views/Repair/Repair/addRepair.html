@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col width="220">
+                <col width="100">
+                <col width="220">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>生产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>科室报修表单</legend>
+        </fieldset>
+        <form class="layui-form" action="">
+            <input type="hidden" name="assid" value="{$asArr.assid}">
+            <input type="hidden" name="assnum" value="{$asArr.assnum}">
+            <input type="hidden" name="assets" value="{$asArr.assets}">
+            <input type="hidden" name="opendate" value="{$asArr.opendate}">
+            <input type="hidden" name="factory" value="{$asArr.factory}">
+            <input type="hidden" name="model" value="{$asArr.model}">
+            <input type="hidden" name="factorynum" value="{$asArr.factorynum}">
+            <input type="hidden" name="department" value="{$asArr.department}">
+            <input type="hidden" name="departid" value="{$asArr.departid}">
+            <input type="hidden" name="assprice" value="{$asArr.buy_price}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">档案编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" placeholder="档案编号" value="" name="archives_num" class="layui-input">
+                    </div>
+                </div>
+                <if condition="$repair_category">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">维修类别：</label>
+                        <div class="layui-input-inline">
+                            <select name="repair_category" class="input_select" lay-search="">
+                                <volist name="repair_category" id="vo">
+                                    <option value="{$key+1}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </if>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">维修单号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="系统生成" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <if condition="$issystem['repair_date'] eq 0">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>报修时间：</label>
+                        <else />
+                        <label class="layui-form-label">报修时间：</label>
+                    </if>
+                    <div class="layui-input-inline">
+                        <if condition="$issystem['repair_date'] eq 1">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                            <else/>
+                            <input type="text" name="repair_date" value="" placeholder="请点击选择报修时间" style="cursor: pointer;" id="repair_date" readonly="readonly" class="layui-input" lay-verify="required">
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">
+                        <if condition="$issystem['repair_person'] eq 0"><span class="rquireCoin"> * </span></if>
+                        报修人：</label>
+                    <div class="layui-input-inline">
+                        <if condition="$issystem['repair_person'] eq 1">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                            <else/>
+                            <input type="text" value="" name="repair_person" class="layui-input" lay-verify="required|name" placeholder="请输入报修人">
+                        </if>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <if condition="$issystem['repair_phone'] eq 0">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>报修电话：</label>
+                        <else />
+                        <label class="layui-form-label">报修电话：</label>
+                    </if>
+                    <div class="layui-input-inline">
+                        <if condition="$issystem['repair_phone'] eq 1">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                            <else/>
+                            <input type="text" value="" name="repair_phone" class="layui-input" lay-verify="required|tel" placeholder="请输入报修电话">
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">
+                    <if condition="$problem eq 1"><span class="rquireCoin"> * </span></if>
+                    故障描述：</label>
+                <div class="layui-input-block">
+                    <if condition="$problem eq 1">
+                        <textarea placeholder="请输入故障描述" class="layui-textarea" name="breakdown" lay-verify="required"></textarea>
+                        <else/>
+                        <textarea placeholder="请输入故障描述" class="layui-textarea" name="breakdown"></textarea>
+                    </if>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="remark"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon">&#xe609;</i>
+                        确认并提交报修
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+</div>
+</body>
+</html>
+<script>
+    var addRepairUrl='{$addRepairUrl}';
+</script>
+<script>
+    var max = '{$max}';
+    var current_time = '{$current_time}';
+    layui.use('controller/repair/repair/addRepair', layui.factory('controller/repair/repair/addRepair'));
+</script>
+<script src="/tecev/src/lib/view.js"></script>

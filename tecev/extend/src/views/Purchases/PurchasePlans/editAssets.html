@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增招设备</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 90px;
+        }
+        #addTenderFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+        .asn{
+            width: 100%;
+        }
+        .asn .layui-input-inline{
+            width: 40% !important;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <form class="layui-form" lay-filter="editAssets" action="">
+            <input type="hidden" name="assets_id" value="{$assets_id}"/>
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">设备信息</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline asn">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备名称：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="dic_assets_sel">
+                            <input type="text" name="assets_name" value="" class="form-control bsSuggest" lay-verify="assets_name|required" placeholder="请输入设备名称" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" lay-verify="unit|required" autocomplete="off" placeholder="请输入设备单位" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备数量：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="nums" lay-verify="nums|number|required" autocomplete="off" placeholder="请输入设备数量" value="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 预计单价：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="market_price" lay-verify="market_price|required" autocomplete="off" placeholder="请输入预计单价（元）" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 是否进口：</label>
+                    <div class="layui-input-inline">
+                        <select name="is_import" lay-verify="is_import|required">
+                            <option value="">请选择</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 上报类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="buy_type" lay-verify="buy_type|required">
+                            <option value="">请选择</option>
+                            <option value="1">报废更新</option>
+                            <option value="2">添置</option>
+                            <option value="3">新增</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 参考品牌：</label>
+                    <div class="layui-input-inline">
+                        <select name="brand" lay-verify="brand|required" xm-select="brand" xm-select-search="" lay-verify="select1">
+                            <volist name="brands" id="vo">
+                                <option value="{$vo.brand_name}">{$vo.brand_name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="editAssets">
+                    <i class="layui-icon" >&#xe609;</i> 保存
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var departReport = "{$departReport}";
+    var assets_name = "{$assetsInfo.assets_name}";
+    var unit = "{$assetsInfo.unit}";
+    var nums = "{$assetsInfo.nums}";
+    var market_price = "{$assetsInfo.market_price}";
+    var is_import = "{$assetsInfo.is_import}";
+    var buy_type = "{$assetsInfo.buy_type}";
+    var brand = {$old_brand};
+    layui.use('controller/purchases/plans/editAssets', layui.factory('controller/purchases/plans/editAssets'));
+</script>

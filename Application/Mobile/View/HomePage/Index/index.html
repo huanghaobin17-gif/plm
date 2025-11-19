@@ -1,0 +1,400 @@
+<include file="Public:head"/>
+<style>
+    .layui-card-header{font-size: 1rem;}
+    .layui-card-header img{width: 2.5rem;}
+    .layui-card:first-child{margin-top: 0}
+    .layui-card{box-shadow: none;margin:1.25rem 0 0 0;}
+    .layui-card-header{border-bottom-color: #e5e5e5}
+    .otherScreen:first-child .layui-col-xs4{margin-top: 1rem}
+    .layui-row .layui-col-xs4{margin-top: 3rem;}
+    .listButton{width: 6rem;text-align: center;position: relative;margin: 0 auto;}
+    .listButton img{width: 3rem}
+    .listButton p{font-size: 0.875rem;line-height: 2.25rem;}
+    .listButton .layui-badge{width: 0.8rem;position: absolute;top: -0.5rem;right: 1rem;height: 1rem;line-height: 1rem;padding: 0 4px;}
+    .headerImage{width: 3rem;height: 3rem;margin: 0 .24rem;border-radius: 50%;-webkit-box-flex: 0;-webkit-flex: 0 0 1.2rem;flex: 0 0 1.2rem;background-repeat: no-repeat;background-size: 1.2rem 1.2rem;}
+    .task li{height: 4.5rem;position: relative;border-bottom: 1px solid #eee;padding: 1.5rem 0 2rem 0;}
+    .taskLeft{width: 20%;display: inline-block;text-align: center;border-right: 1px solid #e5e5e5;}
+    .taskRight{display: inline-block;}
+    .taskRight h2{padding: 0 0 1.5625rem 0.625rem;font-size: 1rem;}
+    .taskRight p{padding: 0 0 1.5625rem 0.625rem;}
+    .taskRight p span{font-size: 0.875rem;color: #666;}
+    .taskTime{margin-left: 1rem;color: #777}
+    .taskButtom{position: absolute;right: 0;top: 30%;}
+    .taskUp{float: right;}
+    .taskNum{color: #FF5722;}
+    .examineTitle{color: #FF5722;font-size: 0.875rem;}
+    .copyright{width: 15.625rem;color: #999999;margin: 0 auto;margin-bottom: 3.5rem;margin-top: 0.9375rem;}
+    .buttomNav{width: 100%;height:3rem;background-color: #fbfbfb;position: fixed;bottom: 0;z-index: 99999;border-top: 1px solid #e2e2e2;}
+    .buttomNav a{width: 100%;height: 3rem;display: block;text-align: center;line-height: 3rem;}
+    .buttomNav li{position: relative;}
+    .br1px{border-right: 1px solid #c9c9c9;position: absolute;right: 0;width: 1px;height: 60%;top: 20%;}
+    /*去掉原本layui的样式 底下中间菜单样式*/
+    .layui-nav-child{top:auto;bottom:2.5rem;}
+    .layui-nav{padding: 0;background-color: #fbfbfb;border-radius: 0;box-sizing: inherit;}
+    .layui-nav .layui-nav-item a{padding: 0;color: #333;}
+    .layui-nav .layui-nav-item{display: block;}
+    .layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a{color: #333;}
+    .layui-nav-bar{display: none}
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/sbcx.png">
+                                <p>设备查询</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/sys.png">
+                                <p>扫码报修</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/wxjd.png">
+                                <p>维修接单</p>
+                                <span class="layui-badge">...</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/smjx.png">
+                                <p>扫码检修</p>
+                                <span class="layui-badge">13</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/wxcl.png">
+                                <p>维修处理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/wxjc.png">
+                                <p>维修进程</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/wxys.png">
+                                <p>维修验收</p>
+                                <span class="layui-badge">8</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/wxzd.png">
+                                <p>维修转单</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/pjck.png">
+                                <p>配件出库</p>
+                                <span class="layui-badge">6</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/jdsq.png">
+                                <p>借调申请</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/qrjr.png">
+                                <p>确认借入</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/ghys.png">
+                                <p>归还验收</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/jdyq.png">
+                                <p>借调逾期</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/zksq.png">
+                                <p>转科申请</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/zkjc.png">
+                                <p>转科进程</p>
+                                <span class="layui-badge">...</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/zkys.png">
+                                <p>转科验收</p>
+                                <span class="layui-badge">13</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/byss.png">
+                                <p>保养实施</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/byjc.png">
+                                <p>保养进程</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/byys.png">
+                                <p>保养验收</p>
+                                <span class="layui-badge">8</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/zkjc.png">
+                                <p>质控检测</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/zkjg.png">
+                                <p>质控结果</p>
+                                <span class="layui-badge">6</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/sp.png">
+                                <p>审批</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/dqtx.png">
+                                <p>到期提醒</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/tjfx.png">
+                                <p>统计分析</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="otherScreen">
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/gg.png">
+                                <p>公告</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="layui-col-xs4">
+                        <a>
+                            <div class="listButton">
+                                <img src="__PUBLIC__/mobile/images/icon/pjkc.png">
+                                <p>配件库存</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img src="__PUBLIC__/mobile/images/icon/dcl.png" style="width: 1.2rem;">
+            <span>待处理事件</span>
+            <p class="taskUp"><span class="taskNum"> 4 </span>项</p>
+        </div>
+        <div class="layui-card-body">
+            <ul class="task">
+                <li>
+                    <div class="taskLeft">
+                        <img class="headerImage" src="__PUBLIC__/mobile/images/icon/cstx.jpg">
+                        <p>李维真</p>
+                    </div>
+                    <div class="taskRight">
+                        <h2>耳鼻喉诊治综合工作台</h2>
+                        <p>
+                            <span class="taskDepartment">耳鼻咽喉科病区</span>
+                            <span class="taskTime">2019-01-11 16:31</span>
+                        </p>
+                    </div>
+                    <a class="layui-btn layui-btn-normal taskButtom">接单</a>
+                </li>
+                <li>
+                    <div class="taskLeft">
+                        <img class="headerImage" src="__PUBLIC__/mobile/images/icon/cstx.jpg">
+                        <p>郝美丽</p>
+                    </div>
+                    <div class="taskRight">
+                        <h2>多参数监护仪</h2>
+                        <p>
+                            <span class="taskDepartment">普通内科</span>
+                            <span class="taskTime">2019-01-31 16:32</span>
+                        </p>
+                    </div>
+                    <a class="layui-btn layui-btn-normal taskButtom">接单</a>
+                </li>
+                <li>
+                    <div class="taskLeft">
+                        <img class="headerImage" src="__PUBLIC__/mobile/images/icon/cstx.jpg">
+                        <p>刘付春</p>
+                    </div>
+                    <div class="taskRight">
+                        <h2>手持式血液分析仪</h2>
+                        <p>
+                            <span class="taskDepartment">麻醉手术科</span>
+                            <span class="taskTime">2019-01-21 21:31</span>
+                        </p>
+                    </div>
+                    <a class="layui-btn taskButtom">验收</a>
+                </li>
+                <li>
+                    <div class="taskLeft">
+                        <img class="headerImage" src="__PUBLIC__/mobile/images/icon/cstx.jpg">
+                        <p>管理员</p>
+                    </div>
+                    <div class="taskRight">
+                        <h2>双道注射泵 <span class="examineTitle">借调申请</span></h2>
+                        <p>
+                            <span class="taskDepartment">新生儿科</span>
+                            <span class="taskTime">2019-01-30 21:31</span>
+                        </p>
+                    </div>
+                    <a class="layui-btn layui-btn-danger taskButtom">审批</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<p class="copyright">  © 2019</p>
+<div class="buttomNav">
+    <ul>
+        <div class="layui-col-xs4">
+            <li>
+                <a>扫码</a>
+                <div class="br1px"></div>
+            </li>
+        </div>
+        <div class="layui-col-xs4">
+            <li>
+                <ul class="layui-nav" lay-filter="">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" id="menu">菜单</a>
+                        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                            <dd><a href="###">哈哈</a></dd>
+                            <dd><a href="###">哈哈1</a></dd>
+                            <dd><a href="###">哈哈2</a></dd>
+                            <dd><a href="###">哈哈3</a></dd>
+                            <dd><a href="###">哈哈4</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="br1px"></div>
+            </li>
+        </div>
+        <div class="layui-col-xs4">
+            <li>
+                <a>我的</a>
+            </li>
+        </div>
+    </ul>
+</div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+        $("#menu").click(function(){
+            var thisClickMenu = $(this).siblings('.layui-nav-child');
+            if (thisClickMenu.hasClass('layui-show')){
+                thisClickMenu.removeClass('layui-show');
+            }
+        })
+    });
+    if (screen.width >= 768) {
+        $(".otherScreen").addClass('layui-col-sm4');
+        $(".otherScreen:first-child .layui-col-xs4").css('margin-top','3rem');
+    }
+</script>
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>设备采购询价记录登记</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #exportPriceFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+            基础信息
+        </blockquote>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>申请科室：</th>
+                <td>{$recordInfo.department}</td>
+            </tr>
+            <tr>
+                <th>项目名称：</th>
+                <td>{$recordInfo.project_name}</td>
+            </tr>
+            <tr>
+                <th>申请单号：</th>
+                <td>{$recordInfo.apply_num}</td>
+            </tr>
+            <tr>
+                <th>申请日期：</th>
+                <td>{$recordInfo.apply_date}</td>
+            </tr>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$recordInfo.assets_name}</td>
+            </tr>
+            <tr>
+                <th>设备单位：</th>
+                <td>{$recordInfo.unit}</td>
+            </tr>
+            <tr>
+                <th>设备数量：</th>
+                <td>{$recordInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>设备单价：</th>
+                <td>{$recordInfo.market_price}</td>
+            </tr>
+            <tr>
+                <th>预计总价：</th>
+                <td>{$recordInfo.total_price}</td>
+            </tr>
+            <tr>
+                <th>是否进口：</th>
+                <td>{$recordInfo.is_import_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            待采购设备询价记录
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0"  lay-even lay-size="sm">
+            <colgroup>
+                <col width="22%">
+                <col width="22%">
+                <col width="11%">
+                <col width="11%">
+                <col width="11%">
+                <col width="11%">
+                <col width="8%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">供应商名称</th>
+                <th style="text-align: left !important;">生产厂商</th>
+                <th style="text-align: left !important;">设备型号</th>
+                <th style="text-align: left !important;">品牌</th>
+                <th style="text-align: left !important;">市场价</th>
+                <th style="text-align: left !important;">询价单价</th>
+                <th style="text-align: left !important;">确认供货</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody class="supplierList">
+                <volist name="details" id="vo">
+                    <tr class="supdetail">
+                        <td>{$vo.supplier_name}</td>
+                        <td>{$vo.factory_name}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.brand}</td>
+                        <td>{$vo.market_price}</td>
+                        <td>{$vo.company_price}</td>
+                        <td>
+                            <if condition="$vo.final_select eq 1">
+                                <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                <else/>
+                                <i class="layui-icon layui-icon-zzban" style="color: #FF5722;"></i>
+                            </if>
+                        </td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-xs  showDetail" data-id="{$vo.detail_id}">查看</button>
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var inquiryPricesList = "{$inquiryPricesList}";
+</script>
+<script>
+    layui.use('controller/purchases/tendering/showInquiryPrices', layui.factory('controller/purchases/tendering/showInquiryPrices'));
+</script>

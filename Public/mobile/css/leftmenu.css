@@ -1,0 +1,17 @@
+/* CSS Document */
+body{ background-color:#ffffff;}
+dt{ padding-left:20px; line-height:35px;}
+dt a{cursor:pointer;}
+.assets{ background:url(/sbsys/images/assets.png) no-repeat left;}
+.repair{ background:url(/sbsys/images/repair.png) no-repeat left;}
+.patrol{ background:url(/sbsys/images/patrol.png) no-repeat left;}
+.quality{ background:url(/sbsys/images/quality.png) no-repeat left;}
+.setup{ background:url(/sbsys/images/setup.png) no-repeat left;}
+.oplog{ background:url(/sbsys/images/oplog.png) no-repeat left;}
+.count{ background:url(/sbsys/images/count.png) no-repeat left;}
+dd{ padding-left:20px; line-height:25px; cursor:pointer;}
+.dd2{ padding-left:32px;}
+dd:hover{ background:#1273a3;}
+dd:hover a,dd:hover a b{ color:#FFFFFF;}
+a{ color:#333333; font-size:14px;}
+a.add:hover{ color:#F60}

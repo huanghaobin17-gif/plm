@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .form_ul{
+            height: 80px;
+        }
+        .form_ul li{
+            float: left;
+            width: 195px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layer-to-top">
+        <form class="layui-form layui-form-pane">
+            <ul class="form_ul">
+                <li><input type="checkbox" name="" checked="checked" disabled value="1" title="维修报废设备" lay-skin="primary"></li>
+
+                <if condition="in_array('insurance_assets',$survey_showids)">
+                    <if condition="in_array('insurance_assets',$show_survey_ids)">
+                        <li><input type="checkbox" name="insurance_assets" checked="checked" value="1" title="在保买保设备" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="insurance_assets" value="1" title="在保买保设备" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('special_assets',$survey_showids)">
+                    <if condition="in_array('special_assets',$show_survey_ids)">
+                        <li><input type="checkbox" name="special_assets" checked="checked" value="1" title="特种设备" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="special_assets" value="1" title="特种设备" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('lifesupport_assets',$survey_showids)">
+                    <if condition="in_array('lifesupport_assets',$show_survey_ids)">
+                        <li><input type="checkbox" name="lifesupport_assets" checked="checked" value="1" title="生命支持设备" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="lifesupport_assets" value="1" title="生命支持设备" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('big_assets',$survey_showids)">
+                    <if condition="in_array('big_assets',$show_survey_ids)">
+                        <li><input type="checkbox" name="big_assets" checked="checked" value="1" title="大型设备" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="big_assets" value="1" title="大型设备" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('firstaid_assets',$survey_showids)">
+                    <if condition="in_array('firstaid_assets',$show_survey_ids)">
+                        <li><input type="checkbox" name="firstaid_assets" checked="checked" value="1" title="急救设备" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="firstaid_assets" value="1" title="急救设备" lay-skin="primary"></li>
+                    </if>
+                </if>
+                <if condition="in_array('quality_assets',$survey_showids)">
+                    <if condition="in_array('quality_assets',$show_survey_ids)">
+                        <li>
+                            <input type="checkbox" name="quality_assets" checked="checked" value="1" title="质控设备"
+                                   lay-skin="primary">
+                        </li>
+                        <else/>
+                        <li>
+                            <input type="checkbox" name="quality_assets" value="1" title="质控设备" lay-skin="primary">
+                        </li>
+                    </if>
+                </if>
+                <if condition="in_array('metering_assets',$survey_showids)">
+                    <if condition="in_array('metering_assets',$show_survey_ids)">
+                        <li>
+                            <input type="checkbox" name="metering_assets" checked="checked" value="1" title="计量设备"
+                                   lay-skin="primary">
+                        </li>
+                        <else/>
+                        <li>
+                            <input type="checkbox" name="metering_assets" value="1" title="计量设备" lay-skin="primary">
+                        </li>
+                    </if>
+                </if>
+                <if condition="in_array('Inspection_assets',$survey_showids)">
+                    <if condition="in_array('Inspection_assets',$show_survey_ids)">
+                        <li>
+                            <input type="checkbox" name="Inspection_assets" checked="checked" value="1" title="巡检设备"
+                                   lay-skin="primary">
+                        </li>
+                        <else/>
+                        <li>
+                            <input type="checkbox" name="Inspection_assets" value="1" title="巡检设备" lay-skin="primary">
+                        </li>
+                    </if>
+                </if>
+                <if condition="in_array('maintain_assets',$survey_showids)">
+                    <if condition="in_array('maintain_assets',$show_survey_ids)">
+                        <li>
+                            <input type="checkbox" name="maintain_assets" checked="checked" value="1" title="保养设备"
+                                   lay-skin="primary">
+                        </li>
+                        <else/>
+                        <li>
+                            <input type="checkbox" name="maintain_assets" value="1" title="保养设备" lay-skin="primary">
+                        </li>
+                    </if>
+                </if>
+            </ul>
+            <div class="layui-form-item" pane="" style="width: 300px;">
+                <label class="layui-form-label">图表类型：</label>
+                <div class="layui-input-inline">
+                    <if condition="$chart_type eq 'annular'">
+                        <input type="radio" name="chart_type" value="annular" title="环形" checked>
+                        <input type="radio" name="chart_type" value="pie" title="扇形">
+                    </if>
+                    <if condition="$chart_type eq 'pie'">
+                        <input type="radio" name="chart_type" value="annular" title="环形">
+                        <input type="radio" name="chart_type" value="pie" title="扇形" checked>
+                    </if>
+                    <if condition="$chart_type eq null">
+                        <input type="radio" name="chart_type" value="annular" title="环形" checked>
+                        <input type="radio" name="chart_type" value="pie" title="扇形">
+                    </if>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/login/index/show_setting', layui.factory('controller/login/index/show_setting'));
+</script>

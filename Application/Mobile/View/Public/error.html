@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>温馨提示</title>
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/tecev/start/layui/icon/icon.css" media="all">
+    <link rel="stylesheet" href="/tecev/start/layui/icon/scan.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/css/moblieCommon.css" media="all">
+</head>
+<?php if(isset($jumpUrl)) { ?>
+<script src="__PUBLIC__/js/jquery-3.7.0.min.js"></script>
+<script src="/tecev/start/layui/layui.js"></script>
+<script>
+    layui.use('form', function () {
+        layer.msg('<?php echo $errmsg; ?>', {icon: 2});
+        setTimeout(function () {
+            window.location = '<?php echo($jumpUrl);?>';
+        }, 3000);
+    })
+</script>
+<?php } ?>

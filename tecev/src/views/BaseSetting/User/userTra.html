@@ -1,0 +1,74 @@
+<?php if($menuData = get_menu_name('BaseSetting','User','userTra')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var userTra = "{$userTra}";
+</script>
+<style>
+    #LAY-BaseSetting-User-getUserList .downloadConfirmReport{
+        cursor: pointer;
+        color: #01AAED;
+    }
+    .layui-table-cell{
+        height: 60px;
+    }
+</style>
+<div class="layui-fluid" id="LAY-BaseSetting-User-getUserTraList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">用户名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="bsSuggestUserTra" placeholder="请输入用户名称" name="username">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">查询日期：</label>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" placeholder="查询日期" style="cursor: pointer;" name="scan_date" id="scan_date">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="userTraSearch"
+                                            id="userTraSearch"><i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div id="userTraLists" lay-filter="userTraData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/user/userTra', layui.factory('basesetting/user/userTra'));
+</script>
+
+
+

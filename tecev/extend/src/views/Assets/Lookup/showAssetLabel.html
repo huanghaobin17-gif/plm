@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设备标签打印</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        td{ color: #000000}
+        ul > li > div{ width: 100px; padding-right: 10px; font-weight: bold;}
+        .print-label{
+            width: 350px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: -15px;">
+    <table class="layui-table print-label">
+        <tr>
+            <td colspan="2" align="center">
+                <b>{$hospitalName}设备维护标签</b>
+            </td>
+        </tr>
+        <!--<tr>-->
+            <!--<td colspan="2">-->
+                <!--<ul>-->
+                    <!--<li><div class="fl text-right">设备名称：</div>{$asInfo.assets}</li>-->
+                    <!--<li><div class="fl text-right">设备编号：</div>{$asInfo.assnum}</li>-->
+                    <!--<li><div class="fl text-right">产品序列号：</div>{$asInfo.serialnum}</li>-->
+                    <!--<li><div class="fl text-right">设备原编号：</div>{$asInfo.assorignum}</li>-->
+                <!--</ul>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <tr>
+
+            <td>
+                <ul>
+                    <li><div class="fl text-right">规格/型号：</div>{$asInfo.model}</li>
+                    <li><div class="fl text-right">设备品牌：</div>{$asInfo.brand}</li>
+                    <li><div class="fl text-right">所属科室：</div>{$asInfo.department}</li>
+                    <li><div class="fl text-right">启用日期：</div>{$asInfo.opendate}</li>
+                </ul>
+            </td>
+            <td align="center" style="width: 114px;padding: 0">
+                <img src="{$asInfo.code_url}" alt="">
+            </td>
+        </tr>
+    </table>
+    <div class="printbtn" style="margin: 0 auto;text-align: center;">
+        <button class="layui-btn" lay-submit="" lay-filter="printLabel" id="print" title="打印">
+            打印
+        </button>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/assets/lookup/showAssetLabel', layui.factory('controller/assets/lookup/showAssetLabel'));
+</script>

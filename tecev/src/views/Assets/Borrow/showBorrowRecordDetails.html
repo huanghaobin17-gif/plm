@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>借调记录</title>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+
+<style>
+
+    /*进度条样式*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .margin-bottom-10{margin-bottom: 10px;}
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav {
+        width:960px;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li{
+        padding:0 30px;
+        line-height: 30px;
+        background-color: #50abe4;
+        display: inline-block;
+        color:#fff;
+        position: relative;
+        margin-right: 4px;
+        margin-bottom: 10px;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:after{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        position: absolute;
+        right:-20px;
+        top:0;
+        z-index: 10;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:before{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        border-left:20px solid #fff;
+        position: absolute;
+        left:0;
+        top:0;
+    }
+
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:first-child{
+        border-radius: 4px 0 0 4px;
+        padding-left:25px;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:last-child{
+        border-radius: 0 4px 4px 0;
+        padding-right: 25px;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:first-child:before{
+        display: none;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .progressNav li:last-child:after{
+        display: none;
+    }
+    /*正在进行*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .doingProgress:after{border-left:20px solid #50abe4;}
+    /*完成*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .completeProgress{background-color: rgba(80,171,228,0.5)!important;}
+    #LAY-Assets-Borrow-showBorrowRecordDetails .completeProgress:after{opacity: 0.5!important;border-left:20px solid #50abe4;}
+    /*未完成*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .nocompleteProgress{background-color: #CFCFCF!important;}
+    #LAY-Assets-Borrow-showBorrowRecordDetails .nocompleteProgress:after{border-left:20px solid #CFCFCF;!important;}
+    /*定位小数字*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .number{position: absolute;top: -1px;}
+    /*定位文字*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .numberText{margin-left: 20px;}
+    /*时间线左移出*/
+    /*时间线最新tips*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .newTips{
+        width: 34px;
+        height: 18px;
+        border: 1px solid #ebebeb;
+        border-radius: 4px;
+        position: absolute;
+        color: #fff;
+        font-size: 12px;
+        display: inline-block;
+        top: -1px;
+        left: -48px;
+        background-color: #0af;
+        line-height: 18px;
+        text-align: center;
+    }
+    #LAY-Assets-Borrow-showBorrowRecordDetails .newTips:before{
+        box-sizing: content-box;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 4px;
+        left: 31px;
+        padding: 0;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        border-left: 10px solid #0af;
+        border-right: 4px solid transparent;
+        display: block;
+        content: "";
+        z-index: 12;
+    }
+    /*时间线日期大小*/
+    #LAY-Assets-Borrow-showBorrowRecordDetails .date{font-size: 18px;}
+
+</style>
+
+<div class="containDiv" id="LAY-Assets-Borrow-showBorrowRecordDetails">
+
+    <div class="margin-bottom-10">
+        <ul class="progressNav">
+            <volist name="borrowTimeLineProgress" id="v">
+                <li class="{$v.class}" ><span class="number">{$v.number}</span><span class="numberText">{$v.statusName}</span></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="margin-bottom-15 m-left">
+        <ul class="layui-timeline">
+            <volist name="borrowTimeLine" id="v">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title"><span class="date">{$v.date}</span>  【{$v.statusName}】 ：{$v.user}({$v.telephone})  {$v.text}</div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <if condition="$showLifeBorrow neq 1">
+        <blockquote class="layui-elem-quote-sm">
+            设备基础信息
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col>
+                <col width="120">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td class="text-right">设备名称：</td>
+                <td>{$assets.assets}</td>
+                <td class="text-right">设备编号：</td>
+                <td>{$assets.assnum}</td>
+            </tr>
+            <tr>
+                <td class="text-right">规格/型号：</td>
+                <td>{$assets.model}</td>
+                <td class="text-right">品牌：</td>
+                <td>{$assets.brand}</td>
+            </tr>
+            <tr>
+                <td class="text-right">产品序列号：</td>
+                <td>{$assets.serialnum}</td>
+                <td class="text-right">生产厂家：</td>
+                <td>{$assets.factory}</td>
+            </tr>
+            <tr>
+                <td class="text-right">所属科室：</td>
+                <td>{$assets.department}</td>
+                <td class="text-right">设备管理员：</td>
+                <td>{$assets.assetsrespon}</td>
+            </tr>
+            <tr>
+                <td class="text-right">设备原值：</td>
+                <td>{$assets.buy_price}</td>
+                <td class="text-right">设备状态：</td>
+                <td>{$assets.statusName}</td>
+            </tr>
+            </tbody>
+        </table>
+    </if>
+
+    <blockquote class="layui-elem-quote-sm">
+        借调申请信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">流水号：</td>
+            <td>{$borrow.borrow_num}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请科室：</td>
+            <td>{$borrow.department}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请人：</td>
+            <td>{$borrow.apply_username}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请时间：</td>
+            <td>{$borrow.apply_time}</td>
+        </tr>
+        <tr>
+            <td class="text-right">预计归还时间：</td>
+            <td>{$borrow.estimate_back}</td>
+        </tr>
+        <tr>
+            <td class="text-right">借用原因：</td>
+            <td>{$borrow.borrow_reason}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            借调附属设备明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="approve">
+        <volist name="approve" id="vo">
+            <if condition="$i eq 1">
+                <blockquote class="layui-elem-quote-sm">借出科室审批</blockquote>
+                <else/>
+                <blockquote class="layui-elem-quote-sm">设备科审批</blockquote>
+            </if>
+            <table class="layui-table" lay-even="" lay-size="sm">
+                <colgroup>
+                    <col width="120">
+                    <col>
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td class="text-right">审批人：</td>
+                    <td>{$vo.approver}</td>
+                    <td class="text-right">审批时间：</td>
+                    <td>{$vo.approve_time}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">审批状态：</td>
+                    <td>{$vo.is_adoptName}</td>
+                    <td class="text-right">审批意见：</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </volist>
+    </notempty>
+
+    <notempty name="end_reason">
+        <blockquote class="layui-elem-quote-sm">不借入设备信息</blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col>
+                <col width="120">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td class="text-right">记录用户：</td>
+                <td>{$borrow.borrow_in_username}</td>
+                <td class="text-right">不借入时间：</td>
+                <td>{$borrow.not_apply_time}</td>
+            </tr>
+            <tr>
+                <td class="text-right">不借入原因：</td>
+                <td colspan="3">{$borrow.end_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="borrow_in">
+        <blockquote class="layui-elem-quote-sm">借入检查确定信息</blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col>
+                <col width="120">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td class="text-right">借入检查用户：</td>
+                <td>{$borrow.borrow_in_username}</td>
+                <td class="text-right">借入时间：</td>
+                <td>{$borrow.borrow_in_time}</td>
+            </tr>
+            <notempty name="borrow[supplement]">
+                <tr>
+                    <td class="text-right">补充清单：</td>
+                    <td colspan="3">{$borrow.supplement}</td>
+                </tr>
+            </notempty>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="give_back">
+        <blockquote class="layui-elem-quote-sm">归还验收信息</blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col>
+                <col width="120">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td class="text-right">归还验收用户：</td>
+                <td>{$borrow.give_back_username}</td>
+                <td class="text-right">归还时间：</td>
+                <td>{$borrow.give_back_time}</td>
+            </tr>
+            </tbody>
+        </table>
+    </notempty>
+</div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(".layui-timeline-content").first().append('<span class="newTips">最新</span>');
+        $(".newTips").siblings('.layui-timeline-title').css('color','#0af');
+    })
+</script>

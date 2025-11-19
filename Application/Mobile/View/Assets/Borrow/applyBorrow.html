@@ -1,0 +1,334 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Assets','Borrow','applyBorrow')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .layui-table tr th{width: 30%;}
+    .assetsHideDetail{display: none;}
+    .layui-card-body{padding: 0}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+
+    .subsidiary_table{
+        margin: 10px 15px 0 15px;
+    }
+    .subsidiary_table .layui-table tr th{
+        text-align: left;
+    }
+    .subsidiary_table .layui-border-box{
+        margin-top: 5px;
+    }
+    .toolbar .title {
+        line-height: 2.8rem;
+    }
+    .toolbar .picker-button {
+        line-height: 2.8rem;
+    }
+    .layui-card:first-of-type{
+        margin-top: 0;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <input type="hidden" name="record_url" value=""/>
+    <input type="hidden" name="pic_url" value=""/>
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$assets.assets}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$assets.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备原编号</th>
+                    <td>{$assets.assorignum}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$assets.model}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$assets.serialnum}</td>
+                </tr>
+                <tr>
+                    <th>设备常用名</th>
+                    <td>{$assets.common_name}</td>
+                </tr>
+                <tr>
+                    <th>设备分类</th>
+                    <td>{$assets.cate_name}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>系统辅助分类</th>
+                    <td>{$assets.helpcat}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备原值(元)</th>
+                    <td>{$assets.buy_price}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>预计使用年限</th>
+                    <td>{$assets.expected_life}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>残净值率(%)</th>
+                    <td>{$assets.residual_value}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>生产厂商</th>
+                    <td>{$assets.factory}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>供应商</th>
+                    <td>{$assets.supplier}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>维修商</th>
+                    <td>{$assets.repair}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>出厂日期</th>
+                    <td>{$assets.factorydate}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>保修到期日期</th>
+                    <td>{$assets.guarantee_date}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>保修状态</th>
+                    <td>{$assets.guaranteeStatus}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>单位</th>
+                    <td>{$assets.unit}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>品牌</th>
+                    <td>{$assets.brand}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>出厂编号</th>
+                    <td>{$assets.factorynum}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备类型</th>
+                    <td>{$assets.type}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>发票编号</th>
+                    <td>{$assets.invoicenum}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>所属科室</th>
+                    <td>{$assets.department}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>管理科室</th>
+                    <td>{$assets.managedepart}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>所在位置</th>
+                    <td>{$assets.address}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>资产负责人</th>
+                    <td>{$assets.assetsrespon}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>财务分类</th>
+                    <td>{$assets.finance}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备来源</th>
+                    <td>{$assets.assfrom}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>资金来源</th>
+                    <td>{$assets.capitalfrom}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>入库日期</th>
+                    <td>{$assets.storage_date}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>启用日期</th>
+                    <td>{$assets.opendate}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>折旧方式</th>
+                    <td>{$assets.depreciation_method_name}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>折旧年限</th>
+                    <td>{$assets.depreciable_lives}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="layui-card" style="margin-top: 0;">
+                <div class="moreButton">
+                    <a class="moreDetailButton" data-detailClass="assetsHideDetail">加载更多</a>
+                </div>
+                <div class="moreButton" style="display: none;">
+                    <a class="hideDetailButton" data-detailClass="assetsHideDetail">收起</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <notempty name="approve">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">审批信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <tbody>
+                    <volist name="approve" id="vo">
+                        <tr>
+                            <th>审批人</th>
+                            <td>
+                                <if condition="$i eq 1"> (借出科室审批)
+                                    <else/>
+                                    (设备科审批)
+                                </if>
+                                {$vo.approver}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>审批时间</th>
+                            <td>{$vo.approve_time}</td>
+                        </tr>
+                        <tr>
+                            <th>审批意见</th>
+                            <td>{$vo.is_adoptName}</td>
+                        </tr>
+                        <tr>
+                            <th>备注</th>
+                            <td>
+                                <if condition="$vo.remark neq ''">
+                                    {$vo.remark}
+                                    <else/>
+                                    无
+                                </if>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </notempty>
+    <notempty name="is_display">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+            <h2 class="formTitle">借调申请表单</h2>
+        </div>
+        <div class="layui-card-body">
+            <notempty name="subsidiary">
+                <div class="subsidiary_table">
+                    <span class="mobileTips"> 勾选连同所属附属设备一起借调</span>
+                    <table class="layui-table" lay-data="{id: 'subsidiaryData'}" lay-filter="subsidiary_table" lay-even="">
+                        <thead>
+                        <tr>
+                            <th lay-data="{field:'assid',checkbox:true,LAY_CHECKED:true}">全选</th>
+                            <th lay-data="{field:'assets'}">附属设备名称</th>
+                            <th lay-data="{field:'model'}">规格型号</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="subsidiary" id="vo">
+                            <tr>
+                                <td>{$vo.assid}</td>
+                                <td>{$vo.assets}</td>
+                                <td>{$vo.model}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </notempty>
+            <form class="layui-form">
+                <input type="hidden" name="assid" value="{$assets.assid}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">流水号：</label>
+                    <div class="layui-input-block" style="line-height: 36px;">
+                        {$flowNumber}
+                    </div>
+                </div>
+                <notempty name="departname">
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>申请科室：</label>
+                        <div class="layui-input-block">
+                            <select name="apply_departid" class="input_select" >
+                                <option value="">请选择</option>
+                                <volist name="departname" id="vo">
+                                    <option value="{$vo.departid}">{$vo.department}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </notempty>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>归还时间：</label>
+                    <div class="layui-input-block">
+                        <input style="padding: 0.55rem 0;border-bottom:1px solid #c2c2c2;" name="estimate_back" value="{$assets_borrow_data.estimate_back}" class="weui-input" id="estimate_back" type="text" placeholder="请点击此处归还时间" readonly="">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>借调原因：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="borrow_reason" value="{$assets_borrow_data.borrow_reason}" placeholder="请输入借调原因" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">申请人：</label>
+                    <div class="layui-input-block" style="line-height: 36px;">
+                        {$apply_user}
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">申请时间：</label>
+                    <div class="layui-input-block" style="line-height: 36px;">
+                        {$borrow_in_time}
+                    </div>
+                </div>
+                <input type="hidden" name="type" value="{$assets_borrow_data.type}">
+                <input type="hidden" name="borid" value="{$assets_borrow_data.borid}">
+                <if condition="$assets_borrow_data.type eq 'edit'">
+                    <div class="layui-form-item">
+                        <div class="layui-btn layui-btn-fluid confirm" lay-submit lay-filter="confirm">确认申请重审</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-btn layui-btn-fluid layui-btn-danger over" lay-submit lay-filter="over">结束进程</div>
+                    </div>
+                    <else/>
+                    <div class="layui-btn layui-btn-fluid confirm" lay-submit lay-filter="confirm">确认并提交</div>
+                </if>
+            </form>
+        </div>
+    </div>
+    </notempty>
+    <audio src="" id="audio"></audio>
+</div>
+</body>
+<script>
+    var applyBorrowUrl='{$applyBorrowUrl}';
+    var apply_borrow_back_start_time='{$apply_borrow_back_start_time}';
+    var apply_borrow_back_end_time='{$apply_borrow_back_end_time}';
+</script>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/borrow/applyBorrow.js?v={:mt_rand(1,54561)}"></script>

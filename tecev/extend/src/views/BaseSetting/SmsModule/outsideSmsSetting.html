@@ -1,0 +1,56 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-outside .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-outside .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-outside .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-outside .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-outside">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>外调设备 {assets}</span>
+            <span>申请外调科室 {department}</span>
+            <span>审批结果 {examine_status}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>外调模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="outside_sms_open" name="Outside[status]"  value="1" title="开启" <if condition="$settings[Outside][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="outside_sms_open" name="Outside[status]"  value="0" title="关闭" <if condition="$settings[Outside][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="outside_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知处理外调审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Outside[doApprove][content]" value="{$settings[Outside][doApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Outside[doApprove][status]"  value="1" title="开启" <if condition="$settings[Outside][doApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Outside[doApprove][status]"  value="0" title="关闭" <if condition="$settings[Outside][doApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Outside[outsideApproveOver][content]" value="{$settings[Outside][outsideApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Outside[outsideApproveOver][status]"  value="1" title="开启" <if condition="$settings[Outside][outsideApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Outside[outsideApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Outside][outsideApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+</div>

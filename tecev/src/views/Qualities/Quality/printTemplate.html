@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        td,th{ text-align: center!important;}
+        th{ font-weight: bold!important;}
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+        em{
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] i{
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+        .layui-form-checkbox span{
+            font-size: 12px;
+        }
+        .layui-form-checkbox[lay-skin=primary] span{
+            line-height: 16px;
+            padding-right: 0px!important;
+        }
+        .layui-form-checkbox span{
+            padding: 0px 3px;
+        }
+        .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th{
+            padding: 5px!important;
+        }
+
+        .logo {
+            height: 60px;
+            position: absolute;
+            top: 20px;
+        }
+    </style>
+</head>
+<body style="width: 794px!important; margin: auto">
+<div class="layui-fluid">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;"><!--中山大学附属第一医院东院-->输液装置质量检测原始记录</h2>
+        <notempty name="imageUrl">
+            <img src="{$imageUrl}" class="logo">
+        </notempty>
+        <div class="fr" style="width: 230px;">
+            <span>报告编号:<em></em></span>
+        </div>
+        <div class="clear"></div>
+        <div class="fr" style="width: 230px;">
+            <span>制表日期:<em></em></span>
+        </div>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="150">
+                <col width="550">
+                <col width="200">
+                <col width="550">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>使用科室</th>
+                <td><em></em></td>
+                <th>质控计划名称</th>
+                <td><em></em></td>
+            </tr>
+            <tr>
+                <th>检测依据</th>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <th>项目类型</th>
+                <th>被检设备</th>
+                <th colspan="2">检测仪器（标准器、模拟器）</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td><em></em></td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <th>品牌</th>
+                <td><em></em></td>
+                <th>规格 / 型号</th>
+                <td><em></em></td>
+            </tr>
+            <tr>
+                <th>设备编号</th>
+                <td><em></em></td>
+                <th>产品序列号</th>
+                <td><em></em></td>
+            </tr>
+            <tr>
+                <th>启用日期</th>
+                <td><em></em></td>
+                <th>上次质控日期</th>
+                <td><em></em></td>
+            </tr>
+            <tr>
+                <th class="text-left" colspan="4">二、性能检测、校准、记录</th>
+            </tr>
+            <tr>
+                <th>外观功能</th>
+                <td class="no-padding-td" colspan="3" style="text-align: left!important;">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="146">
+                <col width="110">
+                <col>
+                <col>
+                <col width="250">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th rowspan="2">
+                    流量检测
+                    <br><span style="font-weight:normal!important;">最大允差±10%</span>
+                </th>
+                <td>流量测试点</td>
+                <td></td>
+                <td></td>
+                <th>检测结果</th>
+            </tr>
+            <tr>
+                <td>平均流量</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="146">
+                <col width="110">
+                <col>
+                <col>
+                <col width="250">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th rowspan="2">阻塞报警检测</th>
+                <td>阻塞报警设置值</td>
+                <td></td>
+                <td></td>
+                <th>检测结果</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="146">
+                <col width="150">
+                <col width="300">
+                <col width="130">
+                <col width="300">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th rowspan="4">报警系统检测</th>
+                <th>堵塞</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+                <th>即将空瓶</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+            </tr>
+            <tr>
+                <th>电池电量不足</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+                <th>流速错误</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+            </tr>
+            <tr>
+                <th>输液管路安装不妥</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+                <th>气泡报警</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+            </tr>
+            <tr>
+                <th>电源线脱开</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+                <th>开门报警</th>
+                <td>
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </td>
+            </tr>
+            <tr>
+                <th>检测结论</th>
+                <td colspan="2">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                </td>
+                <th>备注</th>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="3" class="text-left">三、经办工程师及验收人员意见及签字</th>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-left">
+                    评分：
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>1分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>2分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>3分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>4分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>5分
+                </td>
+            </tr>
+            <tr>
+                <th>设备使用部门负责人意见及签字 </th>
+                <th>经办工程师意见及签字</th>
+                <th>设备科意见及签字</th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span style="padding-right: 70px;">签字：</span>
+                        <span>日期：</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span style="padding-right: 70px;">签字：</span>
+                        <span>日期：</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span style="padding-right: 70px;">签字：</span>
+                        <span>日期：</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

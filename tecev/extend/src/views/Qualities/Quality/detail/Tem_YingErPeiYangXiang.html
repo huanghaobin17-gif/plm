@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>质控明细录入</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        th{ text-align: right!important; font-weight: bold!important;}
+        .no-padding-td{ padding: 0px!important;}
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+        #scanfile{
+            display: none;
+        }
+        .local-upload{
+            float: left;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .paizhao{
+            float: left;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+            vertical-align:middle;
+            margin-right: 10px;
+            height: 30px;
+            line-height: 30px;
+        }
+        .read-table th{
+            width: 12%;
+        }
+        .qrcode {
+            display: none;
+            width: 218px;
+            height: 255px;
+            padding: 20px 14px;
+            box-sizing: border-box;
+            position: absolute;
+            background: url('/Public/images/qrcode.png') no-repeat;
+            background-size:188px 220px;
+            right:75px;
+            top: 25px;
+            z-index: 30;
+        }
+        .qrcode img{
+            width: 85%;
+            max-width: 85% !important;
+        }
+        .qrcode .tip {
+            width: 170px;
+            text-align: center;
+            vertical-align: top;
+            display: block;
+            font-size: 14px;
+            color: #333;
+        }
+        .local-upload{
+            margin-top: 4px;
+        }
+        .ulli li{
+            height: 25px;
+            line-height: 25px;
+            float: left;
+            padding: 0 5px 0 12px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #E3E3E4;
+        }
+        .remove_pic{
+            cursor: pointer;
+        }
+        .remove_pic:hover{
+            color:red;
+        }
+        .pic_name{
+            color: #00a6c8;
+            cursor: pointer;
+        }
+        .red_border {
+            border: 1px solid #CC0000 !important;
+        }
+
+    </style>
+    <script>
+        var assets = "{$asInfo.assets}";
+        var assid = "{$asInfo.assid}";
+        var assnum = "{$asInfo.assnum}";
+    </script>
+</head>
+<body>
+    <div class="containDiv">
+    <blockquote class="layui-elem-quote">
+        质控计划详情信息
+    </blockquote>
+    <table class="layui-table" lay-size="sm" lay-even="" style=" margin-top: 0px!important;">
+        <colgroup>
+            <col width="150">
+            <col>
+            <col width="200">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>检测报告编号:</th>
+            <td>{$qsInfo.plan_num}</td>
+            <th>质控计划名称：</th>
+            <td>{$qsInfo.plan_name}</td>
+        </tr>
+        <tr>
+            <th>检测依据：</th>
+            <td>{$qsInfo.basis}</td>
+            <th>检测仪器（标准器、模拟器）：</th>
+            <td>{$qsInfo.instrument}</td>
+        </tr>
+        </tbody>
+    </table>
+    <blockquote class="layui-elem-quote">
+        检测设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm" style=" margin-top: 0px!important;">
+        <colgroup>
+            <col width="150">
+            <col>
+            <col width="150">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>设备名称：</th>
+            <td>{$asInfo.assets}</td>
+            <th>设备编号：</th>
+            <td>{$asInfo.assnum}</td>
+        </tr>
+        <tr>
+            <th>使用科室：</th>
+            <td>{$asInfo.department}</td>
+            <th>产品序列号：</th>
+            <td>{$asInfo.serialnum}</td>
+        </tr>
+        <tr>
+            <th>品牌：</th>
+            <td>{$asInfo.brand}</td>
+            <th>规格 / 型号：</th>
+            <td>{$asInfo.model}</td>
+        </tr>
+        <tr>
+            <th>启用日期：</th>
+            <td>{$asInfo.opendate}</td>
+            <th>上次质控时间：</th>
+            <td>{$asInfo.lasttesttime}</td>
+        </tr>
+        </tbody>
+    </table>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>质控检测明细表单(质控模板：{$templatename})</legend>
+    </fieldset>
+    <form action="" class="layui-form">
+        <input type="hidden" name="qsid" value="{$qsInfo.qsid}"/>
+        <input type="hidden" name="report" value=""/>
+        <if condition="$detail_data">
+            <input type="hidden" name="save_edit" value="edit"/>
+        </if>
+        <table class="layui-table" lay-size="sm" >
+            <colgroup>
+                <col width="147">
+                <col width="200">
+                <col width="150">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>外观功能：</th>
+                <td>
+                    <div class="layui-inline">
+                        <input type="radio" name="lookslike" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['exterior'] eq 1">checked</if> />
+                        <input type="radio" name="lookslike" value="2" lay-skin="primary" title="不符合"<if condition="$detail_data['exterior'] eq 2">checked</if> />
+                    </div>
+                </td>
+                <th>不符合情况说明：</th>
+                <td class="no-padding-td">
+                    <input type="text" name="lookslike_desc" value="{$detail_data['exterior_explain']}" placeholder="请输入说明情况" autocomplete="off" class="layui-input">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+         <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="130">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="250">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="12"  style="text-align: left !important;">&emsp; 1.温度检测</th>
+        </tr>
+        <tr>
+            <th>设定温度Tk</th>
+            <th  colspan="10">34℃(每3分钟记录1次）</th>
+            <th >平均值（a）</th>
+        </tr>
+        <tr>
+            <th>Tx显示温度</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq 'Tx显示温度'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="Tx[]"  onblur="average(this,'Tx')" value="{$detail_data['preset_detection']['Tx'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>Txa=<span id="Txa">{$detail_data['preset_detection']['Txa'][0]}</span><input type="hidden" name="Txa[]" value="{$detail_data['preset_detection']['Txa'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T1</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '中心温度测试点T1'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="T1[]"  onblur="average(this,'T1')" value="{$detail_data['preset_detection']['T1'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>T1a=<span id="T1a">{$detail_data['preset_detection']['T1a'][0]}</span><input type="hidden" name="T1a[]" value="{$detail_data['preset_detection']['T1a'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T2</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '中心温度测试点T2'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="T2[]" onblur="average(this,'T2')" value="{$detail_data['preset_detection']['T2'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>T2a=<span id="T2a">{$detail_data['preset_detection']['T2a'][0]}</span><input type="hidden" name="T2a[]" value="{$detail_data['preset_detection']['T2a'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T3</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '中心温度测试点T3'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="T3[]" onblur="average(this,'T3')" value="{$detail_data['preset_detection']['T3'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>T3a=<span id="T3a">{$detail_data['preset_detection']['T3a'][0]}</span><input type="hidden" name="T3a[]" value="{$detail_data['preset_detection']['T3a'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T4</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '中心温度测试点T4'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="T4[]" onblur="average(this,'T4')" value="{$detail_data['preset_detection']['T4'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>T4a=<span id="T4a">{$detail_data['preset_detection']['T4a'][0]}</span><input type="hidden" name="T4a[]" value="{$detail_data['preset_detection']['T4a'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T5</th>
+            <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '中心温度测试点T5'">
+                        <volist name="vo.set" id="ho" offset="0" length='10'>
+                     <td class="no-padding-td">
+                                <input type="text" name="T5[]" onblur="average(this,'T5')" value="{$detail_data['preset_detection']['T5'][$key]}" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>T5a=<span id="T5a">{$detail_data['preset_detection']['T5a'][0]}</span><input type="hidden" name="T5a[]" value="{$detail_data['preset_detection']['T5a'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+        </tr>
+        <tr>
+            <th>检测项目</th>
+            <td colspan="5">允许误差值</td>
+            <td colspan="5">实际偏差值</td>
+            <td colspan="1">检测结果</td>
+        </tr>
+        <tr>
+            <th>温度偏差值</th>
+            <td colspan="5">|Txa-T1a|≤0.8℃</td>
+            <td colspan="5"><span id="Temperature_deviation">{$detail_data['preset_detection']['Temperature_deviation'][0]}</span><input type="hidden" name="Temperature_deviation[]" value="{$detail_data['preset_detection']['Temperature_deviation'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Temperature_deviation_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Temperature_deviation_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Temperature_deviation_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Temperature_deviation_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>温度均匀性</th>
+            <td colspan="5">|T2a/3a/4a/5a-T1a|max≤0.8℃</td>
+            <td colspan="5"><span id="Temperature_uniformity">{$detail_data['preset_detection']['Temperature_uniformity'][0]}</span><input type="hidden" name="Temperature_uniformity[]" value="{$detail_data['preset_detection']['Temperature_uniformity'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Temperature_uniformity_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Temperature_uniformity_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Temperature_uniformity_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Temperature_uniformity_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>波动度</th>
+            <td colspan="5">|T1s-T1a|max≤0.5℃</td>
+            <td colspan="5"><span id="Volatility">{$detail_data['preset_detection']['Volatility'][0]}</span><input type="hidden" name="Volatility[]" value="{$detail_data['preset_detection']['Volatility'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Volatility_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Volatility_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Volatility_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Volatility_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>温控偏差</th>
+            <td colspan="5">|Tk-T1a|≤1.5℃</td>
+            <td colspan="5"><span id="Temperature_control_deviation">{$detail_data['preset_detection']['Temperature_control_deviation'][0]}</span><input type="hidden" name="Temperature_control_deviation[]" value="{$detail_data['preset_detection']['Temperature_control_deviation'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Temperature_control_deviation_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Temperature_control_deviation_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Temperature_control_deviation_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Temperature_control_deviation_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th colspan="12"  style="text-align: left !important;">&emsp; 2.声级检测</th>
+        </tr>
+        <tr>
+            <th>检测项目</th>
+            <td colspan="5">允许误差值</td>
+            <td colspan="5">实际偏差值</td>
+            <td colspan="1">检测结果</td>
+        </tr>
+        <tr>
+            <th>箱内正常噪音检测</th>
+            <th colspan="5">≤60dB</th>
+            <td colspan="5"><input type="text" name="Normal_noise_detection_in_the_box[]" value="{$detail_data['preset_detection']['Normal_noise_detection_in_the_box'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Normal_noise_detection_in_the_box_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Normal_noise_detection_in_the_box_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Normal_noise_detection_in_the_box_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Normal_noise_detection_in_the_box_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>箱内报警噪音测试</th>
+            <th colspan="5">≤80dB</th>
+            <td colspan="5"><input type="text" name="Alarm_noise_test_in_the_box[]" value="{$detail_data['preset_detection']['Alarm_noise_test_in_the_box'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Alarm_noise_test_in_the_box_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Alarm_noise_test_in_the_box_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Alarm_noise_test_in_the_box_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Alarm_noise_test_in_the_box_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>报警声级测试 (3米）</th>
+            <th colspan="5">≥65dB</th>
+            <td colspan="5"><input type="text" name="Alarm_sound_level_test[]" value="{$detail_data['preset_detection']['Alarm_sound_level_test'][0]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Alarm_sound_level_test_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Alarm_sound_level_test_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Alarm_sound_level_test_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Alarm_sound_level_test_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>3.湿度检测</th>
+            <td colspan="3">设定值：<input type="text" name="Humidity_detection[]" value="{$detail_data['preset_detection']['Humidity_detection'][0]}" placeholder="请输入设定值" autocomplete="off" class="layui-input"></td>
+            <th colspan="4">容许误差： ＜10%</th>
+            <td colspan="3">实际值：<input type="text" name="Humidity_detection[]" value="{$detail_data['preset_detection']['Humidity_detection'][1]}" placeholder="请输入测量值" autocomplete="off" class="layui-input"></td>
+            <td colspan="1"><div class="layui-inline">
+                        <input type="radio" disabled name="Humidity_detection_result" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['preset_detection']['Humidity_detection_result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="Humidity_detection_result" value="2" lay-skin="primary" title="不符合"  <if condition="$detail_data['preset_detection']['Humidity_detection_result'] eq 2">checked</if> />
+                    </div></td>
+        </tr>
+        <tr>
+            <th>4.报警测试</th>
+            <td colspan="3">断电报警</td>
+            <td colspan="4"><div class="layui-inline">
+                <input type="radio" name="Power_failure_alarm" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['fixed_detection']['Power_failure_alarm'] eq 1">checked</if> />
+                <input type="radio" name="Power_failure_alarm" value="2" lay-skin="primary" title="不符合" <if condition="$detail_data['fixed_detection']['Power_failure_alarm'] eq 2">checked</if> />
+            </div></td>
+            <td colspan="3">超温报警</td>
+            <td colspan="1"><div class="layui-inline">
+                <input type="radio" name="Over_temperature_alarm" value="1" lay-skin="primary" title="符合" <if condition="$detail_data['fixed_detection']['Over_temperature_alarm'] eq 1">checked</if> />
+                <input type="radio" name="Over_temperature_alarm" value="2" lay-skin="primary" title="不符合" <if condition="$detail_data['fixed_detection']['Over_temperature_alarm'] eq 2">checked</if> />
+            </div></td>
+        </tr>
+        </tbody>
+    </table>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="147">
+                <col width="180">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>设备铭牌照片</th>
+                <td>
+                        <span class="paizhao">
+                            <i class="layui-icon layui-icon-zqrcode-l" style="font-size: 13px;"></i>
+                            扫码上传
+                            <div class="qrcode">
+                                <img src="{$codeUrl['nameplate']}" alt="扫码上传">
+                                <span class="tip">扫一扫，上传照片</span>
+                            </div>
+                        </span>
+                    <span class="local-upload nameplate"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </td>
+                <td id="nameplate">
+                    <ul class="ulli">
+                        <volist name="file_data['nameplate']" id="vo">
+                            <li><span class="pic_name" data-url="{$vo.file_url}">{$vo.file_name}</span> &nbsp;&nbsp;<i class="layui-icon layui-tab-close remove_pic" data-id="{$vo.file_id}">&#x1006;</i></li>
+                        </volist>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>检测仪器视图照片</th>
+                <td>
+                        <span class="paizhao">
+                            <i class="layui-icon layui-icon-zqrcode-l" style="font-size: 13px;"></i>
+                            扫码上传
+                            <div class="qrcode">
+                                <img src="{$codeUrl['instrument_view']}" alt="扫码上传">
+                                <span class="tip">扫一扫，上传照片</span>
+                            </div>
+                        </span>
+                    <span class="local-upload instrument_view"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </td>
+                <td id="instrument_view">
+                    <ul class="ulli">
+                        <volist name="file_data['instrument_view']" id="vo">
+                            <li><span class="pic_name" data-url="{$vo.file_url}">{$vo.file_name}</span> &nbsp;&nbsp;<i class="layui-icon layui-tab-close remove_pic" data-id="{$vo.file_id}">&#x1006;</i></li>
+                        </volist>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="147">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>评分：</th>
+                <td>
+                    <div class="layui-inline">
+                        <input type="radio" disabled name="fen" value="1" lay-skin="primary" title="1分">、
+                        <input type="radio" disabled name="fen" value="2" lay-skin="primary" title="2分">、
+                        <input type="radio" disabled name="fen" value="3" lay-skin="primary" title="3分">、
+                        <input type="radio" disabled name="fen" value="4" lay-skin="primary" title="4分">、
+                        <input type="radio" disabled name="fen" value="5" lay-skin="primary" title="5分">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>检测结果：</th>
+                <td>
+                    <div class="layui-inline">
+                        <input type="radio" disabled name="total_result" value="1" lay-skin="primary" title="合格" <if condition="$detail_data['result'] eq 1">checked</if> />
+                        <input type="radio" disabled name="total_result" value="2" lay-skin="primary" title="不合格" <if condition="$detail_data['result'] eq 2">checked</if> />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>备注：<br/>（偏离情况说明）</th>
+                <td class="no-padding-td">
+                    <input type="text" name="total_desc" value="{$detail_data['remark']}" placeholder="请输入备注" autocomplete="off" class="layui-input">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+        <div class="layui-form-item" style="text-align: center; margin-bottom: 50px;">
+            <button type="button" class="layui-btn layui-btn-primary" id="scanfile" data-url="">
+                预览报告
+            </button>
+            <button class="layui-btn layui-btn-warm" lay-submit lay-filter="upload" id="file_url" name="file_url" lay-tips="设备的质控测量值及检测结果，以签字的纸质报告为准！请务必上传文件报告！">
+                <i class="layui-icon">&#xe67c;</i>上传纸质报告
+            </button>
+            <button class="layui-btn" lay-submit lay-filter="keepquality" style="background: #F7B824"><i class="layui-icon">&#xe609;</i> 保存质控记录
+            </button>
+                <button class="layui-btn" lay-submit lay-filter="save" lay-tips="设备的质控测量值及检测结果，以签字的纸质报告为准！请务必上传文件报告！">
+                    <i class="layui-icon" >&#xe609;</i>确认并提交
+                </button>
+            <button type="reset" class="layui-btn layui-btn-primary">
+                <i class="layui-icon">ဂ</i> 重置
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var qsid = "{$qsInfo.qsid}";
+    layui.use('controller/qualities/quality/setQualityDetail', layui.factory('controller/qualities/quality/setQualityDetail'));
+</script>

@@ -1,0 +1,80 @@
+<?php if (!defined('THINK_PATH')) exit();?><title>单机效益分析</title>
+<div class="layui-fluid" id="LAY-Benefit-Benefit-singleBenefitList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="singleBenefitListAssets" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="singleBenefitListDep" placeholder="请输入科室名称" name="assetsDep">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">统计日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly style="cursor: pointer;"
+                                           name="startDate" id="singleBenefitListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly style="cursor: pointer;"
+                                           name="endDate" id="singleBenefitListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="singleBenefitListSearch" id="singleBenefitListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="singleBenefitListReset">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="singleBenefitList" lay-filter="singleBenefitData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    var preMonth = "<?php echo ($preMonth); ?>";
+    layui.use('benefit/benefit/singleBenefitList', layui.factory('benefit/benefit/singleBenefitList'));
+</script>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{$Think.config.APP_TITLE}</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!--  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; child-src 'none'; object-src 'none';">-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/images/favicon.ico"/>
+  <link rel="stylesheet" href="/tecev/src/style/login.css?v={:mt_rand(1,54561)}" />
+  <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__PUBLIC__/css/tecev.css" media="all">
+  <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+  <link rel="stylesheet" href="__PUBLIC__/tecev-icon/iconfont.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/formselects.css?v={:mt_rand(1,54561)}">
+  <link rel="stylesheet" href="/tecev/start/layui/icon/icon.css" media="all">
+  <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+  <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+  <script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+  <script src="__PUBLIC__/js/cookie.js"></script>
+  <script src="__PUBLIC__/js/newlocalstorage.js?v={:mt_rand(1,54561)}"></script>
+  <script src="__PUBLIC__/js/placeholder.js?v={:mt_rand(1,54561)}"></script>
+  <include file="Public:message"/>
+  <script>
+  /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+  </script>
+</head>
+<body>
+  <div id="LAY_app"></div>
+  <script src="/dist/main.js"></script>
+  <script>
+    var version = Math.random().toFixed(4);
+  layui.config({
+    version:version,//js版本号
+    base: '/tecev/src/' //指定 layuiAdmin 项目路径，本地开发用 src，线上用 dist
+  }).extend({ //设定模块别名
+    tipsType: '../../extend/tipsType',
+    suggest: '../../extend/suggest',
+    formSelects: '../../extend/formSelects',
+    tablePlug: '../../extend/tablePlug/tablePlug',
+    treeGrid: '../../extend/treeGrid',
+    soulTable: '../../extend/soulTable/soulTable',
+    tableFilter: '../../extend/soulTable/tableFilter',
+    excel: '../../extend/soulTable/excel',
+    tableChild: '../../extend/soulTable/tableChild',
+    tableMerge: '../../extend/soulTable/tableMerge',
+  }).use('index');
+  </script>
+</body>
+</html>
+
+

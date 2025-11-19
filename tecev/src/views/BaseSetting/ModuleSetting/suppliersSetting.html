@@ -1,0 +1,8 @@
+<blockquote class="layui-elem-quote module-blockquote">厂商管理（内）模块配置</blockquote>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">模块状态：</label>
+    <div class="layui-input-block radio-margin-left">
+        <input type="radio" name="offlineSuppliers[offlineSuppliers_open][is_open]" lay-filter="offlineSuppliers_open" value="1" title="开启" <if condition="$settings['offlineSuppliers']['offlineSuppliers_open'][is_open] eq 1">checked</if> >
+        <input type="radio" name="offlineSuppliers[offlineSuppliers_open][is_open]" lay-filter="offlineSuppliers_open" value="0" title="关闭" <if condition="$settings['offlineSuppliers']['offlineSuppliers_open'][is_open] neq 1">checked</if> >
+    </div>
+</div>

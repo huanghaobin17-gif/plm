@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    #LAY-Repair-RepairSearch-showRepair .parts_table {  padding: 0 !important;  }
+    #LAY-Repair-RepairSearch-showRepair .layui-table th{
+        text-align: center;
+    }
+    #LAY-Repair-RepairSearch-showRepair .layui-table tr td {
+        text-align: center;
+    }
+    #LAY-Repair-RepairSearch-showRepair .offer_tbody textarea {
+        border: none;
+        resize: none;
+    }
+    #LAY-Repair-RepairSearch-showRepair .layui-table {
+        margin: 0;
+    }
+    /*进度条样式*/
+    #LAY-Repair-RepairSearch-showRepair .margin-bottom-10{margin-bottom: 10px;}
+    /*.progressNav {
+        width:960px;
+    }*/
+    #LAY-Repair-RepairSearch-showRepair .progressNav li{
+        padding:0 30px;
+        line-height: 30px;
+        background-color: #50abe4;
+        display: inline-block;
+        color:#fff;
+        position: relative;
+        margin-right: 4px;
+        margin-bottom: 10px;
+    }
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:after{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        position: absolute;
+        right:-20px;
+        top:0;
+        z-index: 10;
+    }
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:before{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        border-left:20px solid #fff;
+        position: absolute;
+        left:0;
+        top:0;
+    }
+
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:first-child{
+        border-radius: 4px 0 0 4px;
+        padding-left:25px;
+    }
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:last-child{
+        border-radius: 0 4px 4px 0;
+        padding-right: 25px;
+    }
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:first-child:before{
+        display: none;
+    }
+    #LAY-Repair-RepairSearch-showRepair .progressNav li:last-child:after{
+        display: none;
+    }
+    /*正在进行*/
+    .doingProgress:after{border-left:20px solid #50abe4;}
+    /*完成*/
+    #LAY-Repair-RepairSearch-showRepair .completeProgress{background-color: rgba(80,171,228,0.5)!important;}
+    #LAY-Repair-RepairSearch-showRepair .completeProgress:after{opacity: 0.5!important;border-left:20px solid #50abe4;}
+    /*未完成*/
+    #LAY-Repair-RepairSearch-showRepair .nocompleteProgress{background-color: #CFCFCF!important;}
+    #LAY-Repair-RepairSearch-showRepair .nocompleteProgress:after{border-left:20px solid #CFCFCF;!important;}
+    /*定位小数字*/
+    #LAY-Repair-RepairSearch-showRepair .number{position: absolute;top: -1px;}
+    /*定位文字*/
+    #LAY-Repair-RepairSearch-showRepair .numberText{margin-left: 20px;}
+    /*时间线左移出*/
+    /*时间线最新tips*/
+    #LAY-Repair-RepairSearch-showRepair .newTips{
+        width: 34px;
+        height: 18px;
+        border: 1px solid #ebebeb;
+        border-radius: 4px;
+        position: absolute;
+        color: #fff;
+        font-size: 12px;
+        display: inline-block;
+        top: -1px;
+        left: -48px;
+        background-color: #0af;
+        line-height: 18px;
+        text-align: center;
+    }
+    #LAY-Repair-RepairSearch-showRepair .newTips:before{
+        box-sizing: content-box;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 4px;
+        left: 31px;
+        padding: 0;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        border-left: 10px solid #0af;
+        border-right: 4px solid transparent;
+        display: block;
+        content: "";
+        z-index: 12;
+    }
+    /*时间线日期大小*/
+    #LAY-Repair-RepairSearch-showRepair .date{font-size: 18px;}
+    #LAY-Repair-RepairSearch-showRepair #showRepairFile{
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        color: #0a8ddf;
+        cursor: pointer;
+    }
+
+    .green {
+        color: #85AB70;
+        cursor: pointer;
+    }
+
+    #media {
+        color: #76ABDF;
+        cursor: pointer;
+    }
+
+    .multifile{
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairSearch-cancelRepair">
+    <!--设备基础信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$assetsinfo.assets}</td>
+                <th>规格型号：</th>
+                <td>{$assetsinfo.model}</td>
+            </tr>
+            <tr>
+                <th>设备编码：</th>
+                <td>{$assetsinfo.assnum}</td>
+                <th>生产厂家：</th>
+                <td>{$assetsinfo.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$assetsinfo.category}</td>
+                <th>使用科室：</th>
+                <td>{$assetsinfo.departname}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$assetsinfo.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$assetsinfo.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--报修申报信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">报修申请信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>维修单号：</th>
+                <td colspan="5">{$repArr.repnum}</td>
+            </tr>
+            <tr>
+                <th>报修人：</th>
+                <td>{$repArr.applicant}</td>
+                <th>报修日期：</th>
+                <td>{$repArr.applicant_time}</td>
+                <th>报修电话：</th>
+                <td>{$repArr.applicant_tel}</td>
+            </tr>
+            <tr>
+                <th>故障描述：</th>
+                <td colspan="5">{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$repArr.applicant_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--维修接单信息-->
+    <if condition="$repArr['status'] EQ C('REPAIR_RECEIPT')">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修接单与检修信息</div>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>响应人：</th>
+                    <td>{$repArr.response}</td>
+                    <th>响应时间：</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr>
+                    <th>预计到场时间(分钟)：</th>
+                    <td>{$repArr.expect_arrive}</td>
+                    <th>现场签到时间：</th>
+                    <td>{$repArr.sign_in_time}</td>
+                </tr>
+                <tr>
+                    <th>备注：</th>
+                    <td colspan="3">{$repArr.reponse_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <!--维修检修信息-->
+    <if condition="$repArr['status'] EGT C('REPAIR_HAVE_OVERHAULED')">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修接单与检修信息</div>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tr>
+                    <th>响应人：</th>
+                    <td>{$repArr.response}</td>
+                    <th>响应时间：</th>
+                    <td>{$repArr.response_date}</td>
+                    <th>预计修复日期：</th>
+                    <td>{$repArr.expect_time}</td>
+                </tr>
+                <tr>
+                    <th>现场签到时间：</th>
+                    <td colspan="5">{$repArr.sign_in_time}</td>
+                </tr>
+                <tr>
+                    <th>故障问题：</th>
+                    <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr>
+                    <th>解决方式：</th>
+                    <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                        <td colspan="5">现场解决</td>
+                        <else/>
+                        <td colspan="5">非现场解决</td>
+                    </if>
+                </tr>
+                <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                    <tr>
+                        <th>维修性质：</th>
+                        <td colspan="5">{$repArr.repairTypeName}</td>
+                    </tr>
+                </if>
+                <if condition="$repArr['repair_type'] eq 1">
+                    <tr>
+                        <th>维修厂家：</th>
+                        <td>{$repArr.guarantee_name}</td>
+                        <th>维修公司联系人：</th>
+                        <td>{$repArr.salesman_name}</td>
+                        <th>维修公司联系电话：</th>
+                        <td>{$repArr.salesman_phone}</td>
+                    </tr>
+                </if>
+                <tr>
+                    <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                        <th>处理详情：</th>
+                        <td colspan="5">{$repArr.dispose_detail}</td>
+                        <else/>
+                        <th>检修备注：</th>
+                        <td colspan="5">{$repArr.repair_remark}</td>
+                    </if>
+                </tr>
+            </table>
+        </div>
+    </if>
+
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>撤单情况</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form">
+            <input type="hidden" name="repid" value="{$repArr.repid}">
+            <input type="hidden" name="action" value="{$cancelRepairUrl}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>撤单人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$user}" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>撤单时间：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$now}"  style="cursor: pointer;"   readonly="readonly" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>撤单原因：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入撤单原因" class="layui-textarea autoheight" name="cancle_remark"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon">&#xe609;</i> 提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var repid='{$repid}';
+    var cancelRepairUrl='{$cancelRepairUrl}';
+</script>
+<script>
+    layui.use('controller/repair/search/cancelRepair', layui.factory('controller/repair/search/cancelRepair'));
+</script>

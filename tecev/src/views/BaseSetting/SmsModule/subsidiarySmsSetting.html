@@ -1,0 +1,67 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-subsidiary .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-subsidiary .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-subsidiary .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-subsidiary .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-subsidiary">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>附属设备名称 {assets}</span>
+            <span>附属设备科室 {department}</span>
+            <span>主设备名称 {allot_assets}</span>
+            <span>主设备科室 {allot_department}</span>
+            <span>审批结果 {approve_status}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>附属设备模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="subsidiary_sms_open" name="Subsidiary[status]"  value="1" title="开启" <if condition="$settings[Subsidiary][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="subsidiary_sms_open" name="Subsidiary[status]"  value="0" title="关闭" <if condition="$settings[Subsidiary][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="subsidiary_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知处理分配审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Subsidiary[doApprove][content]" value="{$settings[Subsidiary][doApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Subsidiary[doApprove][status]"  value="1" title="开启" <if condition="$settings[Subsidiary][doApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Subsidiary[doApprove][status]"  value="0" title="关闭" <if condition="$settings[Subsidiary][doApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Subsidiary[subsidiaryApproveOver][content]" value="{$settings[Subsidiary][subsidiaryApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Subsidiary[subsidiaryApproveOver][status]"  value="1" title="开启" <if condition="$settings[Subsidiary][subsidiaryApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Subsidiary[subsidiaryApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Subsidiary][subsidiaryApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知验收附属设备：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Subsidiary[subsidiaryCheck][content]" value="{$settings[Subsidiary][subsidiaryCheck][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Subsidiary[subsidiaryCheck][status]"  value="1" title="开启" <if condition="$settings[Subsidiary][subsidiaryCheck][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Subsidiary[subsidiaryCheck][status]"  value="0" title="关闭" <if condition="$settings[Subsidiary][subsidiaryCheck][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+
+</div>

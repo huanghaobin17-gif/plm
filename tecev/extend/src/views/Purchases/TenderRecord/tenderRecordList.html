@@ -1,0 +1,102 @@
+<?php if($menuData = get_menu_name('Purchases','TenderRecord','tenderRecordList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var tenderRecordList = "{$tenderRecordList}";
+    var hospital_id = "{$hospital_id}";
+</script>
+<div class="layui-fluid" id="LAY-Purchases-TenderRecord-tenderRecordList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="tenderRecordListDepartment" xm-select-search="">
+                                        <option value="">请选择上报科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">项目名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getProjects_tender"  placeholder="请输入项目名称" name="project_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">购置类型：</label>
+                                <div class="layui-input-inline">
+                                    <select name="buy_type" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="1">报废更新</option>
+                                        <option value="2">添置</option>
+                                        <option value="3">新增</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">招标状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="tender_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未招标</option>
+                                        <option value="1">已招标</option>
+                                        <option value="2">已确定</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" name="apply_date_start" id="tender_date_start">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" name="apply_date_end" id="tender_date_end">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="tenderRecordSearch" id="tenderRecordSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 招标记录列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="tenderRecordList" lay-filter="tenderRecordData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('purchases/tenderRecord/tenderRecordList', layui.factory('purchases/tenderRecord/tenderRecordList'));
+</script>

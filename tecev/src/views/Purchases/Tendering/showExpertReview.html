@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .t-desc{
+            color:#999999;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">科室采购申请基本信息</blockquote>
+            <table class="layui-table" lay-size="sm" lay-even="">
+                <colgroup>
+                    <col width="100">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td class="text-right">申请科室：</td>
+                    <td>{$applyInfo.department}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">申请单号：</td>
+                    <td>{$applyInfo.apply_num}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">申请方式：</td>
+                    <td>{$applyInfo.apply_type_name}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">项目名称：</td>
+                    <td>{$applyInfo.project_name}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">申请人：</td>
+                    <td>{$applyInfo.apply_user}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">申请时间：</td>
+                    <td>{$applyInfo.apply_time}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">申请理由：</td>
+                    <td>{$applyInfo.apply_reason}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">设备明细</blockquote>
+            <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="6%">
+                    <col width="16%">
+                    <col width="7%">
+                    <col width="10%">
+                    <col width="7%">
+                    <col width="12%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="">
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">序号</th>
+                    <th style="text-align: left !important;">设备名称</th>
+                    <th style="text-align: left !important;">单位</th>
+                    <th style="text-align: left !important;">单价(元)</th>
+                    <th style="text-align: left !important;">数量</th>
+                    <th style="text-align: left !important;">总额(元)</th>
+                    <th style="text-align: left !important;">是否进口</th>
+                    <th style="text-align: left !important;">上报类别</th>
+                    <th style="text-align: left !important;">参考品牌</th>
+                </tr>
+                <tbody>
+                <if condition="$assets">
+                    <volist name="assets" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.assets_name}</td>
+                            <td>{$vo.unit}</td>
+                            <td>{$vo.market_price}</td>
+                            <td>{$vo.nums}</td>
+                            <td>{$vo.total_price}</td>
+                            <td>
+                                <if condition="$vo.is_import eq 1">
+                                    是
+                                    <else/>
+                                    否
+                                </if>
+                            </td>
+                            <td>
+                                <if condition="$vo.buy_type eq 1">
+                                    报废更新
+                                </if>
+                                <if condition="$vo.buy_type eq 2">
+                                    添置
+                                </if>
+                                <if condition="$vo.buy_type eq 3">
+                                    新增
+                                </if>
+                            </td>
+                            <td>{$vo.brand}</td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td colspan="9" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">附件信息</blockquote>
+            <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+                <colgroup>
+                    <col width="6%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>文件名称</th>
+                    <th>文件大小</th>
+                    <th>提交人</th>
+                    <th>提交时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="file_list">
+                <if condition="$files">
+                    <volist name="files" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.file_name}</td>
+                            <td>{$vo.file_size}M</td>
+                            <td>{$vo.add_user}</td>
+                            <td>{$vo.add_time}</td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <!--<button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>-->
+                                    <button class="layui-btn layui-btn-xs downFile" lay-submit lay-filter="downFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">下载</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <form class="layui-form" lay-filter="showExpertReview">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                项目论证
+            </blockquote>
+            <div style="margin-top: 20px;margin-left: 20px;">
+                    <div class="layui-form-item">
+                        <div>安装条件</div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="installation" value="4" title="完备" disabled>
+                            <input type="radio" name="installation" value="3" title="较完备" disabled>
+                            <input type="radio" name="installation" value="2" title="欠完备" disabled="">
+                            <input type="radio" name="installation" value="1" title="不完备" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>病源/业务评估量</div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="business" value="4" title="充足" disabled>
+                            <input type="radio" name="business" value="3" title="较多" disabled>
+                            <input type="radio" name="business" value="2" title="一般" disabled="">
+                            <input type="radio" name="business" value="1" title="较少" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>合理性 <span class="t-desc">(主要指布局合理性、从同类设备使用/完好率、本区域内其他医院同类设备使用情况考量)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="rationality" value="4" title="充足" disabled>
+                            <input type="radio" name="rationality" value="3" title="较多" disabled>
+                            <input type="radio" name="rationality" value="2" title="一般" disabled="">
+                            <input type="radio" name="rationality" value="1" title="较少" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>技术水平 <span class="t-desc">(技术人员配备和培训)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="technical" value="4" title="很好" disabled>
+                            <input type="radio" name="technical" value="3" title="较好"  disabled>
+                            <input type="radio" name="technical" value="2" title="一般" disabled="">
+                            <input type="radio" name="technical" value="1" title="差" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>经济效益/支撑医院发展的程度 <span class="t-desc">(成本分析、耗材价格、维修成本)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="benefit" value="4" title="很高" disabled>
+                            <input type="radio" name="benefit" value="3" title="较高" disabled>
+                            <input type="radio" name="benefit" value="2" title="一般"  disabled="">
+                            <input type="radio" name="benefit" value="1" title="低" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>必要性 <span class="t-desc">(能否提高诊疗水平、是否医疗急需特需、是否教学科研必备)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="necessity" value="4" title="急需" disabled>
+                            <input type="radio" name="necessity" value="3" title="非急需" disabled>
+                            <input type="radio" name="necessity" value="2" title="需要" disabled="">
+                            <input type="radio" name="necessity" value="1" title="非必要" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">审批意见：</label>
+                        <div class="layui-input-block" style="margin-left: 120px;width: 525px;">
+                            <textarea placeholder="请输入内容" name="project_desc" disabled class="layui-textarea" style="min-height: 40px;">很好</textarea>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                技术评价
+            </blockquote>
+            <div style="margin-top: 20px;margin-left: 20px;">
+                    <div class="layui-form-item">
+                        <div>可维修性 <span class="t-desc">(厂家能否长期提供维修服务)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="repair" value="4" title="很好" disabled>
+                            <input type="radio" name="repair" value="3" title="较好" disabled>
+                            <input type="radio" name="repair" value="2" title="一般" disabled="">
+                            <input type="radio" name="repair" value="1" title="差" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>安全性 <span class="t-desc">(对环境/操作人员/患者是否安全、是否节能环保)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="safety" value="4" title="安全" disabled>
+                            <input type="radio" name="safety" value="3" title="较低风险" disabled>
+                            <input type="radio" name="safety" value="2" title="较高风险" disabled="">
+                            <input type="radio" name="safety" value="1" title="危险" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>技术与需求匹配度 <span class="t-desc">(设备基本原理设计、功能指标、技术参数与科室需求的匹配程度)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="matching" value="4" title="非常匹配" disabled>
+                            <input type="radio" name="matching" value="3" title="较匹配" disabled>
+                            <input type="radio" name="matching" value="2" title="一般" disabled="">
+                            <input type="radio" name="matching" value="1" title="不匹配" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>设备可靠性 <span class="t-desc">(设备使用寿命、设备功能/技术/安全指标能否符合标准要求)</span></div>
+                        <div class="layui-input-block">
+                            <input type="radio" name="reliability" value="4" title="很好" disabled>
+                            <input type="radio" name="reliability" value="3" title="较好" disabled>
+                            <input type="radio" name="reliability" value="2" title="一般"  disabled="">
+                            <input type="radio" name="reliability" value="1" title="差" disabled="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">审批意见：</label>
+                        <div class="layui-input-block" style="margin-left: 120px;width: 525px;">
+                            <textarea placeholder="请输入内容" name="technical_desc" class="layui-textarea" disabled="disabled" style="min-height: 40px;">很好</textarea>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var installation = "{$reviewInfo.installation}";
+    var business = "{$reviewInfo.business}";
+    var rationality = "{$reviewInfo.rationality}";
+    var technical = "{$reviewInfo.technical}";
+    var benefit = "{$reviewInfo.benefit}";
+    var necessity = "{$reviewInfo.necessity}";
+    var project_desc = "{$reviewInfo.project_desc}";
+
+
+    var repair = "{$reviewInfo.repair}";
+    var safety = "{$reviewInfo.safety}";
+    var matching = "{$reviewInfo.matching}";
+    var reliability = "{$reviewInfo.reliability}";
+    var technical_desc = "{$reviewInfo.technical_desc}";
+</script>
+<script>
+    layui.use('controller/purchases/tendering/showExpertReview', layui.factory('controller/purchases/tendering/showExpertReview'));
+</script>

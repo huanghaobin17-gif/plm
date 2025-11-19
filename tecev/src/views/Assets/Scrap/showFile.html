@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+    .layui-table{ margin-top: 0px;}
+    .layui-table img {
+        cursor: pointer;
+        max-width: 95% !important;
+    }
+    .media{
+        margin: 0 auto;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-elem-quote">相关文件:</div>
+    <table class="layui-table" lay-even>
+        <tbody>
+        <volist name="uploadinfo" id="vo">
+            <tr>
+                <th>文件{$key+1}</th>
+                <td class="td-align-center">
+                <switch name="vo.type">
+                    <case value="1">
+                        <img src="{$vo.file_url}" class="bigImg">
+                    </case>
+                    <case value="2">
+                        <a class="media" href="{$vo.file_url}"></a>
+                    </case>
+                    <case value="3">
+                        <button class="layui-btn layui-btn-normal downFile" data-path="{$vo.file_url}">word文档下载</button>
+                    </case>
+                </switch>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        $('a.media').media({width:800, height:600});
+    });
+
+    $(".bigImg").click(function(){
+        var imgUrl = $(this).attr('src');
+        window.img_width = 355;
+        var html  = "<center>";
+        html += "<div style='position:fixed; left:50%; margin-left:-40px; bottom:5px;'>";
+        html += "  <button style='width:40px; height:40px; border-radius:20px;'";
+        html += "        onclick='window.img_width < 1000 ? window.img_width += 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width});'>";
+        html += "  放大";
+        html += "  </button>&nbsp; &nbsp; ";
+        html += "  <button style='width:40px;  height:40px;border-radius:20px;'";
+        html += "  onclick='window.img_width > 100 ? window.img_width -= 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width})' >";
+        html += "  缩小";
+        html += "  </button>";
+        html += "</div>";
+        html += "</center>";
+        html += "<br/>";
+        html += "<center>";
+        html += "<img class='img_url_class' style='width:100%;' src='"+imgUrl+"' />";
+        html += "</center>";
+        //页面层
+        layer.open({
+            title:'原始图缩放浏览',
+            type: 1,
+            anim: 2,
+            shadeClose: true,
+            area: ['75%', '100%'], //宽高
+            content: html
+        });
+    });
+
+//    下载word文档
+    $(".downFile").click(function(){
+        var path = $(this).attr('data-path');
+        window.location.href=admin_name+'/Scrap/showFile?path='+path+'&type=downFile';
+        return false;
+    })
+
+</script>
+</body>
+</html>

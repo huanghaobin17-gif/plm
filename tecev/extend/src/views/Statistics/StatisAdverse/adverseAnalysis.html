@@ -1,0 +1,97 @@
+<?php if($menuData = get_menu_name('Statistics','StatisAdverse','adverseAnalysis')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var adverseAnalysis = "{$adverseAnalysis}";
+</script>
+<div class="layui-fluid" id="LAY-Statistics-StatisAdverse-adverseAanalysis">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报告日期：</label>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly value="{$start_date}" style="cursor: pointer;" name="startDate" id="adverseS" lay-verify="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly value="{$end_date}" style="cursor: pointer;" name="endDate" id="adverseE" lay-verify="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="staticAdverseSearch" id="staticAdverseSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="analysisLists" lay-filter="analysisData"></table>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="chart-title">不良事件概况</div>
+                        <form class="layui-form" action="">
+                            <div class="layui-input-inline chart-sel">
+                                <select name="adverse_pic_type" lay-search="" lay-filter="change_pic" >
+                                    <option value="pie" selected>饼图</option>
+                                    <option value="bar">柱状图</option>
+                                    <option value="line">折线图</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-card-body">
+                        <div class="hidden-contant">暂无相关数据</div>
+                        <div id="statics-contant">
+                            <div class="layui-col-md4">
+                                <div id="inner_out" class="static-chart-width"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="report_from" class="static-chart-width"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="event_result" class="static-chart-width"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="patient_age" class="static-chart-width"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="patient_sex" class="static-chart-width"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="patient_place" class="static-chart-width"></div>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisAdverse/adverseAnalysis', layui.factory('statistics/statisAdverse/adverseAnalysis'));
+</script>

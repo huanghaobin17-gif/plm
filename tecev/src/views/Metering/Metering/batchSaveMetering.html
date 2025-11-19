@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Metering-Metering-batchSaveMetering .styled-select select {
+            background: transparent;
+            width: 130px;
+            padding: 2px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            height: 25px;
+            -webkit-appearance: none; /*for chrome*/
+        }
+        #LAY-Metering-Metering-batchSaveMetering .cusquote1 {
+            padding: 5px !important;
+            width: 100%;
+            margin: 0 auto;
+            font-size: 12px;
+            color: red;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .tdcenter{
+            text-align: center;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .con_left{
+            width: 66%;
+            float: left;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .con_right{
+            width: 32%;
+            height: 300px;
+            float: left;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .not-show{
+            display: none;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .layui-inline,.layui-input-inline{
+            margin-right: 0 !important;
+        }
+        #LAY-Metering-Metering-batchSaveMetering .space{
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Metering-Metering-batchSaveMetering">
+    <fieldset>
+        <legend>待批量维护设备列表</legend>
+        <blockquote class="layui-elem-quote cusquote1" style="width: auto;">
+            请先选择要批量维护的列，填好或选择后按确认提交！
+        </blockquote>
+        <div class="layui-card-body">
+            <div class="con_left">
+                <table id="batchSaveMeteringList" lay-filter="batchSaveMeteringList"></table>
+            </div>
+            <div class="con_right">
+                <form class="layui-form">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 60px;">选择列：</label>
+                        <div class="layui-input-inline">
+                            <select name="fields" lay-search="" lay-filter="showSelectFields">
+                                <option value="">请选择要维护的列</option>
+                                <volist name="fields" id="vo">
+                                    <option value="{$key}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <div id="model" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">填写设备规格/型号</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 115px;">规格/型号：<span class="rquireCoin">*</span></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="model" lay-verify="required" placeholder="请输入设备规格/型号" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="unit" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">填写设备单位</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 115px;">单位：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="unit" lay-verify="" placeholder="请输入设备单位，如：台/个" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="factory" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">填写设备生产厂商</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">生产厂商： <span class="rquireCoin">*</span></label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="factory" placeholder="请输入生产厂商" autocomplete="off" value="" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="mcategory" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择计量分类</blockquote>
+                                <div class="layui-item">
+                                    <label class="layui-form-label" style="width: 105px;">计量分类：</label>
+                                    <div class="layui-inline">
+                                        <select name="mcategory" lay-verify="mcategory">
+                                            <option value="">请选择分类：</option>
+                                            <volist name="categorys" id="vo">
+                                                <option value="{$vo.mcid}">{$vo.mcategory}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <a href="javascript:;" id="addMCategory" style="color: #1E9FFF;"><i class="layui-icon">&#xe654;</i></a>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="cycle" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">输入计量周期（月）</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 115px;"><span class="rquireCoin">*</span>计量周期：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="cycle" lay-verify="required" placeholder="请输入计量周期" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="test_way" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择检定方式</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">检定方式： </label>
+                                        <div class="layui-input-inline">
+                                            <select name="test_way" lay-verify="test_way" class="layui-input" lay-search="">
+                                                <option value="1">院内</option>
+                                                <option value="0">院外</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="next_date" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择下次待检日期</blockquote>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">待检日期：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="next_date" id="next_date_input" placeholder="请选择下次待检日期" autocomplete="off" value="" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="respo_user" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择计量负责人</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 116px;">设备负责人：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="respo_user" lay-verify="" placeholder="设备负责人" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="remark" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">填写备注</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 115px;">备注：</label>
+                                        <div class="layui-input-inline">
+                                            <textarea placeholder="请输入内容" class="layui-textarea" name="remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="remind_day" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">填写提前提醒天数</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label" style="width: 130px;">提前提醒天数：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="remind_day" lay-verify="" placeholder="提前提醒天数" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="status" class="not-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row">
+                            <form class="layui-form layui-form-pane" action="">
+                                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">计划状态</blockquote>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">计划状态： </label>
+                                        <div class="layui-input-inline">
+                                            <select name="status" lay-verify="status" class="layui-input" lay-search="">
+                                                <option value="1">开启</option>
+                                                <option value="0">暂停</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveEdit">
+                                        <i class="layui-icon" >&#xe609;</i> 确认
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">
+                                        <i class="layui-icon">ဂ</i> 重置
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<div id="addMCategoryBody" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row" style="margin-top: 20px;">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">分类名称：</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入分类名称,一行一个" class="layui-textarea" name="categorysTitle"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addCategorys">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/html" id="serialNumTpl">
+    {{# return d.LAY_INDEX; }}
+</script>
+<script>
+    var mpid = "{$mpid}";
+    var header = {$header}
+</script>
+</html>
+<script>
+    layui.use('controller/ametering/metering/batchSaveMetering', layui.factory('controller/metering/metering/batchSaveMetering'));
+</script>

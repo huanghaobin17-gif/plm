@@ -1,0 +1,272 @@
+<include file="Public:head"/>
+<title>报废处置</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    .voiceButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+
+    .photoButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+
+    .reVoiceButton button {
+        position: relative;
+    }
+
+    .reVoiceButton span {
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .reVoiceButton i {
+        position: absolute;
+        left: 0.3rem;
+        top: 0.25rem;
+        font-size: 1.8rem !important;
+    }
+
+    .confirm {
+        height: 3.75rem;
+        line-height: 3.75rem;
+        font-size: 1.3rem;
+    }
+
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    body .react-cover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .layui-card:first-of-type {
+        margin-top: 0;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <input type="hidden" name="assids" value="{$asArr.assid}">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">设备基本信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asArr.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$asArr.serialnum}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">报废申请信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body mgt1rem">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>报废单号</th>
+                    <td>{$scrapinfo.scrapnum}</td>
+                </tr>
+                <tr>
+                    <th>报废日期</th>
+                    <td>{$scrapinfo.scrapdate}</td>
+                </tr>
+                <tr>
+                    <th>申请人</th>
+                    <td>{$scrapinfo.apply_user}</td>
+                </tr>
+                <tr>
+                    <th>申请时间</th>
+                    <td>{$scrapinfo.add_time}</td>
+                </tr>
+                <tr>
+                    <th>报废原因</th>
+                    <td>{$scrapinfo.scrap_reason}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <if condition="$scrapinfo.clear_cross_user neq null">
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">报废处置信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body mgt1rem">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>处置日期</th>
+                    <td>{$scrapinfo.cleardate}</td>
+                </tr>
+                <tr>
+                    <th>处置经手人</th>
+                    <td>{$scrapinfo.clear_cross_user}</td>
+                </tr>
+                <tr>
+                    <th>清理公司</th>
+                    <td>{$scrapinfo.clear_company}</td>
+                </tr>
+                <tr>
+                    <th>联系人</th>
+                    <td>{$scrapinfo.clear_contacter}</td>
+                </tr>
+                <tr>
+                    <th>联系电话</th>
+                    <td>{$scrapinfo.clear_telephone}</td>
+                </tr>
+                <tr>
+                    <th>备注</th>
+                    <td>{$scrapinfo.clear_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <else/>
+    <!-- <div class="layui-form-item mgt2rem">
+                        <input type="file" id="fileElem" multiple accept="image/*" style="display:none;">
+                        <div class="layui-btn layui-btn-fluid layui-btn-primary add_pic">点击上传相关报告</div>
+                        <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: 1rem">
+                            <colgroup>
+                                <col width="80%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: left !important;">文件</th>
+                                <th style="text-align: left !important;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="addFileTbody">
+
+                            <notempty name="files">
+                                <volist name="files" id="vo">
+                                    <tr class="">
+                                        <td class="file_name">
+                                            <img src="{$vo.file_url}" data-file_id="{$vo.file_id}" data-save="{$vo.file_url}" data-name="{$vo.file_url}" data-type="{$vo.file_url}" data-size="{$vo.file_url}"/>{$vo.file_name}</td>
+                                        </td>
+                                        <td><div class="layui-btn layui-btn-xs layui-btn-danger del_file">移除</div></td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr class="notFileDataTr">
+                                    <td colspan="2" style="text-align: center!important;">暂无数据</td>
+                                </tr>
+                            </notempty>
+
+                            </tbody>
+                        </table>
+                    </div>
+    <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">报废处置表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <div class="is_scene">
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>处置日期：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cleardate" placeholder="请选择处置日期" id="cleardate" readonly
+                                   value="{$date}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="is_scene">
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>清理公司：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="clear_company" placeholder="请输入清理公司" autocomplete="off"
+                                   class="layui-input">
+                                   <input type="hidden" name="scrid" value="{$scrapinfo.scrid}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>联系人：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="clear_contacter" placeholder="请输入联系人" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>联系电话：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="clear_telephone" placeholder="请输入联系电话" autocomplete="off"
+                                   class="layui-input" lay-verify="mobilePhone|number">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">处置经手人：</label>
+                        <div style="line-height: 38px;">{$username}</div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                    <label class="layui-form-label">补充备注：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="clear_remark"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                </div>
+                <button class="layui-btn layui-btn-fluid confirm mgt2rem" lay-submit lay-filter="add">确认并提交</button>
+            </div>
+        </div>
+    </form> -->
+    </if>
+    <canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <audio src="" id="audio"></audio>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var url = "{$url}";
+    var today = "{$date}";
+    var scrid = "{$scrapinfo.scrid}";
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/scrap/result.js?v={:mt_rand(1,54561)}"></script>

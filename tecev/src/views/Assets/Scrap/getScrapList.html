@@ -1,0 +1,96 @@
+<?php if($menuData = get_menu_name('Assets','Scrap','getScrapList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getScrapList = "{$getScrapList}";
+</script>
+<div class="layui-fluid" id="LAY-Assets-Scrap-getScrapList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getScrapListAssetsNum" placeholder="请输入设备编号" name="getScrapListAssetsNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getScrapListAssets" placeholder="请输入设备名称" name="getScrapListAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="scrap_list_department" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getScrapListCategory" placeholder="请输入设备分类" name="getScrapListCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn"  lay-submit="" lay-filter="ScrapListSearch" id="eventquery"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="ScrapLists" lay-filter="ScrapLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/scrap/getScrapList', layui.factory('assets/scrap/getScrapList'));
+</script>
+

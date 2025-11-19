@@ -1,0 +1,689 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__PUBLIC__/css/formselects.css?v={:mt_rand(1,54561)}">
+<title>维修处理</title>
+<style>
+    .layui-table tr th{width: 24%;}
+    .red{color: #FF5722}
+    .green{color: #85AB70}
+    .assetsHideDetail,.companyHideDetail,.approvesHideDetail{display: none;}
+    .layui-card-body{padding: 0}
+    .formDiv{margin-top: 1.25rem;}
+    .emptyDiv{display: none;margin-bottom: 1.25rem;position: relative;z-index: 10;}
+    .emptyDiv .layui-card-body{padding: 10px 15px;}
+    .formDiv .layui-card-body{padding: 10px 15px;}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+    .layui-timeline-title span{font-size: 1rem;margin-right: 1rem;}
+    .layui-card-body .layui-table{margin: 0;}
+
+
+    .partsTable .layui-table tr td {
+        width: auto;
+        text-align: center;
+    }
+
+    .partsTable .layui-table thead tr th {
+        width: auto;
+        text-align: center;
+    }
+
+
+    .followTable thead tr th{text-align: center;}
+
+    .addFollowDiv{
+        z-index: 100000;
+    }
+    .editFollowDiv{
+        z-index: 100000;
+    }
+
+    .emptyNum {
+        text-align: center;
+        padding: 0.625rem 1rem;
+    }
+    .weui-popup__modal .weui-icon-cancel {
+        position: absolute;
+        right: 0.2rem;
+        top: 0.8rem;
+        color: #888;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    .addFollowDiv .weui-popup__modal{
+        background-color: #fff;
+    }
+    .editFollowDiv .weui-popup__modal{
+        background-color: #fff;
+    }
+    .weui-picker-overlay, .weui-picker-container{
+        z-index: 100001;
+    }
+    .companyDiv .layui-card-body{
+        margin-top: 1.25rem;
+    }
+    .companyDiv .layui-card-body:nth-child(odd) .layui-table tr{
+        background-color: #e6e6e654;
+    }
+    .suggestIconDiv{
+        position: absolute;
+        right: 1rem;
+        top: -0.5rem;
+    }
+    .suggestIcon{
+        width: 2.5rem;
+    }
+
+    .addPartsDiv {
+        z-index: 100000;
+    }
+
+    .addPartsDiv .weui-popup__modal {
+        background-color: #fff;
+    }
+
+    .addPartsDiv .xm-select-parent {
+        width: 14.5rem;
+    }
+
+    .addPartsTips {
+        display: inline-block;
+        height: 2.375rem;
+        line-height: 2.375rem;
+    }
+    #media,#showImages{
+        color:#76ABDF;
+    }
+    .gray{
+        color: #666;
+        margin-left: 10px;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <div class="emptyDiv"></div>
+        <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">维修单详情</h2>
+                <div class="bl1px"></div>
+            </div>
+            <div class="layui-card-body">
+                <table class="layui-table" lay-even>
+                    <tbody>
+                    <tr>
+                        <th>维修单号</th>
+                        <td>{$repArr.repnum}</td>
+                    </tr>
+                    <tr>
+                        <th>报修科室</th>
+                        <td>{$asArr.department}</td>
+                    </tr>
+                    <tr>
+                        <th>设备编号</th>
+                        <td>{$asArr.assnum}</td>
+                    </tr>
+                    <tr>
+                        <th>设备名称</th>
+                        <td>{$asArr.assets}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>规格/型号</th>
+                        <td>{$asArr.model}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>报修人</th>
+                        <td>{$repArr.applicant}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>报修时间</th>
+                        <td>{$repArr.applicant_time}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>接单时间</th>
+                        <td>{$repArr.response_date}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>签到时间</th>
+                        <td>{$repArr.sign_in_time}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>维修工程师</th>
+                        <td>{$repArr.response}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>故障问题</th>
+                        <td><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>故障描述</th>
+                        <td>{$repArr.breakdown}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>语音描述</th>
+                        <td>
+                            <if condition="$repArr['wxTapeAmr']">
+                                <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                                <span id="media">点击播放</span>
+                                <else/>
+                                无
+                            </if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>故障照片</th>
+                        <td>
+                            <empty name="repArr['pic_url']">
+                                无
+                                <else/>
+                                <a class="green" id="showImages">查看 （总共{$repArr.imgCount}张）</a>
+                            </empty>
+                        </td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>检修备注</th>
+                        <td>{$repArr.repair_remark}</td>
+                    </tr>
+                    <tr class="assetsHideDetail">
+                        <th>维修性质</th>
+                        <td>{$repArr.repTypeName}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-card" style="margin-top: 0;">
+                <div class="moreButton">
+                    <a class="moreDetailButton" data-detailClass="assetsHideDetail">加载更多</a>
+                </div>
+                <div class="moreButton" style="display: none;">
+                    <a class="hideDetailButton" data-detailClass="assetsHideDetail">收起</a>
+                </div>
+            </div>
+        </div>
+        <!--保修厂家-->
+        <if condition="$repArr['repair_type'] EQ C('REPAIR_TYPE_IS_GUARANTEE_NAME')">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">保修信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-table">
+                        <tbody>
+                        <tr>
+                            <th>维修厂家</th>
+                            <td>{$repArr.repair}</td>
+                        </tr>
+                        <tr>
+                            <th>维修公司联系人</th>
+                            <td>{$repArr.repa_user}</td>
+                        </tr>
+                        <tr>
+                            <th>维修公司联系电话</th>
+                            <td>{$repArr.repa_tel}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </if>
+        <!--第三方-->
+        <notempty name="company">
+            <div class="layui-card companyDiv">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">报价信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <volist name="company" id="v">
+                    <?php if($v['last_decisioin']!=C('YES_STATUS')){ ?>
+                    <?php $companyDivClass='companyHideDetail'; ?>
+                    <?php }else{ ?>
+                    <?php $companyDivClass=''; ?>
+                    <?php }   ?>
+                    <div class="layui-card-body {$companyDivClass}">
+                        <if condition="$v['last_decisioin'] EQ C('YES_STATUS')">
+                            <div class="suggestIconDiv">
+                                <img class="suggestIcon" src="__PUBLIC__/mobile/images/icon/suggest.png">
+                            </div>
+                        </if>
+                        <table class="layui-table">
+                            <tbody>
+                            <tr>
+                                <th>公司名称</th>
+                                <td>{$v.offer_company}</td>
+                            </tr>
+                            <tr>
+                                <th>公司资质</th>
+                                <td>
+                                    {$v.aptitude}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>联系人</th>
+                                <td>{$v.offer_contacts}</td>
+                            </tr>
+                            <tr>
+                                <th>联系人电话</th>
+                                <td>{$v.telphone}</td>
+                            </tr>
+                            <tr>
+                                <th>维修周期</th>
+                                <td>{$v.cycle}</td>
+                            </tr>
+                            <tr>
+                                <th>发票</th>
+                                <td>{$v.invoice}</td>
+                            </tr>
+                            <tr>
+                                <th>费用</th>
+                                <td>{$v.total_price}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </volist>
+            </div>
+            <div class="layui-card" style="margin-top: 0;">
+                <div class="moreButton">
+                    <a class="moreDetailButton" data-detailClass="companyHideDetail">加载更多</a>
+                </div>
+                <div class="moreButton" style="display: none;">
+                    <a class="hideDetailButton" data-detailClass="companyHideDetail">收起</a>
+                </div>
+            </div>
+        </notempty>
+
+        <div class="layui-card partsTable">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">配件信息</h2>
+                <div class="bl1px"></div>
+            </div>
+                <div class="layui-card-body" style="padding: 10px 15px;">
+                    <div class="layui-form-item  mgt1rem" style="margin-top: 0">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid layui-btn-primary addPartsButton">添加配件</a>
+                    </div>
+                    <div class="partsTable">
+                        <table class="layui-table" lay-even>
+                            <thead>
+                            <tr>
+                                <th>配件名称</th>
+                                <th>规格型号</th>
+                                <th>数量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <notempty name="parts">
+                                <volist name="parts" id="v">
+                                    <tr class="not_check">
+                                        <td>{$v.parts}</td>
+                                        <td>{$v.part_model}</td>
+                                        <td>{$v.part_num}</td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr class="emptyParts">
+                                    <td colspan="3" style="text-align: center;">暂无配件</td>
+                                </tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+
+        <!--审批-->
+        <notempty name="approves">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">审批信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-table" lay-even>
+                        <tbody>
+                        <volist name="approves" id="app">
+                            <?php if($i!=1){?>
+                            <?php $approvesDivClass='approvesHideDetail'; ?>
+                            <?php }else{ ?>
+                            <?php $approvesDivClass=''; ?>
+                            <?php }   ?>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批人</th>
+                                <td>{$app.approver}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批时间</th>
+                                <td>{$app.approve_time}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批意见</th>
+                                <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                                    <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                    <else/>
+                                    <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                                </if>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>备注</th>
+                                <td>{$app.remark}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if(count($approves)>1){ ?>
+                <div class="layui-card" style="margin-top: 0;">
+                    <div class="moreButton">
+                        <a class="moreDetailButton" data-detailClass="approvesHideDetail">加载更多</a>
+                    </div>
+                    <div class="moreButton" style="display: none;">
+                        <a class="hideDetailButton" data-detailClass="approvesHideDetail">收起</a>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+        </notempty>
+
+
+        <div class="formDiv">
+            <div class="layui-card mgt0">
+                <div class="layui-card-header">
+                    <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                    <h2 class="formTitle">维修处理表单</h2>
+                    <a class="upFormButton">表单置顶<i class="layui-icon layui-icon-zarrow-up-l"></i></a>
+                    <a class="downFormButton">表单置底<i class="layui-icon layui-icon-zarrow-down-l"></i></a>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item mgt1rem">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid layui-btn-primary addFollowButton">添加维修处理跟进详情</a>
+                    </div>
+                    <div class="mgt1rem">
+                        <table class="layui-table followTable" lay-even style="table-layout: fixed;">
+                            <thead>
+                            <tr>
+                                <th style="width: 30%;">跟进时间</th>
+                                <th style="width: auto;">处理详情</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <notempty name="follow">
+                                <volist name="follow" id="vo">
+                                    <tr>
+                                        <td class="followdate">{$vo.followdate_m}</td>
+                                        <td class="remark">{$vo.detail}</td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr class="emptyFollow">
+                                    <td colspan="2" style="text-align: center;" >暂无跟进信息</td>
+                                </tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <?php if($menuData = get_menu('Repair','Repair','uploadRepair')):?>
+                    <div class="layui-form-item mgt2rem">
+                        <input type="file" id="fileElem" multiple accept="image/*" style="display:none;">
+                        <div class="layui-btn layui-btn-fluid layui-btn-primary add_pic">点击上传相关报告</div>
+                        <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: 1rem">
+                            <colgroup>
+                                <col width="80%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: left !important;">文件名称</th>
+                                <th style="text-align: left !important;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="addFileTbody">
+
+                            <notempty name="files">
+                                <volist name="files" id="vo">
+                                    <tr class="">
+                                        <td class="file_name">
+                                            <img src="{$vo.file_url}" data-file_id="{$vo.file_id}" data-save="{$vo.file_url}" data-name="{$vo.file_url}" data-type="{$vo.file_url}" data-size="{$vo.file_url}"/>{$vo.file_name}</td>
+                                        </td>
+                                        <td><div class="layui-btn layui-btn-xs layui-btn-danger del_file">移除</div></td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr class="notFileDataTr">
+                                    <td colspan="2" style="text-align: center!important;">暂无数据</td>
+                                </tr>
+                            </notempty>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php endif;?>
+
+                    <input type="hidden" name="repid" value="{$repArr.repid}">
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">维修工程师：</label>
+                        <div class="layui-input-block">
+                            <input type="text" readonly value="{$repArr.response}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">联系电话：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username_tel" value="{$repArr.response_tel}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">协助工程师：</label>
+                        <div class="layui-input-block">
+                            <select name="assist_engineer" lay-filter="assist_engineer">
+                                <option value="-1">可选择</option>
+                                <volist name="user" id="v">
+                                    <if condition="$repArr['assist_engineer'] eq $v['username']">
+                                        <option value="{$v.username}" selected >{$v.username}</option>
+                                        <else />
+                                        <option value="{$v.username}" >{$v.username}</option>
+                                    </if>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">联系电话：</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="assist_engineer_tel" name="assist_engineer_tel" value="{$repArr.assist_engineer_tel}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">其他费用：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="other_price" value="{$repArr.other_price}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">总维修费用：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="actual_price" readonly value="{$repArr.actual_price}"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><if condition="$service_date eq C('SHUT_STATUS')"><span class="rquireCoin"> * </span></if>维修日期：</label>
+                        <div class="layui-input-block">
+                            <if condition="$service_date eq C('OPEN_STATUS')">
+                                <input type="text" readonly value="系统生成" autocomplete="off" class="layui-input">
+                                <else />
+                                <input style="padding-top: 0.55rem;" name="service_date" class="weui-input" id="service_date" value="{$repArr.engineer_time}" type="text" placeholder="请点击此处选择时间" readonly="">
+                            </if>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><if condition="$service_working eq C('SHUT_STATUS')"><span class="rquireCoin"> * </span></if>维修工时：</label>
+                        <div class="layui-input-block">
+                            <if condition="$service_working eq C('OPEN_STATUS')">
+                                <input type="text" name="working_hours" readonly value="{$repArr.working_hours}"  autocomplete="off" class="layui-input" style="width: 80%;float: left;"><span style="line-height: 38px;color:#c2c2c2;">(小时)</span>
+                                <else/>
+                                <input type="text" class="layui-input" lay-verify="requried" name="working_hours" placeholoder="请输入维修工时" value="{$repArr.working_hours}" style="width: 80%;float: left;"><span style="line-height: 38px;color:#c2c2c2;">(小时)</span>
+                            </if>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">维修结果：</label>
+                        <div class="layui-input-block">
+                            <textarea class="weui-textarea" style="border-bottom: 1px solid #c2c2c2;" name="dispose_detail" placeholder="请输入维修结果" autocomplete="off">{$repArr.dispose_detail}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn layui-btn-warm enterButton" id="keepStartRepair" style="width: 100%;" lay-submit lay-filter="keepStartRepair">暂存不提交</button>
+                    </div>
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn enterButton" id="endRepair" style="width: 100%;" lay-submit lay-filter="endStartRepair">确认修复并提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--添加配件弹层-->
+        <div class="weui-popup__container addPartsDiv">
+            <div class="weui-popup__overlay"></div>
+            <div class="weui-popup__modal">
+                <div class="popupTopTitleDiv">
+                    <span class="popupTopTitle">添加配件</span>
+                    <i class="weui-icon-cancel"></i>
+                </div>
+                <div class="popupContent">
+                    <div class="layui-form-item mgt1rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>配件名称：</label>
+                        <div class="layui-input-block">
+                            <select name="partsSelect" xm-select="partsSelect">
+                                <option value="">请选择维修配件（可多选）</option>
+                                <volist name="partsAll" id="v">
+                                    <option value="{$key}">{$v.parts}（规格型号：{$v.parts_model}）</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgt1rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>配件数量：</label>
+                        <div class="addPartsTips">（请在下方增减配件数量）</div>
+                    </div>
+                    <div class="layui-form-item partsList">
+                        <div class="weui-cells">
+                            <p class="emptyNum">暂无配件</p>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgt1rem" style="padding: 0 1rem;">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid saveParts">保存</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--添加维修跟进-->
+        <div class="weui-popup__container addFollowDiv">
+            <div class="weui-popup__overlay"></div>
+            <div class="weui-popup__modal">
+                <div class="popupTopTitleDiv">
+                    <span class="popupTopTitle">添加维修处理跟进详情</span>
+                    <i class="weui-icon-cancel"></i>
+                </div>
+                <div class="popupContent">
+                    <div class="weui-cells">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label for="followTime" class="weui-label">
+                                    <span class="rquireCoin"> * </span>跟进时间：
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" id="followTime" type="text" placeholder="请点击此处选择时间" readonly="">
+                            </div>
+                        </div>
+                        <div class="weui-cell mgt1rem">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">
+                                    <span class="rquireCoin"> * </span>跟进详情：
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" id="followDetail" placeholder="请输入跟进详情" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgt1rem" style="padding: 0 1rem;">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid saveFollowButton">保存</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--修改维修跟进-->
+        <div class="weui-popup__container editFollowDiv">
+            <div class="weui-popup__overlay"></div>
+            <div class="weui-popup__modal">
+                <input type="hidden" name="dataIndex">
+                <div class="popupTopTitleDiv">
+                    <span class="popupTopTitle">修改维修处理跟进详情</span>
+                    <i class="weui-icon-cancel"></i>
+                </div>
+                <div class="popupContent">
+                    <div class="weui-cells">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                <label for="followTime" class="weui-label">
+                                    <span class="rquireCoin"> * </span>跟进时间：
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" id="editFollowTime" type="text" placeholder="请点击此处选择时间" readonly="">
+                            </div>
+                        </div>
+                        <div class="weui-cell mgt1rem">
+                            <div class="weui-cell__hd">
+                                <label class="weui-label">
+                                    <span class="rquireCoin"> * </span>跟进详情：
+                                </label>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <textarea class="weui-textarea" id="editFollowDetail" placeholder="请输入跟进详情" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgt1rem" style="padding: 0 1rem;">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid layui-btn-warm editFollowButton">修改</a>
+                    </div>
+                    <div class="layui-form-item mgt1rem" style="padding: 0 1rem;">
+                        <a href="javascript:void(0)" class="layui-btn layui-btn-fluid layui-btn-danger deleteFollowButton">删除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+</body>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/mobile/js/weui/showImages.js"></script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script>
+    var startRepairUrl = '{$startRepairUrl}';
+    var personalPartsInfo = {$personalPartsInfo};
+    var username = '<?php echo(session("username")); ?>';
+    var userJson =<?php echo($userJson);?>;
+    <notempty name = "repArr['pic_url']">
+    var pic_url = {$repArr.pic_url};
+    var photos = $.photoBrowser({items: pic_url});
+    $("#showImages").click(function(){
+        photos.open();
+    });
+    </notempty >
+</script>
+<script src="__PUBLIC__/mobile/js/repair/repair/startRepair.js?v={:mt_rand(1,54561)}"></script>

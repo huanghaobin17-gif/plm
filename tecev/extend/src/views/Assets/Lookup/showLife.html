@@ -1,0 +1,1570 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-table-view .layui-table {
+            width: 100%
+        }
+
+        .layui-table, .layui-table-view {
+            margin-top: 0;
+        }
+
+        .no-padding-td {
+            padding: 0px !important;
+        }
+
+        .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        .cus-width {
+            width: 250px !important;
+        }
+
+        .total {
+            text-align: left;
+            font-weight: bold;
+            color: #FF5722;
+        }
+
+        .img-content {
+            width: 95%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 2%;
+            text-align: center;
+            border: 1px solid #E6E9EB;
+        }
+
+        .img-content img {
+            width: 100%;
+            max-height: 410px;
+        }
+
+        .system-img {
+            padding-top: 105px;
+            padding-bottom: 105px;
+        }
+
+        .width140 {
+            width: 140px !important;
+        }
+
+        /*时间线*/
+        .timeLineList {
+            height: auto;
+            width: 75%;
+            float: left;
+            margin: 0 0 20px 100px;
+        }
+
+        .timeLineList li {
+            width: 80px;
+            float: left;
+            height: 80px;
+        }
+
+        .layui-timeline-axis {
+            position: static;
+        }
+
+        .timeLineBox {
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .timeLine {
+            width: 63px;
+            height: 3px;
+            position: absolute;
+            top: 7px;
+            left: -62px;
+            margin-top: 0;
+        }
+
+        .timeLineAddAssets {
+            width: 70px;
+            height: 3px;
+            background-color: #009688;
+            position: absolute;
+            top: 7px;
+            left: -69px;
+        }
+
+        .timeLineAddAssetsTitle {
+            position: absolute;
+            top: -25px;
+            left: -15px;
+            font-size: 12px;
+            color: #009688
+        }
+
+        .timeLineTitle {
+            position: absolute;
+            top: -25px;
+            font-size: 12px;
+            left: -5px;
+        }
+
+        .timeLineAddAssetsDate {
+            position: absolute;
+            top: 25px;
+            left: -20px;
+            font-size: 12px;
+            color: #009688
+        }
+
+        .timeLineDate {
+            position: absolute;
+            top: 25px;
+            left: -20px;
+            font-size: 12px;
+        }
+
+        .timeLineDetail {
+            width: 300px;
+            position: absolute;
+            left: -80px;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+            font-size: 12px;
+            z-index: 100;
+            display: none;
+        }
+
+        .timeLineDetail tr th {
+            text-align: right;
+        }
+
+        .transferbgcolor {
+            background-color: #FFB800;
+        }
+
+        .transfercolor {
+            color: #FFB800;
+        }
+
+        .repairbgcolor {
+            background-color: #FF5722;
+        }
+
+        .repaircolor {
+            color: #FF5722;
+        }
+
+        .scrapbgcolor {
+            background-color: #C9C9C9;
+        }
+
+        .scrapcolor {
+            color: #C9C9C9;
+        }
+
+        .patrolbgcolor {
+            background-color: #1E9FFF;
+        }
+
+        .patrolcolor {
+            color: #1E9FFF;
+        }
+
+        .adversebgcolor {
+            background-color: #f06165;
+        }
+
+        .adversecolor {
+            color: #f06165;
+        }
+
+        .qualitybgcolor {
+            background-color: #F88C51;
+        }
+
+        .qualitycolor {
+            color: #F88C51;
+        }
+
+        .meteringbgcolor {
+            background-color: #AE7C37;
+        }
+
+        .meteringcolor {
+            color: #AE7C37;
+        }
+
+        .borrowbgcolor {
+            background-color: #DA70D6;
+        }
+
+        .borrowcolor {
+            color: #DA70D6;
+        }
+
+        .outsidebgcolor {
+            background-color: #8B4513;
+        }
+
+        .outsidecolor {
+            color: #8B4513;
+        }
+        .subsidiarybgcolor {
+            background-color: #2F4056;
+        }
+
+        .subsidiarycolor {
+            color: #2F4056;
+        }
+
+        .baseInfo {
+            margin-left: 30px;
+            font-size: 12px;
+        }
+
+        .baseInfo .layui-inline {
+            width: 200px;
+        }
+    </style>
+    <script>
+        var showAssets = "{$showAssets}";
+    </script>
+</head>
+<body>
+<div class="containDiv" style="width: 100%;">
+    <input type="hidden" name="assid" value="{$assid}"/>
+    <input type="hidden" name="changeTab" value="{$changeTab}"/>
+    <div class="margin-bottom-15">
+        <ul class="timeLineList">
+            <li>
+                <div class="timeLineBox">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="timeLineAddAssets"></div>
+                    <span class="timeLineAddAssetsTitle">设备入库</span>
+                    <span class="timeLineAddAssetsDate">{$assets.storage_date}</span>
+                </div>
+            </li>
+            <volist name="life" id="v">
+                <switch name="v.type">
+                    <case value="1"><!--转科生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine transferbgcolor"></div>
+                                <span class="timeLineTitle transfercolor">{$v.title}</span>
+                                <span class="timeLineDate transfercolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>申请人：</th>
+                                            <td>{$v.applicant_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请时间：</th>
+                                            <td>{$v.applicant_time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>转出科室：</th>
+                                            <td>{$v.tranout_depart_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>转出科室负责人：</th>
+                                            <td>{$v.tranout_departrespon}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>转入科室：</th>
+                                            <td>{$v.tranin_depart_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>转入科室负责人：</th>
+                                            <td>{$v.tranin_departrespon}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>转科日期：</th>
+                                            <td>{$v.transfer_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收人：</th>
+                                            <td>{$v.check_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收时间：</th>
+                                            <td>{$v.check_time}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="2"><!--维修生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine repairbgcolor"></div>
+                                <span class="timeLineTitle repaircolor">{$v.title}</span>
+                                <span class="timeLineDate repaircolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>报修人：</th>
+                                            <td>{$v.applicant}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报修时间：</th>
+                                            <td>{$v.applicant_time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报修原因：</th>
+                                            <td>{$v.breakdown}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>维修状态：</th>
+                                            <td>{$v.statusName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>接单人：</th>
+                                            <td>{$v.response}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>接单时间：</th>
+                                            <td>{$v.response_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>维修结束时间：</th>
+                                            <td>{$v.overdate}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收人：</th>
+                                            <td>{$v.checkperson}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收时间：</th>
+                                            <td>{$v.checkdate}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="3"><!--报废生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine scrapbgcolor"></div>
+                                <span class="timeLineTitle scrapcolor">{$v.title}</span>
+                                <span class="timeLineDate scrapcolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>申请人：</th>
+                                            <td>{$v.apply_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请时间：</th>
+                                            <td>{$v.add_time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报废原因：</th>
+                                            <td>{$v.scrap_reason}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>处置经手人：</th>
+                                            <td>{$v.clear_cross_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>清理公司：</th>
+                                            <td>{$v.clear_company}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="4"><!--巡查保养生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine patrolbgcolor"></div>
+                                <span class="timeLineTitle patrolcolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate patrolcolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>计划名称：</th>
+                                            <td>{$v.patrol_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计划级别：</th>
+                                            <td>{$v.patrol_level_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>周期计划：</th>
+                                            <td>{$v.cycle_name}</td>
+                                        </tr>
+                                        <if condition="$v.is_cycle eq 1">
+                                            <tr>
+                                                <th>周期设置：</th>
+                                                <td>{$v.cycle_setting_name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>当前/总期次：</th>
+                                                <td>{$v.total_current_period}</td>
+                                            </tr>
+                                        </if>
+                                        <tr>
+                                            <th>计划开始日期：</th>
+                                            <td>{$v.patrol_start_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计划结束日期：</th>
+                                            <td>{$v.patrol_end_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计划执行状态：</th>
+                                            <td>{$v.statusName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>是否异常：</th>
+                                            <td>{$v.is_normal}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>异常项总数：</th>
+                                            <td>{$v.abnormal}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="5"><!--不良事件生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine adversebgcolor"></div>
+                                <span class="timeLineTitle adversecolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate adversecolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>报告人：</th>
+                                            <td>{$v.sign}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报告人职称：</th>
+                                            <td>{$v.reporter}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>事件记录时间：</th>
+                                            <td>{$v.addtime}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报告日期：</th>
+                                            <td>{$v.report_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>报告来源：</th>
+                                            <td>{$v.report_from}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>预期治疗治病：</th>
+                                            <td>{$v.expected}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>事件后果：</th>
+                                            <td>{$v.consequence}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>事件主要表现：</th>
+                                            <td>{$v.express}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>初步原因分析：</th>
+                                            <td>{$v.cause}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>初步处理情况：</th>
+                                            <td>{$v.situation}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="6"><!--质控计划生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine qualitybgcolor"></div>
+                                <span class="timeLineTitle qualitycolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate qualitycolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>计划名称：</th>
+                                            <td>{$v.plan_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计划编号：</th>
+                                            <td>{$v.plan_num}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>是否周期执行：</th>
+                                            <td>{$v.is_cycle}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>周期(月)：</th>
+                                            <td>{$v.cycle}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>期次：</th>
+                                            <td>{$v.period}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检测人：</th>
+                                            <td>{$v.username}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>预计执行日期：</th>
+                                            <td>{$v.do_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>预计结束日期：</th>
+                                            <td>{$v.end_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>启用日期：</th>
+                                            <td>{$v.start_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计划执行状态：</th>
+                                            <td>{$v.is_start}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检测结果：</th>
+                                            <td>{$v.result}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="7"><!--计量计划生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine meteringbgcolor"></div>
+                                <span class="timeLineTitle meteringcolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate meteringcolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>计划编号：</th>
+                                            <td>{$v.plan_num}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计量分类：</th>
+                                            <td>{$v.mcategory}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>周期(月)：</th>
+                                            <td>{$v.cycle}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计量负责人：</th>
+                                            <td>{$v.respo_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>启用状态：</th>
+                                            <td>{$v.plan_status_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>本次检定日期：</th>
+                                            <td>{$v.this_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检定机构：</th>
+                                            <td>{$v.company}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>计量费用：</th>
+                                            <td>{$v.money}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检定人：</th>
+                                            <td>{$v.test_person}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检查状态：</th>
+                                            <td>{$v.result_status_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>检定结果：</th>
+                                            <td>{$v.result}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="8"><!--借调生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine borrowbgcolor"></div>
+                                <span class="timeLineTitle borrowcolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate borrowcolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>申请科室：</th>
+                                            <td>{$v.apply_department}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请人：</th>
+                                            <td>{$v.apply_username}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请时间：</th>
+                                            <td>{$v.apply_time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>借用原因：</th>
+                                            <td>{$v.borrow_reason}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>借调状态：</th>
+                                            <td>{$v.statuName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>结束时间：</th>
+                                            <td>{$v.over_date}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="9"><!--外调生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine outsidebgcolor"></div>
+                                <span class="timeLineTitle outsidecolor" style="left: -15px;">{$v.title}</span>
+                                <span class="timeLineDate outsidecolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>申请人：</th>
+                                            <td>{$v.apply_username}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请时间：</th>
+                                            <td>{$v.apply_time}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请类型：</th>
+                                            <td>{$v.apply_typeName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>联系人：</th>
+                                            <td>{$v.person}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>联系电话：</th>
+                                            <td>{$v.phone}</td>
+                                        </tr>
+                                        <notempty name="v.price">
+                                            <tr>
+                                                <th>金额：</th>
+                                                <td>{$v.price}</td>
+                                            </tr>
+                                        </notempty>
+                                        <tr>
+                                            <th>外调目的地：</th>
+                                            <td>{$v.accept}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收人：</th>
+                                            <td>{$v.check_person}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收人联系电话：</th>
+                                            <td>{$v.check_phone}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收日期：</th>
+                                            <td>{$v.check_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>是否通过审核：</th>
+                                            <td>{$v.examine_statusName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>结束时间：</th>
+                                            <td>{$v.over_date}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                    <case value="10"><!--附属设备分配生命线-->
+                        <?php if($v['sort_date'] != '-'): ?>
+                        <li>
+                            <div class="timeLineBox">
+                                <i class="layui-icon layui-timeline-axis"></i>
+                                <div class="timeLine subsidiarybgcolor"></div>
+                                <span class="timeLineTitle subsidiarycolor" style="left: -30px;">{$v.title}</span>
+                                <span class="timeLineDate subsidiarycolor">{$v.sort_date}</span>
+                                <div class="timeLineDetail">
+                                    <table class="layui-table" lay-size="sm" style="margin: 0;">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col width="60%">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>申请人：</th>
+                                            <td>{$v.apply_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>申请日期：</th>
+                                            <td>{$v.apply_date}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>设备名称：</th>
+                                            <td>{$v.main_assets}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>设备科室：</th>
+                                            <td>{$v.department}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>管理科室：</th>
+                                            <td>{$v.main_managedepart}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>使用位置：</th>
+                                            <td>{$v.main_address}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>负责人：</th>
+                                            <td>{$v.main_assetsrespon}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收人：</th>
+                                            <td>{$v.check_user}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>验收日期：</th>
+                                            <td>{$v.check_time}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </case>
+                </switch>
+            </volist>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="margin-bottom-15 baseInfo">
+        <div class="layui-form-item">
+            <div class="layui-inline">设备编号：{$assets.assnum}</div>
+            <div class="layui-inline">所属科室：{$assets.department}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">设备名称：{$assets.assets}</div>
+            <div class="layui-inline">设备型号：{$assets.model}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">入库日期：{$assets.storage_date}</div>
+            <div class="layui-inline">保修到期：{$assets.guarantee_date}</div>
+        </div>
+    </div>
+    <div class="layui-tab layui-tab-brief" lay-filter="change">
+        <ul class="layui-tab-title">
+            <li class="layui-this">基础信息</li>
+            <li>资质信息</li>
+            <if condition="$showTechnicalInformation eq 1"><li>技术资料</li></if>
+            <if condition="$showAssetsfile eq 1"><li>设备档案</li></if>
+            <if condition="$assets['is_subsidiary'] eq 0">
+                <li>附属设备</li>
+            </if>
+            <if condition="$showAssetsInsurance eq 1"><li>设备参保</li></if>
+            <li>状态变更记录</li>
+            <li>转科记录</li>
+            <li>维修记录</li>
+            <li>质控记录</li>
+            <li>计量记录</li>
+            <!--<li>折旧记录</li>-->
+            <li>不良记录</li>
+
+            <li>借调记录</li>
+            <li lay-id="14">外调记录</li>
+
+            <!--功能开发中。。。后续开启-->
+            <!--<li>采购信息</li>-->
+            <!--<li>效益分析</li>-->
+            <!--<li>保养信息</li>-->
+
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show"><!--基础信息-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备名称：{$assets.assets}</div>
+                    <div style="width: 70%;float: left;">
+                        <table class="layui-table read-table" lay-size="sm" lay-even>
+                            <colgroup>
+                                <col width="195">
+                                <col>
+                                <col width="195">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>设备编号：</th>
+                                <td>{$assets.assnum}</td>
+                                <th>设备原编号：</th>
+                                <td>{$assets.assorignum}</td>
+                            </tr>
+                            <tr>
+                                <th>规格 / 型号：</th>
+                                <td>{$assets.model}</td>
+                                <th>产品序列号：</th>
+                                <td>{$assets.serialnum}</td>
+                            </tr>
+                            <tr>
+                                <th>设备分类：</th>
+                                <td colspan="3">{$assets.cate_name}</td>
+                            </tr>
+                            <tr>
+                                <th>系统辅助分类：</th>
+                                <td>{$assets.helpcat}</td>
+                                <th>设备原值(元)：</th>
+                                <td>{$assets.buy_price}</td>
+                            </tr>
+                            <tr>
+                                <th>预计使用年限：</th>
+                                <td>{$assets.expected_life}</td>
+                                <th>残净值率(%)：</th>
+                                <td>{$assets.residual_value}</td>
+                            </tr>
+                            <tr>
+                                <th>生产厂商：</th>
+                                <td>{$ols_factory.factory}</td>
+                                <th>供应商：</th>
+                                <td>{$ols_supplier.supplier}</td>
+                            </tr>
+                            <tr>
+                                <th>出厂日期：</th>
+                                <td>{$assets.factorydate}</td>
+                                <th>保修到期日期：</th>
+                                <td>{$assets.guarantee_date}</td>
+                            </tr>
+                            <tr>
+                                <th>单位：</th>
+                                <td>{$assets.unit}</td>
+                                <th>品牌：</th>
+                                <td>{$assets.brand}</td>
+                            </tr>
+                            <tr>
+                                <th>出厂编号：</th>
+                                <td>{$assets.factorynum}</td>
+                                <th>发票编号：</th>
+                                <td>{$assets.invoicenum}</td>
+                            </tr>
+                            <tr>
+                                <th>设备类型：</th>
+                                <td colspan="3">{$assets.type}</td>
+                            </tr>
+                            <tr>
+                                <th>所属科室：</th>
+                                <td>{$assets.department}</td>
+                                <th>管理科室：</th>
+                                <td>{$assets.managedepart}</td>
+                            </tr>
+                            <tr>
+                                <th>所在位置：</th>
+                                <td>{$assets.address}</td>
+                                <th>资产负责人：</th>
+                                <td>{$assets.assetsrespon}</td>
+                            </tr>
+                            <tr>
+                                <th>财务分类：</th>
+                                <td>{$assets.finance}</td>
+                                <th>设备来源：</th>
+                                <td>{$assets.assfrom}</td>
+                            </tr>
+                            <tr>
+                                <th>资金来源：</th>
+                                <td>{$assets.capitalfrom}</td>
+                                <th>入库日期：</th>
+                                <td>{$assets.storage_date}</td>
+                            </tr>
+                            <tr>
+                                <th>启用日期：</th>
+                                <td colspan="3">{$assets.opendate}</td>
+                            </tr>
+                            <tr>
+                                <th>折旧方式：</th>
+                                <td>{$assets.depreciation_method_name}</td>
+                                <th>折旧年限：</th>
+                                <td>{$assets.depreciable_lives}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="photo fl" style="width: 30%; text-align: center;">
+                        <empty name="assets.pic_url">
+                            <div class="system-img">
+                                <i class="layui-icon" style="font-size: 120px;">&#xe60d;</i><br>暂无图片<br/>
+                                <br>（如需添加请前往设备详情页面添加）<br/>
+                            </div>
+                            <else />
+                            <div class="layui-carousel" id="carouselAssetsPic">
+                                <div carousel-item="">
+                                    <volist name="assetsPic" id="v">
+                                        <img src="{$v}" style="cursor: pointer;"/>
+                                    </volist>
+                                </div>
+                            </div>
+                        </empty>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--资质信息-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">资质信息</div>
+                    <table class="layui-table read-table" lay-even="" lay-size="sm">
+                        <colgroup>
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>生产厂商：</th>
+                            <td colspan="3">{$ols_factory.factory}</td>
+                        </tr>
+                        <tr>
+                            <th>联系人：</th>
+                            <td>{$ols_factory.factory_user}</td>
+                            <th>联系电话：</th>
+                            <td>{$ols_factory.factory_tel}</td>
+                        </tr>
+                        <tr>
+                            <th>供应商：</th>
+                            <td colspan="3">{$ols_supplier.supplier}</td>
+                        </tr>
+                        <tr>
+                            <th>联系人：</th>
+                            <td>{$ols_supplier.supp_user}</td>
+                            <th>联系电话：</th>
+                            <td>{$ols_supplier.supp_tel}</td>
+                        </tr>
+                        <tr>
+                            <th>维修公司：</th>
+                            <td colspan="3">{$ols_repair.repair}</td>
+                        </tr>
+                        <tr>
+                            <th>联系人：</th>
+                            <td>{$ols_repair.repa_user}</td>
+                            <th>联系电话：</th>
+                            <td>{$ols_repair.repa_tel}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">生产商资质文件</div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="80">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col width="160">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">发证(备案)日期</td>
+                            <td class="td-align-center">有效期限</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="fileList">
+                        <empty name="fac_files">
+                            <tr class="tech-empty">
+                                <td colspan="6" class="td-align-center">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="fac_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.name}</td>
+                                    <td class="td-align-center">{$vo.adddate}</td>
+                                    <td class="td-align-center">{$vo.record_date}</td>
+                                    <td class="td-align-center">{$vo.term_date}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">供应商资质文件</div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="80">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col width="160">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">发证(备案)日期</td>
+                            <td class="td-align-center">有效期限</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="fileList">
+                        <empty name="sup_files">
+                            <tr class="tech-empty">
+                                <td colspan="6" class="td-align-center">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="sup_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.name}</td>
+                                    <td class="td-align-center">{$vo.adddate}</td>
+                                    <td class="td-align-center">{$vo.record_date}</td>
+                                    <td class="td-align-center">{$vo.term_date}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">维修商资质文件</div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="80">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col width="160">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">发证(备案)日期</td>
+                            <td class="td-align-center">有效期限</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="fileList">
+                        <empty name="rep_files">
+                            <tr class="tech-empty">
+                                <td colspan="6" class="td-align-center">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="rep_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.name}</td>
+                                    <td class="td-align-center">{$vo.adddate}</td>
+                                    <td class="td-align-center">{$vo.record_date}</td>
+                                    <td class="td-align-center">{$vo.term_date}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                </div></div>
+        <if condition="$showTechnicalInformation eq 1">
+            <div class="layui-tab-item"><!--技术资料-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">技术资料</div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="80">
+                            <col>
+                            <col>
+                            <col width="160">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="qualifileList">
+                        <empty name="techni_files">
+                            <tr class="tech-empty">
+                                <td colspan="4" class="td-align-center">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="techni_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.file_name}</td>
+                                    <td class="td-align-center">{$vo.add_time}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </if>
+        <if condition="$showAssetsfile eq 1">
+            <div class="layui-tab-item"><!--设备档案-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备档案</div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="80">
+                            <col>
+                            <col>
+                            <col width="160">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="arcfileList">
+                        <empty name="archives_files">
+                            <tr class="arc-empty">
+                                <td colspan="4" class="td-align-center">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="archives_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.file_name}</td>
+                                    <td class="td-align-center">{$vo.add_time}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </if>
+            <if condition="$assets['is_subsidiary'] eq 0">
+                <div class="layui-tab-item"><!--附属设备-->
+                    <div class="margin-bottom-15">
+                        <div class="layui-elem-quote">附属设备</div>
+                        <table class="layui-table mgt0" lay-size="sm">
+                            <colgroup>
+                                <col width="60">
+                                <col width="">
+                                <col width="120">
+                                <col width="120">
+                                <col width="80">
+                                <col width="90">
+                                <col width="">
+                                <col width="150">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th class="th-align-center">序号</th>
+                                <th class="th-align-center"><span class="rquireCoin">*</span> 附属设备名称</th>
+                                <th class="th-align-center"><span class="rquireCoin">*</span> 品牌</th>
+                                <th class="th-align-center"><span class="rquireCoin">*</span> 规格 / 型号</th>
+                                <th class="th-align-center"><span class="rquireCoin">*</span> 数量</th>
+                                <th class="th-align-center">单价（元）</th>
+                                <th class="th-align-center"><span class="rquireCoin">*</span> 分类</th>
+                                <th class="th-align-center">备注</th>
+                            </tr>
+                            </thead>
+                            <tbody class="materiel-list">
+                            <empty name="increment">
+                                <tr class="arc-empty" id="arc-empty-materiel">
+                                    <td colspan="9" style="text-align: center;">暂无相关数据</td>
+                                </tr>
+                                <else/>
+                                <volist name="increment" id="vo">
+                                    <tr id="row_{$key+1}">
+                                        <td class="td-align-center xuhao">{$key+1}</td>
+                                        <td class="td-align-center increname">{$vo.increname}</td>
+                                        <td class="td-align-center brand">{$vo.brand}</td>
+                                        <td class="td-align-center model">{$vo.model}</td>
+                                        <td class="td-align-center incre_num">{$vo.incre_num}</td>
+                                        <td class="td-align-center increprice">{$vo.increprice}</td>
+                                        <td class="td-align-center incre_catid">{$vo.catname}</td>
+                                        <td class="td-align-center remark">{$vo.remark}</td>
+                                    </tr>
+                                </volist>
+                            </empty>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </if>
+        <if condition="$showAssetsInsurance eq 1">
+            <div class="layui-tab-item"><!--参保信息-->
+                <div class="margin-bottom-15">
+                    <div class="layui-row">
+                        <div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header" style="padding: 0">
+                                    <div class="layui-elem-quote">参保信息</div>
+                                </div>
+                                <div class="layui-card-body" style="padding:0 0 0 1px;">
+                                    <table id="doRenewal" lay-filter="doRenewalData" lay-size="sm"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+            <div class="layui-tab-item"><!--状态变更记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备状态变更记录</div>
+                    <table id="Status" lay-filter="statusData"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--设备转科记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备转科记录</div>
+                    <table id="transfer" lay-filter="transfer"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--设备维修记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备维修记录</div>
+                    <div id="RepairSearchList" lay-filter="RepairSearchList"></div>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--设备质控记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备质控记录</div>
+                    <div id="quality" lay-filter="qualityData"></div>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--设备计量记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备计量记录</div>
+                    <div id="meteringLists" lay-filter="meteringListsData"></div>
+                </div>
+            </div>
+            <!--<div class="layui-tab-item">&lt;!&ndash;设备折旧记录&ndash;&gt;-->
+            <!--<div class="margin-bottom-15">-->
+            <!--<div class="layui-elem-quote">设备折旧记录</div>-->
+            <!--开发中。。。-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="layui-tab-item"><!--不良记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备不良记录</div>
+                    <div id="getAdverseLists" lay-filter="getAdverseData"></div>
+                </div>
+            </div>
+
+            <div class="layui-tab-item"><!--借调记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备借调记录</div>
+                    <div id="borrowRecordList" lay-filter="borrowRecordData"></div>
+                </div>
+            </div>
+            <div class="layui-tab-item"><!--外调记录-->
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">设备外调申请记录</div>
+                    <table class="layui-table" lay-even="" lay-size="sm">
+                        <colgroup>
+                            <col width="120">
+                            <col>
+                            <col width="120">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td class="text-right">申请类型：</td>
+                            <td>{$outside.apply_type_name}</td>
+                            <if condition="$outside['apply_type'] eq C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                                <td class="text-right">外售金额：</td>
+                                <td>{$outside.price}元</td>
+                                <else/>
+                                <td class="text-right">外调目的地：</td>
+                                <td>{$outside.accept}</td>
+                            </if>
+                        </tr>
+                        <tr>
+                            <if condition="$outside['apply_type'] eq C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                                <td class="text-right">外调目的地：</td>
+                                <td>{$outside.accept}</td>
+                                <td class="text-right">外调原因：</td>
+                                <td>{$outside.reason}</td>
+                                <else/>
+                                <td class="text-right">外调原因：</td>
+                                <td colspan="3">{$outside.reason}</td>
+                            </if>
+                        </tr>
+                        <tr>
+                            <td class="text-right">联系人：</td>
+                            <td>{$outside.person}</td>
+                            <td class="text-right">联系电话：</td>
+                            <td>{$outside.phone}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">申请人：</td>
+                            <td>{$outside.apply_username}</td>
+                            <td class="text-right">申请时间：</td>
+                            <td>{$outside.apply_time}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">预计调出日期：</td>
+                            <td colspan="3">{$outside.outside_date}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <notempty name="approve">
+                        <blockquote class="layui-elem-quote">审批信息</blockquote>
+                        <table class="layui-table" lay-even="" lay-size="sm">
+                            <colgroup>
+                                <col width="100">
+                                <col width="100">
+                                <col width="100">
+                                <col width="150">
+                                <col width="100">
+                                <col width="100">
+                                <col width="100">
+                                <col width="250">
+                            </colgroup>
+                            <tbody>
+                            <volist name="approve" id="vo">
+                                <tr>
+                                    <th style="width: 10%;">审批人：</th>
+                                    <td>{$vo.approver}</td>
+                                    <th style="width: 10%;">审批时间：</th>
+                                    <td>{$vo.approve_time}</td>
+                                    <th style="width: 10%;">审批状态：</th>
+                                    <td>{$vo.is_adoptName}</td>
+                                    <th style="width: 10%;">审批意见：</th>
+                                    <td>{$vo.remark}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </notempty>
+
+                    <notempty name="applyFile">
+                        <blockquote class="layui-elem-quote">外调申请附件</blockquote>
+                        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+                            <colgroup>
+                                <col width="15%">
+                                <col width="40%">
+                                <col width="30%">
+                                <col width="15%">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>序号：</th>
+                                <th>文件名称：</th>
+                                <td>上传时间</td>
+                                <th>操作：</th>
+                            </tr>
+                            <volist name="applyFile" id="vo">
+                                <tr>
+                                    <td>{$key+1}</td>
+                                    <td>{$vo.file_name}</td>
+                                    <td>{$vo.add_time}</td>
+                                    <td>{$vo.operation}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </notempty>
+
+                    <if condition="$outside[status] EQ C('OUTSIDE_STATUS_COMPLETE')">
+                        <blockquote class="layui-elem-quote">外调验收单</blockquote>
+                        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;margin-bottom: 0!important;border-bottom: none">
+                            <colgroup>
+                                <col width="15%">
+                                <col width="40%">
+                                <col width="30%">
+                                <col width="15%">
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>验收人：</th>
+                                <td>{$outside.check_person}</td>
+                                <th>联系电话：</th>
+                                <td>{$outside.check_phone}</td>
+                            </tr>
+                            <tr>
+                                <th>验收时间：</th>
+                                <td>{$outside.check_date}</td>
+                                <td>备注：</td>
+                                <td>{$outside.check_remark}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <notempty name="checkFile">
+                            <blockquote class="layui-elem-quote" style="padding: 5px 15px;border-left: 1px solid #e6e6e6;">外调验收单附件</blockquote>
+                            <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+                                <colgroup>
+                                    <col width="15%">
+                                    <col width="40%">
+                                    <col width="30%">
+                                    <col width="15%">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>序号：</th>
+                                    <th>文件名称：</th>
+                                    <th>上传时间</th>
+                                    <th>操作：</th>
+                                </tr>
+                                <volist name="checkFile" id="vo">
+                                    <tr>
+                                        <td>{$key+1}</td>
+                                        <td>{$vo.file_name}</td>
+                                        <td>{$vo.add_time}</td>
+                                        <td>{$vo.operation}</td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </notempty>
+                    </if>
+                </div>
+            </div>
+
+            <!--<div class="layui-tab-item">&lt;!&ndash;采购信息&ndash;&gt;-->
+            <!--开发中...-->
+            <!--</div>-->
+            <!--<div class="layui-tab-item">&lt;!&ndash;效益分析&ndash;&gt;-->
+            <!--开发中...-->
+            <!--</div>-->
+            <!--<div class="layui-tab-item">&lt;!&ndash;保养信息&ndash;&gt;-->
+            <!--开发中...-->
+            <!--</div>-->
+
+            <!--<div class="layui-tab-item">&lt;!&ndash;设备折旧记录&ndash;&gt;-->
+            <!--开发中...-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>
+<script>
+    var usecompany ='{$usecompany}';
+    layui.use('controller/assets/lookup/showLife', layui.factory('controller/assets/lookup/showLife'));
+</script>
+
+

@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加维修单</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="/Public/images/favicon.ico"/>
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/css/formselects.css?v={:mt_rand(1,54561)}">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+</head>
+<style>
+    .layui-form-pane .layui-form-label {
+        overflow: initial
+    }
+
+    .layui-form-pane .layui-input-block {
+        margin-left: 112px;
+    }
+
+
+    .layui-input {
+        /*width: 98%;*/
+        height: 38px;
+    }
+
+    .read-table th {
+        text-align: right
+    }
+
+    .read-table td {
+        text-align: left
+    }
+
+    .dateFormat {
+        cursor: pointer;
+    }
+
+    .not_scene {
+        display: none;
+    }
+
+    .factory {
+        display: none;
+    }
+
+    .offer {
+        display: none
+    }
+</style>
+<body style="padding: 15px;">
+<div class="layui-form layui-form-pane">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>设备相关信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>设备名称：</label>
+            <div class="layui-input-block">
+                <div class="input-group">
+                    <input type="text" class="form-control layui-input" id="assets-search" lay-verify="required" placeholder="可输入名称、编号、原编号、规格/型号、序列号、设备位置进行搜索" name="assets">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>设备编号：</label>
+            <div class="layui-input-block">
+                <div class="input-group">
+                    <input type="text" class="form-control layui-input" id="assnum-search" lay-verify="required" placeholder="可输入名称、编号、原编号、规格/型号、序列号、设备位置进行搜索" name="assnum">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="layui-table read-table" lay-even lay-size="sm">
+        <colgroup>
+            <col width="15%">
+            <col width="35%">
+            <col width="15%">
+            <col width="35%">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>规格型号：</th>
+            <td class="data-assets-model"></td>
+            <th>生产厂家：</th>
+            <td class="data-assets-factory"></td>
+        </tr>
+        <tr>
+            <th>设备序列号：</th>
+            <td class="data-assets-serialnum"></td>
+            <th>分类名称：</th>
+            <td class="data-assets-category"></td>
+        </tr>
+        <tr>
+            <th>使用科室：</th>
+            <td class="data-assets-department"></td>
+            <th>设备位置：</th>
+            <td class="data-assets-address"></td>
+        </tr>
+        <tr>
+            <th>保修截止日期：</th>
+            <td class="data-assets-guarantee_date"></td>
+            <th>保修状态：</th>
+            <td class="data-assets-guaranteeStatus"></td>
+        </tr>
+        </tbody>
+    </table>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>报修相关信息</legend>
+    </fieldset>
+    <div class="layui-row layui-col-space5">
+        <div class="layui-col-md4">
+            <label class="layui-form-label">档案编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="archives_num" placeholder="请输入档案编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label">维修类别：</label>
+            <div class="layui-input-block">
+                <select name="repair_category">
+                    <volist name="repair_category" id="vo">
+                        <option value="{$key+1}">{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label">维修单号：</label>
+            <div class="layui-input-block">
+                <input type="text" placeholder="单号由本系统规则生成" readonly autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>报修时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="applicant_time" value="" placeholder="请点击选择报修时间" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>报修人：</label>
+            <div class="layui-input-block">
+                <div class="input-group">
+                    <input type="text" class="form-control layui-input" id="applicant-search" lay-verify="required" placeholder="请输入报修人名称" name="applicant">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>报修人电话：</label>
+            <div class="layui-input-block">
+                <input type="text" name="applicant_tel" lay-verify="required" placeholder="请输入报修电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label"><span class="rquireCoin"> * </span>故障描述：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入故障描述" name="breakdown" class="layui-textarea" lay-verify="required"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">报修备注：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入报修备注" name="applicant_remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>接单相关信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>接单人：</label>
+                <div class="layui-input-block">
+                    <div class="input-group">
+                        <input type="text" class="form-control layui-input" id="response-search" lay-verify="required" placeholder="请输入接单人名称" name="response">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>接单人电话：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="response_tel" lay-verify="required" placeholder="请输入接单人电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>接单时间：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="response_date" value="" placeholder="请点击选择接单时间" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>预计到场：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="expect_arrive" lay-verify="required" placeholder="请输入预计到场时间（分钟）" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">接单备注：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入接单备注" name="reponse_remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>检修相关信息</legend>
+    </fieldset>
+    <div class="layui-row layui-col-space5">
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>故障类型：</label>
+            <div class="layui-input-block">
+                <select xm-select="type" xm-select-search="" id="refreshType" lay-verify="required">
+                    <volist name="repairType" id="v">
+                        <option value="{$v.id}" {$v.selected}>{$v.title}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>故障问题：</label>
+            <div class="layui-input-block">
+                <select xm-select="problem" xm-select-search="" lay-verify="required"></select>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>解决方式：</label>
+            <div class="layui-input-block">
+                <select name="is_scene" lay-filter="scene_type">
+                    <option value="1">现场解决</option>
+                    <option value="0">非现场解决</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>检修时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="overhauldate" value="" placeholder="请点击选择检修时间" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>预计修复：</label>
+            <div class="layui-input-block">
+                <input type="text" name="expect_time" value="" placeholder="请点击选择预计修复时间" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-col-md6 repair_type not_scene">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span> 维修性质：</label>
+            <div class="layui-input-block">
+                <select name="repair_type" class="type" lay-filter="repair_type"></select>
+            </div>
+        </div>
+    </div>
+    <div class="is_scene">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>处理详情：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入处理详情" name="dispose_detail" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="not_scene">
+        <div class="layui-row layui-col-space5 factory">
+            <div class="layui-col-md4">
+                <label class="layui-form-label">维修厂家：</label>
+                <div class="layui-input-block">
+                    <input type="hidden" name="guarantee_id" value="{$asArr.guarantee_id}">
+                    <input type="text" name="guarantee_name" value="{$asArr.guarantee_name}" readonly class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <label class="layui-form-label">联系人：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="salesman_name" value="{$asArr.salesman_name}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md4">
+                <label class="layui-form-label">联系电话：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="salesman_phone" value="{$asArr.salesman_phone}" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">检修备注：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入检修备注" name="repair_remark" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title addParts">
+        <legend>配件/服务明细</legend>
+    </fieldset>
+    <div class="layui-col-md12 addParts">
+        <table id="parts_list" lay-filter="parts_list"></table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title offer">
+        <legend>维修报价相关信息</legend>
+    </fieldset>
+    <div class="layui-row layui-col-space5 offer">
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>公司名称：</label>
+            <div class="layui-input-block">
+                <select name="offer_company" lay-filter="companyInfo" lay-search>
+                    <option value="">请选择公司</option>
+                    <volist name="company" id="v">
+                        <option value="{$v.sup_name}" data-salesman-name="{$v.salesman_name}" data-salesman-phone="{$v.salesman_phone}" data-company_id="{$v.olsid}">{$v.sup_name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>联系人：</label>
+            <div class="layui-input-block">
+                <input type="text" name="offer_contacts" placeholder="请输入联系人名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>联系方式：</label>
+            <div class="layui-input-block">
+                <input type="text" name="telphone" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>服务金额：</label>
+            <div class="layui-input-block">
+                <input type="text" name="total_price" placeholder="请输入服务金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>发票：</label>
+            <div class="layui-input-block">
+                <input type="text" name="invoice" placeholder="请输入发票" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>周期：</label>
+            <div class="layui-input-block">
+                <input type="text" name="cycle" placeholder="请输入到货/服务周期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>决定人：</label>
+            <div class="layui-input-block">
+                <input type="text" name="decision_user" placeholder="请输入决定人名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>决定时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="decision_adddate" value="" placeholder="请点击选择决定时间" readonly="readonly" class="layui-input dateFormat">
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>简要说明：</label>
+            <div class="layui-input-block">
+                <input type="text" name="decision_reasion" placeholder="请输入决定人的简要说明" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text offer">
+        <label class="layui-form-label">公司备注：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入公司备注" name="company_remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>维修过程相关信息</legend>
+    </fieldset>
+    <div class="layui-form-item">
+        <div class="layui-row layui-col-space5">
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>维修工程师：</label>
+                <div class="layui-input-block">
+                    <div class="input-group">
+                        <input type="text" class="form-control layui-input" id="engineer-search" lay-verify="required" placeholder="请输入维修工程师名称" name="engineer">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label">联系方式：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="engineer_tel" placeholder="请输入维修工程师联系电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label">协助工程师：</label>
+                <div class="layui-input-block">
+                    <div class="input-group">
+                        <input type="text" class="form-control layui-input" id="assist-search" placeholder="请输入协助工程师名称" name="assist_engineer">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label">联系方式：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="assist_engineer_tel" placeholder="请输入协助工程师联系方式" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label">其他费用：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="other_price" placeholder="请输入其他费用" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label">总维修费用：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="actual_price" value="" placeholder="请输入总维修费用" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>维修开始：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="engineer_time" value="" placeholder="请点击选择维修开始日期" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>维修结束：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="overdate" value="" placeholder="请点击选择维修结束日期" readonly="readonly" class="layui-input dateFormat" lay-verify="required">
+                </div>
+            </div>
+            <!--            <div class="layui-col-md3">-->
+            <!--                <label class="layui-form-label"><span class="rquireCoin"> * </span>维修工时：</label>-->
+            <!--                <div class="layui-input-block">-->
+            <!--                    <input type="text" name="working_hours" lay-verify="required" placeholder="请输入维修工时（小时）" autocomplete="off" class="layui-input">-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>维修跟进相关信息</legend>
+    </fieldset>
+    <div class="layui-col-md12">
+        <table id="follow_list" lay-filter="follow_list"></table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title addParts">
+        <legend>验收相关信息</legend>
+    </fieldset>
+    <div class="layui-row layui-col-space5">
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>验收人：</label>
+            <div class="layui-input-block">
+                <div class="input-group">
+                    <input type="text" class="form-control layui-input" id="check-search" lay-verify="required" placeholder="请输入验收人名称" name="checkperson">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>验收时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="checkdate" lay-verify="required" placeholder="请点击选择验收时间" readonly="readonly" autocomplete="off" class="layui-input dateFormat">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">验收备注：</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入验收备注" name="check_remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <button class="layui-btn" lay-submit lay-filter="save">提交</button>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/html" id="parts-Toolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加配件</a>
+    </div>
+</script>
+<script type="text/html" id="parts-Tool">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </div>
+</script>
+<script type="text/html" id="follow-Toolbar">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加跟进记录</a>
+    </div>
+</script>
+<script type="text/html" id="follow-Tool">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </div>
+</script>
+
+<script src="/tecev/start/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/tecev/src/' //指定 layuiAdmin 项目路径，本地开发用 src，线上用 dist
+    }).extend({ //设定模块别名
+        suggest: '../extend/suggest',
+        formSelects: '../extend/formSelects',
+        ty_sug: '../extend/ty_sug',
+    });
+</script>
+<script>
+    layui.use(['form', 'table', 'layedit', 'laydate', 'suggest', 'formSelects'], function () {
+        var form = layui.form, laydate = layui.laydate, table = layui.table, formSelects = layui.formSelects, suggest = layui.suggest, submitUrl = 'repairForm', thisbody = $('body'), repair_type = 0, scene = 1, companyId = 0;
+        //绑定该页面所有时间元素
+        lay('.dateFormat').each(function () {
+            var that = this;
+            laydate.render({
+                elem: this //指定元素
+                , type: 'datetime'
+                , calendar: true
+                , min: '1970-01-02'
+                , trigger: 'click'
+                , done: function (value, date) {
+                    if (date.hours === 0 && date.minutes === 0 && date.seconds === 0) {
+                        layer.confirm('当前选择日期暂无具体时间,请补充具体时间。', {
+                            btn: ['是', '否'],
+                            title: '是否需要补充时间',
+                            closeBtn: 0
+                        }, function (index) {
+                            layer.close(index);
+                            setTimeout(function () {
+                                $(that).click();
+                            }, 500)
+                        }, function (index) {
+                            layer.close(index);
+                        });
+                    }
+                }
+            });
+        });
+        //初始化搜索建议插件
+        suggest.search();
+        //设备名称搜索建议
+        $("#assets-search").bsSuggest(returnRepairFormAssets('repairForm')).on('onSetSelectValue', function (e, keyword, data) {
+            getAssetsInfo(data.assid);
+        }).on('onUnsetSelectValue', function (e) {
+            resetAssetsInfo(false);
+        });
+        //设备编号搜索建议
+        $("#assnum-search").bsSuggest(returnRepairFormAssnum('repairForm')).on('onSetSelectValue', function (e, keyword, data) {
+            getAssetsInfo(data.assid);
+        }).on('onUnsetSelectValue', function (e) {
+            resetAssetsInfo(false);
+        });
+        //报修人搜索建议
+        $("#applicant-search").bsSuggest(returnUser()).on('onSetSelectValue', function (e, keyword, data) {
+            $("input[name='applicant_tel']").val(data.telephone);
+        }).on('onUnsetSelectValue', function (e) {
+            $("input[name='applicant_tel']").val('');
+        });
+        //接单人搜索建议
+        $("#response-search").bsSuggest(returnUser()).on('onSetSelectValue', function (e, keyword, data) {
+            $("input[name='response_tel']").val(data.telephone);
+        }).on('onUnsetSelectValue', function (e) {
+            $("input[name='response_tel']").val('');
+        });
+        //维修工程师搜索建议
+        $("#engineer-search").bsSuggest(returnUser()).on('onSetSelectValue', function (e, keyword, data) {
+            $("input[name='engineer_tel']").val(data.telephone);
+        }).on('onUnsetSelectValue', function (e) {
+            $("input[name='engineer_tel']").val('');
+        });
+        //协助工程师搜索建议
+        $("#assist-search").bsSuggest(returnUser()).on('onSetSelectValue', function (e, keyword, data) {
+            $("input[name='assist_engineer_tel']").val(data.telephone);
+        }).on('onUnsetSelectValue', function (e) {
+            $("input[name='assist_engineer_tel']").val('');
+        });
+        //验收人搜索建议
+        $("#check-search").bsSuggest(returnUser());
+
+        // ajax获取设备信息
+        function getAssetsInfo(assid) {
+            $.ajax({
+                url: submitUrl + '?action=getAssetsInfo',
+                data: {assid: assid},
+                dataType: 'json',
+                success: function (res) {
+                    $('.data-assets-model').html(res.model);
+                    $('.data-assets-factory').html(res.factory);
+                    $('.data-assets-serialnum').html(res.serialnum);
+                    $('.data-assets-category').html(res.category);
+                    $('.data-assets-department').html(res.department);
+                    $('.data-assets-address').html(res.address);
+                    $('.data-assets-guarantee_date').html(res.guarantee_date);
+                    $('.data-assets-guaranteeStatus').html(res.guaranteeStatus);
+                    $('#assets-search').val(res.assets);
+                    $('#assnum-search').val(res.assnum);
+                    //保修厂家信息
+                    $("input[name='guarantee_id']").val(res.guarantee_id);
+                    $("input[name='guarantee_name']").val(res.guarantee_name);
+                    $("input[name='salesman_name']").val(res.salesman_name);
+                    $("input[name='salesman_phone']").val(res.salesman_phone);
+                    //维修性质 如果在保修期内 多一个选项维保厂家
+                    var selectHtml = '<option value="0">自修</option>' + '<option value="2">第三方维修</option>';
+                    if (res.is_guarantee === 1) {
+                        selectHtml += '<option value="1">维保厂家</option>'
+                    }
+                    $("select[name='repair_type']").html(selectHtml);
+                    form.render('select');
+
+                },
+                error: function () {
+                    resetAssetsInfo();
+                }
+            })
+        }
+
+        //复位相关设备信息
+        function resetAssetsInfo(type = true) {
+            $('.data-assets-model').html('');
+            $('.data-assets-factory').html('');
+            $('.data-assets-serialnum').html('');
+            $('.data-assets-category').html('');
+            $('.data-assets-department').html('');
+            $('.data-assets-address').html('');
+            $('.data-assets-guarantee_date').html('');
+            $('.data-assets-guarantee_status').html('');
+            if (type) {
+                $('#assets-search').val('');
+                $('#assnum-search').val('');
+            }
+            //清空保修厂家信息
+            $("input[name='guarantee_id']").val('');
+            $("input[name='guarantee_name']").val('');
+            $("input[name='salesman_name']").val('');
+            $("input[name='salesman_phone']").val('');
+        }
+
+
+        //故障类型 多选框初始配置
+        formSelects.render('type', selectParams(1));
+        formSelects.btns('type', selectParams(2), selectParams(3));
+        //故障问题 多选框初始配置
+        formSelects.render('problem', selectParams(1));
+        formSelects.btns('problem', selectParams(2));
+        //监听联动变化事件
+        formSelects.on('type', function () {
+            setTimeout(function () {
+                var parentid = formSelects.value('type', 'valStr');
+                if (!parentid) {
+                    //local模式
+                    formSelects.data('problem', 'local', {arr: []});
+                } else {
+                    //server模式
+                    formSelects.data('problem', 'server', {
+                        url: submitUrl + "?action=getRepairProblem&parentid=" + parentid
+                    });
+                }
+            }, 100)
+        });
+        //过长的维修问题增加tips
+        thisbody.find(".xm-select").click(function () {
+            var fs = $(this).parents('.xm-select-parent').attr('fs_id');
+            if (fs === 'problem') {
+                var title = $(this).parent().next().find('dd');
+                $.each(title, function (k, v) {
+                    if ($.trim($(v).attr('class')) === '') {
+                        var span = $(this).find('span').html();
+                        if (span.length >= 23) {
+                            $(this).find('span').attr('title', span);
+                        }
+                    }
+                })
+            }
+        });
+        //选择是否现场解决
+        form.on('select(scene_type)', function (data) {
+            var scene = parseInt(data.value);
+            if (scene === 1) {
+                thisbody.find('.is_scene').show();
+                thisbody.find('.not_scene').hide();
+                thisbody.find('.offer').hide();
+                thisbody.find('.addParts').show();
+                thisbody.find('select[name="reponse_remark"]').attr('lay-verify', 'required');
+                //thisbody.find('.addParts').hide();
+            } else {
+                if (repair_type === 0) {
+                    thisbody.find('.offer').hide();
+                    thisbody.find('.addParts').show();
+                } else if (repair_type === 2) {
+                    thisbody.find('.offer').show();
+                    thisbody.find('.addParts').hide();
+                }
+                thisbody.find('.is_scene').hide();
+                thisbody.find('.not_scene').show();
+                thisbody.find('select[name="reponse_remark"]').attr('lay-verify', '');
+            }
+            // form.render();
+        });
+        //选择维修性质
+        form.on('select(repair_type)', function (data) {
+            //新增判断是否第三方公司
+            thisbody.find('.offer').find('select').attr('lay-verify', '');
+            thisbody.find('.offer').find('input').attr('lay-verify', '');
+            repair_type = parseInt(data.value);
+            if (repair_type === 0) {
+                thisbody.find('.addParts').show();
+                thisbody.find('.offer').hide();
+                thisbody.find('.factory').hide();
+            } else if (repair_type === 2) {
+                thisbody.find('.offer').show();
+                thisbody.find('.addParts').hide();
+                thisbody.find('.factory').hide();
+                //新增判断是否第三方公司
+                thisbody.find('.offer').find('select').attr('lay-verify', 'required');
+                thisbody.find('.offer').find('input').attr('lay-verify', 'required');
+            } else if (repair_type === 1) {
+                thisbody.find('.offer').hide();
+                thisbody.find('.addParts').hide();
+                thisbody.find('.factory').show();
+            }
+        });
+
+        //配件table
+        var partsData = [];
+        var partsTable = table.render({
+            elem: '#parts_list'
+            , height: 320
+            , size: 'sm'
+            , toolbar: '#parts-Toolbar'
+            , defaultToolbar: []
+            , data: partsData
+            , cols: [
+                [{
+                    field: 'parts',
+                    title: '配件名称',
+                    minWidth: 100,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: 'part_model',
+                    title: '型号',
+                    minWidth: 100,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: 'num',
+                    title: '数量',
+                    minWidth: 100,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: 'part_price',
+                    title: '单价',
+                    minWidth: 100,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: 'username',
+                    title: '操作人',
+                    minWidth: 100,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: '',
+                    title: '操作',
+                    minWidth: 100,
+                    align: 'center',
+                    toolbar: '#parts-Tool'
+                }]
+            ]
+        });
+        //监听配件表格上方工具条
+        table.on('toolbar(parts_list)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    var field = {id: Math.random().toString(36).substr(-8), parts: '点击修改', part_model: '点击修改', num: '点击修改', part_price: '点击修改', username: '点击修改'};
+                    partsData.push(field);
+                    partsTable.reload({
+                        data: partsData
+                    });
+                    break;
+            }
+        });
+        //监听配件表格内工具条
+        table.on('tool(parts_list)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (layEvent === 'del') { //删除
+                layer.confirm('真的删除行么？', function (index) {
+                    var delKey = '';
+                    $.each(partsData, function (k, v) {
+                        if (v.id === data.id) {
+                            delKey = k;
+                            return false;
+                        }
+                    });
+                    partsData.splice(delKey, 1);
+                    partsTable.reload({
+                        data: partsData
+                    });
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            }
+        });
+
+        //监听配件修改行
+        table.on('edit(parts_list)', function(obj){
+            if (obj.field === 'num' || obj.field === 'part_price'){
+                var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+                var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+                if (!regPos.test(obj.value) || !regNeg.test(obj.value)){
+                    layer.msg('只能填写数字');
+                    $.each(partsData,function (k,v) {
+                        if (v.id === obj.data.id){
+                            v[obj.field] = '点击修改';
+                            return false;
+                        }
+                    });
+                    partsTable.reload({
+                        data: partsData
+                    });
+                }
+            }
+        });
+        //第三方选择公司联动填充输入框
+        form.on('select(companyInfo)', function (data) {
+            companyId = data.value;
+            $(data.elem).find('option').each(function (k, v) {
+                if (data.value === $(v).attr('value')) {
+                    thisbody.find("input[name='offer_contacts']").val($(v).attr('data-salesman-name'));
+                    thisbody.find("input[name='telphone']").val($(v).attr('data-salesman-phone'));
+                }
+            });
+        });
+
+        //跟进table
+        var followData = [];
+        var followTable = table.render({
+            elem: '#follow_list'
+            , height: 320
+            , size: 'sm'
+            , toolbar: '#follow-Toolbar'
+            , defaultToolbar: []
+            , data: followData
+            , cols: [
+                [{
+                    field: 'follow_date',
+                    title: '跟进日期',
+                    minWidth: 150,
+                    align: 'center',
+                    // edit: 'text',
+                    event: 'follow_date'
+                }, {
+                    field: 'follow_detail',
+                    title: '处理详情',
+                    minWidth: 200,
+                    edit: 'text',
+                    align: 'center'
+                }, {
+                    field: 'next_date',
+                    title: '预计下一步跟进日期',
+                    minWidth: 150,
+                    align: 'center',
+                    // edit: 'text',
+                    event: 'next_date'
+                }, {
+                    field: '',
+                    title: '操作',
+                    minWidth: 100,
+                    align: 'center',
+                    toolbar: '#follow-Tool'
+                }]
+            ]
+        });
+        //监听跟进表格上方工具条
+        table.on('toolbar(follow_list)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'add':
+                    var field = {id: Math.random().toString(36).substr(-8), follow_date: '', follow_detail: '点击修改', next_date: ''};
+                    followData.push(field);
+                    followTable.reload({
+                        data: followData
+                    });
+                    break;
+            }
+        });
+        //监听跟进表格内工具条
+        table.on('tool(follow_list)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var that = this;
+            var field = $(that).data('field');
+            switch (layEvent) {
+                case 'del':
+                    layer.confirm('真的删除行么？', function (index) {
+                        var delKey = '';
+                        $.each(followData, function (k, v) {
+                            if (v.id === data.id) {
+                                delKey = k;
+                                return false;
+                            }
+                        });
+                        followData.splice(delKey, 1);
+                        followTable.reload({
+                            data: followData
+                        });
+                        layer.close(index);
+                        //向服务端发送删除指令
+                    });
+                    break;
+                case 'follow_date':
+                    //时间选择器
+                    laydate.render({
+                        elem: $(this).find('.layui-table-cell').get(0),
+                        calendar: true
+                        , show: true
+                        , min: '1970-01-02'
+                        , trigger: 'click'
+                        , done: function (value, date) {
+                            if (data.next_date !== '') {
+                                if (value > data.next_date) {
+                                    layer.msg("跟进日期不能大于预计下次跟进日期！", {icon: 2, time: 2000});
+                                    value = '';
+                                }
+                            }
+                            if (followData.length > 1) {
+                                $.each(followData, function (k, v) {
+                                    if (v.id === data.id) {
+                                        if (value < followData[k - 1]['follow_date']) {
+                                            layer.msg("下一条跟进日期记录必须比上一条记录大", {icon: 2, time: 2000});
+                                            value = '';
+                                            return false;
+                                        }
+                                    }
+                                })
+                            }
+                            //同步更新缓存对应的值
+                            obj.update({
+                                [field]: value
+                            });
+                        }
+                    });
+                    break;
+                case 'next_date':
+                    //时间选择器
+                    laydate.render({
+                        elem: $(this).find('.layui-table-cell').get(0),
+                        calendar: true
+                        , show: true
+                        , min: '1970-01-02'
+                        , trigger: 'click'
+                        , done: function (value, date) {
+                            if (data.follow_date !== '') {
+                                if (value < data.follow_date) {
+                                    layer.msg('预计下次跟进日期不能比跟进时间小', {icon: 2});
+                                    value = '';
+                                }
+                            }
+                            //同步更新缓存对应的值
+                            obj.update({
+                                [field]: value
+                            });
+                        }
+                    });
+                    break;
+            }
+        });
+
+        //提交
+        form.on('submit(save)', function (data) {
+            var params = data.field;
+            //故障问题
+            params.problem = formSelects.value('problem', 'valStr');
+            if (scene === 1) {
+                repair_type = 0;
+                params.partsData = partsData;
+            } else {
+                //非现场解决
+                if (repair_type === 0) {
+                    //自修，读取配件信息
+                    params.partsData = partsData;
+                }
+            }
+            params.repair_type = repair_type;
+            params.followData = followData;
+            params.offer_company_id = companyId;
+            //表单提交ajax
+            $.ajax({
+                timeout: 30000,
+                type: "POST",
+                url: submitUrl,
+                data: params,
+                dataType: "json",
+                async: true,
+                success: function (data) {
+                    if (data.status === 1) {
+                        layer.msg(data.msg, {icon: 1},1000);
+                        setTimeout(function () {
+                            location.reload();
+                        },2000)
+                    } else {
+                        layer.msg(data.msg, {icon: 2}, 1000);
+                    }
+                },
+                error: function () {
+                    layer.msg("网络访问失败", {icon: 2}, 1000);
+                },
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>

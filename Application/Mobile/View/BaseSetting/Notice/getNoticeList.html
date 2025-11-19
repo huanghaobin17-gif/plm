@@ -1,0 +1,106 @@
+<include file="Public:head"/>
+<!--<?php if($menuData = get_menu_name('Repair','Repair','getRepairLists')):?>-->
+<!--<title>{$menuData['actionname']}</title>-->
+<title>系统公告</title>
+<!--<?php endif?>-->
+<style>
+    .detail {
+        padding-top: 1.5rem;
+    }
+
+    .detail li {
+        position: relative;
+    }
+
+    .detailText {
+        width: auto;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .text {
+        /*margin-left: 6rem;*/
+        display: inline-block;
+    }
+
+    .typeImage {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .typeButton {
+        position: absolute;
+        top: 0;
+        z-index: 3;
+    }
+
+    .typeButton a {
+        font-size: 1.05rem;
+    }
+
+    .content {
+        height: 8rem;
+        border-width: 0 0 1px 0;
+        margin-top: 0;
+    }
+
+    .typeImageDiv {
+        text-align: center;
+        margin-top: 1.75rem;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="min-height: 38.5rem">
+            <ul>
+                <if condition="$data neq null">
+                    <volist name="data" id="vo">
+                        <li>
+                            <div class="content jumpDetail" data-id="{$vo.notid}">
+                                <div class="layui-row">
+                                    <div class="layui-col-xs3">
+                                        <div class="typeImageDiv">
+                                            <img src="__PUBLIC__/mobile/images/icon/{$vo.file_type}.png" class="typeImage">
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs9">
+                                        <ul class="detail">
+                                            <li>
+                                                <span class="detailText">{$vo.title}</span>
+                                            </li>
+                                            <li>
+                                                <span class="text">{$vo.add_time}</span>
+<!--                                                <div class="typeButton">-->
+<!--                                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary">{$vo.}-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </volist>
+                    <else/>
+                    <div class="layui-card-body" style="padding: 0.5rem;">
+                        <ul id="examine">
+                            <div class="no_data">
+                                <div class="no_data_img"><img src="/Public/mobile/images/icon/u83.png"/></div>
+                                <div class="no_data_tips">暂无相关数据</div>
+                            </div>
+                        </ul>
+                    </div>
+                </if>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var noticeListUrl = '{$url}';
+</script>
+<script src="__PUBLIC__/mobile/js/basesetting/notice/getNoticeList.js?v={:mt_rand(1,54561)}"></script>

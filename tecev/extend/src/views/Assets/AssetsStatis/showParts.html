@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <script src="__PUBLIC__/js/echarts.js"></script>
+    <style>
+        .layui-table tr th {
+            text-align: center !important;
+        }
+        .conData tr td{
+            text-align: center;
+        }
+        .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+        .layui-table{ margin-top: 0px; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="reportHeader">
+        <div class="reportTitle">{$reportTitle}</div>
+        <div class="reportConditions">{$reportConditions}</div>
+        <input type="hidden" name="assid" value="{$assid}"/>
+    </div>
+    <table class="layui-table">
+        <colgroup>
+            <col width="80">
+            <col width="260">
+            <col width="200">
+            <col width="120">
+            <col width="120">
+            <col width="120">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>配件名称</th>
+            <th>配件型号</th>
+            <th>配件单价</th>
+            <th>配件数量</th>
+            <th>合计（元）</th>
+        </tr>
+        </thead>
+        <tbody class="conData">
+            <volist name="data" id="vo">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.parts}</td>
+                    <td>{$vo.part_model}</td>
+                    <td>{$vo.part_price}</td>
+                    <td class="pnum">{$vo.part_num}</td>
+                    <td class="psum">{$vo.price_sum}</td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="clear"></div>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        var tr = $('.conData').find('tr');
+        var pnum = psum =0;
+            $.each(tr,function (key,val) {
+            pnum += parseInt($(this).find('.pnum').html());
+            psum += parseFloat($(this).find('.psum').html());
+        });
+        var html = '';
+        html += '<tr>\n' +
+            '<td style="color:red;">合计：</td>\n' +
+            '<td style="color:red;">--</td>\n' +
+            '<td style="color:red;">--</td>\n' +
+            '<td style="color:red;">--</td>\n' +
+            '<td class="pnum" style="color:red;">'+pnum+'</td>\n' +
+            '<td class="psum" style="color:red;">'+parseFloat(psum).toFixed(2)+'</td>\n' +
+            '</tr>';
+        $('.conData').append(html);
+    });
+</script>

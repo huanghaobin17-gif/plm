@@ -1,0 +1,86 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-patrol .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-patrol .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-patrol .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-patrol .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-patrol">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>计划名称 {patrolname}</span>
+            <span>计划编号 {patrolnum}</span>
+            <span>周期编号 {cyclenum}</span>
+            <span>巡查级别 {patrol_level}</span>
+            <span>周期开始时间 {startdate}</span>
+            <span>转至维修的设备名称 {assets}</span>
+            <span>转至维修的设备科室 {department}</span>
+            <span>申报人 {applicant}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>巡查模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="patrol_sms_open" name="Patrol[status]"  value="1" title="开启" <if condition="$settings[Patrol][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="patrol_sms_open" name="Patrol[status]"  value="0" title="关闭" <if condition="$settings[Patrol][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="patrol_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知处理巡查计划审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Patrol[doApprove][content]" value="{$settings[Patrol][doApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Patrol[doApprove][status]"  value="1" title="开启" <if condition="$settings[Patrol][doApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Patrol[doApprove][status]"  value="0" title="关闭" <if condition="$settings[Patrol][doApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知申请人审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Patrol[borrowrApproveOver][content]" value="{$settings[Patrol][borrowrApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Patrol[borrowrApproveOver][status]"  value="1" title="开启" <if condition="$settings[Patrol][borrowrApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Patrol[borrowrApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Patrol][borrowrApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知实施巡查计划：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Patrol[doPatrolTask][content]" value="{$settings[Patrol][doPatrolTask][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Patrol[doPatrolTask][status]"  value="1" title="开启" <if condition="$settings[Patrol][doPatrolTask][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Patrol[doPatrolTask][status]"  value="0" title="关闭" <if condition="$settings[Patrol][doPatrolTask][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知验收巡查计划：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Patrol[checkPatrolTask][content]" value="{$settings[Patrol][checkPatrolTask][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Patrol[checkPatrolTask][status]"  value="1" title="开启" <if condition="$settings[Patrol][checkPatrolTask][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Patrol[checkPatrolTask][status]"  value="0" title="关闭" <if condition="$settings[Patrol][checkPatrolTask][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知确认异常设备报修：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Patrol[confirmRepair][content]" value="{$settings[Patrol][confirmRepair][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Patrol[confirmRepair][status]"  value="1" title="开启" <if condition="$settings[Patrol][confirmRepair][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Patrol[confirmRepair][status]"  value="0" title="关闭" <if condition="$settings[Patrol][confirmRepair][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+
+</div>

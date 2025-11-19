@@ -1,0 +1,159 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-purchases .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-purchases .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-purchases .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-purchases .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-purchases">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>项目名称 {project_name}</span>
+            <span>项目编号 {plans_num}</span>
+            <span>上报科室 {department}</span>
+            <span>采购申请单编号 {apply_num}</span>
+            <span>采购计划审批结果 {approve_status}</span>
+            <span>采购设备 {assets}</span>
+            <span>出库单编号 {out_num}</span>
+            <span>调试开始时间 {installStartDate}</span>
+            <span>调试结束时间 {installEendDate}</span>
+            <span>调试地点 {debug_area}</span>
+            <span>培训开始时间 {trainStartDate}</span>
+            <span>培训结束时间 {trainEendDate}</span>
+            <span>培训地点 {train_area}</span>
+            <span>培训的设备 {train_assets}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>采购模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="purchases_sms_open" name="Purchases[status]"  value="1" title="开启" <if condition="$settings[Purchases][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="purchases_sms_open" name="Purchases[status]"  value="0" title="关闭" <if condition="$settings[Purchases][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+
+    <div class="purchases_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知科室上报审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[purchasePlanApprove][content]" value="{$settings[Purchases][purchasePlanApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[purchasePlanApprove][status]"  value="1" title="开启" <if condition="$settings[Purchases][purchasePlanApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[purchasePlanApprove][status]"  value="0" title="关闭" <if condition="$settings[Purchases][purchasePlanApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知上报审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[purchasePlanApproveOver][content]" value="{$settings[Purchases][purchasePlanApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[purchasePlanApproveOver][status]"  value="1" title="开启" <if condition="$settings[Purchases][purchasePlanApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[purchasePlanApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Purchases][purchasePlanApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知采购申请审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[approveApply][content]" value="{$settings[Purchases][approveApply][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[approveApply][status]"  value="1" title="开启" <if condition="$settings[Purchases][approveApply][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[approveApply][status]"  value="0" title="关闭" <if condition="$settings[Purchases][approveApply][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知采购审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[approveApplyOver][content]" value="{$settings[Purchases][approveApplyOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[approveApplyOver][status]"  value="1" title="开启" <if condition="$settings[Purchases][approveApplyOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[approveApplyOver][status]"  value="0" title="关闭" <if condition="$settings[Purchases][approveApplyOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知专家评审：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[expertReview][content]" value="{$settings[Purchases][expertReview][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[expertReview][status]"  value="1" title="开启" <if condition="$settings[Purchases][expertReview][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[expertReview][status]"  value="0" title="关闭" <if condition="$settings[Purchases][expertReview][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知进行标书评审：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[tbApprove][content]" value="{$settings[Purchases][tbApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[tbApprove][status]"  value="1" title="开启" <if condition="$settings[Purchases][tbApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[tbApprove][status]"  value="0" title="关闭" <if condition="$settings[Purchases][tbApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知进行标书已驳回：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[tbApproveOver][content]" value="{$settings[Purchases][tbApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[tbApproveOver][status]"  value="1" title="开启" <if condition="$settings[Purchases][tbApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[tbApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Purchases][tbApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知提交标书：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[tbSubmit][content]" value="{$settings[Purchases][tbSubmit][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[tbSubmit][status]"  value="1" title="开启" <if condition="$settings[Purchases][tbSubmit][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[tbSubmit][status]"  value="0" title="关闭" <if condition="$settings[Purchases][tbSubmit][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知出库审批未通过：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[notOutApproveOver][content]" value="{$settings[Purchases][notOutApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[notOutApproveOver][status]"  value="1" title="开启" <if condition="$settings[Purchases][notOutApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[notOutApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Purchases][notOutApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知参加安装调试：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[debugReport][content]" value="{$settings[Purchases][debugReport][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[debugReport][status]"  value="1" title="开启" <if condition="$settings[Purchases][debugReport][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[debugReport][status]"  value="0" title="关闭" <if condition="$settings[Purchases][debugReport][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知讲师进行培训：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[doTrain][content]" value="{$settings[Purchases][doTrain][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[doTrain][status]"  value="1" title="开启" <if condition="$settings[Purchases][doTrain][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[doTrain][status]"  value="0" title="关闭" <if condition="$settings[Purchases][doTrain][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知人员参加培训：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Purchases[joinTrain][content]" value="{$settings[Purchases][joinTrain][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Purchases[joinTrain][status]"  value="1" title="开启" <if condition="$settings[Purchases][joinTrain][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Purchases[joinTrain][status]"  value="0" title="关闭" <if condition="$settings[Purchases][joinTrain][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+</div>

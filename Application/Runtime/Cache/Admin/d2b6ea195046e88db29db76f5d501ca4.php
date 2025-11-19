@@ -1,0 +1,291 @@
+<?php if (!defined('THINK_PATH')) exit();?><title>设备保养记录查询列表</title>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getRecordSearchListUrl='<?php echo ($getRecordSearchList); ?>';
+</script>
+<style>
+    #LAY-Patrol-PatroRecordSearch-getRecordSearchList .layui-form-label{width: 84px;}
+    #LAY-Patrol-PatroRecordSearch-getRecordSearchList .xm-select-parent{height: 39px;}
+    #LAY-Patrol-PatroRecordSearch-getRecordSearchList .xm-input, #LAY-Patrol-PatroRecordSearch-getRecordSearchList .xm-select{height: 39px !important;}
+
+    #LAY-Patrol-PatroRecordSearch-getRecordSearchList .formatDate {
+        cursor: pointer;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Patrol-PatroRecords-getPatrolRecords">
+<style>
+        @page {
+            margin: 20px auto 0;
+            font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport td, th {
+            text-align: center !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport th {
+            font-weight: bold !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport em {
+            font-size: 12px;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-form-checkbox[lay-skin=primary] i {
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-form-checkbox span {
+            font-size: 12px;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-form-checkbox[lay-skin=primary] span {
+            line-height: 16px;
+            padding-right: 0 !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-form-checkbox span {
+            padding: 0 3px;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .text-align-left {
+            text-align: left !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-table[lay-size=sm] td,
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-table[lay-size=sm] th {
+            padding: 5px !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .layui-table[lay-size=sm] td.text-align-left {
+            padding-left: 15px !important;
+        }
+
+        #LAY-Patrol-ReportTemplate-patrolReport .logo {
+            height: 60px;
+            position: absolute;
+            top: 20px;
+        }
+    </style>
+<div class="layui-fluid" id="LAY-Patrol-PatroRecordSearch-getRecordSearchList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getRecordSearchListAssets"
+                                               placeholder="请输入设备名称" name="assets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getRecordSearchListAssnum"
+                                               placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备原编码：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"
+                                               id="getRecordSearchListAssorignum" placeholder="请输入设备原编码"
+                                               name="assorignum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">使用科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="departid" xm-select-search="">
+                                        <option value="">请选择科室</option>
+                                        <?php if(is_array($departmentInfo)): $i = 0; $__LIST__ = $departmentInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">执行人：</label>
+                                <div class="layui-input-inline">
+                                    <select name="executor" xm-select="executor" xm-select-search="">
+                                        <option value="">请选择执行人</option>
+                                        <?php if(is_array($userInfo)): $i = 0; $__LIST__ = $userInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["userid"]); ?>"><?php echo ($v["username"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">级别：</label>
+                                <div class="layui-input-inline">
+                                    <select name="level" lay-search="">
+                                        <option value="">请选择级别</option>
+                                        <option value="3">预防性维护（PM）</option>
+                                        <option value="2">巡查保养（RC）</option>
+                                        <option value="1">日常保养（DC）</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">巡查周期：</label>
+                                <div class="layui-input-inline">
+                                    <select name="patrolCycle" lay-search="">
+                                        <option value="">请选择巡查周期</option>
+                                        <?php if(is_array($patrolCycle_data)): $i = 0; $__LIST__ = $patrolCycle_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["patrol_xc_cycle"]); ?>"><?php echo ($vo["patrol_xc_cycle"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">保养周期：</label>
+                                <div class="layui-input-inline">
+                                    <select name="maintainCycle" lay-search="">
+                                        <option value="">请选择保养周期</option>
+                                        <?php if(is_array($maintainCycle_data)): $i = 0; $__LIST__ = $maintainCycle_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["patrol_pm_cycle"]); ?>"><?php echo ($vo["patrol_pm_cycle"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">即将到期：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="exceptOverDate" value="0" title="全部" checked>
+                                    <input type="radio" name="exceptOverDate" value="1" title="是">
+                                    <input type="radio" name="exceptOverDate" value="2" title="否">
+                                </div>
+                            </div>
+
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="" lay-filter="getRecordSearchListSearch"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="getRecordSearchList" lay-filter="getRecordSearchListData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="printStyle" style="display: none;">
+    <form class="layui-form" style="text-align: center;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: auto;margin-right: 0;">
+                    <input type="radio" name="printStyle" value="1" title="最近一次报告" checked>
+                    <input type="hidden" name="assnums">
+                    <input type="radio" name="printStyle" value="2" title="所有审报告">
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="layui-btn" lay-submit="" lay-filter="printStyle">确认</button>
+            </div>
+        </div>
+    </form>
+</div>
+    <div id="departmentRecord" style="display: none;padding: 10px;">
+        <form class="layui-form" style="text-align: center;">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>所属科室：</label>
+                    <div class="layui-input-inline">
+                        <select name="departid"  lay-search="">
+                            <option value="">请选择科室</option>
+                            <?php if(is_array($departmentInfo)): $i = 0; $__LIST__ = $departmentInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">级别：</label>
+                    <div class="layui-input-inline">
+                        <select name="level" lay-search="">
+                            <option value="">请选择级别</option>
+                            <option value="3">预防性维护（PM）</option>
+                            <option value="2">巡查保养（RC）</option>
+                            <option value="1">日常保养（DC）</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">完成时间：</label>
+                    <div class="layui-input-inline timeStyle" style="width: 83px;">
+                        <input class="layui-input completeDate" style="cursor: pointer;" placeholder="开始日期" readonly name="startDate">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline timeStyle" style="width: 83px;">
+                        <input class="layui-input completeDate" style="cursor: pointer;" placeholder="结束日期" readonly name="endDate">
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="departmentRecord">确认</button>
+                </div>
+            </div>
+        </form>
+    </div>
+<div id="Patrol_report" style="width: 794px!important; margin: auto;display: none;">
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('patrol/patrolRecords/getPatrolRecords', layui.factory('patrol/patrolRecords/getPatrolRecords'));
+</script>
+<script src="/Public/js/jquery.PrintArea.js" type="text/javascript"></script>
+<script type="text/html" id="Patrol-PatroRecordSearch-getRecordSearchListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Patrol','PatrolRecords','printReports')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchPrintPatrolReport" id="batchPrintPatrolReport" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon layui-icon-zzprint"></i>批量打印保养报告
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Patrol','PatrolRecords','exportReports')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchExportPatrol" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon iconfont icon-download"></i>批量导出
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="exportDepartPatrol" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon iconfont icon-download"></i>单科室记录批量导出
+        </button>
+        <?php endif?>
+    </div>
+</script>

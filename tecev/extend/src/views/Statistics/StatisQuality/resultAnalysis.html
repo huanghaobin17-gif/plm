@@ -1,0 +1,919 @@
+<?php if($menuData = get_menu_name('Statistics','StatisQuality','resultAnalysis')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var resultAnalysis = "{$resultAnalysis}";
+    var qtemid = "{$qtemid}";
+</script>
+<style>
+    .hidden-contant {
+        display: none;
+        text-align: center;
+    }
+    .chart_detail{
+        margin-bottom: 10px;
+    }
+    .div-chart-show-pic{
+        height: 320px;
+        min-height: 300px;
+    }
+    .div-chart-show-pic-chart, .div-chart-show-workjob {
+        width: 100%;
+        height: 320px;
+        min-height: 300px;
+    }
+    .layui-select-title{
+        height: 41px;
+    }
+    .detail th{
+        text-align: center;
+    }
+    .detail td{
+        text-align: center;
+    }
+    .detail_content{
+        height:280px;
+        max-height: 280px;
+        width: 100%;
+    }
+    .detail_table{
+        width: 43%;
+        margin-left: 10px;
+        margin-top: 20px;
+        float: left;
+    }
+    .detail_pic{
+        float: left;
+    }
+    #LAY-Statistics-QualityStatis-resultAnalysis .abnormal_detail_pic{
+        width: 55%;
+        min-width: 520px;
+        float: left;
+        margin-left: 5px;
+        height: 250px;
+    }
+    .show_detail_list{
+        display: none;
+        width: 100% !important;
+    }
+    .no_detail_data{
+        display: none;
+        width: 100%;
+        text-align: center;
+        height: 100px;
+        line-height: 100px;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Statistics-StatisQuality-resultAnalysis" style="margin:0 -10px">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-tab layui-tab-brief" lay-filter="qualityDepartTab" style="margin: 0">
+                <ul class="layui-tab-title" style="margin:0 10px; background-color: #ffffff">
+                    <li class="layui-this">质控结果统计</li>
+                    <li>质控设备异常项统计</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <!--质控结果统计-->
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-row">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                                    <div class="layui-card-body">
+                                        <form class="layui-form" lay-filter="component-form-group">
+                                            <div class="layui-form-item spacingBalance">
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">设备名称：</label>
+                                                    <div class="layui-input-inline">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control bsSuggest" id="getAssetsStatistics" placeholder="请输入设备名称" name="assets">
+                                                            <div class="input-group-btn">
+                                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">设备分类：</label>
+                                                    <div class="layui-input-inline">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control bsSuggest" id="getCateStatistics" placeholder="请输入设备分类" name="category">
+                                                            <div class="input-group-btn">
+                                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">供应商：</label>
+                                                    <div class="layui-input-inline">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control bsSuggest" id="getSuppliersStatistics" placeholder="请输入厂商名称" name="suppname">
+                                                            <div class="input-group-btn">
+                                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label" style="width: 80px;border-right: none;">所属科室：</label>
+                                                    <div class="layui-input-inline">
+                                                        <select name="departids" xm-select="qualityStaDepartments" xm-select-search="">
+                                                            <option value="">请选择所属科室</option>
+                                                            <volist name="departments" id="v">
+                                                                <option value="{$v.departid}">{$v.department}</option>
+                                                            </volist>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label" style="width: 80px;border-right: none;">品牌：</label>
+                                                    <div class="layui-input-inline">
+                                                        <select name="brands" xm-select="qualityStaBrand" xm-select-search="">
+                                                            <option value="">请选择品牌</option>
+                                                            <volist name="brands" id="v">
+                                                                <option value="{$v.brand_name}">{$v.brand_name}</option>
+                                                            </volist>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">完成日期：</label>
+                                                    <div class="layui-input-inline" style="width: 83px;">
+                                                        <input class="layui-input" placeholder="开始日期" readonly value="{$start_date}" style="cursor: pointer;" name="startDate" id="resultAnalysisSR" lay-verify="startDate">
+                                                    </div>
+                                                    <div class="layui-form-mid">-</div>
+                                                    <div class="layui-input-inline" style="width: 83px;">
+                                                        <input class="layui-input" placeholder="结束日期" readonly value="{$end_date}" style="cursor: pointer;" name="endDate" id="resultAnalysisER" lay-verify="endDate">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline" style="margin-left: 10px;">
+                                                    <div class="fl">
+                                                        <button class="layui-btn" type="button" lay-submit="" lay-filter="repairAnalysisSearchR" id="repairAnalysisSearchR">
+                                                            <i class="layui-icon">&#xe615;</i> 搜 索
+                                                        </button>
+                                                        <button type="reset" lay-submit="" lay-filter="reset" class="layui-btn layui-btn-primary">重置</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row" style="margin-top: 15px">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                                    <div class="layui-row quality_result_staticsic" style="padding-right: 15px;">
+                                        <div class="layui-col-md6 tb-padding">
+                                            <div class="grid-demo">
+                                                <div class="div-chart-show">
+                                                    <div class="div-chart-show-title">科室质控设备分析</div>
+                                                    <div class="div-chart-show-pic">
+                                                        <div id="department_result" class="div-chart-show-pic-chart"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md6 tb-padding">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div class="div-chart-show">
+                                                    <div class="div-chart-show-title">模板使用次数分析</div>
+                                                    <div class="div-chart-show-pic">
+                                                        <div id="template_nums" class="div-chart-show-pic-chart"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab layui-tab-brief"  lay-filter="docDemoTabBrief1">
+                                        <ul class="layui-tab-title">
+                                            <li class="layui-this">科室质控设备数量统计</li>
+                                            <li>模板使用次数统计</li>
+                                        </ul>
+                                        <div class="layui-tab-content">
+                                            <div class="layui-tab-item layui-show">
+                                                <table id="department_result_lists" lay-filter="department_result_data"></table>
+                                            </div>
+                                            <div class="layui-tab-item">
+                                                <table id="template_nums_lists" lay-filter="template_nums_data"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--质控设备异常项统计-->
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form" lay-filter="component-form-group">
+                                    <div class="layui-form-item spacingBalance">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">设备名称：</label>
+                                            <div class="layui-input-inline">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control bsSuggest" id="getAssetsStatistics_error" placeholder="请输入设备名称" name="assetsB">
+                                                    <div class="input-group-btn">
+                                                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">设备分类：</label>
+                                            <div class="layui-input-inline">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control bsSuggest" id="getCateStatistics_error" placeholder="请输入设备分类" name="categoryB">
+                                                    <div class="input-group-btn">
+                                                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">供应商：</label>
+                                            <div class="layui-input-inline">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control bsSuggest" id="getSuppliersStatistics_error" placeholder="请输入厂商名称" name="suppnameB">
+                                                    <div class="input-group-btn">
+                                                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="width: 80px;border-right: none;">所属科室：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="departidsB" xm-select="qualityStaDepartmentsB" xm-select-search="">
+                                                    <option value="">请选择所属科室</option>
+                                                    <volist name="departments" id="v">
+                                                        <option value="{$v.departid}">{$v.department}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="width: 80px;border-right: none;">品牌：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="brandsB" xm-select="qualityStaBrandsB" xm-select-search="">
+                                                    <option value="">请选择品牌</option>
+                                                    <volist name="brands" id="v">
+                                                        <option value="{$v.brand_name}">{$v.brand_name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">完成日期：</label>
+                                            <div class="layui-input-inline" style="width: 83px;">
+                                                <input class="layui-input" placeholder="开始日期" readonly value="{$start_date}" style="cursor: pointer;" name="startDateB" id="resultAnalysisSB" lay-verify="startDateB">
+                                            </div>
+                                            <div class="layui-form-mid">-</div>
+                                            <div class="layui-input-inline" style="width: 83px;">
+                                                <input class="layui-input" placeholder="结束日期" readonly value="{$end_date}" style="cursor: pointer;" name="endDateB" id="resultAnalysisEB" lay-verify="endDateB">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" style="margin-left: 10px;">
+                                            <div class="fl">
+                                                <button class="layui-btn" type="button" lay-submit="" lay-filter="repairAnalysisSearchB" id="repairAnalysisSearchB">
+                                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                                </button>
+                                                <button type="reset" lay-submit="" lay-filter="reset" class="layui-btn layui-btn-primary">重置</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header">
+                                    <div style="float: left;width: 50px;">
+                                        <i class="layui-icon">&#xe615;</i> 图示
+                                    </div>
+                                    <form class="layui-form">
+                                        <div class="layui-block" style="width: 500px;float: left;">
+                                            <label class="layui-form-label">模板类型</label>
+                                            <div class="layui-input-inline">
+                                                <select name="templates" lay-filter="change_templates" lay-verify="required">
+                                                    <volist name="templates" id="vo">
+                                                        <option value="{$vo.qtemid}"  <if condition="$vo.qtemid EQ $thistemplates">selected</if>>{$vo.name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="layui-card-body">
+                                    <div class="layui-row abnormal_detail_staticsic">
+                                        <div class="layui-col-md6 tb-padding">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div class="div-chart-show">
+                                                    <div class="div-chart-show-title">异常设备台次分析</div>
+                                                    <div class="div-chart-show-pic">
+                                                        <div id="abnormal_assets" class="div-chart-show-pic-chart"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md6 tb-padding">
+                                            <div class="grid-demo grid-demo-bg1">
+                                                <div class="div-chart-show">
+                                                    <div class="div-chart-show-title">检测结果分析</div>
+                                                    <div class="div-chart-show-pic">
+                                                        <div id="template_result_chart" class="div-chart-show-pic-chart"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab layui-tab-brief"  lay-filter="docDemoTabBrief1">
+                                        <ul class="layui-tab-title">
+                                            <li class="layui-this">检测设备质控结果记录</li>
+                                            <li>异常项明细统计</li>
+                                        </ul>
+                                        <div class="layui-tab-content" style="padding: 0;">
+                                            <div class="layui-tab-item layui-show">
+                                                <table id="abnormal_assets_lists" lay-filter="abnormal_assets_data"></table>
+                                            </div>
+                                            <div class="layui-tab-item">
+                                                <div class="no_detail_data">暂无相关数据</div>
+                                                <!--监护仪-->
+                                                <div class="show_detail_list show_detail_1">
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">心率(次/min)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="heartRate_1">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_heartRate_1" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">呼吸率(次/min)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="breathRate_1">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_breathRate_1" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">无创血压(mmHg)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="pressure_1">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_pressure_1" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">血氧饱和度(%)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="BOS_1">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_BOS_1" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">固定非值检测</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="120">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>固定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="other_1">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_other_1" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--输液装置-->
+                                                <div class="show_detail_list show_detail_2">
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">流量检测(ml/h)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="flow_2">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_flow_2" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">阻塞报警检测</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="block_2">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_block_2" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail" style="height: 380px;">
+                                                        <div class="div-chart-show-title">固定非值检测</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="140">
+                                                                        <col width="75">
+                                                                        <col width="75">
+                                                                        <col width="75">
+                                                                        <col width="75">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>固定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>不适用</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="other_2">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_other_2" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--除颤仪-->
+                                                <div class="show_detail_list show_detail_3">
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">心率(次/min)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="heartRate_3">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_heartRate_3" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">释放能量(J)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="energesis_3">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_energesis_3" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">固定非值检测</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="140">
+                                                                        <col width="75">
+                                                                        <col width="75">
+                                                                        <col width="75">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>固定值</th>
+                                                                        <th>正常</th>
+                                                                        <th>不正常</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="other_3">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_other_3" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!--呼吸机-->
+                                                <div class="show_detail_list show_detail_4">
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">潮气量(ml)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="humidity_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_humidity_4" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">强制通气频率(BPM)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="aeration_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_aeration_4" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">吸入氧浓度(%)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="IOI_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_IOI_4" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">吸气压力水平(cmH₂O)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="IPAP_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_IPAP_4" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail">
+                                                        <div class="div-chart-show-title">呼气末正压(cmH₂O)</div>
+                                                        <div class="detail_content">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="60">
+                                                                        <col width="100">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>序号</th>
+                                                                        <th>设定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="PEEP_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_PEEP_4" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-chart-show chart_detail" style="height: 600px;">
+                                                        <div class="div-chart-show-title">固定非值检测</div>
+                                                        <div class="detail_content" style="height: 600px;">
+                                                            <div class="detail_table">
+                                                                <table class="layui-table detail" lay-size="sm">
+                                                                    <colgroup>
+                                                                        <col width="120">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="80">
+                                                                        <col width="120">
+                                                                        <col>
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>固定值</th>
+                                                                        <th>符合</th>
+                                                                        <th>不符合</th>
+                                                                        <th>不适用</th>
+                                                                        <th>异常率</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="other_4">
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div id="sta_abnormal_other_4" style="height: 400px;margin-top: 50px;" class="abnormal_detail_pic">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisQuality/resultAnalysis', layui.factory('statistics/statisQuality/resultAnalysis'));
+</script>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-elem-quote {
+            margin: 0px;
+            padding: 10px;
+            font-weight: bold
+        }
+
+        .th_center th, .th_center {
+            text-align: center !important;
+        }
+
+        .layui-inline {
+            margin-bottom: 10px !important;
+            margin-right: 0 !important;
+        }
+
+        .th-inner {
+            text-align: center;
+        }
+
+        .parts_table {
+            padding: 0 !important;
+        }
+
+        .layui-table {
+            margin: 0;
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 0;
+        }
+
+        .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+            padding: 0;
+        }
+
+        .layui-table tr td {
+            text-align: center;
+        }
+
+        .offer_tbody textarea {
+            border: none;
+            resize: none;
+        }
+
+        .no-padding-td {
+            padding: 0 !important;
+        }
+
+        .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        .layui-form-radio {
+            margin: 0;
+            padding-right: 5px;
+        }
+
+        .layui-textarea {
+            min-height: 90px;
+        }
+        .green{color: #85AB70;cursor: pointer;}
+        #media{
+            color:#76ABDF;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-Repair-showRepairDetails">
+    <input type="hidden" name="repid" value="{$repArr.repid}">
+    <!--设备基础信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>设备编码：</th>
+                <td>{$asArr.assnum}</td>
+                <th>生产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--报修申报信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">报修申请信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>维修单号：</th>
+                <td colspan="5">{$repArr.repnum}</td>
+            </tr>
+            <tr>
+                <th>报修人：</th>
+                <td>{$repArr.applicant}</td>
+                <th>报修时间：</th>
+                <td>{$repArr.applicant_time}</td>
+                <th>报修人联系电话：</th>
+                <td>{$repArr.applicant_tel}</td>
+            </tr>
+            <tr>
+                <th>故障描述：</th>
+                <td colspan="5">{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>语音描述：</th>
+                <td colspan="5">
+                    <if condition="$repArr['wxTapeAmr']">
+                        <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                        <span id="media">点击播放</span>
+                        <else/>
+                        无
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>故障照片：</th>
+                <td colspan="5">
+                    <empty name="repArr['pic_url']">
+                        无
+                        <else/>
+                        <a class="green" id="showImages">
+                            查看(共{$repArr.imgCount}张)
+                            <volist name="repArr['addRepair_pic_url']" id="v">
+                                <input type="hidden" class="imageUrl" value="{$v}">
+                            </volist>
+                        </a>
+                    </empty>
+                </td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$repArr.applicant_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--维修接单信息-->
+    <if condition="$repArr['status'] EQ C('REPAIR_RECEIPT')">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修接单与检修信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>响应人：</th>
+                <td>{$repArr.response}</td>
+                <th>响应时间：</th>
+                <td>{$repArr.response_date}</td>
+            </tr>
+            <tr>
+                <th>预计到场时间(分钟)：</th>
+                <td>{$repArr.expect_arrive}</td>
+                <th>现场签到时间：</th>
+                <td>{$repArr.sign_in_time}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="3">{$repArr.reponse_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </if>
+    <!--维修检修信息-->
+    <if condition="$repArr['status'] EGT C('REPAIR_HAVE_OVERHAULED')">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修接单与检修信息</div>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tr>
+                    <th>响应人：</th>
+                    <td>{$repArr.response}</td>
+                    <th>响应时间：</th>
+                    <td>{$repArr.response_date}</td>
+                    <th>预计修复日期：</th>
+                    <td>{$repArr.expect_time}</td>
+                </tr>
+                <tr>
+                    <th>现场签到时间：</th>
+                    <td colspan="5">{$repArr.sign_in_time}</td>
+                </tr>
+                <tr>
+                    <th>故障问题：</th>
+                    <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr>
+                    <th>解决方式：</th>
+                    <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                        <td colspan="5">现场解决</td>
+                        <else/>
+                        <td colspan="5">非现场解决</td>
+                    </if>
+                </tr>
+                <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                    <tr>
+                        <th>维修性质：</th>
+                        <td colspan="5">{$repArr.repTypeName}</td>
+                    </tr>
+                </if>
+                <if condition="$repArr['repair_type'] eq 1">
+                    <tr>
+                        <th>维修厂家：</th>
+                        <td>{$asArr.sup_name}</td>
+                        <th>维修公司联系人：</th>
+                        <td>{$asArr.salesman_name}</td>
+                        <th>维修公司联系电话：</th>
+                        <td>{$asArr.salesman_phone}</td>
+                    </tr>
+                </if>
+                <tr>
+                    <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                        <th>处理详情：</th>
+                        <td colspan="5">{$repArr.dispose_detail}</td>
+                        <else/>
+                        <th>检修备注：</th>
+                        <td colspan="5">{$repArr.repair_remark}</td>
+                    </if>
+                </tr>
+            </table>
+        </div>
+    </if>
+    <!--第三方厂家-->
+    <notempty name="company">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修报价记录表单</div>
+            <table class="layui-table offerTbody" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center">公司名称</th>
+                    <th style="text-align: center">联系人</th>
+                    <th style="text-align: center">联系方式</th>
+                    <th style="text-align: center;">服务金额</th>
+                    <th style="text-align: center;">发票</th>
+                    <th style="text-align: center;">到货/服务周期</th>
+
+                    <th style="text-align: center;">建议渠道</th>
+                        <th style="text-align: center;">建议说明</th>
+
+                    <th style="text-align: center;">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <volist name="company" id="v">
+                        <tr>
+                            <td>{$v.offer_company}</td>
+                            <td>{$v.offer_contacts}</td>
+                            <td>{$v.telphone}</td>
+                            <td>{$v.total_price}</td>
+                            <td>{$v.invoice}</td>
+                            <td>{$v.cycle}</td>
+
+                            <td>
+                                    <if condition="$v[proposal] EQ C('YES_STATUS')">
+                                        建议选用
+                                        <else/>
+                                        /
+                                    </if>
+                                </td>
+                                <td>{$v.proposal_info}</td>
+
+                            <td>{$v.remark}</td>
+                        </tr>
+                    </volist>
+                    <notempty name="companyLast">
+                        <tr>
+                            <th style="border-top: none;text-align: right">最终决定者：</th>
+                            <td style="border-top: none;text-align: left" colspan="8">{$companyLast.decision_user}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right">最终决定时间：</th>
+                            <td style="text-align: left" colspan="8">{$companyLast.decision_adddate}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right">最终选择：</th>
+                            <td style="text-align: left" colspan="8">{$companyLast.offer_company}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right">原因说明：</th>
+                            <td style="text-align: left" colspan="8">{$companyLast.decision_reasion}</td>
+                        </tr>
+                    </notempty>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--配件/服务-->
+    <notempty name="parts">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">配件/服务明细</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center">配件名称</th>
+                    <th style="text-align: center">型号</th>
+                    <th style="text-align: center;width:100px;">数量</th>
+                    <th style="text-align: center;width:100px;">总价</th>
+                    <th style="text-align: center;width:100px;">操作人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="parts">
+                    <tr>
+                        <td colspan="4">无记录</td>
+                    </tr>
+                    <else/>
+                    <volist name="parts" id="v">
+                        <tr>
+                            <td>{$v.parts}</td>
+                            <td>{$v.part_model}</td>
+                            <td>{$v.part_num}</td>
+                            <td>{$v.price_sum}</td>
+                            <td>
+                                <empty name="v[edituser]">
+                                    {$v.adduser}
+                                    <else/>
+                                    {$v.edituser}
+                                </empty>
+                            </td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--修复待验收/已完成共同部分-->
+    <if condition="$repArr['status'] EGT C('REPAIR_MAINTENANCE_COMPLETION')">
+    <!--维修处理-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修处理</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>维修工程师：</th>
+                <td>{$repArr.response}</td>
+                <th>联系电话：</th>
+                <td>{$repArr.response_tel}</td>
+                <th>总维修费用：</th>
+                <td>{$repArr.actual_price}</td>
+
+            </tr>
+            <tr>
+                <th>协助工程师：</th>
+                <td>{$repArr.assist_engineer}</td>
+                <th>联系电话：</th>
+                <td>{$repArr.assist_engineer_tel}</td>
+                <th>维修日期：</th>
+                <td>{$repArr.engineer_time}</td>
+            </tr>
+            <tr>
+                <th>维修工时：</th>
+                <td colspan="6">{$repArr.working_hours}</td>
+            </tr>
+            <tr>
+                <th>处理详情：</th>
+                <td colspan="6">
+                    {$repArr.dispose_detail}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </if>
+    <!--维修跟进-->
+    <notempty name="follow">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修跟进详情</div>
+            <table class="layui-table" lay-even lay-size="sm" >
+                <thead>
+                <tr>
+                    <th style="text-align: center">序号</th>
+                    <th width="15%" style="text-align: center">跟进时间</th>
+                    <th width="50%" style="text-align: center">处理详情</th>
+                    <th width="20%" style="text-align: center">预计下一步跟进时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="follow">
+                    <tr>
+                        <td colspan="5" style="text-align: center">无记录</td>
+                    </tr>
+                    <else />
+                    <volist name="follow" id="vo">
+                        <tr>
+                            <td>{$i}</td>
+                            <td class="followdate">{$vo.followdate}</td>
+                            <td class="detail">{$vo.detail}</td>
+                            <td class="nextdate">{$vo.nextdate}</td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <notempty name="repArr.app_user_status">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审批流程&进度</div>
+            <div class="layui-card-body splc">
+                {$repArr.app_user_status}
+            </div>
+        </div>
+    </notempty>
+    <!--审批-->
+    <notempty name="approves">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审批记录</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="90">
+                    <col width="140">
+                    <col width="70">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>审核人</th>
+                    <th>审核时间</th>
+                    <th>审核状态</th>
+                    <th>审核意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="approves" id="app">
+                    <tr>
+                        <td>{$app.approver}</td>
+                        <td>{$app.approve_time}</td>
+                        <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                            <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                            <else/>
+                            <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                        </if>
+                        <td>{$app.remark}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--验收信息-->
+    <if condition="$repArr['status'] EQ C('REPAIR_ALREADY_ACCEPTED')">
+        <div class="margin-bottom-15">
+        <div class="layui-elem-quote">验收情况</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>验收人：</th>
+                <td>{$repArr.checkperson}</td>
+                <th>验收时间：</th>
+                <td>{$repArr.checkdate}</td>
+                <th>是否修复：</th>
+                <td>
+                    <switch name="repArr['over_status']">
+                        <case value="0">未修复</case>
+                        <case value="1">已修复</case>
+                    </switch>
+                </td>
+            </tr>
+            <tr>
+                <th>服务态度：</th>
+                <td>
+                    <switch name="repArr['service_attitude']">
+                        <case value="0">非常满意</case>
+                        <case value="1">满意</case>
+                        <case value="2">一般</case>
+                    </switch>
+                </td>
+                <th>技术水平：</th>
+                <td>
+                    <switch name="repArr['technical_level']">
+                        <case value="0">非常满意</case>
+                        <case value="1">满意</case>
+                        <case value="2">一般</case>
+                    </switch>
+                </td>
+                <th>响应时效：</th>
+                <td>
+                    <switch name="repArr['response_efficiency']">
+                        <case value="0">非常满意</case>
+                        <case value="1">满意</case>
+                        <case value="2">一般</case>
+                    </switch>
+                </td>
+            </tr>
+            <tr>
+                <th>意见/建议：</th>
+                <td colspan="5">{$repArr.check_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </if>
+    <!--上传文件-->
+    <notempty name="files">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">相关文件查看</div>
+            <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+                <colgroup>
+                    <col width="15%">
+                    <col width="40%">
+                    <col width="30%">
+                    <col width="15%">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>序号：</th>
+                    <th>文件名称：</th>
+                    <td>上传时间</td>
+                    <th>操作：</th>
+                </tr>
+                <volist name="files" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>{$vo.operation}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repair/showRepairDetails', layui.factory('controller/repair/repair/showRepairDetails'));
+</script>
+<script>
+    //播放停止语音
+    var audio = document.getElementById("audio");
+    if(audio){
+        var btn = document.getElementById("media");
+        btn.onclick = function () {
+            if (audio.paused) { //判断当前的状态是否为暂停，若是则点击播放，否则暂停
+                audio.play();
+            }else{
+                audio.pause();
+            }
+        };
+    }
+</script>
+

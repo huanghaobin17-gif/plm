@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>设备采购询价记录登记</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Purchases-Tendering-inquiryPrices .detailed .no-padding-td {
+            padding: 0 !important;
+        }
+        #LAY-Purchases-Tendering-inquiryPrices .detailed .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Purchases-Tendering-inquiryPrices .xm-select-parent .xm-input{
+            border:none;
+        }
+        #LAY-Purchases-Tendering-inquiryPrices .layui-textarea{
+            border: none!important;
+            min-height: 48px!important;
+        }
+        #addPrice{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+            基础信息
+        </blockquote>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>申请科室：</th>
+                <td>{$recordInfo.department}</td>
+            </tr>
+            <tr>
+                <th>项目名称：</th>
+                <td>{$recordInfo.project_name}</td>
+            </tr>
+            <tr>
+                <th>申请单号：</th>
+                <td>{$recordInfo.apply_num}</td>
+            </tr>
+            <tr>
+                <th>申请日期：</th>
+                <td>{$recordInfo.apply_date}</td>
+            </tr>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$recordInfo.assets_name}</td>
+            </tr>
+            <tr>
+                <th>设备单位：</th>
+                <td>{$recordInfo.unit}</td>
+            </tr>
+            <tr>
+                <th>设备数量：</th>
+                <td>{$recordInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>设备单价：</th>
+                <td>{$recordInfo.market_price}</td>
+            </tr>
+            <tr>
+                <th>预计总价：</th>
+                <td>{$recordInfo.total_price}</td>
+            </tr>
+            <tr>
+                <th>是否进口：</th>
+                <td>{$recordInfo.is_import_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form class="layui-form" action="">
+        <input type="hidden" name="record_id" value="{$recordInfo.record_id}"/>
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">
+                询价记录
+                <span id="addPrice"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 增加询价</span>
+            </div>
+            <table class="layui-table read-table-l" style="margin-top: 0"  lay-even lay-size="sm">
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">供应商名称</th>
+                <th style="text-align: left !important;">生产厂商</th>
+                <th style="text-align: left !important;">设备型号</th>
+                <th style="text-align: left !important;">品牌</th>
+                <th style="text-align: left !important;">市场价</th>
+                <th style="text-align: left !important;">询价单价</th>
+                <th style="text-align: left !important;">确认供货</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody class="supplierList">
+            <if condition="$details">
+                <volist name="details" id="vo">
+                    <tr class="supdetail">
+                        <td>{$vo.supplier_name}</td>
+                        <td>{$vo.factory_name}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.brand}</td>
+                        <td>{$vo.market_price}</td>
+                        <td>{$vo.company_price}</td>
+                        <td><input type="radio" name="final_select" value="{$vo.detail_id}" title=""></td>
+                        <td>
+                            <button type="button" class="layui-btn layui-btn-xs  layui-btn-danger delPrice" data-id="{$vo.detail_id}">移除</button>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="8" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+        </div>
+        <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+        <button class="layui-btn" type="button" value="" lay-submit lay-filter="finalSave">
+            <i class="layui-icon" >&#xe609;</i> 提交
+        </button>
+        <button type="reset" class="layui-btn layui-btn-primary">
+            <i class="layui-icon">ဂ</i> 重置
+        </button>
+    </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var inquiryPrices = "{$inquiryPrices}";
+</script>
+<script>
+    layui.use('controller/purchases/tendering/inquiryPrices', layui.factory('controller/purchases/tendering/inquiryPrices'));
+</script>

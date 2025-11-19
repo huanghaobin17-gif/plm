@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv" id="LAY-Metering-Metering-batchAddMetering">
+    <div style="margin: 20px 0;">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <div class="toolbar-move" style="margin-right: 40px;">
+                        <button class="layui-btn" type="button" lay-submit="" id="exploreMeteringResultModel"><i class="layui-icon">&#xe61e;</i> 导出计量记录模板</button>
+                    </div>
+                    <div class="toolbar-move" style="margin-right: 40px;">
+                        <button class="layui-btn" type="button" lay-submit="" id="uploadMeteringResultFile" lay-data="{accept: 'file'}"><i class="layui-icon layui-icon-uploadfile"></i>上传计量记录文件</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl" style="color: red;">
+                        <i class="layui-icon">&#xe62d;</i> 列表中数据尚未入库，红色字体数据为不合法数据，可直接点击进行修改操作
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="batchSetMeteringResultList" lay-filter="batchSetMeteringResultData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <fieldset>-->
+<!--        <legend>待入库记录明细</legend>-->
+<!--&lt;!&ndash;        <blockquote class="layui-elem-quote cusquote1" style="width: 1450px;">&ndash;&gt;-->
+<!--&lt;!&ndash;            列表中数据尚未入库，红色字体数据为不合法数据，可直接点击进行修改操作！&ndash;&gt;-->
+<!--&lt;!&ndash;        </blockquote>&ndash;&gt;-->
+<!--        <div class="layui-card-body">-->
+<!--            <div id="batchSetMeteringResultList" lay-filter="batchSetMeteringResultData"></div>-->
+<!--        </div>-->
+<!--    </fieldset>-->
+    <div class="layui-form-item">
+        <div style="text-align: center">
+            <button class="layui-btn layui-btn-danger" id="batchDel" lay-submit lay-filter="batchDel"><i class="layui-icon" >&#xe640;</i> 删除选中数据</button>
+            <button class="layui-btn layui-btn-normal" id="uploadSel" lay-submit lay-filter="uploadSel"><i class="layui-icon" >&#xe609;</i> 保存选中数据</button>
+            <button class="layui-btn" id="uploadAll" lay-submit lay-filter="uploadAll"><i class="layui-icon" >&#xe609;</i> 保存当页数据</button>
+            <button class="layui-btn" id="matchFiles" lay-submit lay-filter="matchFiles"><i class="layui-icon" >&#xe609;</i> 匹配已上传的计量附件</button>
+        </div>
+    </div>
+    <div class="layui-upload" style="margin-bottom: 50px;">
+        <button type="button" class="layui-btn layui-btn-normal" id="uploadMeteringResultPic"><i class="layui-icon layui-icon-upload"></i>批量上传计量记录附件</button>
+        <div class="layui-upload-list" style="max-width: 700px;">
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col width="100">
+                    <col width="200">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>大小</th>
+                    <th>上传状态</th>
+                    <th>操作</th>
+                </tr></thead>
+                <tbody id="demoList"></tbody>
+            </table>
+        </div>
+        <button type="button" class="layui-btn" id="uploadMeteringResultPicAction">开始上传</button>
+    </div>
+</div>
+</body>
+<!--修改计量分类-->
+<div id="mcategoryList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备分类</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">设备分类 <span style="color: red" class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="mcid" lay-search>
+                                <option value="">请选择设备分类</option>
+                                <volist name="categorys" id="vo">
+                                    <option value="{$vo.mcid}">{$vo.mcategory}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveMcategory">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>
+<script>
+    layui.use('controller/metering/metering/batchSetMeteringResult', layui.factory('controller/metering/metering/batchSetMeteringResult'));
+</script>
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>明细表单</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="ppid" value="{$detailinfo.ppid}">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>明细名称：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" value="{$detailinfo.name}" placeholder="请输入明细名称" autocomplete="off" class="layui-input" lay-verify="detail">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">默认结果：</label>
+            <div class="layui-input-inline">
+                <select name="result" lay-verify="required">
+                    <if condition="$detailinfo.result eq '合格'">
+                        <option value="合格" selected="selected">合格</option>
+                        <else/>
+                        <option value="合格">合格</option>
+                    </if>
+                    <if condition="$detailinfo.result eq '修复'">
+                        <option value="修复" selected="selected">修复</option>
+                        <else/>
+                        <option value="修复">修复</option>
+                    </if>
+                    <if condition="$detailinfo.result eq '可用'">
+                        <option value="可用" selected="selected">可用</option>
+                        <else/>
+                        <option value="可用">可用</option>
+                    </if>
+                    <if condition="$detailinfo.result eq '待修'">
+                        <option value="待修" selected="selected">待修</option>
+                        <else/>
+                        <option value="待修">待修</option>
+                    </if>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">保养内容及要求：</label>
+            <div class="layui-input-block">
+                <textarea name="require"  class="layui-textarea">{$detailinfo.require}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" type="button" lay-submit lay-filter="edit"><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/editdetail', layui.factory('controller/patrol/patrolsetting/editdetail'));
+</script>

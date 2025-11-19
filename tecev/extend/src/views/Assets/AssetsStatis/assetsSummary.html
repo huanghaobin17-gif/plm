@@ -1,0 +1,124 @@
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<style>
+    #LAY-Assets-Statistics-assetsSummary .table thead th{text-align: center}
+    #LAY-Assets-Statistics-assetsSummary .layui-table thead tr th,#LAY-Assets-Statistics-assetsSummary .layui-table tbody tr td{
+        text-align: center;
+    }
+    #LAY-Assets-Statistics-assetsSummary .offer_tbody textarea {
+        border: none;
+        resize: none;
+    }
+</style>
+<?php if($menuData = get_menu_name('Assets','AssetsStatis','assetsSummary')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Assets-AssetsStatis-assetsSummary" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <include file="Public:hospital_search"/>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="assetsSummaryDepartment" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报表日期：</label>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;"
+                                           value="{$data_start}" name="assetsSummaryStartDate"
+                                           id="assetsSummaryStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;"
+                                           value="{$data_end}" name="assetsSummaryEndDate" id="assetsSummaryEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 120px;">总金额区间：</label>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="assetsSummaryPriceMin" placeholder="￥" lay-verify="priceMin" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="assetsSummaryPriceMax" placeholder="￥" lay-verify="priceMax" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="assetsSummarySearch"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="contain ">
+                        <div class="layui-row assets_summary_staticsic" style="padding-right: 15px;">
+                            <div class="layui-col-md12 tb-padding">
+                                <div class="grid-demo">
+                                    <div class="div-chart-show">
+                                        <div class="div-chart-show-title">科室设备维修保养概况汇总</div>
+                                        <div class="div-chart-show-pic" style="min-height: 600px;">
+                                            <div id="department_nums_result" class="div-chart-show-pic-chart" style="min-height: 600px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 列表</div>
+                        <div class="reportHeader">
+                            <div class="assetsSummaryReportTitle"></div>
+                            <div class="assetsSummaryReportConditions"></div>
+                        </div>
+                        <div id="assetsSummaryLists" lay-filter="assetsSummaryData"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Assets-AssetsStatis-assetsSummaryToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Assets','AssetsStatis','exportAssetsSummary')):?>
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportData" id="exportData" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe61e;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var assetsSummary = "{$assetsSummary}";
+    layui.use('assets/statistics/assetsSummary', layui.factory('assets/statistics/assetsSummary'));
+</script>
+
+
+
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-table{margin: -1px;}
+        .layui-colla-content{padding: 0;}
+        .layui-collapse{border-right: none}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">模板名称 </label>
+                <div class="layui-input-inline">
+                    <div class="input-group">
+                        <input type="text" class="layui-input" readonly="readonly" value="{$tpInfo.name}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-collapse">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">{$vo.name}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table" lay-even lay-size="sm" >
+                            <thead>
+                            <tr>
+                                <th style="width: 8%">编号</th>
+                                <th>保养明细项目名称</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo['detail']" id="v">
+                                <tr>
+                                    <td>{$v.num}</td>
+                                    <if condition="$v.require neq ''">
+                                        <td>{$v.name}<br>(保养内容及要求：{$v.require})</td>
+                                        <else />
+                                        <td>{$v.name}</td>
+                                    </if>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="layui-form-item layui-form-text" style="margin-top: 20px;">
+            <label class="layui-form-label">模板备注：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入模板备注" name="remark" class="layui-textarea" readonly>{$tpInfo.remark}</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('element', function() {
+        var element = layui.element;
+    });
+</script>

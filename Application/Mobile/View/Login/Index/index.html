@@ -1,0 +1,73 @@
+<include file="Public:head"/>
+<style>
+    .scan{margin-bottom: 20px;}
+    .scan button{height: 60px;line-height: 60px;font-size: 30px;}
+    .scan i{font-size: 28px;}
+    .layui-card-header{height: auto}
+    .layui-card{padding: 20px;position: relative;box-shadow: none;margin-top: 0;}
+    .view{position: absolute;right: 20px;top: 40%;}
+    .content{height: 80px;margin: 0 auto;border: 1px solid #E5E5E5;position: relative;}
+    .content p{padding: 10px; }
+    .content p:last-child{margin-top: 5px;}
+    #task li{margin-top: 10px;}
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-col-xs12 bgcolor">
+            <div class="scan">
+                <button class="layui-btn layui-btn-fluid" id="index_scanQRcode"><i class="wx-icon wx-icon-scan"></i> 扫一扫</button>
+            </div>
+            <blockquote class="layui-elem-quote title">质控任务</blockquote>
+            <div class="layui-card">
+                <ul id="task">
+                    <?php if($menuData = get_menu('Repair','Repair','ordersLists')):?>
+                    <a href="{$menuData['actionurl']}">
+                        <li class="takeHtml">
+                            <div class="content">
+                                <p>{$menuData['actionname']}</p>
+                            </div>
+                        </li>
+                    </a>
+                    <?php endif?>
+                    <?php if($menuData = get_menu('Qualities','Quality','qualityDetailList')):?>
+                    <a href="{$menuData['actionurl']}">
+                        <li class="takeHtml">
+                            <div class="content">
+                                <p>{$menuData['actionname']}</p>
+                            </div>
+                        </li>
+                    </a>
+                    <?php endif?>
+                    <?php if($menuData = get_menu('Repair','Repair','ordersLists11')):?>
+                    <a href="{$menuData['actionurl']}">
+                        <li class="takeHtml">
+                            <div class="content">
+                                <p>{$menuData['actionname']}</p>
+                            </div>
+                        </li>
+                    </a>
+                    <?php endif?>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $(document).on('click','#index_scanQRcode',function(){
+            wx.scanQRCode({
+                needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    console.log(result);
+                }
+            });
+        });
+    });
+</script>
+

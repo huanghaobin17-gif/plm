@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>单台设备巡查保养</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css?v={:mt_rand(1,54561)}">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css?v={:mt_rand(1,54561)}"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/common.css?v={:mt_rand(1,54561)}"/>
+    <link href="__PUBLIC__/tablesorter/themes/blue/style.css?v={:mt_rand(1,54561)}" rel="stylesheet" type="text/css"/>
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table-zh-CN.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/lang.js?v={:mt_rand(1,54561)}"></script>
+    <link rel="stylesheet" href="__PUBLIC__/layer/layui/css/layui.css?v={:mt_rand(1,54561)}">
+    <script src="__PUBLIC__/layer/layui/layui.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".alltable").tablesorter({headers: {2: {sorter: false}, 3: {sorter: false}}});
+        });
+    </script>
+    <style>
+        .layui-form-item .layui-inline {
+            margin-bottom: 0;
+            margin-right: 0;
+        }
+
+        .layui-table th, .layui-table td{
+            padding: 5px;
+            min-height: inherit;
+            font-size: 13px;
+            min-width: 40px;
+            max-width: 45px;
+        }
+        #testNoBtn {
+            width: 190px;
+            padding-left: 10px;
+        }
+        .table_center{
+            text-align: center;
+        }
+        .table_left{
+            text-align: left;
+        }
+        label {
+            margin-bottom: 0
+        }
+        .layui-table thead tr {
+            background-color: white;
+        }
+
+        .layui-table {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<table class="layui-table" style="width: 100%;height: 100%">
+    <tbody>
+    <tr>
+        <th class="table_center">序号</th>
+        <th class="table_left" style="width: 400px;">设备名称</th>
+        <th class="table_center">数量</th>
+    </tr>
+    <notempty name="task">
+        <volist name="task" id="v">
+            <tr>
+                <td class="table_center">{$i}</td>
+                <td class="table_left">{$v.title}</td>
+                <td class="table_center">{$v.num}</td>
+            </tr>
+        </volist>
+        <tr>
+            <td colspan="3" align="center">
+                注：<span style="color: sandybrown">橙色</span>标签为提示内容，不统计为未读消息
+            </td>
+        </tr>
+    </notempty>
+    <empty name="task">
+        <tr>
+            <td colspan="3" class="table_center">暂无任务</td>
+        </tr>
+    </empty>
+    </tbody>
+</table>
+
+
+
+</body>
+<script>
+    $('.task').on('click',function () {
+        var url = $(this).attr('data-url');
+        parent.window.location.href=url;
+    })
+</script>
+</html>

@@ -1,0 +1,745 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<style>
+    .layui-elem-quote {
+        margin: 0px;
+        padding: 10px;
+        font-weight: bold
+    }
+
+    .th_center th, .th_center {
+        text-align: center !important;
+    }
+
+    .layui-inline {
+        margin-bottom: 10px !important;
+        margin-right: 0 !important;
+    }
+
+    .th-inner {
+        text-align: center;
+    }
+
+    .parts_table {
+        padding: 0 !important;
+    }
+
+    .layui-table {
+        margin: 0;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 0;
+    }
+
+    .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+        padding: 0;
+    }
+
+    .layui-table tr td {
+        text-align: center;
+    }
+
+    .offer_tbody textarea {
+        min-height: 50px;
+        border: none!important;
+        resize: none!important;
+    }
+
+    .no-padding-td {
+        padding: 0 !important;
+    }
+
+    .no-padding-td .layui-input {
+        border: none;
+        height: 48px;
+        line-height: 48px;
+    }
+
+    .layui-form-radio {
+        margin: 0;
+        padding-right: 5px;
+    }
+
+    .layui-textarea {
+        min-height: 90px;
+    }
+    #LAY-Repair-Repair-accept .offer{
+        display: none;
+    }
+    #LAY-Repair-Repair-accept .not_scene{
+        display: none;
+    }
+    #LAY-Repair-Repair-accept .addIcon{
+        position: absolute;
+        right: -20px;
+        top: -12px;
+        cursor: pointer;
+        color: #0a8ddf;
+    }
+    #LAY-Repair-Repair-accept .addIcon i{font-size: 25px}
+    /*配件名称搜索建议样式*/
+    #LAY-Repair-Repair-accept .form-control::-webkit-input-placeholder{
+        color: #757575 !important;
+        font-size: 12px;
+    }
+    #LAY-Repair-Repair-accept .jhover{
+        background-color: #5FB878 !important;
+    }
+    #LAY-Repair-Repair-accept .input-group{
+        width: 99% !important;
+    }
+    #LAY-Repair-Repair-accept .input-group .form-control{
+        font-size: 12px;
+        border: none;
+        width: 98% !important;
+    }
+    #LAY-Repair-Repair-accept .input-group .form-control:focus{
+        box-shadow:none;
+        -webkit-box-shadow:none;
+    }
+    #LAY-Repair-Repair-accept .partsName{
+        border-radius: 0 !important;
+        outline:none !important;
+    }
+    #LAY-Repair-Repair-accept .addParts{
+        display: none;
+    }
+
+    #LAY-Repair-Repair-accept .rightAddButton {
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        color: #0a8ddf;
+        cursor: pointer;
+    }
+    .green{color: #85AB70;cursor: pointer;}
+    #media{
+        color:#76ABDF;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="containDiv" id="LAY-Repair-Repair-accept">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>生产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">报修申请信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>报修人：</th>
+                <td>{$repArr.applicant}</td>
+                <th>报修日期：</th>
+                <td>{$repArr.applicant_time}</td>
+                <th>报修电话：</th>
+                <td>{$repArr.applicant_tel}</td>
+            </tr>
+            <tr>
+                <th>故障描述：</th>
+                <td colspan="5">{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>语音描述：</th>
+                <td colspan="5">
+                    <if condition="$repArr['wxTapeAmr']">
+                        <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                        <span id="media">点击播放</span>
+                        <else/>
+                        无
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>故障照片：</th>
+                <td colspan="5">
+                    <empty name="repArr['pic_url']">
+                        无
+                        <else/>
+                        <a class="green" id="showImages">
+                            查看(共{$repArr.imgCount}张)
+                            <volist name="repArr['addRepair_pic_url']" id="v">
+                                <input type="hidden" class="imageUrl" value="{$v}">
+                            </volist>
+                        </a>
+                    </empty>
+                </td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$repArr.applicant_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--接单-->
+    <if condition="$repArr[status] EQ C('REPAIR_HAVE_REPAIRED')">
+        <form class="layui-form">
+            <input type="hidden" value="{$repArr.repid}" name="repid">
+            <input type="hidden" value="{$acceptUrl}" name="action">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>维修接单</legend>
+            </fieldset>
+            <div class="margin-bottom-15">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">响应人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">响应时间：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <input type="hidden" name="uptime" value="{$uptime}"/>
+                        <label class="layui-form-label" style="width:150px">
+                            <span class="rquireCoin"> * </span> 预计到场时间(分钟)：
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="" placeholder="预计到达现场时间" name="expect_arrive" autocomplete="off" class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">备注：</label>
+                        <div class="layui-input-block">
+                            <textarea class="layui-textarea" name="reponse_remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="notice"><i class="layui-icon">&#xe609;</i> 接单并通知报修人员
+                    </button>
+                </div>
+            </div>
+        </form>
+    </if>
+    <!--检修-->
+    <?php if($showAccpet == 1){ ?>
+    <if condition="$repArr[status] eq C('REPAIR_RECEIPT')">
+        <form class="layui-form">
+            <input type="hidden" value="{$repArr.repid}" name="repid">
+            <input type="hidden" value="{$acceptUrl}" name="action">
+            <div class="margin-bottom-15">
+                <div class="layui-elem-quote">维修接单信息</div>
+                <table class="layui-table read-table" lay-even lay-size="sm">
+                    <tbody>
+                    <tr>
+                        <th>响应人：</th>
+                        <td>{$repArr.response}</td>
+                        <th>响应时间：</th>
+                        <td>{$repArr.response_date}</td>
+                    </tr>
+                    <tr>
+                        <th>预计到场时间(分钟)：</th>
+                        <td>{$repArr.expect_arrive}</td>
+                        <th>现场签到时间：</th>
+                        <td>{$repArr.sign_in_time}</td>
+                    </tr>
+                    <tr>
+                        <th>备注：</th>
+                        <td colspan="3">{$repArr.reponse_remark}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--检修表单-->
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>检修表单</legend>
+            </fieldset>
+            <div class="margin-bottom-15">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span> 故障类型：</label>
+                        <div class="layui-input-inline">
+                            <select xm-select="type" xm-select-search="" id="refreshType">
+                                <volist name="repairType" id="v">
+                                    <option value="{$v.id}" {$v.selected}>{$v.title}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 100px;"><span class="rquireCoin"> * </span> 故障问题：</label>
+                        <div class="layui-input-inline" style="width: 350px;">
+                            <select xm-select="problem" xm-select-search="">
+                                <if condition="$not_scene eq 'block'">
+                                    <volist name="repairType" id="v">
+                                        <notempty name="v.selected">
+                                            <volist name="v.parent" id="vv">
+                                                <option value="{$vv.value}" {$vv.selected}>{$vv.title}</option>
+                                            </volist>
+                                        </notempty>
+                                    </volist>
+                                </if>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <?php if($menuData = get_menu('Repair','RepairSetting','addType')):?>
+                        <div class="addIcon">
+                            <i class="layui-icon addTypeAndProblem" data-url="{$menuData['actionurl']}"> &#xe654;</i>
+                        </div >
+                        <?php endif;?>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>解决方式：</label>
+                        <div class="layui-input-inline">
+                            <select name="is_scene" id="is_scene" class="type" lay-filter="FilterIs_scene">
+                                <notempty name="repArr.overhaul_time">
+                                    <if condition="$repArr.is_scene eq 1">
+                                        <option value="1" selected>现场解决</option>
+                                        <option value="0">非现场解决</option>
+                                        <else/>
+                                        <option value="1">现场解决</option>
+                                        <option value="0" selected>非现场解决</option>
+                                    </if>
+                                    <else/>
+                                    <option value="1">现场解决</option>
+                                    <option value="0">非现场解决</option>
+                                </notempty>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width:100px">预计修复时间：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" placeholder="请选择时间" readonly style="cursor: pointer;" name="expect_time" value="{$repArr.expect_time}" id="expect_time">
+                        </div>
+                    </div>
+                </div>
+                <!--现场解决-->
+                <div class="is_scene" style="display: {$is_scene}">
+                    <div class="layui-form-item">
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label"><span class="rquireCoin"> * </span>处理详情：</label>
+                            <div class="layui-input-block">
+                                <textarea class="layui-textarea" name="dispose_detail"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--不能现场解决-->
+                <div class="not_scene" style="display: {$not_scene}">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><span class="rquireCoin"> * </span> 维修性质：</label>
+                            <div class="layui-input-inline">
+                                <select name="repair_type" lay-verify="required" lay-filter="repairType">
+                                    <if condition="$repArr.repair_type eq 0">
+                                        <option value="0" selected>自修</option>
+                                        <option value="2">第三方维修</option>
+                                    </if>
+                                    <if condition="$repArr.repair_type eq 2">
+                                        <option value="0">自修</option>
+                                        <option value="2" selected>第三方维修</option>
+                                    </if>
+                                    <if condition="$asArr['is_guarantee'] EQ C('YES_STATUS')">
+                                        <option value="1">维保厂家</option>
+                                    </if>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <if condition="$asArr['is_guarantee'] EQ C('YES_STATUS')">
+                        <div class="layui-form-item factory" style="display: none">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">维修厂家：</label>
+                                <div class="layui-input-inline">
+                                    <input type="hidden" name="guarantee_id" value="{$asArr.guarantee_id}">
+                                    <input type="text" name="guarantee_name" value="{$asArr.guarantee_name}" readonly class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 120px;">维修公司联系人：</label>
+                                <div class="layui-input-inline" style="width: 130px;">
+                                    <input type="text" name="salesman_name" value="{$asArr.salesman_name}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 180px;">维修公司联系电话：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="salesman_phone" value="{$asArr.salesman_phone}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <div class="layui-form-item">
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">检修备注：</label>
+                            <div class="layui-input-block">
+                                <textarea class="layui-textarea" name="repair_remark">{$repArr.repair_remark}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--检修表单END-->
+
+            <!--维修报价记录表单-->
+            <fieldset class="layui-elem-field layui-field-title offer" style="display:{$show_company}">
+                <legend>维修报价记录表单</legend>
+            </fieldset>
+            <div class="margin-bottom-15 offer" style="display:{$show_company}">
+                <if condition="$isOpenOffer_formOffer EQ C('DO_STATUS')">
+                    <div class="layui-inline">
+                        <span style="color: red;font-weight: bold">注：请设置一个最终厂家后再提交</span>
+                    </div>
+                </if>
+                <table class="layui-table offerTbody" lay-even lay-size="sm">
+                    <thead>
+                        <tr>
+                            <th class="th-align-center" rowspan="3"><span class="rquireCoin">*</span>公司名称</th>
+                            <th style="width: 60px;" class="th-align-center" rowspan="3"><span class="rquireCoin">*</span>联系人
+                            </th>
+                            <th style="width: 80px;" class="th-align-center" rowspan="3"><span class="rquireCoin">*</span>联系方式
+                            </th>
+                        </tr>
+                        <tr>
+                            <if condition="$isOpenOffer_formOffer NEQ C('NOT_DO_STATUS')">
+                                <th style="width: 80px;" class="th-align-center"><span class="rquireCoin">*</span>服务金额</th>
+                            </if>
+                            <th style="width: 100px;" class="th-align-center"><span class="rquireCoin">*</span>发票
+                            </th>
+                            <th style="width: 80px;" class="th-align-center"><span class="rquireCoin">*</span>到货/服务周期
+                            </th>
+                            <if condition="$isOpenOffer_formOffer NEQ C('DO_STATUS')">
+                                <th class="th-align-center" style="width: 50px;">建议渠道</th>
+                                <th class="th-align-center" style="width: 100px;">建议说明</th>
+                            </if>
+                            <th class="th-align-center" rowspan="3">备注</th>
+                            <if condition="$isOpenOffer_formOffer EQ C('DO_STATUS')">
+                                <th style="width: 50px;" class="th-align-center">最终选择</th>
+                            </if>
+                            <th style="width: 80px;" class="th-align-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="offer_tbody">
+                        <volist name="coms" id="vo">
+                            <tr class="offid_tr" data-offid="">
+                                <td class="company_td" style="text-align: center; vertical-align: middle; ">{$vo.offer_company}</td>
+                                <td class="contacts_td" style="text-align: center; padding: 0;">{$vo.offer_contacts}</td>
+                                <td class="telphone_td" style="text-align: center; padding: 0;">{$vo.telphone}</td>
+                                <!--总价-->
+                                <if condition="$isOpenOffer_formOffer NEQ C('NOT_DO_STATUS')">
+                                <td class="total_price" style="text-align: center; vertical-align: middle;">{$vo.total_price}</td>
+                                </if>
+                                    <td class="invoice_td" style="text-align: center; padding: 0;">{$vo.invoice}</td>
+                                <td class="cycle_td" style="text-align: center; padding: 0;">{$vo.cycle}</td>
+                                <if condition="$isOpenOffer_formOffer NEQ C('DO_STATUS')">
+                                    <td style="text-align: center; vertical-align: middle; ">
+                                        <input name="proposal" type="radio" value="{$vo.offer_company}" <if condition="$vo.proposal eq 1">checked</if>>
+                                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon layui-anim-scaleSpring"></i><div></div></div>
+                                    </td>
+                                    <td style="text-align: center; padding: 0;"> <textarea name="proposal_info">{$vo.proposal_info}</textarea> </td>
+                                </if>
+                                <if condition="$isOpenOffer_formOffer EQ C('DO_STATUS')">
+                                    <td style="width: 30px;text-align: center">
+                                        <input name="last_decisioin" type="radio" value="{$vo.offer_company}" <if condition="$vo.last_decisioin eq 1">checked</if>>
+                                        <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i></div>
+                                    </td>
+                                </if>
+                                <td class="remark_td" style="text-align: center; padding: 0;">{$vo.remark}</td>
+                                <td style="width:70px;text-align: center; vertical-align: middle; ">
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-danger remove_company"><i class="layui-icon"></i></button>
+                                </td>
+                            </tr>
+                        </volist>
+                        <tr class="add">
+                        <!--公司名称-->
+                        <td class="no-padding-td" style="text-align: left;">
+                            <select name="offer_company" lay-filter="companyInfo" lay-search>
+                                <option value="">请选择公司</option>
+                                <volist name="company" id="v">
+                                    <option value="{$v.olsid}">{$v.sup_name}</option>
+                                </volist>
+                            </select>
+                        </td>
+                        <!--联系人-->
+                        <td class="no-padding-td">
+                            <input type="text"  name="offer_contacts" class="layui-input" placeholder="联系人">
+                        </td>
+                        <!--联系方式-->
+                        <td class="no-padding-td">
+                            <input type="text"  name="telphone" class="layui-input" placeholder="联系电话">
+                        </td>
+                        <!--总价-->
+                        <if condition="$isOpenOffer_formOffer NEQ C('NOT_DO_STATUS')">
+                            <td class="no-padding-td">
+                                <input type="text" name="total_price" class="layui-input" placeholder="服务金额">
+                            </td>
+                        </if>
+                        <!--发票-->
+                        <td class="no-padding-td">
+                            <input type="text" name="invoice" class="layui-input" placeholder="发票">
+                        </td>
+                        <!--到货/服务周期-->
+                        <td class="no-padding-td">
+                            <input type="text" name="cycle" class="layui-input" placeholder="到货/服务周期">
+                        </td>
+
+                        <if condition="$isOpenOffer_formOffer NEQ C('DO_STATUS')">
+                            <!--建议渠道-->
+                            <td class="no-padding-td"></td>
+                            <!--建议说明-->
+                            <td class="no-padding-td"></td>
+                        </if>
+                        <!--备注-->
+                        <td class="no-padding-td">
+                            <input type="text" name="remark" class="layui-input" placeholder="备注">
+                        </td>
+                        <!--最终选择-->
+                        <if condition="$isOpenOffer_formOffer EQ C('DO_STATUS')">
+                            <td class="no-padding-td"></td>
+                        </if>
+                        <!--操作-->
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs addCompany" lay-submit lay-filter="addCompany">
+                                    添加
+                                </button>
+                                <button class="layui-btn layui-btn-xs layui-btn-primary" id="offerReset" style="margin-left:5px">
+                                    重置
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <if condition="$isOpenOffer_formOffer EQ C('DO_STATUS')">
+                    <div class="layui-form-item" style="margin-top: 15px;">
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">原因说明：</label>
+                            <div class="layui-input-block">
+                                <textarea class="layui-textarea" name="decision_reasion">{$decision_reasion}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </if>
+            </div>
+            <!--维修报价记录表单END-->
+
+            <!--配件/服务明细-->
+            <fieldset class="layui-elem-field layui-field-title addParts" style="display:{$show_parts}">
+                <legend>配件/服务明细</legend>
+            </fieldset>
+            <div class="margin-bottom-15 addParts" style="display: {$show_parts}">
+                <table class="layui-table" lay-even lay-size="sm">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center;width:240px;"><span class="rquireCoin">*</span>配件名称</th>
+                        <th style="text-align: center">型号</th>
+                        <th style="text-align: center;width:100px;"><span class="rquireCoin">*</span>数量</th>
+                        <!--<th style="text-align: center;width:100px;">是否出库</th>-->
+                        <th style="text-align: center;width:100px;">操作人</th>
+                        <th style="text-align: center;width:100px;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="partsTbody">
+                    <volist name="parts" id="vo">
+                        <tr class="tr_part" data-partid="{$vo.partid}" id="editRow{$vo.partid}">
+                            <td class="parts">{$vo.parts}</td>
+                            <td class="part_model">{$vo.part_model}</td>
+                            <td class="sum">{$vo.part_num}</td>
+                            <td class="adduser">{$vo.adduser}</td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-warm save_part" ><i class="layui-icon">&#xe642;</i></button>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-btn-danger remove_part"  ><i class="layui-icon">&#xe640;</i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </volist>
+                    <tr class="add">
+                        <td class="no-padding-td partsNameDiv">
+                            <div class="input-group ">
+                                <input type="text" class="form-control partsName" id="partsNameSearch" placeholder="配件/服务名称" name="parts">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="no-padding-td">
+                            <input type="text" name="part_model" class="layui-input" placeholder="型号">
+                        </td>
+                        <td class="no-padding-td">
+                            <input type="text" name="sum" class="layui-input" placeholder="数量">
+                        </td>
+                        <td>
+                            <?php echo(session('username'))?>
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <input type="hidden" name="editPartId" value="">
+                                <button type="button" class="layui-btn layui-btn-xs addPartsInfo" lay-submit lay-filter="addParts">
+                                    添加
+                                </button>
+                                <button class="layui-btn layui-btn-xs layui-btn-primary" id="partReset" style="margin-left:5px">
+                                    重置
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--配件/服务明细END-->
+
+            <?php if($menuData = get_menu('Repair','Repair','uploadRepair')):?>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote">
+                    相关文件上传
+                    <span class="rightAddButton" id="acceptFile" lay-tips="提示 : 上传文件后缀名只能为word文档、PDF文件、扫描图片上传"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">文件名称</th>
+                        <th style="text-align: left !important;">提交人</th>
+                        <th style="text-align: left !important;">上传时间</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addFileTbody">
+                    <if condition="$files neq null">
+                        <volist name="files" id="vo">
+                            <tr class="fileDataTr">
+                                <td class="fileName">
+                                    <input type="hidden" name="file_name" value="{$vo.file_name}">
+                                    <input type="hidden" name="save_name" value="{$vo.save_name}">
+                                    <input type="hidden" name="file_type" value="{$vo.file_type}">
+                                    <input type="hidden" name="file_size" value="{$vo.file_size}">
+                                    <input type="hidden" name="file_url" value="{$vo.file_url}">
+                                    {$vo.file_name}
+                                </td>
+                                <td class="addFileuser">{$vo.add_user}</td>
+                                <td class="addFileTime">{$vo.add_date}</td>
+                                <td class="addFileTime"><div class="layui-btn layui-btn-xs layui-btn-danger del_file">移除</div></td>
+                            </tr>
+                        </volist>
+                        <else/>
+                        <tr class="notFileDataTr">
+                            <td colspan="4" style="text-align: center!important;">暂无数据</td>
+                        </tr>
+                    </if>
+                    </tbody>
+                </table>
+            </div>
+            <?php endif;?>
+            <!--现场解决-->
+            <div class="is_scene" style="display: {$is_scene}">
+                <div class="layui-form-item">
+                    <div style="text-align: center">
+                        <if condition="$sign_result EQ true">
+                            <button class="layui-btn uploadFile" lay-submit lay-filter="doAccpet">
+                                <i class="layui-icon">&#xe609;</i> 确认并维修完成
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon">ဂ</i> 重置
+                            </button>
+                            <button class="layui-btn" lay-submit lay-filter="pdf">
+                                导出PDF维修单
+                            </button>
+                            <else/>
+                            <span style="color: red;font-weight: bold">未到现场扫码签到,签到后再确认检修</span>
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <!--现场解决END-->
+
+            <!--不能现场解决-->
+            <div class="not_scene" style="display: {$not_scene}">
+                <div class="layui-form-item">
+                    <div style="text-align: center">
+                        <if condition="$sign_result EQ true">
+                            <button type="button" class="layui-btn layui-btn-warm uploadFile" lay-submit lay-filter="tmp_save"><i class="layui-icon">&#xe609;</i>
+                                暂时保存
+                            </button>
+                            <button type="button" class="layui-btn uploadFile" lay-submit lay-filter="doAccpet"><i class="layui-icon">&#xe609;</i>
+                                确认检修
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置
+                            </button>
+                            <button class="layui-btn" lay-submit lay-filter="pdf"> 导出PDF维修单</button>
+                            <else/>
+                            <span style="color: red;font-weight: bold">未到现场扫码签到,签到后再确认检修</span>
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <!--不能现场解决END-->
+        </form>
+    </if>
+    <?php }else{ ?>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>工单已指派给 {$repArr['assign_engineer']} 工程师</legend>
+    </fieldset>
+    <?php }?>
+
+
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var companyInfo = {$companyInfo};
+    var personalPartsInfo = {$personalPartsInfo};
+    var isOpenOffer_formOffer = '{$isOpenOffer_formOffer}';
+    var username = '<?php echo(session("username")); ?>';
+    var now_date = '{$now_date}';
+    var acceptUrl='{$acceptUrl}';
+    var repid='{$repArr.repid}';
+</script>
+<script>
+    layui.use('controller/repair/repair/accept', layui.factory('controller/repair/repair/accept'));
+</script>
+

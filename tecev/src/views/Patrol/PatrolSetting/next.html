@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <link href="__PUBLIC__/tablesorter/themes/blue/style.css?v={:mt_rand(1,54561)}" rel="stylesheet" type="text/css"/>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".alltable").tablesorter({headers:{2:{sorter:false},3:{sorter:false},4:{sorter:false}}});
+        });
+    </script>
+    <style>
+        .layui-form-item .layui-inline{margin-bottom: 0;margin-right: 0;}
+        #testNoBtn{width:190px;padding-left:10px;}
+        label{margin-bottom: 0}
+        td{width: 120px;}
+        .layui-table thead tr{background-color: white;}
+        .layui-table{margin: 0;}
+        .layui-colla-content{padding: 0;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">模板名称 </label>
+                <div class="layui-input-inline">
+                    <div class="input-group">
+                        <input type="text" class="layui-input" name="name" readonly="readonly" value="{$name}">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span style="color: red;">注：日常保养、巡查保养明细为非必选项目，但是如果不选择则会影响到日常、巡查保养计划制定，建议选择设置。</span>
+            </div>
+        </div>
+        <input type="hidden" name="layerId" value="{$layerId}">
+        <input type="hidden" name="tpid" value="{$tpid}">
+        <input type="hidden" name="update" value="{$update}">
+        <input type="hidden" name="level3" value="{$level3}">
+        <div class="layui-collapse">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">{$vo.name}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table tablesorter alltable" >
+                            <thead>
+                            <tr>
+                                <th style="width: 8%">编号</th>
+                                <th>明细名称</th>
+                                <th style="width: 13%;text-align: center;">巡查保养</th>
+                                <th style="width: 13%;text-align: center;">日常保养</th>
+                                <th style="width: 12%;text-align: center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo['detail']" id="v">
+                            <tr>
+                                <td>{$v.num}
+                                    <input type="hidden" name="level3order" value="{$v.num}"  >
+                                </td>
+                                <if condition="$v.require neq NULL">
+                                    <td>{$v.name}<br>(保养内容及明细：{$v.require})</td>
+                                    <else />
+                                    <td>{$v.name}</td>
+                                </if>
+                                    <td style="text-align: center;"><input type="checkbox" name="level2" value="{$v.num}" lay-skin="primary" <if condition="in_array($v['num'],$level2)">checked</if> ></td>
+                                    <td style="text-align: center;"><input type="checkbox" name="level1" value="{$v.num}" lay-skin="primary" lay-filter="allChoose" <if condition="in_array($v['num'],$level1)">checked</if> ></td>
+                                    <td style="text-align: center;"><a style="color:red;cursor: pointer;" onclick="ontop(this)" >置顶↑</a><br><a style="color: #00a6c8;cursor: pointer;" onClick='delRow(this)'>移除</a></td>
+                            </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center;margin-top: 20px;">
+                <button class="layui-btn" type="button" value="" id="prev" >返回上一步</button>
+                <button class="layui-btn" type="button" value=""  lay-submit lay-filter="show">预览</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/next', layui.factory('controller/patrol/patrolsetting/next'));
+</script>

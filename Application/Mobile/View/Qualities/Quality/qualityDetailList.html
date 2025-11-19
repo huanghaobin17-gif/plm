@@ -1,0 +1,82 @@
+<include file="Public:head"/>
+<title>质控检测</title>
+<style>
+    .sum {
+        color: #FF5722;
+    }
+    .using {
+        color: #009688
+    }
+    #ordersLists li {
+        margin-bottom: 0.5rem;
+    }
+    .detail{
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        padding-left: 0;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="mgt1rem">
+                <div class="weui-search-bar" id="searchBar">
+                    <form class="weui-search-bar__form" action="#" id="searchForm">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input" id="searchInput">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索(计划名称、设备编号、名称、科室)</span>
+                        </label>
+                    </form>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                    <div class="stopCancelSearch"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/list.png">
+            <h2 class="list_title">待处理检测设备</h2>
+            <span class="sum"></span> 台
+            <a class="order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="DESC" orderSort="addtime">按计划创建时间</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton" orderType="DESC" orderSort="do_date">按预计执行日期</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="ASC" orderSort="addtime">按计划创建时间</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton" orderType="ASC" orderSort="do_date">按预计执行日期</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body">
+            <p class="count"></p>
+            <ul id="qualityDetailList">
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var qualityDetailList = '{$url}';
+</script>
+<script src="__PUBLIC__/mobile/js/qualities/quality/qualityDetailList.js?v={:mt_rand(1,54561)}"></script>

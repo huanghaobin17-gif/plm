@@ -1,0 +1,104 @@
+<?php if($menuData = get_menu_name('Patrol','Patrol','patrolApprove')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var patrolApprove='{$patrolApprove}';
+</script>
+<style>
+    #LAY-Patrol-Patrol-patrolApprove .layui-card-body .layui-table-view td {
+        height: 80px !important;
+    }
+    #LAY-Patrol-Patrol-patrolApprove .layui-table-body .layui-table[lay-size=lg] .layui-table-cell{
+        height: 65px !important;
+        line-height: 50px !important;
+    }
+    #LAY-Patrol-Patrol-patrolApprove .timeLineList{float: left;margin-left: 60px; height: 60px;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineList li{width:110px;float: left;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineBox{margin-top: 15px;position: relative;}
+    #LAY-Patrol-Patrol-patrolApprove .layui-timeline-axis{ margin-top: 8px; left: -15px;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLine{width:120px;height: 3px;position: absolute; margin-top: 9px;top:7px;left: -65px;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineStart{height: 3px;background-color: #009688;position: absolute;top:7px;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineStartTitle{position: absolute;top: -25px;left: -15px;font-size: 12px;color: #009688}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineTitle{position: absolute;top: -28px;font-size: 12px;left: -23px;}
+    #LAY-Patrol-Patrol-patrolApprove .timeLineDate{position: absolute;top:15px;left: -55px;font-size: 12px;}
+
+    #LAY-Patrol-Patrol-patrolApprove .timeLineDetail{width: 300px;position: absolute;left: -80px;border-radius: 5px;background-color: #fff;color: #333;font-size: 12px;z-index: 100;display: none;  }
+    #LAY-Patrol-Patrol-patrolApprove .timeLineDetail tr th{text-align: right;}
+
+    #LAY-Patrol-Patrol-patrolApprove .patrolColorBg{background-color: #1E9FFF;}
+    #LAY-Patrol-Patrol-patrolApprove .patrolColor{color: #1E9FFF;}
+
+    /*已进行的 浅绿*/
+    #LAY-Patrol-Patrol-patrolApprove .executeddColorBg{background-color: #5FB878;}
+    #LAY-Patrol-Patrol-patrolApprove .executeddColor{color: #5FB878;}
+
+    /*进行中的 蓝色*/
+    #LAY-Patrol-Patrol-patrolApprove .haveColorBg{background-color: #1E9FFF;}
+    #LAY-Patrol-Patrol-patrolApprove .haveColor{color: #1E9FFF;}
+
+    /*未进行的 灰色*/
+    #LAY-Patrol-Patrol-patrolApprove .unexecutedColorBg{background-color: #a09e9e;}
+    #LAY-Patrol-Patrol-patrolApprove .unexecutedColor{color: #a09e9e;}
+
+    /*已完成 赤色*/
+    #LAY-Patrol-Patrol-patrolApprove .endColorBg{background-color: #FF5722;}
+    #LAY-Patrol-Patrol-patrolApprove .endColor{color: #FF5722;}
+
+    #LAY-Patrol-Patrol-patrolApprove .baseInfo{margin-left: 30px;font-size: 12px;}
+    #LAY-Patrol-Patrol-patrolApprove .baseInfo .layui-inline{width: 200px;}
+</style>
+<div class="layui-fluid" id="LAY-Patrol-Patrol-patrolApprove">
+    <!--搜索部分-->
+    <div class="layui-row">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+            <div class="layui-card-body">
+                <form class="layui-form" lay-filter="component-form-group">
+                    <input type="hidden" name="url" value="{$url}">
+                    <div class="layui-form-item spacingBalance">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">保养级别：</label>
+                            <div class="layui-input-inline">
+                                <select name="patrol_level" class="input_select" lay-search="">
+                                    <option value="">请选择</option>
+                                    <option value="1">日常保养</option>
+                                    <option value="2">巡查保养</option>
+                                    <option value="3">预防性维护</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="margin-left: 10px;">
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="patrolApproveSearch" id="patrolApproveSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="patrolApprovelList" lay-filter="patrolApproveData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('patrol/patrol/patrolApprove', layui.factory('patrol/patrol/patrolApprove'));
+</script>

@@ -1,0 +1,123 @@
+<include file="Public:head"/>
+<title>系统公告详情</title>
+<style>
+    .emer_title {
+        text-align: center;
+        color: #A9A9A9;
+        padding-top: 10px;
+        font-size: 20px;
+    }
+
+    .layui-card-header {
+        height: auto
+    }
+
+    .type {
+        text-align: center;
+        display: inline-block;
+    }
+
+    .type button {
+        font-size: 1.02rem;
+    }
+
+    .date {
+        float: right;
+        margin-right: 1rem;
+    }
+
+    .emergencyDetail {
+        border-bottom: 1px solid #e5e5e5
+    }
+
+    .otherFile p {
+        font-size: 1.25rem;
+        padding-top: 1rem;
+    }
+
+    .fileList li {
+        margin-top: 1rem;
+    }
+
+    .fileList span {
+        width: 15rem;
+        display: inline-block;
+    }
+
+    /*.layui-btn-group .layui-btn + .layui-btn {*/
+    /*    margin-left: 0.625rem !important;*/
+    /*}*/
+
+    .processImage {
+        width: 360px;
+        height: 315px;
+    }
+
+    .layui-card-header h3 {
+        font-size: 1.05rem;
+    }
+
+    .emergencyDetail img {
+        max-width: 100%;
+        max-height: 20rem;
+    }
+
+    .typeIcon {
+        width: 1rem;
+        height: 1rem;
+        margin-bottom: 2px;
+        margin-right: 0;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <div class="emer_title" style="color: initial">{$data.title}</div>
+            <div class="titleAdd">
+                <div class="type">
+<!--                    <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" style="border-radius: 7px;">-->
+<!--                        {$data.type}-->
+<!--                    </button>-->
+                </div>
+                <div class="date" style="color: #A9A9A9">
+                    {$data.adddate}
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body" style="min-height: 38.5rem">
+            <ul class="emergencyDetail">
+                {$data.content}
+            </ul>
+            <notempty name="file">
+            <div class="otherFile">
+                <p>相关文件：</p>
+                <ul class="fileList">
+                    <volist name="file" id="vo">
+                    <li>
+                        <span>
+                            <img src="__PUBLIC__/mobile/images/icon/{$vo.file_type}.png" class="typeIcon">
+                            {$vo.file_name}
+                        </span>
+                        <div class="layui-btn-group" style="float: right;">
+                            <if condition="$vo.file_type eq pdf">
+                                <a type="button" class="layui-btn layui-btn-xs layui-btn-normal Preview" href="/M/Notice/showFile?path={$vo.file_url}&name={$vo.file_name}">预览</a>
+                            </if>
+                            <?php $file_url=urlencode($vo['file_url']); ?>
+                            <a href="/M/Notin/download?path={$file_url}&name={$vo.file_name}&size={$vo.file_size}" type="button" class="layui-btn layui-btn-xs" data-name="{$vo.file_name}" data-path="{$vo.file_url}">下载</a>
+                        </div>
+                    </li>
+                 </volist>
+                </ul>
+            </div>
+           </notempty>
+
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var emergencyPlanListUrl = '{$url}';
+</script>
+<script src="__PUBLIC__/mobile/js/basesetting/notice/showNotice.js?v={:mt_rand(1,54561)}"></script>

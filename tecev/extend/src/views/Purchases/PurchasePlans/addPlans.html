@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增年度采购计划</title>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 计划年份：</label>
+                <div class="layui-input-inline">
+                    <input name="plans_year" lay-verify="plans_year|required" readonly type="text" id="year" placeholder="请选择计划年份"  class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 项目名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="project_name" lay-verify="project_name|required" placeholder="请输入项目名称" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 开始时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly name="plans_start" lay-verify="plans_start|required" id="plans_start" placeholder="请选择计划开始时间" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 结束时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="plans_end" lay-verify="plans_end|required" readonly placeholder="请选择计划结束时间" id="plans_end" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 计划科室：</label>
+                <div class="layui-input-inline department-content">
+                    <select name="departid" id="departid" lay-verify="departid|required" xm-select="departid" xm-select-search="" lay-verify="select1">
+                        <volist name="departments" id="vo">
+                            <option value="{$vo.departid}">{$vo.department}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux">允许上报科室(上报人管理科室)</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span> 计划状态：</label>
+            <div class="layui-input-block">
+                <input type="radio" name="plans_status" value="1" title="启用" checked="">
+                <input type="radio" name="plans_status" value="0" title="不启用">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea  class="layui-textarea" name="plans_desc" placeholder="请输入备注"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$add_user}" readonly class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$add_date}" readonly class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="submit" lay-filter="savePlans"><i class="layui-icon">&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/plans/addPlans', layui.factory('controller/purchases/plans/addPlans'));
+</script>

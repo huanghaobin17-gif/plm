@@ -1,0 +1,31 @@
+<head>
+    <include file="Public:layerHeader"/>
+    <script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/cookie.js"></script>
+    <style>
+        .table thead th{text-align: center}
+        .layui-table thead tr th,.layui-table tbody tr td{
+            text-align: center;
+        }
+        .offer_tbody textarea {
+            border: none;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+        <input type="hidden" name="departid" value="{$departid}"/>
+        <input type="hidden" name="startDate" value="{$startDate}"/>
+        <input type="hidden" name="endDate" value="{$endDate}"/>
+        <div class="reportHeader">
+            <div class="reportTitle">{$reportTitle}</div>
+            <div class="reportConditions">{$reportConditions}</div>
+        </div>
+        <table id="assetsLists" lay-filter="assetsData"></table>
+</div>
+</body>
+<script>
+    layui.use('controller/patrol/statistics/departPlanDetail', layui.factory('controller/patrol/statistics/departPlanDetail'));
+</script>
+

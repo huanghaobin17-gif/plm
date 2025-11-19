@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>质控计划详情</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        th{ text-align: right!important; font-weight: bold!important;}
+    </style>
+</head>
+<body>
+    <div class="containDiv">
+        <blockquote class="layui-elem-quote">
+            质控计划名称.信息
+        </blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0px;">
+            <colgroup>
+                <col width="140">
+                <col>
+                <col width="140">
+                <col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>计划制定时间：</th>
+                    <td>{$qsInfo.addtime}</td>
+                    <th>计划制定人：</th>
+                    <td>{$qsInfo.adduser}</td>
+                </tr>
+                <tr>
+                    <th>计划启用日期：</th>
+                    <td>{$qsInfo.start_date}</td>
+                    <th>计划启用人：</th>
+                    <td>{$qsInfo.start_username}</td>
+                </tr>
+                <tr>
+                    <th>预计执行日期：</th>
+                    <td>{$qsInfo.do_date}</td>
+                    <th>执行方式：</th>
+                    <td>
+                        <if condition="$qsInfo.is_cycle eq 1">
+                            周期执行
+                            <else/>
+                            非周期执行
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>周期：</th>
+                    <td>{$qsInfo.cycle}</td>
+                    <th>计划检测人：</th>
+                    <td>{$qsInfo.username}</td>
+                </tr>
+            </tbody>
+        </table>
+        <blockquote class="layui-elem-quote">
+            设备基础信息
+            <button class="layui-btn layui-btn-xs layui-btn-normal" lay-submit lay-filter="showAssets" data-id="{$asInfo.assid}" data-assets="{$asInfo.assets}" style="margin-left: 10px;">设备详情</button>
+        </blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0px;">
+            <colgroup>
+                <col width="140">
+                <col>
+                <col width="140">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$asInfo.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$asInfo.assets}</td>
+            </tr>
+            <tr>
+                <th>规格 / 型号：</th>
+                <td>{$asInfo.model}</td>
+                <th>使用科室：</th>
+                <td>{$asInfo.department}</td>
+            </tr>
+            <tr>
+                <th>上次质控时间：</th>
+                <td>{$asInfo.lasttesttime}</td>
+                <th>上次检测人：</th>
+                <td>{$asInfo.lasttestuser}</td>
+            </tr>
+            </tbody>
+        </table>
+        <blockquote class="layui-elem-quote">
+            质控模板&质控项目明细信息
+        </blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0px;">
+            <colgroup>
+                <col width="180">
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>设备质控模板：</th>
+                    <td colspan="5">{$qsInfo.template}</td>
+                </tr>
+                <tr>
+                    <th>检测依据：</th>
+                    <td>{$qsInfo.basis}</td>
+                </tr>
+                <tr>
+                    <th>检测仪器：</th>
+                    <td>{$qsInfo.instrument}</td>
+                </tr>
+                <volist name="values" id="vo">
+                    <tr>
+                        <th>{$vo.detection_name}（{$vo.unit}）设定值：</th>
+                        <td>{$vo.set}</td>
+                    </tr>
+                </volist>
+                <!--<tr>-->
+                    <!--<th>心率(次/min)设定值：</th>-->
+                    <!--<td>-->
+                        <!--60(57~63)、120(114~126)、180(171~189)、100(95~105)、30(28~32)-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th>呼吸率(次/min)设定值：</th>-->
+                    <!--<td></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th>无创血压（mmHg）设定值：</th>-->
+                    <!--<td></td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th>血氧饱和度（%）设定值：</th>-->
+                    <!--<td></td>-->
+                <!--</tr>-->
+            </tbody>
+        </table>
+        <div class="tbcenter" style=" margin-top: 50px;">
+            <if condition="$qsInfo.is_start neq 0">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="scanTemplate" data-id="{$qsInfo.qsid}" data-name="{$qsInfo.plan_name}" ><i class="layui-icon layui-icon-zeye-l l-icon-in-btn"></i>预览设备质控模板</button>
+            </if>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    layui.use('controller/qualities/quality/showQualityPlan', layui.factory('controller/qualities/quality/showQualityPlan'));
+</script>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <?php if($menuData = get_menu_name('Assets','Borrow','applyBorrow')):?>
+    <title>{$menuData['actionname']}</title>
+    <?php endif?>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Assets-Transfer-add .bsSuggest1{
+            height: 24px;
+        }
+        #LAY-Assets-Transfer-add .layui-form-item{
+            margin-bottom: 5px;
+        }
+        .layui-form-label{width: 115px;}
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Assets-Transfer-add">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">设备基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <volist name="asArr" id="vo">
+                <tbody>
+                <tr>
+                    <th>设备编号：</th>
+                    <td>{$vo.assnum}</td>
+                    <th>设备名称：</th>
+                    <td>{$vo.assets}</td>
+
+                </tr>
+                <tr>
+                    <th>规格型号：</th>
+                    <td>{$vo.model}</td>
+                    <th>现科室：</th>
+                    <td>{$vo.department_name}</td>
+                </tr>
+                </tbody>
+            </volist>
+        </table>
+    </div>
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            同时借调的附属设备    <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips=' 选中 连同所属附属设备一起借调'>&#xe702;</i>
+        </blockquote>
+        <table class="layui-table" lay-data="{id: 'subsidiaryData'}" lay-filter="subsidiary_table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th lay-data="{field:'assid',checkbox:true,LAY_CHECKED:true}">全选</th>
+                <th lay-data="{field:'main_assid',LAY_CHECKED:true,width:60}">序号</th>
+                <th lay-data="{field:'assets'}">附属设备名称</th>
+                <th lay-data="{field:'main_assets'}">主设备名称</th>
+                <th lay-data="{field:'assnum'}">设备编号</th>
+                <th lay-data="{field:'model'}">规格型号</th>
+                <th lay-data="{field:'unit'}">单位</th>
+                <th lay-data="{field:'buy_price'}">原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assid}</td>
+                    <td>{$key+1}<input type="hidden" value={$vo.main_assid}></td>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.main_assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">转出科室基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>转科单号：</th>
+                <td>
+                    <if condition="$transInfo['transfernum']">
+                        {$transInfo['transfernum']}
+                        <else/>
+                        系统生成
+                    </if>
+                </td>
+                <th>申请人：</th>
+                <td>{$username}</td>
+
+            </tr>
+            <tr>
+                <th>申请日期：</th>
+                <td>{$today}</td>
+                <th>转出科室：</th>
+                <td>
+                    {$department_name}
+                    <input type="hidden"  data-value="{$out_departid}" name="traout"  class="layui-input">
+                </td>
+            </tr>
+            <tr>
+                <th>转出科室负责人：</th>
+                <td colspan="3">
+                    {$departrespon}
+                    <input type="hidden" name="traoutre" value="" class="layui-input">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>设备转科申请单信息</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="margin-bottom: 0">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 转入科室：</label>
+                <div class="layui-input-inline">
+                    <div class="input-group cusgroup">
+                        <if condition="$transInfo.atid neq null">
+                            <input type="text" class="form-control" disabled value="{$transInfo.tranoin_department}" placeholder="请选择转入科室" style="height: 24px;"/>
+                            <else/>
+                            <input type="text" class="form-control bsSuggest1" value=""  placeholder="请选择转入科室"/>
+                        </if>
+                        <input type="hidden" name="departid" value="{$transInfo.tranin_departid}">
+                        <input type="hidden" name="assids" value="{$assids}">
+                        <input type="hidden" name="atid" value="{$transInfo.atid}">
+                        <input type="hidden" name="rightdepart" value="{$rightdepart}">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">存放地点：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$transInfo.address}" name="address" readonly placeholder="选择转入科室后自动填充" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 转科日期：</label>
+                <if condition="$transInfo.atid  neq null">
+                    <div class="layui-input-inline">
+                        <input type="text" name="transferdate" value="{$transInfo.transfer_date}" readonly lay-verify="require|transferdate|date" placeholder="请选择转科日期" style="cursor: pointer;" class="layui-input">
+                    </div>
+                    <else/>
+                    <div class="layui-input-inline">
+                        <input type="text" name="transferdate" value="" id="transferdate" readonly lay-verify="require|transferdate|date" placeholder="请选择转科日期" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </if>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">转入科室负责人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="departrespon" value="{$transInfo.tranin_departrespon}" placeholder="选择转入科室后自动填充" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 98%">
+            <label class="layui-form-label">转科文号：</label>
+            <div class="layui-input-block">
+                <input type="text" value="{$transInfo.tran_docnum}" name="docnum" autocomplete="off" class="layui-input" placeholder="请输入转科文号" style="width: 92%;">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">转科原因：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入转科原因" class="layui-textarea" name="tranreason" style="width: 90%;">{$transInfo.tran_reason}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <if condition="$transInfo.atid  neq null">
+                    <button class="layui-btn" id="addTra"><i class="layui-icon" >&#xe609;</i> 确认申请重审</button>
+                    <else/>
+                    <button class="layui-btn" id="addTra"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                </if>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var hospital_id = "{$asArr[0]['hospital_id']}";
+    var today = "{$today}";
+    var departid = "{$asArr[0]['departid']}";
+    layui.use('controller/assets/transfer/add', layui.factory('controller/assets/transfer/add'));
+</script>
+

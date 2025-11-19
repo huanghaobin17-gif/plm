@@ -1,0 +1,121 @@
+<?php if($menuData = get_menu_name('Assets','AssetsStatis','MaintenanceSummary')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Assets-AssetsStatis-MaintenanceSummary">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div lay-filter="MaintenanceSummaryTab" class="layui-tab layui-tab-brief" style="margin: 0px;">
+                <ul class="layui-tab-title" style="margin:0 10px; background-color: #ffffff">
+                    <li class="layui-this">中标供应商</li>
+                    <li>维保期限</li>
+                    <li>维保费用</li>
+                    <li>科室</li>
+                    <li>设备</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-card">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">
+                                        <div class="fl"><i class="layui-icon">&#xe62d;</i> 列表</div>
+                                        <div class="fl"></div>
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <table id="MaintenanceSummarySupplier" lay-filter="MaintenanceSummarySupplier"></table>
+                                        <div id="MaintenanceSummarySupplierMain" style="min-height:800px;min-width: 800px;margin-top: 15px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl"><i class="layui-icon">&#xe62d;</i> 列表</div>
+                                <div class="fl m-left"></div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain ">
+                                    <table id="MaintenanceSummaryTerm" lay-filter="MaintenanceSummaryTerm"></table>
+                                    <div id="MaintenanceSummaryTermMain" style="min-height:800px;min-width: 800px;margin-top: 15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">费用：</label>
+                                        <div class="layui-input-inline" style="width: auto">
+                                            <input type="radio" name="typeCost" value="" title="含历史参保费用" checked>
+                                            <input type="radio" name="typeCost" value="1" title="不含历史参保费用">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <button class="layui-btn" lay-submit="" lay-filter="MaintenanceSummaryCostSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl"><i class="layui-icon">&#xe62d;</i> 列表</div>
+                                <div class="fl m-left"></div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain ">
+                                    <table id="MaintenanceSummaryCost" lay-filter="MaintenanceSummaryCost"></table>
+                                    <!--<div id="MaintenanceSummaryCostMain" style="min-height:800px;min-width: 800px;margin-top: 15px;"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl"><i class="layui-icon">&#xe62d;</i> 列表</div>
+                                <div class="fl m-left"></div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain ">
+                                    <table id="MaintenanceSummaryDepart" lay-filter="MaintenanceSummaryDepart"></table>
+                                    <div id="MaintenanceSummaryDepartMain" style="min-height:800px;min-width: 800px;margin-top: 15px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl"><i class="layui-icon">&#xe62d;</i> 列表</div>
+                                <div class="fl m-left"></div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain ">
+                                    <table id="MaintenanceSummaryAssets" lay-filter="MaintenanceSummaryAssets"></table>
+                                    <!--<div id="MaintenanceSummaryAssetsMain" style="min-height:800px;min-width: 800px;margin-top: 15px;"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('assets/statistics/MaintenanceSummary', layui.factory('assets/statistics/MaintenanceSummary'));
+</script>
+
+
+

@@ -1,0 +1,162 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Repair','RepairParts','partsOutWare')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .red{color: #FF5722}
+    .green{color: #85AB70}
+    .assetsHideDetail{display: none;}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+    .layui-form .layui-form-item{margin: 1rem 0;}
+    input[type=number]{width: 30%;margin-left: 10px;display: inline;}
+    .layui-table thead tr th{text-align: center;}
+    .layui-table tr td{width: auto;}
+    .emptyDiv {
+        display: none;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 10;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <div class="emptyDiv"></div>
+    <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body" style="padding: 0 0 0.625rem 0;">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>维修单号</th>
+                    <td>{$repArr.repnum}</td>
+                </tr>
+                <tr>
+                    <th>报修科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>报修人</th>
+                    <td>{$repArr.applicant}</td>
+                </tr>
+                <tr>
+                    <th>报修时间</th>
+                    <td>{$repArr.applicant_time}</td>
+                </tr>
+                <tr>
+                    <th>接单时间</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr>
+                    <th>维修工程师</th>
+                    <td>{$repArr.response}</td>
+                </tr>
+                <tr>
+                    <th>故障问题</th>
+                    <td><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr>
+                    <th>故障描述</th>
+                    <td>{$repArr.breakdown}</td>
+                </tr>
+                <tr>
+                    <th>检修备注</th>
+                    <td>{$repArr.repair_remark}</td>
+                </tr>
+                <tr>
+                    <th>维修性质</th>
+                    <td>{$repArr.repTypeName}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="layui-card moveAnimatedDiv" style="margin: 1.25rem 0;">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">申请配件信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body" style="padding: 0 0 0.625rem 0;">
+            <table class="layui-table" lay-even>
+                <thead>
+                <tr>
+                    <th style="width: 40%;">配件名称</th>
+                    <th style="width: 40%;">规格型号</th>
+                    <th style="width: 20%;">数量</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>电阻</td>
+                    <td>a1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>电子开关</td>
+                    <td>a2</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>电容</td>
+                    <td>a3</td>
+                    <td>3</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="formDiv">
+        <form class="layui-form">
+            <input type="hidden" name="repid" value="{$repArr.repid}"/>
+            <div class="layui-card mgt0">
+                <div class="layui-card-header">
+                    <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                    <h2 class="formTitle">配件出库表单</h2>
+                    <a class="upFormButton">表单置顶<i class="layui-icon layui-icon-zarrow-up-l"></i></a>
+                    <a class="downFormButton">表单置底<i class="layui-icon layui-icon-zarrow-down-l"></i></a>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">配件数量合计：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">配件费用合计：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" autocomplete="off" class="layui-input" readonly>元
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn enterButton" style="width: 100%;" lay-submit lay-filter="a">确认并出库</button>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-warm enterButton" style="width: 100%;" lay-submit lay-filter="b">库存不足请先入库</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var url = "{$url}";
+</script>
+<script src="__PUBLIC__/mobile/js/repair/repair/partsOutWare.js?v={:mt_rand(1,54561)}"></script>

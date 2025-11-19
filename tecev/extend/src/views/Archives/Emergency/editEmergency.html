@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布应急预案</title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-form-pane .layui-input-block{margin-left: 115px;}
+    .file_list{
+        margin-bottom: 20px;
+    }
+    .file_list ul li{
+        margin-top: 10px;
+    }
+    .show_file{
+        color:#01AAED;
+        cursor: pointer;
+        margin: 0 15px;
+    }
+    .del_file{
+        color:#01AAED;
+        cursor: pointer;
+    }
+    .addIcon{
+        z-index: 99;
+        position: absolute;
+        left: 330px;
+        top: 63px;
+        cursor: pointer;
+        color: #0a8ddf;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-fluid">
+        <div class="layui-row" style="margin-top: 10px;">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-form-label"><span class="rquireCoin"> * </span> 预案名称：</div>
+                    <div class="layui-input-block">
+                        <input type="text" name="emergency" value="{$emerInfo.emergency}" autocomplete="off" placeholder="请输入预案名称" class="layui-input" lay-verify="title">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 预案分类：</label>
+                    <div class="layui-input-inline">
+                        <select id="category" name="category" lay-verify="cate_sel" xm-select="emergencyCategory" xm-select-search="">
+                            <option value="">请选择预案分类</option>
+                            <volist name="cates" id="v">
+                                <option value="{$v.id}" {$v.selected}>{$v.name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <div class="addIcon" id="addCate">
+                        <span class="factoryClick"></span>
+                        <i class="layui-icon"> &#xe654;</i>
+                    </div >
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-form-label">发布者：</div>
+                        <div class="layui-input-inline">
+                            <input type="text" readonly value="{$emerInfo.username}" name="adduser" class="layui-input">
+                            <input type="hidden" readonly value="{$userInfo.userid}" name="add_userid" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-form-label">发布日期：</div>
+                        <div class="layui-input-inline">
+                            <input type="text" readonly value="{$emerInfo.add_date}" name="add_date" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-form-label"><span class="rquireCoin"> * </span> 预案正文：</div>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" rows="25" id="editor" style="display: none;">{$emerInfo.content}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-label" style="float: left;"><span class="rquireCoin"> * </span> 相关文件：</div>
+                    <div style="float: left;">
+                        <div class="file_list">
+                            <ul id="add_files">
+                                <volist name="files" id="vo">
+                                    <li>
+                                        <input type="hidden" name="file_name[]" value="{$vo['file_name']}">
+                                        <input type="hidden" name="save_name[]" value="{$vo['save_name']}">
+                                        <input type="hidden" name="file_type[]" value="{$vo['file_type']}">
+                                        <input type="hidden" name="file_size[]" value="{$vo['file_size']}">
+                                        <input type="hidden" name="file_url[]" value="{$vo['file_url']}">
+                                        <span>{$vo.img} {$vo.file_name}</span>
+                                        <span class="show_file" data-path="{$vo['file_url']}" data-name="{$vo['file_name']}"  class="show_file">预览</span>
+                                        <span class="del_file">删除</span>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <button type="button" class="layui-btn" id="uploadFileEmer">
+                                    <i class="layui-icon">&#xe67c;</i>确定上传
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center">
+                    <input type="hidden" name="arempid" value="{$emerInfo.arempid}"/>
+                    <button class="layui-btn" lay-submit lay-filter="edit"><i class="layui-icon">&#xe609;</i>确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var  addEmergency = '{$addEmergency}';
+    layui.use('controller/archives/emergency/addEmergency', layui.factory('controller/archives/emergency/addEmergency'));
+</script> 

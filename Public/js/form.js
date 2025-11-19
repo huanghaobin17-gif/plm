@@ -1,0 +1,2 @@
+﻿Document.write("<script language=javascript src='common.js'></script>");
+function departnum(value,m,n,id){ if(value.match(/^([0-9]){m,n}$/)){return true; }else{Dmsg('编号只能填数字且长度只能为'+m+'到'+n,id);return false;}}

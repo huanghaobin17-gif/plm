@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .my-menu-li{
+            width: 24% !important;
+            text-align: center;
+        }
+        .tips{
+            line-height: 38px;
+            color:red;
+        }
+        .tooltip-inner{
+            white-space: normal;
+            width: auto;
+            text-align: left;
+            word-wrap:break-word;
+            word-break:break-all;
+        }
+        .layui-table td, .layui-table th {
+            padding: 9px 0 !important;
+        }
+        .table_title{
+            height: 40px;
+            background: #F9F9F9;
+            line-height: 40px;
+            text-align: left;
+            padding-left: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">用户权限列表</div>
+        <input type="hidden" name="userid" value="{$result.userid}"/>
+        <div class="layer-to-top">
+            <volist name="result['res']" id="pri">
+            <table class="layui-table">
+                <caption class="table_title">{$hospitalname[$key]['hospital_name']}</caption>
+                <colgroup>
+                    <col width="16%">
+                    <col width="20%">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="tbheader">模块</th>
+                    <th class="tbheader">类别</th>
+                    <th class="tbheader">权限</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="pri" id="vo">
+                    <tr>
+                        <if condition="$vo[hasRowSpan]">
+                            <td class="tbcenter" rowspan="{$vo.rowSpan}">{$vo.modulename}</td>
+                        </if>
+                        <td class="tbcenter">
+                            {$vo.title}
+                        </td>
+                        <td>
+                            <ul class="privi">
+                                <volist name="vo[menus]" id="menu">
+                                    <li class="my-menu-li">{$menu[title]}</li>
+                                </volist>
+                            </ul>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+            </volist>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/user/showPrivi', layui.factory('controller/basesetting/user/showPrivi'));
+</script>

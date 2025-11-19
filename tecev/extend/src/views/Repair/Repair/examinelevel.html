@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css?v={:mt_rand(1,54561)}">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css?v={:mt_rand(1,54561)}"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/common.css?v={:mt_rand(1,54561)}"/>
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/lang.js?v={:mt_rand(1,54561)}"></script>
+    <link rel="stylesheet" href="__PUBLIC__/layer/layui/css/layui.css?v={:mt_rand(1,54561)}">
+    <script src="__PUBLIC__/layer/layui/layui.js?v={:mt_rand(1,54561)}"></script>
+</head>
+<body>
+<fieldset>
+    <legend>设备基础信息</legend>
+    <div class="tabDiv">
+        <table class="table-striped table-custom">
+            <tr style="background: #fff;">
+                <td align="center">
+                    资产编号
+                </td>
+                <td align="center">
+
+                </td>
+                <td align="center">
+                    规格型号
+                </td>
+                <td align="center">
+
+                </td>
+            </tr>
+            <tr style="background: #fff;">
+                <td align="center">
+                    资产名称
+                </td>
+                <td align="center">
+
+                </td>
+                <td align="center">
+                    资产厂家
+                </td>
+                <td align="center">
+
+                </td>
+            </tr>
+            <tr style="background: #fff;">
+                <td align="center">
+                    分类名称
+                </td>
+                <td align="center">
+
+                </td>
+                <td align="center">
+                    使用科室
+                </td>
+                <td align="center">
+
+                </td>
+            </tr>
+            <tr style="background: #fff;">
+                <td align="center">
+                    保修日期
+                </td>
+                <td align="center">
+
+                </td>
+                <td align="center">
+                    保修状态
+                </td>
+                <td align="center" style="color: red">
+                    已过保修期
+                </td>
+            </tr>
+        </table>
+    </div>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+    <fieldset>
+        <legend>报修申请信息</legend>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">维修状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">报修人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">报修日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">维修期限：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">报修电话：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">维修人员：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline" style="width: 660px">
+                <label class="layui-form-label">故障问题：</label>
+                <div class="layui-input-inline" style="width: 527px">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">维修电话：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">故障描述：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>维修接单信息</legend>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">响应人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">响应时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">接单人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">接单时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">预计修复时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">故障类型</label>
+            <div class="layui-input-inline">
+                <select>
+                    <option value="">1</option>
+                </select>
+            </div>
+            <label class="layui-form-label" style="margin-left: 14px">故障问题</label>
+            <div class="layui-input-inline">
+                <select>
+                    <option value="">1</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="margin-left: 14px">预计费用：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <label class="layui-form-label">维修性质：</label>
+            <div class="layui-input-inline">
+                <select>
+                    <option value="0">自修</option>
+                    <option value="1">维保厂家</option>
+                    <option value="2">第三方维修</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">检修意见：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">第一到场人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">第一到场时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" readonly="true" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>维修报价记录</legend>
+        <div class="tabDiv">
+            <table class="table-striped table-custom">
+                <tr style="background: #fff;">
+                    <td align="center">序号</td>
+                    <td align="center">维修厂家</td>
+                    <td align="center">维修报价</td>
+                    <td align="center">是否最终维修厂家</td>
+                    <td align="center">记录人</td>
+                    <td align="center">记录日期</td>
+                </tr>
+                <tr>
+                    <td align="center">1</td>
+                    <td align="center">2</td>
+                    <td align="center">3</td>
+                    <td align="center">4</td>
+                    <td align="center">5</td>
+                    <td align="center">6</td>
+                </tr>
+                <tr>
+                    <td align="center">1</td>
+                    <td align="center">2</td>
+                    <td align="center">3</td>
+                    <td align="center">4</td>
+                    <td align="center">5</td>
+                    <td align="center">6</td>
+                </tr>
+                <tr>
+                    <td align="center">1</td>
+                    <td align="center">2</td>
+                    <td align="center">3</td>
+                    <td align="center">4</td>
+                    <td align="center">5</td>
+                    <td align="center">6</td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend style="color:#00BFFF">审核区域</legend>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">审核人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value=""
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">申请人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value=""
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审核时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="" placeholder="获取当前时间" readonly="true"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>是否通过</label>
+            <div class="layui-input-block" style="padding-left: 15px;">
+                <input type="radio" name="sex" value="" title="通过" checked>
+                <input type="radio" name="sex" value="" title="否定">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>审批意见：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<script src="__PUBLIC__/js/bootstrap-suggest.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var form = layui.form();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{width: 100px;padding-left: 0;}
+        .layui-word-aux{width: 430px;margin-left: 20px;}
+        .layui-input-block{margin-left: 120px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>修改科室表单</legend>
+    </fieldset>
+    <form class="layui-form">
+        <input type="hidden" name="departid" value="{$departmentinfo.departid}">
+        <if condition="$showHospital eq 1">
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属医院：</label>
+                <div class="layui-input-block">
+                    <input type="text"  value="{$hosInfo.hospital_name}" name="" placeholder="" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </if>
+        <if condition="$parentid neq 0">
+            <div class="layui-form-item">
+                <div class="layui-block">
+                    <label class="layui-form-label">主科室名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly value="{$parentDepartment.department}" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">主科室编号：{$parentDepartment.departnum}</div>
+                </div>
+            </div>
+        </if>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>科室编号：</label>
+                <div class="layui-input-block">
+                    <input type="text"  value="{$departmentinfo.departnum}" <if condition="$canEdit eq 0">readonly</if> name="departnum" lay-verify="required|number" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">已有{$tips}科室编号：{$departNum}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>科室名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="department" value="{$departmentinfo.department}" lay-verify="required|title" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>所在位置：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" value="{$departmentinfo.address}" lay-verify="required|title" autocomplete="off" placeholder="请输入科室所在位置" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>科室电话：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="departtel" value="{$departmentinfo.departtel}" autocomplete="off" lay-verify="required|tel" placeholder="请输入科室电话" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label">科室负责人：</label>
+                <div class="layui-input-block">
+                    <select name="departrespon">
+                        <option value=""></option>
+                        <volist name="user" id="v">
+                            <if condition="$departmentinfo['departrespon'] eq $v['username']">
+                                <option value="{$v.username}" selected>{$v.username}</option>
+                                <else />
+                                <option value="{$v.username}">{$v.username}</option>
+                            </if>
+
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label">设备负责人：</label>
+                <div class="layui-input-block">
+                    <select name="assetsrespon">
+                        <option value=""></option>
+                        <volist name="user" id="v">
+                            <if condition="$departmentinfo['assetsrespon'] eq $v['username']">
+                                <option value="{$v.username}" selected>{$v.username}</option>
+                                <else />
+                                <option value="{$v.username}">{$v.username}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','editDepartment')):?>
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="edit" data-url="{$menuData['actionurl']}"><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <?php endif;?>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/integratedSetting/editdepartment', layui.factory('controller/basesetting/integratedSetting/editdepartment'));
+</script>

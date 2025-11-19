@@ -1,0 +1,130 @@
+<title>实时监控</title>
+<script>
+    var getMonitorList = "{$getMonitorList}";
+</script>
+<style>
+    #LAY-Monitor-Monitor-getMonitorList .main-title {
+        display: flex;
+    }
+
+    #LAY-Monitor-Monitor-getMonitorList .sub-title {
+        height: 50px;
+        line-height: 50px;
+        width: calc(100% / 7);
+        text-align: center;
+    }
+    .layui-table-fixed-l{
+        overflow: hidden;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Monitor-Monitor-getMonitorList">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="main-title">
+                <div class="sub-title">设备总数量</div>
+                <div class="sub-title">开机中</div>
+                <div class="sub-title">关机</div>
+                <div class="sub-title">优</div>
+                <div class="sub-title">良</div>
+                <div class="sub-title">一般</div>
+                <div class="sub-title">差</div>
+            </div>
+            <div class="main-title response-data">
+                <div class="sub-title">84</div>
+                <div class="sub-title">51</div>
+                <div class="sub-title">33</div>
+                <div class="sub-title">5</div>
+                <div class="sub-title">6</div>
+                <div class="sub-title">3</div>
+                <div class="sub-title">39</div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe615;</i> 查询
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编码：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getMonitorListAssnum"
+                                               placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getMonitorListAssets"
+                                               placeholder="请输入设备名称" name="assets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="" lay-filter="monitorListsSearch"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="monitorLists" lay-filter="monitorLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Monitor-Monitor-getMonitorListToolbar">
+    <div class="layui-btn-container">
+<!--        <button class="layui-btn layui-btn-sm" lay-event="download" data-url="{$menuData['actionurl']}">-->
+<!--            下载设备实时数据-->
+<!--        </button>-->
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="test_2" data-url="{$menuData['actionurl']}">-->
+        <!--            资产每日统计（资产编码）-->
+        <!--        </button>-->
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="test_3" data-url="{$menuData['actionurl']}">-->
+        <!--            资产每日统计（资产卡片号）-->
+        <!--        </button>-->
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="test_5" data-url="{$menuData['actionurl']}">-->
+        <!--            资产标签运行状态统计（资产编码）-->
+        <!--        </button>-->
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="test_4" data-url="{$menuData['actionurl']}">-->
+        <!--            资产标签状态统计所有数量-->
+        <!--        </button>-->
+    </div>
+</script>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+
+    layui.use('monitor/monitor/getMonitorList', layui.factory('monitor/monitor/getMonitorList'));
+</script>

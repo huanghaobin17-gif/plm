@@ -1,0 +1,141 @@
+<include file="Public:head"/>
+<title>设备详情</title>
+<style>
+    .red {
+        color: #FF5722
+    }
+
+    .green {
+        color: #85AB70
+    }
+
+    .moreDetail {
+        display: none;
+    }
+
+    .layui-card-body {
+        padding: 0
+    }
+
+    .moreButton {
+        text-align: center;
+        height: 2rem;
+        line-height: 2rem;
+    }
+
+    .moreButton a {
+        color: #2a7ae2;
+    }
+
+    .layui-elem-quote {
+        margin-bottom: 0;
+    }
+
+    .othersInfo .layui-table tr th {
+        width: auto;
+    }
+
+    .othersInfo .layui-table tr td {
+        width: auto;
+    }
+
+    .uploadInfoTable tr th {
+        text-align: center;
+    }
+
+    .uploadInfoTable tr td {
+        text-align: center;
+    }
+
+    .layui-elem-quote {
+        height: 12px;
+        line-height: 12px;
+    }
+
+    #nameplate {
+        margin: 0.5rem 0;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .tips {
+        color: red;
+        font-size: 0.85rem;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$assets.assets}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$assets.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备原编号</th>
+                    <td>{$assets.assorignum}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$assets.model}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$assets.serialnum}</td>
+                </tr>
+                <tr>
+                    <th>设备常用名</th>
+                    <td>{$assets.common_name}</td>
+                </tr>
+                <tr>
+                    <th>设备分类</th>
+                    <td>{$assets.cate_name}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <input type="hidden" id="assid" name="assid" value="{$assets.assid}">
+            <input type="hidden" id="type" name="type" value="{$type}">
+            <button type="button" class="layui-btn layui-btn-fluid" id="nameplate">拍照上传{$buttonName}</button>
+            <div class="tips">
+                Tips：{$tips}
+            </div>
+            
+            <dl style="display: none;" id="img">
+                <dd>
+                    <div class="swiper-container" id="uploadPhotoCarousel">
+                        <div class="swiper-wrapper nameplate_pic">
+
+                                <!--volist name="file_data" id="vo" key="k">
+                                    <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                        <img src="/Public/uploads/{$vo}" class="photo">
+                                    </div>
+                                </volist-->
+
+                        </div>
+                        <!-- 如果需要分页器 -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </dd>
+            </dl>
+            
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/print/labelCheck.js?v={:mt_rand(1,54561)}"></script>

@@ -1,0 +1,121 @@
+<?php if($menuData = get_menu_name('Assets','Outside','getDepartAssetsList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Assets-Outside-getDepartAssetsList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getDepartAssetsListAssetsName" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListAssnum"  placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListCategory" placeholder="请输入设备分类" name="category">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListDepartment" placeholder="请输入科室名称" name="department">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="status" lay-search="" >
+                                        <option value="">请选择设备状态</option>
+                                        <option value="0">在用</option>
+                                        <option value="4">外调中</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">规格/型号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getDepartAssetsListModel" placeholder="请输入规格/型号" name="assetsModel">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="getDepartAssetsListSearch" id="getDepartAssetsListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 设备列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="getDepartAssetsList" lay-filter="getDepartAssetsData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var getDepartAssetsListUrl='{$getDepartAssetsListUrl}';
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+</script>
+<script>
+    layui.use('assets/outside/getDepartAssetsList', layui.factory('assets/outside/getDepartAssetsList'));
+</script>

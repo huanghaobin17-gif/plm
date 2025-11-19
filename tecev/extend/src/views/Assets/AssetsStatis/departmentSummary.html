@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<style>
+    .table thead th{text-align: center}
+    .layui-table thead tr th,.layui-table tbody tr td{
+        text-align: center;
+    }
+    .offer_tbody textarea {
+        border: none;
+        resize: none;
+    }
+</style>
+<title>科室详情账单</title>
+<div class="containDiv">
+    <div class="layui-fluid" id="LAY-Assets-Statistics-assetsSummary" >
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form">
+                            <input type="hidden" name="departid" value="{$departid}"/>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">报表日期：</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <input class="layui-input" placeholder="开始日期" style="cursor: pointer;"
+                                               name="startDate" value="{$data_start}" id="startDate">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <input class="layui-input" placeholder="结束日期" style="cursor: pointer;"
+                                               name="endDate" value="{$data_end}" id="endDate">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">金额区间：</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <input type="text" name="priceMin" placeholder="￥" lay-verify="priceMin" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <input type="text" name="priceMax" placeholder="￥" lay-verify="priceMax" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                    <button class="layui-btn" lay-submit="" lay-filter="eventquery" id="eventquery"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row table-list">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="contain ">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                            <div class="layui-row" style="padding-right: 15px;">
+                                <div class="layui-col-md5 tb-padding">
+                                    <div class="grid-demo grid-demo-bg1">
+                                        <div class="div-chart-show">
+                                            <div class="div-chart-show-title">在保过保设备</div>
+                                            <div class="div-chart-show-pic" style="min-height: 300px;">
+                                                <div id="assets_guarantee" class="div-chart-show-pic-chart" style="min-height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md7 tb-padding">
+                                    <div class="grid-demo">
+                                        <div class="div-chart-show">
+                                            <div class="div-chart-show-title">设备金额区间</div>
+                                            <div class="div-chart-show-pic" style="min-height: 300px;">
+                                                <div id="assets_price" class="div-chart-show-pic-chart" style="min-height: 300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 列表</div>
+                            <div class="reportHeader">
+                                <div class="reportTitle"></div>
+                                <div class="reportConditions"></div>
+                            </div>
+                            <div id="departSummaryLists" lay-filter="departSummaryData"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script  type="text/html" id="LAY-Assets-Statistics-departSummaryToolbar">
+    <?php if($menuData = get_menu('Assets','Statistics','exportDepartmentSummary')):?>
+    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportDepartData" id="exportDepartData" data-url="{$menuData['actionurl']}">
+        <i class="layui-icon">&#xe61e;</i>{$menuData['actionname']}
+    </button>
+    <?php endif?>
+</script>
+<script>
+    var assetsSummary = "{$assetsSummary}";
+    layui.use('controller/assets/statistics/departmentSummary', layui.factory('controller/assets/statistics/departmentSummary'));
+</script>
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+<?php foreach($set as $k=>$v){ ?>
+<div class="layui-form-item">
+    <label class="layui-form-label" style="width: 190px;"><?php echo $v['detection_name'];?>(<?php echo $v['unit'];?>)设定值：</label>
+    <div class="layui-input-block">
+        <?php foreach($v['setting'] as $k1=>$v1){?>
+        <input type="checkbox" name="<?php echo $v['detection_Ename'];?>[]" value="<?php echo $v1;?>" title="<?php echo $v1;?>" checked="">
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>

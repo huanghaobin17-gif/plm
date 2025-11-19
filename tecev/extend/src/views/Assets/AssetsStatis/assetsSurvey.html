@@ -1,0 +1,127 @@
+<style>
+    #LAY-Assets-Statistics-assetsSurvey .listTitle {
+        position: relative;
+    }
+    #LAY-Assets-Statistics-assetsSurvey .layui-table thead tr th,#LAY-Assets-Statistics-assetsSurvey .layui-table tbody tr td{
+        text-align: center;
+    }
+</style>
+<?php if($menuData = get_menu_name('Assets','AssetsStatis','assetsSurvey')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Assets-AssetsStatis-assetsSurvey" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">添加日期：</label>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;"
+                                           value="{$data_start}" name="assetsSurveyStartDate"
+                                           id="assetsSurveyStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;"
+                                           value="{$data_end}" name="assetsSurveyEndDate" id="assetsSurveyEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 120px;">总金额区间：</label>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="assetsSurveyPriceMin" placeholder="￥" lay-verify="priceMin"  class="layui-input">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="assetsSurveyPriceMax" placeholder="￥" lay-verify="priceMax"  class="layui-input">
+                                </div>
+                            </div>
+                            <include file="Public:hospital_search"/>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                    <div class="layui-input-inline">
+                                        <button class="layui-btn" lay-submit="" lay-filter="assetsSurveySearch"><i
+                                                class="layui-icon">&#xe615;</i> 搜 索
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                    <div class="fl m-left">
+                        <?php if($menuData = get_menu('Assets','AssetsStatis','exportAssetsSurvey')):?>
+                        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportData" id="exportData" data-url="{$menuData['actionurl']}">
+                            <i class="layui-icon">&#xe61e;</i>
+                            {$menuData['actionname']}
+                        </button>
+                        <?php endif?>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="contain ">
+                        <div class="reportHeader">
+                            <div class="assetsSurveyReportTitle"></div>
+                            <div class="assetsSurveyReportConditions"></div>
+                        </div>
+                        <table class="layui-table" lay-size="sm" lay-even>
+                            <colgroup>
+                                <col width="80">
+                                <col width="200">
+                                <col width="150">
+                                <col width="150">
+                                <col width="120">
+                                <col width="150">
+                                <col width="120">
+                                <col width="120">
+                                <col width="180">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>科室名称</th>
+                                <th>设备登记台数</th>
+                                <th>总金额（元）</th>
+                                <th>在用台数</th>
+                                <th>维修中台数</th>
+                                <th>报废台数</th>
+                                <th>新增台数</th>
+                                <th>新增总金额（元）</th>
+                            </tr>
+                            </thead>
+                            <tbody class="assetsSurveyConData">
+
+                            </tbody>
+                        </table>
+                        <div id="assetsSurveyMain" style="width: auto;height:800px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('assets/statistics/assetsSurvey', layui.factory('assets/statistics/assetsSurvey'));
+</script>
+
+
+

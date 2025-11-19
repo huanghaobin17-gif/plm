@@ -1,0 +1,155 @@
+<title>配件出库列表</title>
+<style>
+    #LAY-Repair-RepairParts-partsOutWareList .layui-table-cell {
+        padding: 0;
+        height: auto;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .layui-table-fixed th{
+        height:59px;
+    }
+
+
+    #LAY-Repair-RepairParts-partsOutWareList .table_center_td td{
+        line-height: 20px;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .QualificationsTd {
+        text-align: center;
+        border-right: none;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .table_center_td{
+        min-height: 40px;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .outware_parts {
+        border-bottom: 1px solid #e6e6e6;
+        width: 195px;
+        text-align: center;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .outwareDetail_table span{
+        width:195px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+    #LAY-Repair-RepairParts-partsOutWareList .outwareDetail_table tbody tr:last-child .outware_parts,
+    #LAY-Repair-RepairParts-partsOutWareList .table_center_td tbody tr:last-child .outware_parts{
+        border-bottom: none;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .outware_parts_model {
+        width: 195px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    #LAY-Repair-RepairParts-partsOutWareList .outwareDetail_table tr:last-child .outware_parts_model,
+    #LAY-Repair-RepairParts-partsOutWareList .table_center_td tr:last-child .outware_parts_model{
+        border-bottom: none;
+    }
+
+    #LAY-Repair-RepairParts-partsOutWareList .outwareSum {
+        width: 80px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+        border-right: none;
+    }
+    #LAY-Repair-RepairParts-partsOutWareList .outwareDetail_table tr:last-child .outwareSum,
+    #LAY-Repair-RepairParts-partsOutWareList .table_center_td tr:last-child .outwareSum{
+        border-bottom: none;
+    }
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+</script>
+<div class="layui-fluid" id="LAY-Repair-RepairParts-partsOutWareList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出库单号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="partsOutWareListOutware_num" placeholder="请输入出库单号" name="outware_num">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">领用人：</label>
+                                <div class="layui-input-inline">
+                                    <select name="leader">
+                                        <option value="">全部</option>
+                                        <volist name="userData" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出库日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" readonly name="startDate" id="partsOutWareListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" readonly name="endDate" id="partsOutWareListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="partsOutWareListSearch" lay-filter="partsOutWareListSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 厂商列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="partsOutWareList" lay-filter="partsOutWareData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Repair-RepairParts-partsOutWareListbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Repair','RepairParts','partsOutWare')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addPartsOutWare" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var partsOutWareListUrl = '{$partsOutWareListUrl}';
+</script>
+<script>
+    layui.use('repair/repairParts/partsOutWareList', layui.factory('repair/repairParts/partsOutWareList'));
+</script>

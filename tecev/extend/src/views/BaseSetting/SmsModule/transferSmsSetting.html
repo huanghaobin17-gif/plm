@@ -1,0 +1,74 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-transfer .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-transfer .layui-elem-quote-sm span{
+        display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-transfer .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-transfer .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-transfer">
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>设备编号 {assnum}</span>
+            <span>设备名称 {assets}</span>
+            <span>转出科室 {tranout_department}</span>
+            <span>转入科室 {tranin_department}</span>
+            <span>转科单号 {transfer_num}</span>
+            <span>审批结果 {approve_status}</span>
+            <span>验收结果 {check_status}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>转科模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="transfer_sms_open" name="Transfer[status]"  value="1" title="开启" <if condition="$settings[Transfer][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="transfer_sms_open" name="Transfer[status]"  value="0" title="关闭" <if condition="$settings[Transfer][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="transfer_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知处理转科审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Transfer[approveTransfer][content]" value="{$settings[Transfer][approveTransfer][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Transfer[approveTransfer][status]"  value="1" title="开启" <if condition="$settings[Transfer][approveTransfer][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Transfer[approveTransfer][status]"  value="0" title="关闭" <if condition="$settings[Transfer][approveTransfer][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知转科审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Transfer[approveTransferStatus][content]" value="{$settings[Transfer][approveTransferStatus][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Transfer[approveTransferStatus][status]"  value="1" title="开启" <if condition="$settings[Transfer][approveTransferStatus][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Transfer[approveTransferStatus][status]"  value="0" title="关闭" <if condition="$settings[Transfer][approveTransferStatus][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知转科科室验收：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Transfer[checkTransfer][content]" value="{$settings[Transfer][checkTransfer][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Transfer[checkTransfer][status]"  value="1" title="开启" <if condition="$settings[Transfer][checkTransfer][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Transfer[checkTransfer][status]"  value="0" title="关闭" <if condition="$settings[Transfer][checkTransfer][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知转科验收结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Transfer[checkTransferStatus][content]" value="{$settings[Transfer][checkTransferStatus][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Transfer[checkTransferStatus][status]"  value="1" title="开启" <if condition="$settings[Transfer][checkTransferStatus][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Transfer[checkTransferStatus][status]"  value="0" title="关闭" <if condition="$settings[Transfer][checkTransferStatus][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+</div>

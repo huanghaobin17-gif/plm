@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>质控明细录入</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        th{ text-align: right!important; font-weight: bold!important;}
+        .no-padding-td{ padding: 0px!important;}
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="containDiv">
+        <blockquote class="layui-elem-quote">
+            质控计划详情信息
+        </blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style=" margin-top: 0px!important;">
+            <colgroup>
+                <col width="150">
+                <col>
+                <col width="190">
+                <col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>检测报告编号:</th>
+                    <td></td>
+                    <th>质控计划名称：</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>检测依据：</th>
+                    <td></td>
+                    <th>检测仪器（标准器、模拟器）：</th>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <blockquote class="layui-elem-quote">
+            检测设备基础信息
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm" style=" margin-top: 0px!important;">
+            <colgroup>
+                <col width="150">
+                <col>
+                <col width="150">
+                <col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>设备名称：</th>
+                    <td></td>
+                    <th>设备编号：</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>使用科室：</th>
+                    <td></td>
+                    <th>产品序列号：</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>品牌：</th>
+                    <td></td>
+                    <th>规格 / 型号：</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>启用日期：</th>
+                    <td></td>
+                    <th>上次质控时间：</th>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>质控检测明细表单</legend>
+        </fieldset>
+        <form action="" class="layui-form">
+            <table class="layui-table" lay-size="sm" >
+                <colgroup>
+                    <col width="147">
+                    <col width="200">
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>外观功能：</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no1" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="no1" lay-skin="primary" title="不符合">
+                        </div>
+                    </td>
+                    <th>不符合情况说明：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <!--监护仪-->监护仪
+            <!---->
+            <table class="layui-table" lay-size="sm" >
+                <colgroup>
+                    <col width="147">
+                    <col width="90">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="290">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">心率（次/min）：<br>最大允差：显示值±5%</th>
+                    <th>设定值：</th>
+                    <td>60(57~63)</td>
+                    <td>30(28~32)</td>
+                    <td>100(95~105)</td>
+                    <td>120(114~126)</td>
+                    <td>180(171~189)</td>
+                    <th style="text-align: center!important;">心率检测结果</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no2" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="no2" lay-skin="primary" title="不符合">
+                            <input type="radio" name="no2" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm" >
+                <colgroup>
+                    <col width="147">
+                    <col width="90">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="290">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">呼吸率（次/min）：<br></th>
+                    <th>设定值：</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">心率检测结果</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no3" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="no3" lay-skin="primary" title="不符合">
+                            <input type="radio" name="no3" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm" >
+                <colgroup>
+                    <col width="147">
+                    <col width="90">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="290">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">无创血压（mmHg）：<br></th>
+                    <th>设定值：</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">心率检测结果</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no4" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="no4" lay-skin="primary" title="不符合">
+                            <input type="radio" name="no4" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm" >
+                <colgroup>
+                    <col width="147">
+                    <col width="90">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="290">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">血氧饱和度（%）：<br></th>
+                    <th>设定值：</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">心率检测结果</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no5" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="no5" lay-skin="primary" title="不符合">
+                            <input type="radio" name="no5" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="147">
+                    <col>
+                    <col width="147">
+                    <col>
+                    <col width="147">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>声光报警：</th>
+                        <td>
+                            <div class="layui-inline">
+                                <input type="radio" name="no6" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="no6" lay-skin="primary" title="不符合">
+                            </div>
+                        </td>
+                        <th>报警限检查：</th>
+                        <td>
+                            <div class="layui-inline">
+                                <input type="radio" name="no7" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="no7" lay-skin="primary" title="不符合">
+                            </div>
+                        </td>
+                        <th>静音检查：</th>
+                        <td>
+                            <div class="layui-inline">
+                                <input type="radio" name="no8" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="no8" lay-skin="primary" title="不符合">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!--输液装置-->输液装置
+            <!---->
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="120">
+                    <col>
+                    <col>
+                    <col width="250">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">
+                        流量检测：
+                        <br><span style="font-weight:normal!important;">最大允差±10%</span>
+                    </th>
+                    <th>流量测试点：</th>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">检测结果</th>
+                </tr>
+                <tr>
+                    <th>平均流量：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy11" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy11" lay-skin="primary" title="不符合">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="147">
+                    <col width="120">
+                    <col>
+                    <col>
+                    <col width="250">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">阻塞报警检测：</th>
+                    <th>阻塞报警设置值：</th>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">检测结果</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy2" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy2" lay-skin="primary" title="不符合">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="150">
+                    <col>
+                    <col width="150">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="4">报警系统检测</th>
+                    <th>堵塞</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy3" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy3" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy3" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                    <th>即将空瓶</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy4" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy4" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy4" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>电池电量不足</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy5" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy5" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy5" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                    <th>流速错误</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy6" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy6" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy6" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>输液管路安装不妥</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy7" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy7" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy7" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                    <th>气泡报警</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy8" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy8" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy8" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>电源线脱开</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy9" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy9" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy9" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                    <th>开门报警</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="sy1" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="sy1" lay-skin="primary" title="不符合">
+                            <input type="radio" name="sy1" lay-skin="primary" title="不适用">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!--除颤仪-->除颤仪
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="147">
+                    <col width="90">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="250">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="2">心率（次/min）：</th>
+                    <th>设定值：</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">心率检测结果</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="jh3" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="jh3" lay-skin="primary" title="不符合">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                    <colgroup>
+                        <col width="147">
+                        <col width="90">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col width="250">
+                    </colgroup>
+                    <tbody>
+                <tr>
+                    <th rowspan="3">释放能量（J）：</th>
+                    <th>设定值：</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">能量偏移情况判断</th>
+                </tr>
+                <tr>
+                    <th>测量值：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入测量值" autocomplete="off" class="layui-input">
+                    </td>
+                    <td rowspan="2">
+                        <div class="layui-inline">
+                            <input type="radio" name="jh4" lay-skin="primary" title="符合" checked>
+                            <input type="radio" name="jh4" lay-skin="primary" title="不符合">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>误差：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入误差" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入误差" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入误差" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入误差" autocomplete="off" class="layui-input">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入误差" autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="147">
+                    <col width="150">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>充电时间（s）：</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入充电时间" autocomplete="off" class="layui-input">
+                    </td>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="yes" lay-skin="primary" title="正常" checked>
+                                <input type="radio" name="yes" lay-skin="primary" title="不正常">
+                            </div>
+                        </div>
+                    </td>
+                    <th>内部放电：</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="yes1" lay-skin="primary" title="正常" checked>
+                                <input type="radio" name="yes1" lay-skin="primary" title="不正常">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!--呼吸机-->呼吸机
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="110">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="5">潮气量 <br>（vcv模式）</th>
+                    <th>设定值（ml）</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">最大输出误差</th>
+                    <th style="text-align: center!important;">最大示值误差</th>
+                </tr>
+                <tr>
+                    <th>输出实测值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4"></td>
+                </tr>
+                <tr>
+                    <th>误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="110">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th rowspan="6">强制通气频率与呼吸比 <br>（vcv模式）</th>
+                        <th>设定值（BPM）</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th style="text-align: center!important;">最大输出误差</th>
+                        <th style="text-align: center!important;">最大示值误差</th>
+                    </tr>
+                    <tr>
+                        <th>输出实测值</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td rowspan="5"></td>
+                        <td rowspan="5"></td>
+                    </tr>
+                    <tr>
+                        <th>误差</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>示值</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>示值误差</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>设定值（I∶E）</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="110">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="5">吸入氧浓度FiO₂</th>
+                    <th>设定值（%）</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">最大输出误差</th>
+                    <th style="text-align: center!important;">最大示值误差</th>
+                </tr>
+                <tr>
+                    <th>输出实测值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4"></td>
+                </tr>
+                <tr>
+                    <th>误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="110">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="5">吸气压力水平<br>PCV或新生儿呼吸的PLV模式<br>f=20</th>
+                    <th>设定值/cmH₂O</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">最大输出误差</th>
+                    <th style="text-align: center!important;">最大示值误差</th>
+                </tr>
+                <tr>
+                    <th>输出实测值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4"></td>
+                </tr>
+                <tr>
+                    <th>误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="146">
+                    <col width="110">
+                    <col>
+                    <col>
+                    <col>
+                    <col width="120">
+                    <col width="120">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th rowspan="5">呼气末正压PEEP<br>VCV模式<br>Vt=400ml<br>f=20</th>
+                    <th>设定值/cmH₂O</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align: center!important;">最大输出误差</th>
+                    <th style="text-align: center!important;">最大示值误差</th>
+                </tr>
+                <tr>
+                    <th>输出实测值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td rowspan="4"></td>
+                    <td rowspan="4"></td>
+                </tr>
+                <tr>
+                    <th>误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>示值误差</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="150">
+                    <col width="500">
+                    <col width="170">
+                    <col width="500">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th class="text-left" colspan="4">机械通气模式评价</th>
+                </tr>
+                <tr>
+                    <th>容量预制模式</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx1" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx1" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx1" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>流量触发功能</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx2" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx2" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx2" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>压力预制模式</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx3" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx3" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx3" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>压力触发功能</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx4" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx4" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx4" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="150">
+                    <col width="500">
+                    <col width="170">
+                    <col width="500">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th class="text-left" colspan="4">安全报警功能等检查</th>
+                </tr>
+                <tr>
+                    <th>电源报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx5" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx5" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx5" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>氧浓度上/下限报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx6" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx6" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx6" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>气源报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx7" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx7" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx7" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>窒息报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx8" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx8" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx8" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>气道压力上/下限报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx9" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx9" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx9" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>病人回路过压保护功能</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx0" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx0" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx0" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>分钟通气量上/下限报警</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx11" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx11" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx11" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                    <th>按键功能检查（含键盘锁）</th>
+                    <td>
+                        <div class="layui-item">
+                            <div class="layui-inline">
+                                <input type="radio" name="hx12" lay-skin="primary" title="符合" checked>
+                                <input type="radio" name="hx12" lay-skin="primary" title="不符合">
+                                <input type="radio" name="hx12" lay-skin="primary" title="不适用">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!--通用-->通用
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="147">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>评分：</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="fen" lay-skin="primary" title="1分">、
+                            <input type="radio" name="fen" lay-skin="primary" title="2分">、
+                            <input type="radio" name="fen" lay-skin="primary" title="3分">、
+                            <input type="radio" name="fen" lay-skin="primary" title="4分">、
+                            <input type="radio" name="fen" lay-skin="primary" title="5分">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>检测结果：</th>
+                    <td>
+                        <div class="layui-inline">
+                            <input type="radio" name="no9" lay-skin="primary" title="合格" checked>
+                            <input type="radio" name="no9" lay-skin="primary" title="不合格">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>备注：<br/>（偏离情况说明）</th>
+                    <td class="no-padding-td">
+                        <input type="text" name="" placeholder="请输入备注" autocomplete="off" class="layui-input">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="layui-form-item" style="text-align: center; margin-bottom: 50px;">
+                <button class="layui-btn layui-btn-warm" lay-tips="设备的质控测量值及检测结果，以签字的纸质报告为准！请务必上传文件报告！"><i class="layui-icon">&#xe67c;</i>778上传纸质报告</button>
+                <button class="layui-btn" lay-tips="设备的质控测量值及检测结果，以签字的纸质报告为准！请务必上传文件报告！"><i class="layui-icon" >&#xe609;</i>确认并提交</button>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    var qsid = "{$qsInfo.qsid}";
+</script>
+<script src="__PUBLIC__/js/qualities/quality/setQualityDetail.js" type="text/javascript"></script>

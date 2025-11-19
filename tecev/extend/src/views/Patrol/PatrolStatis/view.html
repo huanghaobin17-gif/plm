@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+    <style>
+        .layui-table tr th {
+            text-align: center !important;
+        }
+        .conData tr td{
+            text-align: center;
+        }
+        .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+        .layui-table{ margin-top: 0px; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="reportHeader">
+        <div class="reportTitle">{$reportTitle}</div>
+        <div class="reportConditions">{$reportConditions}</div>
+        <input type="hidden" name="assnum" value="{$assnum}"/>
+        <input type="hidden" name="cid" value="{$cid}"/>
+        <input type="hidden" name="startDate" value="{$startDate}"/>
+        <input type="hidden" name="endDate" value="{$endDate}"/>
+    </div>
+    <table class="layui-table">
+        <colgroup>
+            <col width="60">
+            <col width="140">
+            <col width="280">
+            <col width="110">
+            <col width="180">
+            <col width="60">
+            <col width="">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>计划编号</th>
+            <th>计划名称</th>
+            <th>执行人</th>
+            <th>完成时间</th>
+            <th>异常</th>
+            <th style="text-align: left !important;">异常情况详情</th>
+        </tr>
+        </thead>
+        <tbody class="conData">
+            <assign name="num" value="1" />
+            <volist name="lists" id="vo">
+                <if condition="$vo.patrol_level eq 3">
+                    <tr>
+                        <td>{$num++}</td>
+                        <td>{$vo.patrolnum}</td>
+                        <td>{$vo.patrolname}</td>
+                        <td>{$vo.executor}</td>
+                        <td>{$vo.complete_time}</td>
+                        <if condition="$vo.isNormal eq '是'">
+                            <td style="color: red;">{$vo.isNormal}</td>
+                            <else/>
+                            <td>{$vo.isNormal}</td>
+                        </if>
+                        <td style="text-align: left;">{$vo.abnormalDetail}</td>
+                    </tr>
+                </if>
+            </volist>
+        </tbody>
+    </table>
+    <div class="clear"></div>
+    <table class="layui-table">
+        <colgroup>
+            <col width="60">
+            <col width="140">
+            <col width="280">
+            <col width="110">
+            <col width="180">
+            <col width="60">
+            <col width="">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>计划编号</th>
+            <th>计划名称</th>
+            <th>执行人</th>
+            <th>完成时间</th>
+            <th>异常</th>
+            <th style="text-align: left !important;">异常情况详情</th>
+        </tr>
+        </thead>
+        <tbody class="conData">
+        <assign name="num" value="1" />
+        <volist name="lists" id="vo">
+            <if condition="$vo.patrol_level eq 2">
+                <tr>
+                    <td>{$num++}</td>
+                    <td>{$vo.patrolnum}</td>
+                    <td>{$vo.patrolname}</td>
+                    <td>{$vo.executor}</td>
+                    <td>{$vo.complete_time}</td>
+                    <if condition="$vo.isNormal eq '是'">
+                        <td style="color: red;">{$vo.isNormal}</td>
+                    <else/>
+                        <td>{$vo.isNormal}</td>
+                    </if>
+                    <td style="text-align: left;">{$vo.abnormalDetail}</td>
+                </tr>
+            </if>
+        </volist>
+        </tbody>
+    </table>
+    <div class="clear"></div>
+    <table class="layui-table">
+        <colgroup>
+            <col width="60">
+            <col width="140">
+            <col width="280">
+            <col width="110">
+            <col width="180">
+            <col width="60">
+            <col width="">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>计划编号</th>
+            <th>计划名称</th>
+            <th>执行人</th>
+            <th>完成时间</th>
+            <th>异常</th>
+            <th style="text-align: left !important;">异常情况详情</th>
+        </tr>
+        </thead>
+        <tbody class="conData">
+        <assign name="num" value="1" />
+        <volist name="lists" id="vo">
+            <if condition="$vo.patrol_level eq 1">
+                <tr>
+                    <td>{$num++}</td>
+                    <td>{$vo.patrolnum}</td>
+                    <td>{$vo.patrolname}</td>
+                    <td>{$vo.executor}</td>
+                    <td>{$vo.complete_time}</td>
+                    <if condition="$vo.isNormal eq '是'">
+                        <td style="color: red;">{$vo.isNormal}</td>
+                        <else/>
+                        <td>{$vo.isNormal}</td>
+                    </if>
+                    <td style="text-align: left;">{$vo.abnormalDetail}</td>
+                </tr>
+            </if>
+        </volist>
+        </tbody>
+    </table>
+    <div class="layui-inline" style="margin: 30px auto;display: block;text-align: center;">
+        <?php if($menuData = get_menu('Patrol','Statistics','exportPlanLists')):?>
+            <button class="layui-btn" lay-submit lay-filter="exportData" id="exportData" data-url="{$menuData['actionurl']}">
+                <i class="layui-icon">&#xe61e;</i> {$menuData['actionname']}
+            </button>
+        <?php endif?>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/statistics/view', layui.factory('controller/patrol/statistics/view'));
+</script>

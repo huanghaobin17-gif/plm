@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Repair-Repair-assigned .layui-form-label{
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-Repair-assigned">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tr>
+                <th>资产编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>资产名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>资产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+        </table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>指派</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form" action="">
+            <input type="hidden" value="{$asArr.repid}" name="repid">
+            <input type="hidden" value="{$url}" name="action">
+            <div class="layui-form-item" style="margin-bottom: 0;">
+                <div class="layui-inline">
+                    <label class="layui-form-label">派单日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" placeholder="系统自动生成" readonly autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">响应人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" placeholder="系统自动生成" readonly autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 指派工程师：</label>
+                    <div class="layui-input-inline">
+                        <select name="engineer" id="">
+                            <option value="">请选择</option>
+                            <volist name="user" id="v">
+                                <option value="{$v.username}">{$v.username}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="remark" style="width: 93%"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i
+                            class="layui-icon">&#xe609;</i> 确认并提交派单
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repair/assigned', layui.factory('controller/repair/repair/assigned'));
+</script>

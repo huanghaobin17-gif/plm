@@ -1,0 +1,952 @@
+<style>
+    td,th{ text-align: center!important;}
+    th{ font-weight: bold!important;}
+    .no-padding-td .layui-input {
+        border: none;
+        height: 40px;
+        line-height: 40px;
+    }
+    em{
+        font-size: 12px;
+    }
+
+    .layui-form-checkbox[lay-skin=primary] i{
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+    }
+    .layui-form-checkbox span{
+        font-size: 12px;
+    }
+    .layui-form-checkbox[lay-skin=primary] span{
+        line-height: 16px;
+        padding-right: 0px!important;
+    }
+    .layui-form-checkbox span{
+        padding: 0px 3px;
+    }
+    .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th{
+        padding: 5px!important;
+    }
+</style>
+<div style="min-height: 2313px;">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;"><!--中山大学附属第一医院东院-->呼吸机质量检测原始记录</h2>
+        <div>
+            <span class="fl">检测报告编号：<em>{$qsInfo.plan_num}</em></span>
+            <span class="fr">制表日期：<em>{$date}</em></span>
+        </div>
+        <br/>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="150">
+                <col width="550">
+                <col width="200">
+                <col width="550">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>使用科室</th>
+                <td><em>{$asInfo.department}</em></td>
+                <th>质控计划名称</th>
+                <td><em>{$qsInfo.plan_name}</em></td>
+            </tr>
+            <tr>
+                <th>检测依据</th>
+                <td colspan="3">{$qsInfo.basis}</td>
+            </tr>
+            <tr>
+                <th>项目类型</th>
+                <th>被检设备</th>
+                <th colspan="2">检测仪器（标准器、模拟器）</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td><em>{$asInfo.assets}</em></td>
+                <td colspan="2">{$qsInfo.instrument}</td>
+            </tr>
+            <tr>
+                <th>品牌</th>
+                <td><em>{$asInfo.brand}</em></td>
+                <th>规格 / 型号</th>
+                <td><em>{$asInfo.model}</em></td>
+            </tr>
+            <tr>
+                <th>设备编号</th>
+                <td><em>{$asInfo.assnum}</em></td>
+                <th>产品序列号</th>
+                <td><em>{$asInfo.serialnum}</em></td>
+            </tr>
+            <tr>
+                <th>启用日期</th>
+                <td><em>{$qsInfo.start_date}</em></td>
+                <th>上次质控日期</th>
+                <td><em>{$asInfo.test_date}</em></td>
+            </tr>
+            <tr>
+                <th class="text-left" colspan="4">二、机械通气参数检测</th>
+            </tr>
+            <tr>
+                <th>外观功能</th>
+                <td class="no-padding-td" colspan="3" style="text-align: left!important;">&nbsp;&nbsp;&nbsp;
+                    <if condition="$detailInfo.exterior eq 1">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合&nbsp;
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+                        <else/>
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合&nbsp;
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：{$detailInfo.exterior_explain}
+                    </if>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -10px;">
+            <colgroup>
+                <col width="146">
+                <col width="110">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="120">
+                <col width="120">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th rowspan="5">
+                    潮气量 (vcv模式)
+                    <br/>
+                    <span style="font-weight:normal!important;">
+                        最大允差：{$tolerance['潮气量']}
+                    </span>
+                </th>
+                <td>设定值（ml）</td>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '潮气量'">
+                        <volist name="vo.set" id="ho" offset="0" length='3'>
+                            <td>{$ho}</td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td></td>
+                <?php } ?>
+                <th>最大输出误差</th>
+                <th>最大示值误差</th>
+            </tr>
+            <tr>
+                <th>输出实测值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '潮气量'">
+                        <volist name="detailInfo['preset_detection']['humidity']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['humidity_max_output']}
+                </td>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['humidity_max_value']}
+                </td>
+            </tr>
+            <tr>
+                <th>误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '潮气量'">
+                        <volist name="detailInfo['preset_detection']['humidity_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '潮气量'">
+                        <volist name="detailInfo['preset_detection']['humidity_value']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '潮气量'">
+                        <volist name="detailInfo['preset_detection']['humidity_value_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th rowspan="6">
+                    强制通气频率与呼吸比 <br>（vcv模式）
+                    <br/>
+                    <span style="font-weight:normal!important;">
+                        最大允差：{$tolerance['强制通气频率']}
+                    </span>
+                </th>
+                <td>设定值（BPM）</td>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="vo.set" id="ho" offset="0" length='3'>
+                            <td>{$ho}</td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td></td>
+                <?php } ?>
+                <th>最大输出误差</th>
+                <th>最大示值误差</th>
+            </tr>
+            <tr>
+                <th>输出实测值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="detailInfo['preset_detection']['aeration']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['aeration_max_output']}
+                </td>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['aeration_max_value']}
+                </td>
+            </tr>
+            <tr>
+                <th>误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="detailInfo['preset_detection']['aeration_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="detailInfo['preset_detection']['aeration_value']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="detailInfo['preset_detection']['aeration_value_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>设定值（I∶E）</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '强制通气频率'">
+                        <volist name="detailInfo['preset_detection']['aeration_setIE']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th rowspan="5">
+                    吸入氧浓度FiO₂
+                    <br/>
+                    <span style="font-weight:normal!important;">
+                        最大允差：{$tolerance['吸入氧浓度']}
+                    </span>
+                </th>
+                <td>设定值（%）</td>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                        <volist name="vo.set" id="ho" offset="0" length='3'>
+                            <td>{$ho}</td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td></td>
+                <?php } ?>
+                <th>最大输出误差</th>
+                <th>最大示值误差</th>
+            </tr>
+            <tr>
+                <th>输出实测值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                        <volist name="detailInfo['preset_detection']['IOI']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['IOI_max_output']}
+                </td>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['IOI_max_value']}
+                </td>
+            </tr>
+            <tr>
+                <th>误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                        <volist name="detailInfo['preset_detection']['IOI_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                        <volist name="detailInfo['preset_detection']['IOI_value']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                        <volist name="detailInfo['preset_detection']['IOI_value_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th rowspan="5">
+                    吸气压力水平<br>PCV或新生儿呼吸的PLV模式<br>f=20
+                    <br/>
+                    <span style="font-weight:normal!important;">
+                        最大允差：{$tolerance['吸气压力水平']}
+                    </span>
+                </th>
+                <td>设定值/cmH₂O</td>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                        <volist name="vo.set" id="ho" offset="0" length='3'>
+                            <td>{$ho}</td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td></td>
+                <?php } ?>
+                <th>最大输出误差</th>
+                <th>最大示值误差</th>
+            </tr>
+            <tr>
+                <th>输出实测值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                        <volist name="detailInfo['preset_detection']['IPAP']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['IPAP_max_output']}
+                </td>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['IPAP_max_value']}
+                </td>
+            </tr>
+            <tr>
+                <th>误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                        <volist name="detailInfo['preset_detection']['IPAP_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                        <volist name="detailInfo['preset_detection']['IPAP_value']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                        <volist name="detailInfo['preset_detection']['IPAP_value_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th rowspan="5">
+                    呼气末正压PEEP<br>VCV模式<br>Vt=400ml<br>f=20
+                    <br/>
+                    <span style="font-weight:normal!important;">
+                        最大允差：{$tolerance['呼气末正压']}
+                    </span>
+                </th>
+                <td>设定值/cmH₂O</td>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '呼气末正压'">
+                        <volist name="vo.set" id="ho" offset="0" length='3'>
+                            <td>{$ho}</td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td></td>
+                <?php } ?>
+                <th>最大输出误差</th>
+                <th>最大示值误差</th>
+            </tr>
+            <tr>
+                <th>输出实测值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '呼气末正压'">
+                        <volist name="detailInfo['preset_detection']['PEEP']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['PEEP_max_output']}
+                </td>
+                <td rowspan="4" class="no-padding-td td-center">
+                    {$detailInfo['preset_detection']['PEEP_max_value']}
+                </td>
+            </tr>
+            <tr>
+                <th>误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '呼气末正压'">
+                        <volist name="detailInfo['preset_detection']['PEEP_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '呼气末正压'">
+                        <volist name="detailInfo['preset_detection']['PEEP_value']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            <tr>
+                <th>示值误差</th>
+                <volist name="values" id="vo">
+                    <if condition="$vo.detection_name eq '呼气末正压'">
+                        <volist name="detailInfo['preset_detection']['PEEP_value_tolerance']" id="ho" offset="0" length='5'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                        <?php $length = count($vo['set']);?>
+                    </if>
+                </volist>
+                <?php for($i = 0;$i<(3-$length);$i++){ ?>
+                <td class="no-padding-td"></td>
+                <?php } ?>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -10px;">
+            <colgroup>
+                <col width="150">
+                <col width="500">
+                <col width="170">
+                <col width="500">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th class="text-left" colspan="4">三、机械通气模式评价</th>
+            </tr>
+            <tr>
+                <th>容量预制模式</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['capacity_precut_mode'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['capacity_precut_mode'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['capacity_precut_mode'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>流量触发功能</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['traffic_trigger'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['traffic_trigger'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['traffic_trigger'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>压力预制模式</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['pressure_precut_mode'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['pressure_precut_mode'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['pressure_precut_mode'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>压力触发功能</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['pressure_tigger'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['pressure_tigger'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['pressure_tigger'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="text-left" colspan="4">四、安全报警功能等检查</th>
+            </tr>
+            <tr>
+                <th>电源报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['power_supply_alarm'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['power_supply_alarm'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['power_supply_alarm'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>氧浓度上/下限报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['oxygen_concentration_bound'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['oxygen_concentration_bound'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['oxygen_concentration_bound'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>气源报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['gas_supply_alarm'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['gas_supply_alarm'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['gas_supply_alarm'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>窒息报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['apnea_alarm'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['apnea_alarm'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['apnea_alarm'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>气道压力上/下限报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['AWP_alarm'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['AWP_alarm'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['AWP_alarm'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>病人回路过压保护功能</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['loop_overvoltage_pretection'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['loop_overvoltage_pretection'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['loop_overvoltage_pretection'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>分钟通气量上/下限报警</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['minute_ventilation_bound'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['minute_ventilation_bound'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['minute_ventilation_bound'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+                <th>按键功能检查（含键盘锁）</th>
+                <td>
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['fixed_detection']['press_key'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['press_key'] eq 2">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                        <if condition="$detailInfo['fixed_detection']['press_key'] eq 3">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th>检测结论</th>
+                <td colspan="3" style="text-align: left !important;">
+                    <div class="layui-inline">
+                        <if condition="$detailInfo.result eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                            <else/>
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                        </if>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>备注<br>(偏离情况说明)</th>
+                <td class="no-padding-td pdf" colspan="3" style="text-align: left !important;">
+                    {$detailInfo.remark}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -10px;">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="3" class="text-left">五、经办工程师及验收人员意见及签字</th>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-left">
+                    评分：
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>1分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>2分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>3分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>4分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>5分
+                </td>
+            </tr>
+            <tr>
+                <th>设备使用部门负责人意见及签字 </th>
+                <th>经办工程师意见及签字</th>
+                <th>设备科意见及签字</th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$asInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$asInfoautograph}">
+                        <span>日期：{$asInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$qsInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$qsInfoautograph}">
+                        <span>日期：{$qsInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$departautograph}">
+                        <span>日期：{$departautograph_time}</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

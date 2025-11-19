@@ -1,0 +1,105 @@
+<title>确认报修列表</title>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var confirmAddRepairListUrl='{$confirmAddRepairListUrl}';
+</script>
+<div class="layui-fluid" id="LAY-Repair-Repair-confirmAddRepairList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 86px;">设备名称</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="confirmAddRepairListAssets" placeholder="请输入设备名称" name="confirmAddRepairListAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">计划名称</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="confirmAddRepairListPatrolname" placeholder="请输入计划名称" name="confirmAddRepairListPatrolname">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">巡查人：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="confirmAddRepairListPatroluser" placeholder="请输入巡查人/执行人" name="confirmAddRepairListPatroluser">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">保养级别</label>
+                                <div class="layui-input-inline">
+                                    <select name="patrol_level" class="input_select" lay-search="">
+                                        <option value="-1">全部</option>
+                                        <option value="{$a=C('PATROL_LEVEL_RC')}">{$a=C('PATROL_LEVEL_NAME_RC')}</option>
+                                        <option value="{$a=C('PATROL_LEVEL_DC')}">{$a=C('PATROL_LEVEL_NAME_DC')}</option>
+                                        <option value="{$a=C('PATROL_LEVEL_PM')}">{$a=C('PATROL_LEVEL_NAME_PM')}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">科室名称</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="confirmAddRepairListDepartment" placeholder="请输入科室名称" name="confirmAddRepairListDepartment">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline" style="margin-top:12px;">
+                                        <button class="layui-btn" lay-submit="" lay-filter="confirmAddRepairListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="confirmAddRepairList" lay-filter="confirmAddRepairList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('repair/repair/confirmAddRepairList', layui.factory('repair/repair/confirmAddRepairList'));
+</script>
+ 

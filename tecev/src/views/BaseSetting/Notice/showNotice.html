@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布公告</title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-card-header {
+        height: 80px;
+    }
+
+    .notic_date {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .layui-form-pane .layui-input-block {
+        margin-left: 115px;
+    }
+
+    .file_list {
+        margin-bottom: 20px;
+    }
+
+    .file_list ul li {
+        margin-top: 10px;
+    }
+
+    .show_file {
+        color: #01AAED;
+        cursor: pointer;
+        margin: 0 15px;
+    }
+
+    .del_file {
+        color: #01AAED;
+        cursor: pointer;
+    }
+
+    .addIcon {
+        z-index: 99;
+        position: absolute;
+        left: 330px;
+        top: 63px;
+        cursor: pointer;
+        color: #0a8ddf;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-fluid">
+        <div class="layui-card layuiAdmin-msg-detail">
+            <div class="layui-card-header">
+                <h1 style="text-align: center">{$noticeInfo.title}</h1>
+                <p class="notic_date">
+                    <span>发布时间：{$noticeInfo.adddate}</span>
+                </p>
+            </div>
+            <div class="layui-card-body layui-text">
+                <div class="layadmin-text">
+                    {$noticeInfo.content}
+                </div>
+                <br>
+                <br>
+                <p>
+                    <b style="font-size: 16px;">发布者：{$noticeInfo.adduser}</b>
+                </p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-form-label" style="float: left;">相关文件：</div>
+            <div style="float: left;">
+                <div class="file_list">
+                    <ul id="add_files">
+                        <volist name="files" id="vo">
+                            <li>
+                                <input type="hidden" name="file_name[]" value="{$vo['file_name']}">
+                                <input type="hidden" name="save_name[]" value="{$vo['save_name']}">
+                                <input type="hidden" name="file_type[]" value="{$vo['file_type']}">
+                                <input type="hidden" name="file_size[]" value="{$vo['file_size']}">
+                                <input type="hidden" name="file_url[]" value="{$vo['file_url']}">
+                                <span>{$vo.img} {$vo.file_name}</span>
+                                <span class="show_file" data-path="{$vo['file_url']}" data-name="{$vo['file_name']}" class="show_file">预览</span>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span>相关文件仅：{$is_look_username.username} 可查看、下载</span>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(document).on('click', '.show_file', function () {
+        var path = $(this).siblings('input[name="file_url[]"]').val();
+        var name = $(this).siblings('input[name="file_name[]"]').val();
+        var ext = $(this).siblings('input[name="file_type[]"]').val();
+        name = name.substring(0, name.lastIndexOf("."));
+        if (path) {
+            var url = admin_name + '/Tool/showFile';
+            top.layer.open({
+                type: 2,
+                title: name + '相关文件查看',
+                scrollbar: false,
+                offset: 'r',//弹窗位置固定在右边
+                anim: 2, //动画风格
+                area: ['75%', '100%'],
+                closeBtn: 1,
+                content: [url + '?path=' + path + '&filename=' + name + '.' + ext]
+            });
+        } else {
+            layer.msg(name + '未上传,请先上传', {icon: 2}, 1000);
+        }
+    });
+</script>

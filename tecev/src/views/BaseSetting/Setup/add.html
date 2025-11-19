@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加用户</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/forms.css" />
+    <script src="__PUBLIC__/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/lhgdialog.js?skin=iblue" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/jsfunction.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/setup/add.js" type="text/javascript"></script>
+<style>
+body{ background:#ffffff; width:100%;}
+table.info{background:#e5e5e5}
+.info tr:nth-child(odd) td{ background:#ffffff}
+.info tr:nth-child(even) td{ background:#f9f9f9}
+.info td{ padding:8px 0px 8px 8px;}
+font{ color:red; float:left}
+.input_btn{ margin:0px;}
+.input_box,.zj_select{ margin:0px;}
+.remark{ border:1px solid #e5e5e5; padding:2px; line-height:25px; width:400px; margin-right:20px;}
+.input_box1 {margin:0px;}
+
+</style>
+</head>
+
+<body>
+
+<form id="form">
+	<table width="100%" cellpadding="2" cellspacing="1" class="info">
+        <tr>
+           <td width="15%" align="right">工号：</td>
+           <td align="left"><input type="text" placeholder="系统自动生成" readonly="readonly" class="input_box" /></td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">姓名：</td>
+           <td align="left"><input type="text" class="input_box fl" name="username" value="" /><font>*</font>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">密码：</td>
+           <td align="left"><input type="password" class="input_box fl"  name="password" value="" /><font>*</font>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">确认密码：</td>
+           <td align="left"><input type="password" class="input_box fl" id="checkpassword" name="checkpassword" value="" /><font>*</font>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">性别：</td>
+           <td align="left"><input type="radio" name="gender" checked="checked" value="0" /><label>男</label><input type="radio" name="gender" value="1" /><label>女</label></td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">手机号码：</td>
+           <td align="left"><input type="text" class="input_box fl" name="telephone" value="" /><font>*</font>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">角色：</td>
+           <td align="left">
+           		<select name="roleid" class="zj_select fl" id="roleid">
+                	<option value="0">--请选择角色--</option>
+                	<?php for($i=0;$i<count($role);$i++){ ?>
+                    <option value="<?php echo $role[$i]['roleid']; ?>"><?php echo $role[$i]['role']; ?></option>
+                    <?php } ?>
+                </select><font>*</font>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">工作科室：</td>
+            <td>
+                <font size="50px"><input type="checkbox" onclick="checkall(this.form);"/>全选</font><br>
+                <input type="checkbox" value="0" name="departid">院长 &nbsp;&nbsp;
+           		<?php foreach($department as $k => $v){ ?>
+                     <?php if($k%6==0&&$k>0){ ?>
+                            <input type="checkbox"  value="<?php echo $v[departid]; ?>" name="departid"><?php echo $v[department] ?>&nbsp;&nbsp;<br>
+                     <?php }else{ ?>
+                     <input type="checkbox"  value="<?php echo $v[departid]; ?>" name="departid"><?php echo $v[department] ?>&nbsp;&nbsp;
+                <?php } } ?>
+           </td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">人员状态：</td>
+           <td align="left"><input type="radio" name="status" checked="checked" value="0" /><label>在职</label><input type="radio" name="status" value="1" /><label>离职</label></td>
+        </tr>
+        <tr>
+           <td width="15%" align="right">备注：</td>
+           <td align="left"><textarea name="remark" class="remark"></textarea></td>
+        </tr>
+        <tr>
+           <td colspan="2" align="center"><input type="button" onclick="addUser('<?php echo $action; ?>')" class="input_btn" value="确定无误并提交" />
+                <input type="reset" class="input_btn" value="重置" style=" margin-left:50px" /></td>
+        </tr>
+	</table>
+</form>
+</body>
+</html>

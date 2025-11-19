@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-form-pane .layui-form-label{width: 140px;}
+</style>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>设置科室审批负责人表单</legend>
+    </fieldset>
+    <form class="layui-form">
+        <input type="hidden" name="departid" value="{$departmanager.departid}"/>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>科室名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="" value="{$departmanager.department}" readonly autocomplete="off" placeholder="请输入科室名称" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">审批人：</label>
+            <div class="layui-input-inline">
+                <select name="manager" lay-verify="required|manager" lay-search="" >
+                    <option value="">请选择科室审批负责人</option>
+                    <volist name="users" id="vo">
+                        <if condition="$departmanager['manager'] eq $vo['username']">
+                            <option value="{$vo.userid}" selected="selected">{$vo.username}</option>
+                            <else />
+                            <option value="{$vo.userid}">{$vo.username}</option>
+                        </if>
+                    </volist>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="color: red !important;">{$error_msg}</div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add"><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/integratedSetting/manager', layui.factory('controller/basesetting/integratedSetting/manager'));
+</script>

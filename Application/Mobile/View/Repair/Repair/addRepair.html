@@ -1,0 +1,482 @@
+<include file="Public:head"/>
+<title>设备报修</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    .red {
+        color: #FF5722
+    }
+
+    .green {
+        color: #85AB70
+    }
+
+    .voiceButton {
+        width: 60%;
+        display: inline-block;
+        position: relative;
+    }
+
+    .voiceButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+
+    .photoButton {
+        width: 38%;
+        display: inline-block;
+        margin-left: 0.1rem;
+        position: relative;
+    }
+
+    .photoButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+
+    .voiceTime {
+        font-size: 1rem;
+        position: absolute;
+        margin-left: 0 !important;
+    }
+
+    .revoice {
+        color: #FF5722;
+        position: absolute;
+        top: 0.5rem;
+        right: -4rem;
+    }
+
+    .reVoiceButton {
+        width: 60%;
+        display: inline-block;
+        position: relative;
+    }
+
+    .reVoiceButton button {
+        position: relative;
+    }
+
+    .reVoiceButton span {
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .reVoiceButton i {
+        position: absolute;
+        left: 0.3rem;
+        top: 0.25rem;
+        font-size: 1.8rem !important;
+    }
+
+    .confirm {
+        height: 3.75rem;
+        line-height: 3.75rem;
+        font-size: 1.3rem;
+    }
+
+    .layui-form-label {
+        padding: 0 15px;
+    }
+
+    body{
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+
+    body .react-cover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .record {
+        height: 36px;
+        border: 1px solid #C9C9C9;
+        line-height: 33px;
+    }
+
+    .record_title {
+        padding-left: 35px;
+        font-size: 16px;
+    }
+    .cancle_record,.record_now{
+        width: 100%;
+        height: 200px;
+        position: fixed;
+        top:50px;
+        z-index: 99999;
+    }
+    .cancle_record_content{
+        background: #6A6A6A;
+        border-radius:8px;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+    .cancle_record_icon{
+        height: 130px;
+        width: 100%;
+        color:#fff;
+        text-align: center;
+        padding-top: 12px;
+    }
+    .cancle_record_tips{
+        height: 40px;
+        width: 180px;
+        background: #923432;
+        color: #fff;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        margin: 0 auto;
+        border-radius: 6px;
+    }
+    .cancle_record_tips2{
+        height: 40px;
+        width: 180px;
+        color: #fff;
+        font-size: 16px;
+        line-height: 40px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .xuanzhuan:before{
+        transform: rotate(270deg);
+        display:inline-block;
+    }
+    .layui-card:first-of-type{
+        margin-top: 0;
+    }
+    .weui-textarea{
+        border: 1px solid #e6e6e6;
+        min-height: 6.25rem;
+        height: auto;
+        line-height: 1.25rem;
+        padding: 0.3125rem 0 0 0.3125rem;
+        box-shadow: 0 0 0 rgba(0,0,0,0) !important;
+        -webkit-appearance:none !important;
+    }
+</style>
+<script>
+    var addRepairUrl = "{$addRepairUrl}";
+</script>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <input type="hidden" name="assid" value="{$asArr.assid}"/>
+        <input type="hidden" name="from" value="1">
+        <input type="hidden" name="assnum" value="{$asArr.assnum}">
+        <input type="hidden" name="assets" value="{$asArr.assets}">
+        <input type="hidden" name="opendate" value="{$asArr.opendate}">
+        <input type="hidden" name="factory" value="{$asArr.factory}">
+        <input type="hidden" name="model" value="{$asArr.model}">
+        <input type="hidden" name="factorynum" value="{$asArr.factorynum}">
+        <input type="hidden" name="department" value="{$asArr.department}">
+        <input type="hidden" name="departid" value="{$asArr.departid}">
+        <input type="hidden" name="assprice" value="{$asArr.buy_price}">
+
+        <input type="hidden" name="record_url" value=""/>
+        <input type="hidden" name="pic_url" value=""/>
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">设备基本信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asArr.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$asArr.serialnum}</td>
+                </tr>
+                <tr>
+                    <th>保修状态</th>
+                    <td class="green"><span class="red">{$asArr.guaranteeStatus}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">报修表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-form-item layui-form-text mgt2rem">
+                    <label class="layui-form-label" style="white-space:normal;"><span class="rquireCoin"> * </span>故障描述：</label>
+                    <div class="layui-input-block">
+                        <textarea class="weui-textarea miaoshu" name="breakdown"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item mgt2rem">
+                    <div class="voiceButton">
+                        <div class="record" id="record_bat" ontouchstart="gtouchstart(event)" ontouchmove="gtouchmove(event)" ontouchend="gtouchend(event)">
+                            <img src="__PUBLIC__/mobile/images/icon/voice.png">
+                            <span class="record_title">语音描述（长按录制）</span>
+                        </div>
+                    </div>
+                    <div class="photoButton">
+                        <input type="file" id="fileElem" multiple accept="image/*" style="display:none;">
+                        <button type="button" class="layui-btn layui-btn-fluid layui-btn-primary add_pic">拍照报修</button>
+                        <img src="__PUBLIC__/mobile/images/icon/camera.png">
+                    </div>
+                    <div class="reVoiceButton mgt2rem" style="display: none">
+                        <div class="record bofang" id="media">
+                            <i class="layui-icon layui-icon-voice"><span class="voiceTime">30〞</span></i>
+                            <span style="padding-left: 80px;">点击播放</span>
+                        </div>
+                        <a class="revoice">重新录制</a>
+                    </div>
+                </div>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: 1rem">
+                    <colgroup>
+                        <col width="80%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">故障照片</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addFileTbody">
+                    <tr class="notFileDataTr">
+                        <td colspan="2" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="save" style="margin: 10px auto;">确认并提交</button>
+            </div>
+        </div>
+    </form>
+    <canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <audio src="" id="audio"></audio>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    $(function () {
+       $(".miaoshu").on('blur',function () {
+           $('.miaoshu').attr('readonly','readonly');
+       });
+        $(".miaoshu").on('focus',function () {
+            $(this).removeAttr("readonly");
+        });
+    });
+    var timeOutEvent = 0;//定时器
+    var posStart = 0;//初始化起点坐标
+    var posEnd = 0;//初始化终点坐标
+    var posMove = 0;//初始化滑动坐标
+
+    //开始按
+    function gtouchstart(event) {
+        //event.preventDefault();//阻止浏览器默认行为
+        $('.miaoshu').attr('readonly','readonly');
+        posStart = 0;
+        posStart = event.touches[0].pageY;//获取起点坐标
+        timeOutEvent = setTimeout("longPress()", 500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
+        return false;
+    }
+
+    //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
+    function gtouchend(event) {
+        event.preventDefault();
+        posEnd = 0;
+        posEnd = event.changedTouches[0].pageY;//获取终点坐标
+        clearTimeout(timeOutEvent);//清除定时器
+        if (timeOutEvent != 0) {
+            //这里写要执行的内容（尤如onclick事件）
+            console.log("你这是点击，不是长按");
+        }else{
+            $('.record_now').remove();//移除正在录音提示
+            $('.cancle_record').remove();//移除取消提示
+            $('.record_title').html('语音描述（长按录制）');
+            //停止录音
+            wx.stopRecord({
+                success: function (res) {
+                    var localId = res.localId;
+                    if (posStart - posEnd < 60) {
+                        $('.record_title').html('语音描述（长按录制）');
+                        save(localId);
+                    } else {
+                        console.log('取消');
+                    }
+                }
+            });
+        }
+        return false;
+    }
+
+    //如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按
+    function gtouchmove(event) {
+         clearTimeout(timeOutEvent);//清除定时器
+         timeOutEvent = 0;
+
+         event.preventDefault();//阻止浏览器默认行为
+         posMove = 0;
+         posMove = event.targetTouches[0].pageY;//获取滑动实时坐标
+         if (posStart - posMove < 60) {
+             //btnElem.value = '松开 结束';
+             $('.record_title').html('松开 结束');
+             $('.cancle_record').remove();//移除取消提示
+             var recordnow = $('body').find('.record_now');
+             if(recordnow.length == 0){
+                 var html = '<div class="record_now">\n' +
+                     '    <div class="cancle_record_content">\n' +
+                     '        <div class="cancle_record_icon"><img style="height: 120px;" src="/Public/mobile/images/ic_record@2x.png"></div>\n' +
+                     '        <div class="cancle_record_tips2">手指上滑，取消录音</div>\n' +
+                     '    </div>\n' +
+                     '</div>';
+                 //显示正在录音提示
+                 $('body').append(html);
+             }
+         } else {
+             //超出一定距离
+             //btnElem.value = '松开手指，取消录音';
+             $('.record_title').html('松开手指，取消录音');
+             $('.record_now').remove();//移除正在录音提示
+             var cancle_record = $('body').find('.cancle_record');
+             if(cancle_record.length == 0){
+                 var html = '<div class="cancle_record">\n' +
+                     '    <div class="cancle_record_content">\n' +
+                     '        <div class="cancle_record_icon"><img style="height: 120px;" src="/Public/mobile/images/ic_record@2x.png"></div>\n' +
+                     '        <div class="cancle_record_tips">松开手指，取消录音</div>\n' +
+                     '   </div>\n' +
+                     '</div>';
+                 //显示取消提示
+                 $('body').append(html);
+             }
+         }
+    }
+    var tmp_localId = '';
+    function save(localId) {
+        tmp_localId = localId;
+        //上传语音
+        wx.uploadVoice({
+            localId: tmp_localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                var serverId = res.serverId; // 返回音频的服务器端ID
+                downRecord(serverId);
+            }
+        });
+    }
+    var audio = document.getElementById("audio");
+    var btn = document.getElementById("media");
+    btn.onclick = function () {
+        if (audio.paused) { //判断当前的状态是否为暂停，若是则点击播放，否则暂停
+            audio.play();
+        }else{
+            audio.pause();
+        }
+    };
+
+    //真正长按后应该执行的内容
+    function longPress() {
+        timeOutEvent = 0;
+        //btnElem.value = '松开 结束';
+        $('.record_title').html('松开 结束');
+        var recordnow = $('body').find('.record_now');
+        if(recordnow.length == 0){
+            var html = '<div class="record_now">\n' +
+                '    <div class="cancle_record_content">\n' +
+                '        <div class="cancle_record_icon"><img style="height: 120px;" src="/Public/mobile/images/ic_record@2x.png"></div>\n' +
+                '        <div class="cancle_record_tips2">手指上滑，取消录音</div>\n' +
+                '    </div>\n' +
+                '</div>';
+            //显示正在录音提示
+            $('body').append(html);
+        }
+        //开始录音
+        wx.startRecord();
+        //录音时间超过一分钟没有停止的时候会执行 complete 回调
+        wx.onVoiceRecordEnd({
+            complete: function (res) {
+                tmp_localId = res.localId;
+                //上传语音
+                wx.uploadVoice({
+                    localId: tmp_localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var serverId = res.serverId; // 返回音频的服务器端ID
+                        downRecord(serverId);
+                        $('.record_title').html('语音描述（长按录制）');
+                        $('.record_now').remove();//移除正在录音提示
+                        $('.cancle_record').remove();//移除取消提示
+                        var targetdiv = $('.voiceButton').find('.record');
+                        $(targetdiv).removeAttr('ontouchstart');
+                        $(targetdiv).removeAttr('ontouchmove');
+                        $(targetdiv).removeAttr('ontouchend');
+                        $('.reVoiceButton').show();
+                        $('.record_title').css({"color":'#e6e6e6'});
+                    }
+                });
+            }
+        });
+    }
+
+    function downRecord(serverId) {
+        var params = {};
+        params.mid = serverId;
+        $.ajax({   //后台下载
+            type: "POST",
+            url: admin_name+'/Public/wxRecordDown',
+            data: params,
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                if (data.status == 1) {
+                    var targetdiv = $('.voiceButton').find('.record');
+                    $(targetdiv).removeAttr('ontouchstart');
+                    $(targetdiv).removeAttr('ontouchmove');
+                    $(targetdiv).removeAttr('ontouchend');
+                    $('.reVoiceButton').show();
+                    $('.record_title').css({"color":'#e6e6e6'});
+                    $('input[name="record_url"]').val(data.info['record_url']);
+                    var record_url = data.info['record_url'];
+                    var voiceTime = data.info['seconds'];
+                    $("#audio").attr('src',record_url);
+                    $(".voiceTime").html(voiceTime+'〞');
+                } else {
+                    //layer.msg(data.msg, {icon: 2});
+                    alert(data.msg);
+                }
+            },
+            erro: function () {
+                layer.msg('服务繁忙，请稍后再试！', {icon: 2});
+            }
+        });
+    }
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/repair/repair/addRepair.js?v={:mt_rand(1,54561)}"></script>

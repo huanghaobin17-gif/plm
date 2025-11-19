@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-pane .layui-input-block {
+            margin-left: 114px;
+            left: -2px;
+        }
+        .cusquote1 {
+            padding: 5px !important;
+            font-size: 12px;
+            color: red;
+        }
+        .layui-form-pane .layui-input-block {
+            margin-left: 115px;
+            left: -2px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+        <form class="layui-form">
+            <input type="hidden"  name="is_default" value="{$is_default}">
+            <input type="hidden" name="roleid" value="{$data[roleid]}">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 角色名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rolename" value="{$data[role]}" placeholder="请输入角色名称" required  lay-verify="required|rolename"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-block" id="status">
+                    <if condition="$data[status] eq 1">
+                        <input type="radio" name="status" value="1" title="启用" checked="checked">
+                        <input type="radio" name="status" value="0" title="停用">
+                    <else />
+                        <input type="radio" name="status" value="1" title="启用">
+                        <input type="radio" name="status" value="0" title="停用" checked="checked">
+                    </if>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" class="layui-textarea">{$data[remark]}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="editRole" data-url="{$url}"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/privilege/editRole', layui.factory('controller/basesetting/privilege/editRole'));
+</script>

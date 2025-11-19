@@ -1,0 +1,178 @@
+<?php if($menuData = get_menu_name('Repair','Repair','progress')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<style>
+    #LAY-Repair-Repair-progress .statusColor-green{color:green;width: 85px;}
+    #LAY-Repair-Repair-progress .statusColor-red{color:red;width: 85px;}
+    #LAY-Repair-Repair-progress .statusColor-grey{color:#C4C0BF;width: 85px;}
+    #LAY-Repair-Repair-progress .titlecolor{color:#428bca;width: 85px;}
+    #LAY-Repair-Repair-progress .layui-table-view .layui-table td, #LAY-Repair-Repair-progress .layui-table-view .layui-table th {
+        padding: 0;
+        width: 70px;
+    }
+    #LAY-Repair-Repair-progress .bsSuggest{
+        width:182px;
+        height: 25px;
+        border-radius: 2px !important;
+        outline:none !important;
+    }
+    #LAY-Repair-Repair-progress #progressTable.layui-table th,#progressTable .layui-table td {
+        font-size: 12px;
+    }
+    #LAY-Repair-Repair-progress #progressTable tbody .layui-table{
+        margin: 0!important;
+    }
+
+    #LAY-Repair-Repair-progress #progressTable .layui-form-item .layui-inline {
+        margin-bottom: 0;
+        margin-right: -5px;
+    }
+    #LAY-Repair-Repair-progress #progressTable .layui-table th,#progressTable .layui-table td {
+        padding: 7px 0 !important;
+    }
+    #LAY-Repair-Repair-progress .insideTable{
+        width: 100%;
+    }
+    #LAY-Repair-Repair-progress .insideTable tbody tr{
+        height: 38px;
+    }
+    #LAY-Repair-Repair-progress .insideTable tbody tr td{
+       text-align: center;
+    }
+    #LAY-Repair-Repair-progress .insideTable tbody tr td:last-child{
+        border-right: none;
+        text-align: center;
+    }
+    #LAY-Repair-Repair-progress .layui-table-cell{
+        padding: 0;
+        height: auto;
+    }
+    #LAY-Repair-Repair-progress .layui-table-view .layui-table td,#LAY-Repair-Repair-progress .layui-table-view .layui-table th{
+        padding: 0;
+    }
+    #LAY-Repair-Repair-progress .special td{
+        border-bottom: none;
+    }
+
+</style>
+<div class="layui-fluid" id="LAY-Repair-Repair-progress">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <input type="hidden" name="progress" value="{$url}">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssName" placeholder="请输入设备名称" name="progressAssName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssNum" placeholder="请输入设备编号" name="progressAssNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">使用科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="progressAssetsDep" class="input_select" lay-search="">
+                                        <option value="">全部</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报修人员：</label>
+                                <div class="layui-input-inline">
+                                    <select name="progressApplicant" class="input_select" lay-search="">
+                                        <option value="">请选择</option>
+                                        <volist name="users" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">维修状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="progressRepairStatus" class="input_select" lay-search="">
+                                        <option value="">请选择</option>
+                                        <volist name="repairStatus" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <if condition="$repair_category">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">维修类别：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="repair_category" class="input_select" lay-search="">
+                                            <option value="">全部</option>
+                                            <volist name="repair_category" id="vo">
+                                                <option value="{$key+1}">{$vo}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                            </if>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报修日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input formatDate" placeholder="开始日期" style="cursor: pointer;" readonly name="progressStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input formatDate" placeholder="结束日期" style="cursor: pointer;" readonly name="progressEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="progressSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表（已完成维修的设备不在此列表显示）
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="progressTable" lay-filter="progressTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('repair/repair/progress', layui.factory('repair/repair/progress'));
+</script>

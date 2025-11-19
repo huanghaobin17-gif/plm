@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:head"/>
+<style>
+    .layui-table{margin: 0}
+    .layui-form-item{margin: 0;}
+    .layui-form-pane .layui-input-block{margin-left: 0;}
+    .layui-table th{font-weight: normal; text-align: right;}
+    .layui-table td{text-align: left;}
+    .layui-table thead tr{background-color: white;}
+    .t2 th{width: 160px;}
+    .rank li{float: left;width: 200px;}
+</style>
+<script src="__PUBLIC__/js/base.js"></script>
+<body>
+<include file="Public:top"/>
+<include file="Public:left"/>
+<div class="right">
+    <form class="layui-form layui-form-pane"  action="">
+        <div class="content">
+            <div class="sea_bg">
+                <p class="sea_text">&nbsp;&nbsp;医院设置▼</p>
+            </div>
+            <table class="layui-table" id="copytable">
+                <thead>
+                <tr>
+                    <th style="text-align: center">模块状态</th>
+                    <td>
+                        <div class="layui-input-block"  >
+                            <input type="radio" name="hospital_status" lay-filter="hospital_status"  value="1" title="开启" checked>
+                            <input type="radio" name="hospital_status" lay-filter="hospital_status"  value="0" title="关闭">
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="width:8%;text-align: center;">院系</th>
+                    <th style="width:20%;text-align: center;">医院名称</th>
+                    <th style="width:10%;text-align: center;">代码</th>
+                    <th style="width:10%;text-align: center;">联系人</th>
+                    <th style="width:15%;text-align: center;">联系电话</th>
+                    <th style="width:21%;text-align: center;">地址</th>
+                    <th style="width:12%;text-align: center;">管理角色</th>
+                    <th style="width:5%;text-align: center;">同步科室</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="text-align: center">总院</td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <input type="text" placeholder="医院名称" name="" value="" class="layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <input type="text" name="" value="" class="layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <input type="text" name="" value="" class="layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <input type="text" name="" value="" class="layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <input type="text" name="" value="" class="layui-input">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="layui-input-block hospital">
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="like1[write]" lay-skin="primary" title="哈哈">
+                                <input type="checkbox" name="like1[read]" lay-skin="primary" title="哈哈">
+                                <input type="checkbox" name="like1[game]" lay-skin="primary" title="哈哈">
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                <a class="link" onclick="addRow()" >&gt;&gt;新增分院&lt;&lt; </a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="sea_bg">
+                <p class="sea_text">&nbsp;&nbsp;资产档案配置▼</p>
+            </div>
+            <table class="layui-table t2">
+                <thead>
+                <tr>
+                    <th>模块状态</th>
+                    <td>
+                        <div class="layui-input-block"  >
+                            <input type="radio" name="modules_status" lay-filter="assets_status"  value="1" title="开启" checked>
+                            <input type="radio" name="modules_status" lay-filter="assets_status"  value="0" title="关闭">
+                        </div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>设备列表显示内容 :</th>
+                    <td>
+                        <div class="layui-form-item assets">
+                            <ul class="rank">
+                                <li><input type="checkbox" value="assnum" name="assets_print_col1" lay-skin="primary" title="设备编号" checked></li>
+                                <li><input type="checkbox" value="assets" name="assets_print_col2" lay-skin="primary" title="设备名称" checked></li>
+                                <li><input type="checkbox" value="brand" name="assets_print_col3" lay-skin="primary" title="品牌" checked></li>
+                                <li><input type="checkbox" value="model" name="assets_print_col4" lay-skin="primary" title="规格/型号" checked></li>
+                                <li><input type="checkbox" value="department" name="assets_print_col5" lay-skin="primary" title="科室名称" checked></li>
+                                <li><input type="checkbox" value="opendate" name="assets_print_col6" lay-skin="primary" title="开机日期" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>设备编码规则 :</th>
+                    <td>
+                        <div class="layui-form-item assets" >
+                            <ul class="rank">
+                                <li><input type="checkbox" id="num_code"  name="assets_setting[code]" lay-skin="primary" title="医院代码&nbsp;+&nbsp" checked></li>
+                                <li><input type="checkbox" id="num_catenum"  name="assets_setting[catenum]" lay-skin="primary" title="设备分类编号&nbsp;+&nbsp;" checked></li>
+                                <li style="width: 420px;"><input type="checkbox" id="num_departnum" name="assets_setting[departnum]" lay-skin="primary" title="科室编号&nbsp;+&nbsp;
+                自增ID值&nbsp;=&nbsp;设备编号（条形码、二维码编号）" checked></li>
+                            </ul>
+                        </div>
+                        <span style="color: red;">&nbsp;&nbsp;(注意：请在系统安装后配置好，如后期更改将会导致已打印的标签无法扫描检索！)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>设备状态 :</th>
+                    <td>
+                        <div class="layui-input-block assets">
+                            <input type="text" name="assets_status"  value="<?php echo $assets_status; ?>" class="layui-input">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>设备辅助分类 :</th>
+                    <td>
+                        <div class="layui-input-block assets">
+                            <input type="text" name="assets_helpcat"  value="<?php echo $assets_helpcat; ?>" class="layui-input">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>资金来源 :</th>
+                    <td>
+                        <div class="layui-input-block assets">
+                            <input type="text" name="assets_capitalfrom"   value="<?php echo $assets_capitalfrom; ?>" class="layui-input">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>资产来源 :</th>
+                    <td>
+                        <div class="layui-input-block assets">
+                            <input type="text" name="assets_assfrom"   value="<?php echo $assets_assfrom; ?>" class="layui-input">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>设备财务分类 :</th>
+                    <td>
+                        <div class="layui-input-block assets">
+                            <input type="text" name="assets_finance"  value="<?php echo $assets_finance; ?>" class="layui-input">
+                        </div>
+                        <span style="color: red;">(注意：以上不同的设备状态、设备辅助分类、资金来源、资产来源、设备财务分类请用 | 分隔，设置好后，请勿频繁改动！)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>标签信息打印项 :</th>
+                    <td>
+                        <div class="layui-form-item assets" >
+                            <ul class="rank">
+                                <li><input type="checkbox" id="info_assnum" name="assets_print[assnum]" lay-skin="primary" title="设备编号" checked></li>
+                                <li><input type="checkbox" id="info_assets"  name="assets_print[assets]" lay-skin="primary" title="设备名称" checked></li>
+                                <li><input type="checkbox" id="info_brand"  name="assets_print[brand]" lay-skin="primary" title="品牌" checked></li>
+                                <li><input type="checkbox" id="info_model"  name="assets_print[model]" lay-skin="primary" title="规格/型号" checked></li>
+                                <li><input type="checkbox" id="info_departid"  name="assets_print[departid]" lay-skin="primary" title="科室名称" checked></li>
+                                <li><input type="checkbox" id="info_opendate"  name="assets_print[opendate]" lay-skin="primary" title="开机日期" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>导出设备信息项 :</th>
+                    <td>
+                        <div class="layui-form-item assets" >
+                            <ul class="rank">
+                                <li><input type="checkbox" name="" lay-skin="primary" title="123" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="content">
+            <div class="sea_bg"><p class="sea_text">&nbsp;&nbsp;维修维护配置▼</p>
+            </div>
+            <table class="layui-table t2">
+                <thead>
+                <tr>
+                    <th>模块状态</th>
+                    <td>
+                        <div class="layui-input-block"  >
+                            <input type="radio" name="22" lay-filter="repair_status" value="1" title="开启" checked>
+                            <input type="radio" name="22" lay-filter="repair_status" value="0" title="关闭">
+                        </div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>维修维护编码规则 :</th>
+                    <td>
+                        <div class="layui-input-inline repair">
+                            <input type="text" value="wx"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                        <span>+  设备编号 + “_次数”= 设备维修维护编号</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>医疗器械维修报告 :</th>
+                    <td>
+                        <div class="layui-input-block repair"  >
+                            <input type="radio" name="11"  value="1" checked><img style="width: 200px;height: 283px;" src="__PUBLIC__/images/repair_temp.jpg">
+                            <input type="radio" name="11"  value="0" ><img style="width: 200px;height: 283px;" src="__PUBLIC__/images/repair_temp.jpg">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>服务分类 :</th>
+                    <td>
+                        <div class="layui-input-block repair">
+                            <input type="text" name="repair_service" placeholoder="服务分类1|服务分类2|服务分类3" value="<?php echo $repair_service; ?>" class="layui-input">
+                        </div>
+                        <span style="color: red;">(注意：请用 | 分隔，设置好后，请勿频繁改动！)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>导出维修单信息项 :</th>
+                    <td>
+                        <div class="layui-form-item repair" >
+                            <ul class="rank">
+                                <?php foreach($repair as $k => $v){ ?>
+                                <li><input type="checkbox" id="<?php echo 'print_'.$v[field]; ?>" name="repair_print[<?php echo $v[field]; ?>]" lay-skin="primary" title="<?php echo $v[comment]; ?>" checked></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="content">
+            <div class="sea_bg"><p class="sea_text">&nbsp;&nbsp; 巡查保养配置▼</p>
+            </div>
+            <table class="layui-table t2">
+                <thead>
+                <tr>
+                    <th>模块状态</th>
+                    <td>
+                        <div class="layui-input-block"  >
+                            <input type="radio" name="2" value="1" lay-filter="patrol_status" title="开启" checked>
+                            <input type="radio" name="2" value="0" lay-filter="patrol_status" title="关闭">
+                        </div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>保养级别 :</th>
+                    <td>
+                        <div class="layui-input-inline patrol">
+                            <input type="text" name=""  value="1|2|3" class="layui-input">
+                        </div>
+                        <span style="color: red;">(注意：请用 | 分隔，设置好后，请勿频繁改动！)</span>
+                        <input type="checkbox" id="level" name="" lay-skin="primary" title="启用级别包含关系" checked>
+                    </td>
+                </tr>
+                <tr>
+                    <th>价格区间 :</th>
+                    <td>
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block patrol">
+                                <textarea class="layui-textarea">0:50000|0到50000&#13;50001:100000|50001到100000&#13;100000|100000以上</textarea>
+                            </div>
+                        </div>
+                        <span style="color: red;">(注意：填写规则“区间值(最小值:最大值)|选项名”，一行一个！例：0:50000|五万以下*)</span>
+                        <span>该价格区间也应用于“设备列表”的“价格区间”搜索选项！</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>种别 :</th>
+                    <td>
+                        <div class="layui-input-block patrol">
+                            <input type="text" name=""  value="非特种|特种" class="layui-input">
+                        </div>
+                        <span style="color: red;">(注意：请用 | 分隔，设置好后，请勿频繁改动！)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>点内容项 :</th>
+                    <td>
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block patrol">
+                                <textarea class="layui-textarea" placeholder="点内容项目A|参数A&#13;点内容项目B|参数B&#13;点内容项目C|参数C"></textarea>
+                            </div>
+                        </div>
+                        <span style="color: red;">(注意：填写规则“选项值|选项名”，一行一个！)</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="content">
+            <div class="sea_bg"><p class="sea_text">&nbsp;&nbsp;统计分析配置▼</p>
+            </div>
+            <table class="layui-table t2">
+                <thead>
+                <tr>
+                    <th>模块状态</th>
+                    <td>
+                        <div class="layui-input-block"  >
+                            <input type="radio" name="3" value="1" lay-filter="statis_status" title="开启" checked>
+                            <input type="radio" name="3" value="0" lay-filter="statis_status" title="关闭">
+                        </div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>资产状况统计配置 :</th>
+                    <td>
+                        <div class="layui-form-item statis" >
+                            <ul class="rank">
+                                <li><input type="checkbox" name="" lay-skin="primary" title="3" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>维修维护统计配置 :</th>
+                    <td>
+                        <div class="layui-form-item statis" >
+                            <ul class="rank">
+                                <li><input type="checkbox" name="" lay-skin="primary" title="2" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>巡查计划统计配置 :</th>
+                    <td>
+                        <div class="layui-form-item statis" >
+                            <ul class="rank">
+                                <li><input type="checkbox" name="" lay-skin="primary" title="1" checked></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: center">
+            <button class="layui-btn" id="input_btn" type="button" style="margin-top: 15px;"><i class="layui-icon" >&#xe609;</i> 保存</button>
+            <button type="reset" style="margin-top: 15px;" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+        </div>
+        <include file="Public:footer"/>
+        <div class="clear"></div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('form', function(){
+        var form = layui.form();
+        form.on('radio(hospital_status)', function(status){
+            if (status.value == 1){
+                $(".hospital input[type='checkbox']").removeAttr("disabled");
+                $(".hospital input[type='text']").removeAttr("readonly")
+            }else{
+                $(".hospital input[type='checkbox']").attr("disabled","true");
+                $(".hospital input[type='text']").attr("readonly","true");
+            }
+        });
+        form.on('radio(assets_status)', function(status){
+            if (status.value == 1){
+                $(".assets input[type='checkbox']").removeAttr("disabled");
+                $(".assets input[type='text']").removeAttr("readonly")
+            }else{
+                $(".assets input[type='checkbox']").attr("disabled","true");
+                $(".assets input[type='text']").attr("readonly","true");
+            }
+        });
+        form.on('radio(repair_status)', function(status){
+            if (status.value == 1){
+                $(".repair input[type='checkbox']").removeAttr("disabled");
+                $(".repair input[type='radio']").removeAttr("disabled");
+                $(".repair input[type='text']").removeAttr("readonly");
+                $(".repair textarea").removeAttr("readonly")
+            }else{
+                $(".repair input[type='checkbox']").attr("disabled","true");
+                $(".repair input[type='radio']").attr("disabled","true");
+                $(".repair input[type='text']").attr("readonly","true");
+                $(".repair textarea").attr("readonly","true");
+            }
+        });
+        form.on('radio(patrol_status)', function(status){
+            if (status.value == 1){
+                $(".patrol input[type='checkbox']").removeAttr("disabled");
+                $("#level").removeAttr("disabled");
+                $(".patrol input[type='text']").removeAttr("readonly");
+                $(".patrol textarea").removeAttr("readonly")
+            }else{
+                $(".patrol input[type='checkbox']").attr("disabled","true");
+                $("#level").attr("disabled","true");
+                $(".patrol input[type='text']").attr("readonly","true");
+                $(".patrol textarea").attr("readonly","true");
+            }
+        });
+        form.on('radio(statis_status)', function(status){
+            if (status.value == 1){
+                $(".statis input[type='checkbox']").removeAttr("disabled");
+            }else{
+                $(".statis input[type='checkbox']").attr("disabled","true");
+            }
+        });
+    });
+
+    function addRow() {
+        var html = "<tr><td>分院</td><td><div class='layui-input-block'><input type='text' class='layui-input' placeholder='医院名称' name='' value='' ></div></td><td><div class='layui-input-block'><input type='text' class='layui-input' name='' value='' ></div></td><td><div class='layui-input-block'><input type='text' class='layui-input' name='' value='' ></div></td><td><div class='layui-input-block'><input type='text' class='layui-input' name='' value='' ></div></td><td><div class='layui-input-block'><input type='text' class='layui-input' name='' value='' ></div></td><td><input type='checkbox' value='assnum' name='' lay-skin='primary' title='设备编号'></td><td></td></tr>";
+        $('#copytable').append(html);
+        layui.use('form', function(){
+            var form = layui.form();
+            form.render('checkbox');
+        });
+    }
+</script>

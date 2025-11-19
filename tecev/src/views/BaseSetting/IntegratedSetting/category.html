@@ -1,0 +1,121 @@
+<style>
+    #LAY-BaseSetting-IntegratedSetting-category .layui-card-header{height: 58px;line-height: 58px;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-form-label{width: auto;}
+
+    /* 子侧边 */
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child{width: 250px!important; left: 235px; top: 105px!important; border-right: 1px solid #eee; background-color: #fff;margin-bottom: 20px;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-side-scroll{width: 248px;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav{padding: 10px 0; width: 240px; border-radius: 0; background: none}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-child{border-radius: 0;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-title a,
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-title a:hover,
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-itemed>a{color: #666 !important;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-itemed .layui-nav-child{margin-bottom: 10px; background: none !important;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-item a{height: 30px; line-height: 30px; color: #666;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-item a:hover{background: none !important;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-child a{color: #999 !important;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-more{display: none;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-tree .layui-this,
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-tree .layui-this>a,
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this,
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this a{background: none; color: #5FB878 !important;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-side-child .layui-nav .layui-nav-child a:hover{color: #009688 !important}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-nav .layui-nav-item a{padding: 0 10px;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-nav-item a{border-left: 5px solid #ffffff;}
+    #LAY-BaseSetting-IntegratedSetting-category .layui-nav-item a:hover{border-left: 5px solid #009688;}
+
+    #LAY-BaseSetting-IntegratedSetting-category a:active{
+        border: none;
+    }
+    #LAY-BaseSetting-IntegratedSetting-category .cus-group{
+        margin: 15px 0 0 20px;
+    }
+    #LAY-BaseSetting-IntegratedSetting-category .changeSearchCategory{
+        width: 85%;
+        margin: 10px 0 0 28px;
+    }
+</style>
+<script>
+    var category = "{$category}";
+</script>
+<?php if($menuData = get_menu_name('BaseSetting','IntegratedSetting','category')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-IntegratedSetting-category" >
+    <div class="layui-row">
+        <div class="layui-col-md12" style="background-color: white;margin-bottom: 20px;">
+            <div class="layui-side layui-side-child">
+                <input type="hidden" value="{$cates[0]['catid']}" name="catid"/>
+                <input type="hidden" value="{$cates[0]['category']}" name="category"/>
+                <div class="layui-side-scroll">
+                    <div class="layui-btn-group cus-group">
+                        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','addCategory')):?>
+                        <button class="layui-btn layui-btn-sm" id="addCate" data-url="{$menuData['actionurl']}" >
+                            {$menuData['actionname']}
+                        </button>
+                        <?php endif?>
+                        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','batchAddCategory')):?>
+                        <button class="layui-btn layui-btn-sm layui-btn-normal" id="batchAddCate" data-url="{$menuData['actionurl']}">
+                            {$menuData['actionname']}
+                        </button>
+                        <?php endif?>
+                    </div>
+                    <ul class="layui-nav layui-nav-tree catelist">
+                        <volist name="cates" id="vo">
+                            <li class="layui-nav-item" data-url="sdsd">
+                                <a href="javascript:;" class="getCategory" data-category="{$vo.category}" data-catid="{$vo.catid}" style="text-decoration: none">{$vo.catenum}：{$vo.category}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-card" style="margin-left: 250px;">
+                <div class="layui-card-header">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    &nbsp;&nbsp;<span class="detailName">{$cates[0]['catenum']}：{$cates[0]['category']}</span> 子类列表▼
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="position: relative;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">关键词搜索：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="keyword" class="layui-input" placeholder="可输入分类名称或品名" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn"  lay-submit lay-filter="cateSearch"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="LAY-BaseSetting-IntegratedSetting-categoryReset">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="category" lay-filter="category"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/integratedSetting/category', layui.factory('basesetting/integratedSetting/category'));
+</script>
+<script type="text/html" id="LAY-BaseSetting-IntegratedSetting-categoryToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','addCategory')):?>
+        <button class="layui-btn layui-btn-sm" data-url="{$menuData['actionurl']}" lay-event="addSubCategory">
+            添加子类
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','editCategory')):?>
+        <button class="layui-btn layui-btn-sm layui-btn-warm" data-url="{$menuData['actionurl']}" lay-event="editCategory">修改父分类</button>
+        <?php endif?>
+        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','deleteCategory')):?>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" data-url="{$menuData['actionurl']}" lay-event="delCategory">删除父分类</button>
+        <?php endif?>
+    </div>
+</script>

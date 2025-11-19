@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+</head>
+<script>
+    var showHospital = "{$showHospital}";
+    var hosid = "{$hospital_id}";
+</script>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加设备字典</legend>
+    </fieldset>
+
+    <div class="layer-to-top">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 设备名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="assets" value="" placeholder="请输入设备名称" required  lay-verify="required|assets" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="catid" lay-search lay-verify="required|catid" lay-filter="cat_id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="assets_category" xm-select="assets_category" xm-select-search="" lay-verify="assets_category">
+                            <option value="">请选择设备类型</option>
+                            <option value="is_firstaid">急救设备</option>
+                            <option value="is_special">特种设备</option>
+                            <option value="is_metering">计量设备</option>
+                            <option value="is_qualityAssets">质控设备</option>
+                            <option value="is_benefit">效益分析</option>
+                            <option value="is_lifesupport">生命支持</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">字典类别：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="bdepart">
+                            <input type="text" class="form-control bsSuggest" name="dic_category" id="dic_category_add" placeholder="选择或填写新类别" />
+                            <div class="input-group-btn">
+                                <ul id="showhos" class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" value="" placeholder="请输入设备单位" required  lay-verify="unit" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/dictionary/addAssetsDic', layui.factory('controller/basesetting/dictionary/addAssetsDic'));
+</script>

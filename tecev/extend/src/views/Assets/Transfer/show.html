@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$zkInfo.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$zkInfo.assets}</td>
+
+            </tr>
+            <tr>
+                <th>规格型号：</th>
+                <td>{$zkInfo.model}</td>
+                <th>现科室：</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备转科申请单信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>转科单号：</th>
+                <td>{$zkInfo.transfernum}</td>
+            </tr>
+            <tr>
+                <th>申请人：</th>
+                <td>{$zkInfo.username}</td>
+            </tr>
+            <tr>
+                <th>申请时间：</th>
+                <td>{$zkInfo.applicantdatetime}</td>
+            </tr>
+            <tr>
+                <th>转出科室：</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+            </tr>
+            <tr>
+                <th>转出科室负责人：</th>
+                <td>{$zkInfo.tranout_departrespon}</td>
+            </tr>
+            <tr>
+                <th>转入科室：</th>
+                <td>{$zkInfo.tranin_depart_name}</td>
+            </tr>
+            <tr>
+                <th>转入科室负责人：</th>
+                <td>{$zkInfo.tranin_departrespon}</td>
+            </tr>
+            <tr>
+                <th>转科时间：</th>
+                <td>{$zkInfo.transferdatetime}</td>
+            </tr>
+            <tr>
+                <th>存放地点：</th>
+                <td>{$zkInfo.address}</td>
+            </tr>
+            <tr>
+                <th>转科文号：</th>
+                <td>{$zkInfo.tran_docnum}</td>
+            </tr>
+            <tr>
+                <th>转科原因：</th>
+                <td>{$zkInfo.tran_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">审批结果</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>审核人：</th>
+                <td>{$zkInfo.examineUser}</td>
+            </tr>
+            <tr>
+                <th>审核时间：</th>
+                <td>{$zkInfo.examinedate}</td>
+            </tr>
+            <tr>
+                <th>是否通过：</th>
+                <td>
+                    <if condition="$zkInfo.is_examine eq 0">
+                        是
+                        <else />
+                        否
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>评论意见：</th>
+                <td>{$zkInfo.comment}</td>
+            </tr>
+            <tr>
+                <th>审批意见：</th>
+                <td>{$zkInfo.examine}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">转科验收</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>验收人：</th>
+                <td>
+                    <empty name="zkInfo.examineUse">
+                        {$currentUser}
+                        <else />
+                        {$zkInfo.checkUser}
+                    </empty>
+                </td>
+            </tr>
+            <tr>
+                <th>验收时间：</th>
+                <td>{$zkInfo.checkdate}</td>
+            </tr>
+            <tr>
+                <th>是否通过：</th>
+                <td>
+                    <if condition="$zkInfo.is_check eq 0">
+                        是
+                        <else />
+                        否
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>验收意见：</th>
+                <td>{$zkInfo.check}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

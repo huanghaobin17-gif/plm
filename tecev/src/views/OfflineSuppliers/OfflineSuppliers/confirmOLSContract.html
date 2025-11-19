@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-OfflineSuppliers-OfflineSuppliers-confirmOLSContract .layui-form-label {
+            width: 110px;
+        }
+
+        #LAY-OfflineSuppliers-OfflineSuppliers-confirmOLSContract .rightAddButton {
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+        }
+
+        #LAY-OfflineSuppliers-OfflineSuppliers-confirmOLSContract .addPhaseTbody input {
+            height: 26px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-OfflineSuppliers-OfflineSuppliers-confirmOLSContract">
+    <div class="layui-row">
+        <form class="layui-form" action="">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">基本信息</blockquote>
+            <input type="hidden" name="supplier_id" value="{$contract.supplier_id}">
+            <input type="hidden" name="contract_id" value="{$contract.contract_id}">
+            <input type="hidden" name="contract_type" value="{$contract.contract_type}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_num" readonly value="{$contract.contract_num}">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_name" lay-verify="required" autocomplete="off" placeholder="请输入合同名称">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同类型：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" readonly value="{$contract.contract_type_name}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 乙方单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="supplier_name" readonly value="{$contract.supplier_name}">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_amount" value="{$contract.contract_amount}" lay-verify="price" autocomplete="off" placeholder="请输入合同金额">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 院方联系人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="hospital_manager" value="{$contract.hospital_manager}" lay-verify="required" autocomplete="off" placeholder="请输入院方联系人">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 乙方联系人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="supplier_contacts" value="{$contract.supplier_contacts}" lay-verify="required" autocomplete="off" placeholder="请输入乙方联系人">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 乙方联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="supplier_phone" value="{$contract.supplier_phone}" lay-verify="tel" autocomplete="off" placeholder="请输入乙方联系电话">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 签订日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sign_date" readonly id="confirmOLSContractSign_date" lay-verify="required" placeholder="请选择签订日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同截止日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_date" readonly id="confirmOLSContractEnd_date" lay-verify="required" placeholder="请选择合同截止日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">验收日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="check_date" readonly id="confirmOLSContractCheck_date" placeholder="请选择验收日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 档案编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="archives_num" lay-verify="required" autocomplete="off" placeholder="请输入档案编号" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">档案管理员：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="archives_manager" autocomplete="off" placeholder="请输入档案管理员" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">合同内容：</label>
+                <div class="layui-input-block" style="margin-left: 140px;width:880px;">
+                    <textarea name="contract_content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    合同付款明细
+                    <span class="rightAddButton" id="addPhase" lay-tips="提示 : 付款总额需等于合同总金额"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加期数</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">期数</th>
+                        <th style="text-align: left !important;">付款金额</th>
+                        <th style="text-align: left !important;">预计付款日期</th>
+                        <th style="text-align: left !important;">付款日期</th>
+                        <th style="text-align: left !important;">状态</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addPhaseTbody">
+                    <tr class="notPhaseDataTr">
+                        <td colspan="6" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    合同附件
+                    <span class="rightAddButton" id="confirmOLSContractFile" lay-tips="提示 : 上传文件后缀名只能为word文档、PDF文件、扫描图片上传"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">文件名称</th>
+                        <th style="text-align: left !important;">提交人</th>
+                        <th style="text-align: left !important;">上传时间</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addFileTbody">
+                    <tr class="notFileDataTr">
+                        <td colspan="4" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="margin-bottom-15">
+                <!--第三方合同类型-->
+                <if condition="$contract['contract_type'] EQ C('CONTRACT_TYPE_REPAIR')">
+                    <!--todo 暂未确认需要什么列表数据-->
+                </if>
+                <!--配件类型合同-->
+                <if condition="$contract['contract_type'] EQ C('CONTRACT_TYPE_PARTS')">
+                    <div class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">入库配件明细</div>
+                    <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: 0px;">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col width="70">
+                            <col width="70">
+                            <col width="70">
+                            <col width="70">
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>配件名称</th>
+                            <th>配件型号</th>
+                            <th>数量</th>
+                            <th>单价</th>
+                            <th>总价</th>
+                            <th>单位</th>
+                            <th>品牌</th>
+                            <th>生产厂商</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="inware_detail" id="vo">
+                            <tr>
+                                <td>{$vo.parts}</td>
+                                <td>{$vo.parts_model}</td>
+                                <td>{$vo.max_sum}</td>
+                                <td>{$vo.price}</td>
+                                <td>{$vo.total_price}</td>
+                                <td>{$vo.unit}</td>
+                                <td>{$vo.brand}</td>
+                                <td>{$vo.manufacturer_name}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </if>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="confirm"><i class="layui-icon">&#xe609;</i>
+                    确认无误并提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var confirmOLSContractUrl = "{$confirmOLSContractUrl}";
+    layui.use('controller/offlineSuppliers/offlineSuppliers/confirmOLSContract', layui.factory('controller/offlineSuppliers/offlineSuppliers/confirmOLSContract'));
+</script>

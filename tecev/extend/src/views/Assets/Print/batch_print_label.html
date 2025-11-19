@@ -1,0 +1,586 @@
+<style>
+    #print_assets .batch_content{
+        color:#000000;
+        font-size: 20px;
+    }
+    @page{
+        margin:{$margin_top}px 0 0 0;
+        font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+    }
+    #print_assets .system_1,#print_assets .system_2,#print_assets .user_1,#print_assets .user_2{
+        margin: 0;
+        padding: 0;
+        width: 390px;
+        height: 200px;
+        max-height: 200px;
+        overflow: hidden;
+    }
+    #print_assets .hospital_name{
+        color:#000000;
+        text-align: center;
+        font-size: 22px;
+        height: 25px;
+        line-height: 25px;
+        margin: 5px auto 2px auto;
+    }
+    #print_assets .show_table td{
+        padding: 0 !important;
+    }
+    #print_assets .line_height{
+        padding: 0 !important;
+        height: 25px !important;
+        line-height: 25px !important;
+    }
+    #print_assets .img_line_height{
+        padding: 0 !important;
+        height: 75px !important;
+    }
+    #print_assets .system_1 .show_table{
+        color:#000000;
+        font-size: {$font_size[system_1][font_size]}px;
+        width: 97% !important;
+        margin-left: 5px;
+    }
+    #print_assets .system_2 .show_table{
+        color:#000000;
+        font-size: {$font_size[system_2][font_size]}px;
+        width: 97% !important;
+        margin-left: 5px;
+    }
+    #print_assets .user_1 .show_table{
+        color:#000000;
+        font-size: {$font_size[user_1][font_size]}px;
+        width: 97% !important;
+        margin-left: 5px;
+    }
+    #print_assets .user_2 .show_table{
+        color:#000000;
+        font-size: {$font_size[user_2][font_size]}px;
+        width: 97% !important;
+        margin-left: 5px;
+    }
+    #print_assets .row_td{
+        width: 79%;
+    }
+    #print_assets .td_img{
+        max-width: 80px;
+        max-height: 80px;
+        text-align: left;
+    }
+    #print_assets .td_img img{
+        width:70px;
+    }
+
+    #print_assets .system_2 .row_td{
+        width: 72%;
+    }
+    #print_assets .system_2 .td_img{
+        padding: 0 !important;
+        max-width: 100px !important;
+        max-height: 100px !important;
+        text-align: left;
+    }
+    #print_assets .system_2 .td_img img{
+        width:100px;
+        padding: 0 !important;
+    }
+
+    #print_assets .user_2 .row_td{
+        width: 72%;
+    }
+    #print_assets .user_2 .td_img{
+        padding: 0 !important;
+        max-width: 100px !important;
+        max-height: 100px !important;
+        text-align: left;
+    }
+    #print_assets .user_2 .td_img img{
+        width:100px;
+        padding: 0 !important;
+    }
+
+
+
+    /*兄弟打印机*/
+    #print_assets .system_3,#print_assets .user_3{
+        font-family: 华文中宋;
+        border: 1px solid #e6e6e6;
+        margin: 0;
+        padding: 0;
+        width: 300px;
+        height: 163px;
+        overflow: hidden;
+    }
+    #print_assets .system_3 .czsy_table,#print_assets .user_3 .czsy_table{
+        border: 1px solid #000000;
+        width: 98% !important;
+        margin-left: 6px;
+        margin-bottom: 6px;
+        color:#000000;
+    }
+    #print_assets .system_3 .czsy_table td{
+        color:#000000;
+        font-size: 12px;
+        text-align: center;
+        border: 1px solid #000000;
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+    #print_assets .user_3 .czsy_table td{
+        color:#000000;
+        font-size: {$font_size[user_3][font_size]}px;
+        text-align: center;
+        border: 1px solid #000000;
+        -webkit-text-size-adjust:none;
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+
+    #print_assets .czsy_table .czsy_title{
+        width: 54px;
+    }
+    #print_assets .czsy_table .czsy_con{
+        height: 20px;
+        overflow: hidden;
+    }
+
+    #print_assets .system_3 .hospital_info{
+        float: left;
+        width: 186px;
+    }
+    #print_assets .user_3 .hospital_info{
+        float: left;
+        width: 186px;
+    }
+    #print_assets .system_3 .czsy_barcode,#print_assets .user_3 .czsy_barcode{
+        float: left;
+        width: 108px;
+        margin-left: 2px;
+        text-align: center;
+    }
+    #print_assets .system_3 .czsy_barcode img,#print_assets .user_3 .czsy_barcode img{
+        width: 95px;
+    }
+
+
+    /*system4*/
+    #print_assets .system_4,#print_assets .user_4{
+        font-family: 华文中宋;
+        margin: 0;
+        padding: 0;
+        width: 300px;
+        height: 163px;
+        overflow: hidden;
+        border: 1px solid #e6e6e6;
+    }
+    #print_assets .system_4 .czsy_table,#print_assets .user_4 .czsy_table{
+        color:#000000;
+        border: 1px solid #000000;
+        margin: 6px 4px;
+    }
+    #print_assets .system_4 .czsy_table td{
+        font-size: 12px;
+        text-align: center;
+        border: 1px solid #000000;
+        -webkit-text-size-adjust:none;
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+    #print_assets .user_4 .czsy_table td{
+        text-align: center;
+        border: 1px solid #000000;
+        -webkit-text-size-adjust:none;
+        height: 20px !important;
+        line-height: 20px !important;
+        font-size: {$font_size[user_4][font_size]}px;
+    }
+    #print_assets .system_4 .czsy_table .czsy_title,#print_assets .user_4 .czsy_table .czsy_title{
+        width: 55px;
+        text-align: center;
+    }
+    #print_assets .system_4 .czsy_table .czsy_con,#print_assets .user_4 .czsy_table .czsy_con{
+        min-width: 130px;
+        overflow: hidden;
+    }
+    #print_assets .system_4 .czsy_table .bot_assnum,#print_assets .user_4 .czsy_table .bot_assnum{
+        width: 100px;
+        text-align: center;
+        overflow: hidden;
+    }
+    #print_assets .system_4 .czsy_barcode,#print_assets .user_4 .czsy_barcode{
+        width: 95px;
+        height: 95px;
+        overflow: hidden;
+    }
+
+    /*system5*/
+    #print_assets .system_5{
+        font-family: 华文中宋;
+        margin: 0;
+        padding: 2px 0 0 0;
+        width: 200px;
+        overflow: hidden;
+        margin-bottom: 0px;
+    }
+    #print_assets .system_5 .other_barcode{
+        width: 180px;
+        height: 175px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    #print_assets .system_5 .other_barcode img{
+        width: 175px;
+        margin: 0;
+    }
+
+    /*system6*/
+    #print_assets .system_6{
+        font-family: 华文中宋;
+        margin: 0;
+        padding: 2px 0 0 0;
+        width: 150px;
+        overflow: hidden;
+        border: 1px solid #e6e6e6;
+        margin-bottom: 0px;
+    }
+    #print_assets .system_6 .other_barcode{
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    #print_assets .system_6 .other_barcode img{
+        width: 90px;
+        margin: 0;
+    }
+
+    /*system7*/
+    #print_assets .system_7{
+        font-family: 华文中宋;
+        margin: 0 auto;
+        padding: 0;
+        width: 90px;
+        overflow: hidden;
+        border: 1px solid #e6e6e6;
+        margin-bottom: 5px;
+    }
+    #print_assets .system_7 .other_barcode{
+        width: 55px;
+        height: 52px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    #print_assets .system_7 .other_barcode img{
+        width: 52px;
+        margin: 0;
+    }
+    #print_assets .system_7 .xbh{
+        font-size: 8px;
+        text-align: center;
+        margin-top: -3px;
+    }
+</style>
+<div class="batch_content">
+    <if condition="$temp_name eq 'system_1'">
+        <div class="system_1">
+            <div class="hospital_name">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="show_table">
+                    <tbody>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[0]['title']}：{$data[0]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[1]['title']}：{$data[1]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[2]['title']}：{$data[2]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[3]['title']}：{$data[3]['content']}</td>
+                        <td class="td_img img_line_height" rowspan="3">
+                            <img src="{$assInfo[code_url]}" style="width:{$font_size[system_1][pic_width]}px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[4]['title']}：{$data[4]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[5]['title']}：{$data[5]['content']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'system_2'">
+        <div class="system_2">
+            <div class="hospital_name">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="show_table">
+                    <tbody>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[0]['title']}：{$data[0]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[1]['title']}：{$data[1]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[2]['title']}：{$data[2]['content']}</td>
+                        <td class="td_img img_line_height" rowspan="4">
+                            <img src="{$assInfo[code_url]}" style="width:{$font_size[system_1][pic_width]}px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[3]['title']}：{$data[3]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[4]['title']}：{$data[4]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[5]['title']}：{$data[5]['content']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'system_3'">
+        <div class="system_3">
+            <div class="hospital_name" style="font-size:16px;height:18px;line-height:18px;padding-right: 10px;font-family: 宋体;">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="czsy_table">
+                    <tbody>
+                    <tr>
+                        <td class="czsy_title">{$data[0]['title']}</td>
+                        <td><div class="czsy_con">{$data[0]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[1]['title']}</td>
+                        <td><div class="czsy_con">{$data[1]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[2]['title']}</td>
+                        <td><div class="czsy_con">{$data[2]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[3]['title']}</td>
+                        <td><div class="czsy_con">{$data[3]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[4]['title']}</td>
+                        <td><div class="czsy_con">{$data[4]['content']}</div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="czsy_barcode">
+                <img src="{$assInfo[code_url]}"/>
+                <div style="font-family:宋体;color: #000000;font-size: 12px;width: 105px;overflow: hidden;">{$assInfo[assnum]}</div>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'system_4'">
+        <div class="system_4">
+            <table class="czsy_table">
+                <tbody>
+                <tr>
+                    <td colspan="2">{$data[0]['title']}</td>
+                    <td rowspan="6">
+                        <div style="max-height: 95px;"><img class="czsy_barcode" src="{$assInfo[code_url]}"/></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">{$data[1]['title']}</td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[2]['title']}</td>
+                    <td><div class="czsy_con">{$data[2]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[3]['title']}</td>
+                    <td><div class="czsy_con">{$data[3]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[4]['title']}</td>
+                    <td><div class="czsy_con">{$data[4]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[5]['title']}</td>
+                    <td><div class="czsy_con">{$data[5]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[6]['title']}</td>
+                    <td><div class="czsy_con">{$data[6]['content']}</div></td>
+                    <td><div class="bot_assnum">{$assInfo[assnum]}</div></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'system_5'">
+        <div class="system_5">
+            <div class="system_5">
+                <div class="other_barcode">
+                    <img src="{$assInfo[code_url]}">
+                </div>
+            </div>
+        </div>
+    </if>
+
+    <if condition="$temp_name eq 'system_6'">
+        <div class="system_6">
+            <div class="system_6">
+                <div class="other_barcode">
+                    <img src="{$assInfo[code_url]}">
+                </div>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'system_7'">
+        <div class="system_7">
+            <div class="other_barcode">
+                <img src="{$assInfo[code_url]}"/>
+            </div>
+            <div class="xbh">{$assInfo[assnum]}</div>
+        </div>
+    </if>
+
+    <if condition="$temp_name eq 'user_1'">
+        <div class="user_1">
+            <div class="hospital_name">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="show_table">
+                    <tbody>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[0]['title']}：{$data[0]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[1]['title']}：{$data[1]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[2]['title']}：{$data[2]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[3]['title']}：{$data[3]['content']}</td>
+                        <td class="td_img img_line_height" rowspan="3">
+                            <img src="{$assInfo[code_url]}" style="width:{$font_size[user_1][pic_width]}px;"/>                </td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[4]['title']}：{$data[4]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[5]['title']}：{$data[5]['content']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'user_2'">
+        <div class="user_2">
+            <div class="hospital_name">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="show_table">
+                    <tbody>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[0]['title']}：{$data[0]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="line_height">{$data[1]['title']}：{$data[1]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[2]['title']}：{$data[2]['content']}</td>
+                        <td class="td_img img_line_height" rowspan="4">
+                            <img src="{$assInfo[code_url]}" style="width:{$font_size[user_2][pic_width]}px;"/>                </td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[3]['title']}：{$data[3]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[4]['title']}：{$data[4]['content']}</td>
+                    </tr>
+                    <tr>
+                        <td class="row_td line_height">{$data[5]['title']}：{$data[5]['content']}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'user_3'">
+        <div class="user_3" style="float: left">
+            <div class="hospital_name" style="font-size:16px;height:18px;line-height:18px;padding-right: 10px;font-family: 宋体;">{$hospital_name}</div>
+            <div class="hospital_info">
+                <table class="czsy_table">
+                    <tbody>
+                    <tr>
+                        <td class="czsy_title">{$data[0]['title']}</td>
+                        <td><div class="czsy_con">{$data[0]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[1]['title']}</td>
+                        <td><div class="czsy_con">{$data[1]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[2]['title']}</td>
+                        <td><div class="czsy_con">{$data[2]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[3]['title']}</td>
+                        <td><div class="czsy_con">{$data[3]['content']}</div></td>
+                    </tr>
+                    <tr>
+                        <td class="czsy_title">{$data[4]['title']}</td>
+                        <td><div class="czsy_con">{$data[4]['content']}</div></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="czsy_barcode">
+                <img src="{$assInfo[code_url]}"/>
+                <div style="font-family:宋体;color: #000000;font-size: 12px;width: 105px;overflow: hidden;">{$assInfo[assnum]}</div>
+            </div>
+        </div>
+    </if>
+    <if condition="$temp_name eq 'user_4'">
+        <div class="user_4">
+            <table class="czsy_table">
+                <tbody>
+                <tr>
+                    <td colspan="2">{$data[0]['title']}</td>
+                    <td rowspan="6">
+                        <div style="max-height: 95px;"><img class="czsy_barcode" src="{$assInfo[code_url]}"/></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">{$data[1]['title']}</td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[2]['title']}</td>
+                    <td><div class="czsy_con">{$data[2]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[3]['title']}</td>
+                    <td><div class="czsy_con">{$data[3]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[4]['title']}</td>
+                    <td><div class="czsy_con">{$data[4]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[5]['title']}</td>
+                    <td><div class="czsy_con">{$data[5]['content']}</div></td>
+                </tr>
+                <tr>
+                    <td class="czsy_title">{$data[6]['title']}</td>
+                    <td><div class="czsy_con">{$data[6]['content']}</div></td>
+                    <td><div class="bot_assnum">{$assInfo[assnum]}</div></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </if>
+
+</div>
+

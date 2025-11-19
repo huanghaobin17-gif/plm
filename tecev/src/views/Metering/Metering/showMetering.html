@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计量计划详情</title>
+    <include file="Public:layerHeader"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/selectpage.css?v={:mt_rand(1,54561)}" type="text/css">
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Metering-Metering-showMetering">
+    <blockquote class="layui-elem-quote">计划基本信息</blockquote>
+    <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+        <colgroup>
+            <col width="15%">
+            <col width="35%">
+            <col width="15%">
+            <col width="35%">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>计划编号：</th>
+            <td>{$data.plan_num}</td>
+            <th>设备名称：</th>
+            <td>{$data.assets}</td>
+        </tr>
+        <tr>
+            <th>规格 / 型号：</th>
+            <td>{$data.model}</td>
+            <th>单位：</th>
+            <td>{$data.unit}</td>
+        </tr>
+        <tr>
+            <th>生产厂商：</th>
+            <td>{$data.factory}</td>
+            <th>产品序列号：</th>
+            <td>{$data.productid}</td>
+        </tr>
+        <tr>
+            <th>所属科室：</th>
+            <td>{$data.department}</td>
+            <th>设备数量：</th>
+            <td>{$data.asset_count}</td>
+        </tr>
+        <tr>
+            <th>计量分类：</th>
+            <td>{$data.mcategory}</td>
+            <th>计量周期(月)：</th>
+            <td>{$data.cycle}</td>
+        </tr>
+        <tr>
+            <th>检定方式：</th>
+            <td>{$data.test_way_name}</td>
+            <th>计量负责人：</th>
+            <td>{$data.respo_user}</td>
+        </tr>
+        <tr>
+            <th>下次待检日期：</th>
+            <td>{$data.next_date}</td>
+            <th>提前提醒天数：</th>
+            <td>{$data.remind_day}</td>
+        </tr>
+        <tr>
+            <th>制定日期：</th>
+            <td>{$data.adddate}</td>
+            <th>计划制定人：</th>
+            <td>{$data.adduser}</td>
+        </tr>
+        <tr>
+            <th>计划状态：</th>
+            <td>{$data.statusName}</td>
+            <th>备注：</th>
+            <td>{$data.remark}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

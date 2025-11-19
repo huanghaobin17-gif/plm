@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>操作成功</title>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/sm.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/sm-extend.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/mysui.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/css/mobile.css">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="page-public-success">
+        <div class="content" style="background-color:#fff">
+            <div class="msgcontent">
+                <div class="tipstop">
+                    <img src="__PUBLIC__/mobile/images/success.png">
+                </div>
+                <div class="tipstitle">
+                    <h2 class="msg-title">操作成功</h2>
+                    <p class="msg-desc">{$tips}</p>
+                </div>
+                <div class="msg-area-btn">
+                    <if condition="$url">
+                        <p><a href="{$url}" class="button button-fill button-success msuc" data-no-cache="true">{$btn}</a></p>
+                    </if>
+                    <p><a href="/M/Index/testindex.html" class="button button-fill button-success  mfail" data-no-cache="true" style="background-color: #F8F8F8;">返回首页</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/sm-extend.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/mysui.js' charset='utf-8'></script>
+</body>
+</html>

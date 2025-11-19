@@ -1,0 +1,36 @@
+body .mobile .layui-layer-content{
+    padding: 50px 30px;
+    line-height: 22px;
+    text-align: center;
+}
+body .mobile .layui-layer-btn{
+    display: -webkit-box;
+    width: auto;
+    height: 50px;
+    line-height: 50px;
+    font-size: 0;
+    border-top: 1px solid #D0D0D0;
+    padding: 0;
+    border-radius: inherit;
+}
+body .mobile .layui-layer-btn a{
+    display: block;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+}
+body .mobile .layui-layer-btn .layui-layer-btn0{
+    color: #fff;
+    background-color: #009688;
+}
+body .mobile .layui-layer-btn .layui-layer-btn1{
+    color: #fff;
+    background-color: #FFB800;
+}

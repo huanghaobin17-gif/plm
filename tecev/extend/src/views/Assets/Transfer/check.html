@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">设备基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$zkInfo.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$zkInfo.assets}</td>
+
+            </tr>
+            <tr>
+                <th>规格型号：</th>
+                <td>{$zkInfo.model}</td>
+                <th>现科室：</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            借调附属设备明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">设备转科申请单信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>转科单号：</th>
+                <td>{$zkInfo.transfernum}</td>
+                <th>转科文号：</th>
+                <td>{$zkInfo.tran_docnum}</td>
+            </tr>
+            <tr>
+                <th>申请人：</th>
+                <td>{$zkInfo.applicant_user}</td>
+                <th>申请时间：</th>
+                <td>{$zkInfo.applicant_time}</td>
+            </tr>
+            <tr>
+                <th>转出科室：</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+                <th>转出科室负责人：</th>
+                <td>{$zkInfo.tranout_departrespon}</td>
+            </tr>
+            <tr>
+                <th>转入科室：</th>
+                <td>{$zkInfo.tranin_depart_name}</td>
+                <th>转入科室负责人：</th>
+                <td>{$zkInfo.tranin_departrespon}</td>
+            </tr>
+            <tr>
+                <th>转科时间：</th>
+                <td>{$zkInfo.transfer_date}</td>
+                <th>存放地点：</th>
+                <td>{$zkInfo.address}</td>
+            </tr>
+            <tr>
+                <th>转科原因：</th>
+                <td colspan="3">{$zkInfo.tran_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$isOpenApprove eq 1">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote-sm">审批进程记录</div>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="100">
+                    <col width="120">
+                    <col width="120">
+                    <col width="120">
+                    <col width="160">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="text-align: center;">序号</th>
+                    <th style="text-align: center;">进程名称</th>
+                    <th style="text-align: center;">审批人</th>
+                    <th style="text-align: center;">审批状态</th>
+                    <th style="text-align: center;">审批时间</th>
+                    <th>审批意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="approves">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">暂无记录</td>
+                    </tr>
+                    <else />
+                    <volist name="approves" key="k" id="vo">
+                        <tr>
+                            <td style="text-align: center;">{$k}</td>
+                            <td style="text-align: center;">转科审批</td>
+                            <td style="text-align: center;">{$vo.approver}</td>
+                            <td style="text-align: center;">
+                                <if condition="$vo.is_adopt eq 1">
+                                    <span style="color:green;">通过</span>
+                                    <else/>
+                                    <span style="color:red;">不通过</span>
+                                </if>
+                            </td>
+                            <td style="text-align: center;">{$vo.approve_time}</td>
+                            <td>{$vo.remark}</td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>转科验收</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">验收人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly="readonly" value="{$username}" name="approvaluser"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">验收时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="checkdate" value="{$currenDate}" id="acceptdate"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">是否通过：</label>
+            <div class="layui-input-block" >
+                <input type="radio" name="acceptres"   value="1"  title="是" checked>
+                <input type="radio" name="acceptres"   value="2" title="否">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">验收意见：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入验收意见"  class="layui-textarea" name="check">{$zkInfo.check}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" type="button" id="acceptance"><i class="layui-icon" >&#xe609;</i> 确认无误并提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                <input type="hidden" class="input_btn" name="assid" value="{$zkInfo.assid}"  />
+                <input type="hidden" class="input_btn" name="transnum" value="{$zkInfo.transfernum}"  />
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/assets/transfer/check', layui.factory('controller/assets/transfer/check'));
+</script>

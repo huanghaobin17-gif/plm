@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-form-label{width: 110px;}
+    .layui-textarea{width: 90%;}
+</style>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加故障类型和问题表单</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>故障类型：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group">
+                            <input type="text" class="form-control bsSuggest" lay-verify="required|type"  id="testNoBtn"  name="type" placeholder="请输入故障类型">
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-block">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 故障问题：</label>
+                    <div class="layui-input-inline" style="width: 380px;">
+                        <input type="text" name="problem" value="" lay-verify="required|problem" class="layui-input"  placeholder="请输入故障问题，文字中请不要使用&符号。">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 是否启用：</label>
+                <div class="layui-input-block" style="margin-left: 120px;">
+                    <input type="radio" name="status" value="1" title="启用" checked="checked">
+                    <input type="radio" name="status" value="0" title="停用">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">&nbsp;<span class="rquireCoin"> * </span> 解决办法：</label>
+                <div class="layui-input-block">
+                    <textarea  lay-verify="required" class="layui-textarea" name="solve"  ></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text" style="margin-top: 15px;">
+                <label class="layui-form-label">故障类型备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="typeRemark" ></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text" style="margin-top: 15px;">
+                <label class="layui-form-label">故障问题备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="problemRemark" ></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="add" data-url="" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repair/addTypeAndProblem', layui.factory('controller/repair/repair/addTypeAndProblem'));
+</script>

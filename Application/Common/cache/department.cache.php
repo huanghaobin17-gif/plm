@@ -1,0 +1,3 @@
+<?php 
+$departname=array(); 
+?>

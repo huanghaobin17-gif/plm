@@ -1,0 +1,275 @@
+<include file="Public:head"/>
+<title>设备转科</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    .voiceButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+    .photoButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+    .reVoiceButton button {
+        position: relative;
+    }
+
+    .reVoiceButton span {
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .reVoiceButton i {
+        position: absolute;
+        left: 0.3rem;
+        top: 0.25rem;
+        font-size: 1.8rem !important;
+    }
+
+    .confirm {
+        height: 3.75rem;
+        line-height: 3.75rem;
+        font-size: 1.3rem;
+    }
+    body{
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+
+    body .react-cover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .layui-card:first-of-type{
+        margin-top: 0;
+    }
+    .toolbar .title {
+        line-height: 2.8rem;
+    }
+    .toolbar .picker-button {
+        line-height: 2.8rem;
+    }
+    .fx{
+        width: 19px;
+        padding-left: 10px;
+        margin-bottom: 2px;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <input type="hidden" name="assids" value="{$asArr.assid}">
+        <input type="hidden" name="departid" value="{$transinfo.tranin_departid}">
+        <input type="hidden" name="traOutId" value="{$asArr.departid}">
+        <input type="hidden" name="address" value="{$asArr.address}">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">设备基本信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asArr.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$asArr.serialnum}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <if condition="$show_form eq 0">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">转科申请信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table" lay-even>
+                    <tbody>
+                    <tr>
+                        <th>转科单号</th>
+                        <td>{$transinfo.transfernum}</td>
+                    </tr>
+                    <tr>
+                        <th>申请科室</th>
+                        <td>{$transinfo.tranout_depart_name}<img class="fx" src="/Public/mobile/images/icon/right.png"/></td>
+                    </tr>
+                    <tr>
+                        <th>申请人</th>
+                        <td>{$transinfo.applicant_user}</td>
+                    </tr>
+                    <tr>
+                        <th>申请时间</th>
+                        <td>{$transinfo.applicant_time}</td>
+                    </tr>
+                    <tr>
+                        <th>申请原因</th>
+                        <td>{$transinfo.tran_reason}</td>
+                    </tr>
+                    <tr>
+                        <th>转入科室</th>
+                        <td>{$transinfo.tranin_depart_name}<img class="fx" src="/Public/mobile/images/icon/left.png"/></td>
+                    </tr>
+                    <tr>
+                        <th>科室负责人</th>
+                        <td>{$transinfo.tranin_departrespon}</td>
+                    </tr>
+                    <tr>
+                        <th>联系电话</th>
+                        <td><a href="tel:{$zkInfo.telephone}" style="color:#00CCFF;">{$transinfo.telephone}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </if>
+        <!--审批-->
+        <notempty name="approves">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">审批信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-table" lay-even>
+                        <tbody>
+                        <volist name="approves" id="app">
+                            <?php if($i!=1){?>
+                            <?php $approvesDivClass='approvesHideDetail'; ?>
+                            <?php }else{ ?>
+                            <?php $approvesDivClass=''; ?>
+                            <?php }   ?>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批人</th>
+                                <td>{$app.approver}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批时间</th>
+                                <td>{$app.approve_time}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批意见</th>
+                                <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                                    <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                    <else/>
+                                    <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                                </if>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>备注</th>
+                                <td>
+                                    <if condition="$app.remark neq ''">
+                                        {$app.remark}
+                                        <else/>
+                                        无
+                                    </if>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </notempty>
+        <if condition="$show_form eq 1">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">转科申请表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <div class="is_scene">
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>转科日期：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="transferdate" placeholder="请选择转科日期" id="transferdate" readonly value="<?php echo $transinfo['transfer_date']?$transinfo['transfer_date']:$date;?>" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item mgb2rem">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>转入科室：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="department" placeholder="请选择" <if condition="$transinfo.atid neq null">Disabled<else/>readonly</if> autocomplete="off" class="layui-input departments" value="{$transinfo.tranin_depart_name}">
+                    </div>
+                </div>
+                <div class="is_scene">
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">转科文号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="docnum" placeholder="请输入转科文号" autocomplete="off" class="layui-input" value="{$transinfo.tran_docnum}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">转科原因：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tranreason" placeholder="请输入转科原因" autocomplete="off" class="layui-input" value="{$transinfo.tran_reason}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">申请人：</label>
+                        <div style="line-height: 38px;">{$username}</div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">申请时间：</label>
+                        <div style="line-height: 38px;">{$time}</div>
+                    </div>
+                </div>
+                <input type="hidden" name="atid" value="{$transinfo.atid}">
+                <input type="hidden" name="type" value="{$type}">
+                <if condition="$transinfo.atid neq null">
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid layui-btn-warm" lay-submit lay-filter="save">申请重审</button>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid layui-btn-danger" lay-submit lay-filter="over">结束进程</button>
+                    </div>
+                    <else/>
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="save">确认并提交</button>
+                </if>
+            </div>
+        </div>
+        </if>
+    </form>
+    <canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <audio src="" id="audio"></audio>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+var url = "{$url}";
+var today = "{$date}";
+var departments = [];
+departments = {$departments};
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/transfer/add.js?v={:mt_rand(1,54561)}"></script>

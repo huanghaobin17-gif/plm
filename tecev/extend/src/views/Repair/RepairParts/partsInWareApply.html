@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Repair-RepairParts-partsInWareApply .no-padding-td {
+            padding: 0 !important;
+        }
+
+        #LAY-Repair-RepairParts-partsInWareApply .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Repair-RepairParts-partsInWareApply .no-padding-td .layui-input{
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        #LAY-Repair-RepairParts-partsInWareApply .addIcon {
+            position: absolute;
+            right: 5px;
+            top: 14px;
+            cursor: pointer;
+            color: #0a8ddf;
+        }
+
+        #addSuppliersDiv .layui-form-label {
+            width: 115px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairParts-partsInWareApply">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修单信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>维修单号：</th>
+                <td>{$repArr.repnum}</td>
+                <th>接单工程师：</th>
+                <td>{$repArr.response}</td>
+                <th>接单时间：</th>
+                <td>{$repArr.response_date}</td>
+            </tr>
+            <tr>
+                <th>资产编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+                <th>资产名称：</th>
+                <td>{$asArr.assets}</td>
+            </tr>
+            <tr>
+                <th>资产厂家：</th>
+                <td>{$asArr.factory}</td>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+                <th>接单人：</th>
+                <td>{$repArr.response}</td>
+            </tr>
+            <tr>
+                <th>故障问题：</th>
+                <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+            </tr>
+            <tr>
+                <th>解决方式：</th>
+                <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                    <td colspan="5">现场解决</td>
+                    <else/>
+                    <td colspan="5">非现场解决</td>
+                </if>
+            </tr>
+            <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                <tr>
+                    <th>维修性质：</th>
+                    <td colspan="5">{$repArr.repTypeName}</td>
+                </tr>
+            </if>
+            <tr>
+                <th>检修备注：</th>
+                <td colspan="5">{$repArr.repair_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>入库单申请确认</legend>
+    </fieldset>
+    <form class="layui-form">
+        <div class="layui-form-item" style="margin-bottom: 5px;">
+            <input type="hidden" name="inwareid" value="{$inware.inwareid}">
+            <input type="hidden" name="leader" value="{$repArr.response}">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 入库日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="addtime" value="" placeholder="请点击选择入库日期" style="cursor: pointer;" id="partsInWareApplyAddtime" readonly class="layui-input" lay-verify="addtime">
+                </div>
+            </div>
+        </div>
+
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="100">
+                <col width="80">
+                <col width="100">
+                <col width="60">
+                <col>
+                <col>
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th><span class="rquireCoin"> * </span>配件名称</th>
+                <th>配件型号</th>
+                <th><span class="rquireCoin"> * </span>数量</th>
+                <th><span class="rquireCoin"> * </span>单价</th>
+                <th>单位</th>
+                <th>品牌</th>
+                <th>生产厂商</th>
+                <th><span class="rquireCoin"> * </span>供应商</th>
+            </tr>
+            </thead>
+            <tbody>
+                <volist name="apply" id="vo">
+                    <tr class="parts_tr">
+                        <td><input type="hidden" name="parts" value="{$vo.parts}">{$vo.parts}</td>
+                        <td><input type="hidden" name="parts_model" value="{$vo.parts_model}">{$vo.parts_model}</td>
+                        <td class="no-padding-td"><input class="layui-input" type="hidden" name="min_sum" value="{$vo.sum}"><input class="layui-input" type="text" name="sum" value="{$vo.sum}" placeholder="请输入数量"></td>
+                        <td class="no-padding-td"><input class="layui-input" type="text" name="price" placeholder="请输入单价"></td>
+                        <td class="no-padding-td"><input class="layui-input" type="text" name="unit" placeholder="单位"></td>
+                        <td class="no-padding-td">
+                            <select name="brand" lay-search>
+                                <option value="">请选择品牌</option>
+                                <volist name="brandList" id="bannervo">
+                                    <option value="{$bannervo.brand_name}">{$bannervo.brand_name}</option>
+                                </volist>
+                            </select>
+                        </td>
+                        <td class="no-padding-td">
+                            <select name="manufacturer_id" lay-search>
+                                <option value="">请选择生产商</option>
+                                <volist name="manufacturerList" id="mvo">
+                                    <option value="{$mvo.olsid}">{$mvo.sup_name}</option>
+                                </volist>
+                            </select>
+                        </td>
+                        <td class="no-padding-td">
+                <div class="layui-input-inline" style="width: 180px;">
+                    <select name="supplier_id" lay-filter="supplier_id" lay-search lay-verify="supplier_id">
+                        <option value="">请选择供应商</option>
+                        <volist name="supplierList" id="vo">
+                            <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                        </volist>
+                    </select>
+                </div>
+                <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                <div class="addIcon" id="addSupplier" data-url="{$menuData['actionurl']}">
+                    <i class="layui-icon" > &#xe654;</i>
+                </div>
+                <?php endif?>
+                        </td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">入库备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="remark"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="addPartsInWareApply"><i class="layui-icon">&#xe609;</i>
+                    确认入库
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var partsInWareApplyUrl = '{$partsInWareApplyUrl}';
+    var now_date = "{$now_date}";
+</script>
+<script>
+    layui.use('controller/repair/repairParts/partsInWareApply', layui.factory('controller/repair/repairParts/partsInWareApply'));
+</script>

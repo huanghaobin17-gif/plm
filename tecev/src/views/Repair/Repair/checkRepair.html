@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-Repair-checkRepair">
+    <!--设备基础信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>资产编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>资产名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>资产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--维修处理-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修处理</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>维修工程师：</th>
+                <td>{$repArr.response}</td>
+                <th>联系电话：</th>
+                <td>{$repArr.response_tel}</td>
+                <th>协助工程师：</th>
+                <td>{$repArr.assist_engineer}</td>
+            </tr>
+            <tr>
+                <th>联系电话：</th>
+                <td>{$repArr.assist_engineer_tel}</td>
+                <th>总维修费用：</th>
+                <td>{$repArr.actual_price}</td>
+                <th>维修完成时间：</th>
+                <td>{$repArr.over_time}</td>
+            </tr>
+            <tr>
+                <th>维修工时：</th>
+                <td colspan="6">{$repArr.working_hours}</td>
+            </tr>
+            <tr>
+                <th>处理详情：</th>
+                <td colspan="6">
+                    {$repArr.dispose_detail}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>验收情况</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form">
+            <input type="hidden" name="repid" value="{$repArr.repid}">
+            <input type="hidden" name="action" value="{$url}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">验收人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$user}" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">
+                        <if condition="$repair_check eq 0"><span class="rquireCoin"> * </span>
+                        </if>
+                        验收时间：
+                    </label>
+                    <div class="layui-input-inline">
+                        <if condition="$repair_check eq 1">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                            <else />
+                            <input type="text" name="repair_check" value="" placeholder="请点击选择验收时间" style="cursor: pointer;" id="check_date"  readonly="readonly" class="layui-input" lay-verify="required">
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">服务态度：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="attitude" value="0" title="非常满意" checked>
+                        <input type="radio" name="attitude" value="1" title="满意">
+                        <input type="radio" name="attitude" value="2" title="一般">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">技术水平：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="technical" value="0" title="非常满意" checked>
+                        <input type="radio" name="technical" value="1" title="满意">
+                        <input type="radio" name="technical" value="2" title="一般">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">响应时效：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="efficiency" value="0" title="非常满意" checked>
+                        <input type="radio" name="efficiency" value="1" title="满意">
+                        <input type="radio" name="efficiency" value="2" title="一般">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">是否修复：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="repaired" value="1" title="已修复" checked>
+                    <input type="radio" name="repaired" value="0" title="未修复">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">意见/建议：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入意见或建议" class="layui-textarea autoheight" name="checkRemark"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon">&#xe609;</i> 提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var over_time = "{$repArr.over_time}";
+    layui.use('controller/repair/repair/checkRepair', layui.factory('controller/repair/repair/checkRepair'));
+</script>

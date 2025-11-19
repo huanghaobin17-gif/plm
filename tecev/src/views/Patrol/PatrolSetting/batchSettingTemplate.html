@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .bsSuggest {
+            height: 24px !important;
+        }
+        #LAY-Patrol-PatrolSetting-batchsettingTemplate th {
+            text-align: center;
+        }
+        #LAY-Patrol-PatrolSetting-batchsettingTemplate .layui-form-checkbox{
+            padding-top: 5px!important;
+        }
+        .layui-table-view .layui-table {width:100%}
+        .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
+            top: 5px;
+        }
+        .layui-anim.layui-icon{position: relative;top: 15px;}
+    </style>
+</head>
+<body>
+<div class="layui-fluid" id="LAY-Patrol-PatrolSetting-batchsettingTemplate">
+    <div class="layui-card-header">
+        <div class="fl">
+            <i class="layui-icon"></i> 设备基本信息
+        </div>
+    </div>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="100">
+            <col width="120">
+            <col width="100">
+            <col width="100">
+            <col width="120">
+            <col width="70">
+            <col width="150">
+            <col width="80">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>设备编号</th>
+            <th>设备名称</th>
+            <th>规格型号</th>
+            <th>使用科室</th>
+            <th>设备分类</th>
+            <th>原值(元)</th>
+            <th>设备类型</th>
+            <th>维保状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="assInfo" id="vo">
+            <tr style="text-align: center">
+                <td>{$vo.assnum}</td>
+                <td>{$vo.assets}</td>
+                <td>{$vo.model}</td>
+                <td>{$vo.department}</td>
+                <td>{$vo.category}</td>
+                <td>{$vo.buy_price}</td>
+                <td>{$vo.type_name}</td>
+                <td>{$vo.guarantee_status}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+
+    <form class="layui-form">
+        <input name="assid" value="{$assid}" type="hidden"/>
+        <input name="assnum" value="{$assnum}" type="hidden"/>
+        <input name="tpid" value="{$tpid}" type="hidden"/>
+        <input name="default_tpid" value="{$default_tpid}" type="hidden"/>
+        <div id="toolbar-search">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">模板名称 ：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group">
+                            <input type="text" class="form-control bsSuggest" id="batchsettingTemplateName" placeholder="可输入搜索并自动检索" name="name">
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" type="button" lay-submit lay-filter="settingTemplateSearch"><i class="layui-icon">&#xe615;</i> 搜 索
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+                <?php if($menuData = get_menu('Patrol','PatrolSetting','addTemplate')):?>
+                <div class="layui-inline">
+                    <button class="layui-btn" type="button" id="addTemplate"><i class="layui-icon">&#xe608;</i>
+                        新增模板
+                    </button>
+                </div>
+                <?php endif;?>
+            </div>
+        </div>
+
+        <div class="layui-card-header">
+            <div class="fl">
+                <i class="layui-icon"></i> 模板信息
+            </div>
+        </div>
+        <div class="contain">
+            <table id="batchsettingTemplateList" lay-filter="batchsettingTemplateData"></table>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center;margin-top: 20px;">
+                <input type="hidden" name="tpidValue" value="">
+                <button class="layui-btn" lay-submit lay-filter="add"><i class="layui-icon">&#xe609;</i> 确定初始化</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/batchsettingtemplate', layui.factory('controller/patrol/patrolsetting/batchsettingtemplate'));
+</script>

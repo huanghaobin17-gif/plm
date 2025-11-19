@@ -1,0 +1,328 @@
+<div class="layui-fluid" id="LAY-Metering-Metering-testHtml" >
+    <div class="layui-row">
+        <div class="layui-col-md12" style="background-color: white;margin-bottom: 20px;">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="float: right;">
+                        <button class="layui-btn" id="printTemp"><i class="layui-icon layui-icon-zprinter-l l-icon-in-btn"></i> 打印空白模板</button>
+                    </div>
+                </div>
+                <div class="layui-card-body" style="width: 830px; margin: 0 auto;" id="templates-MeteringContent">
+                    <style>
+                        #templates-MeteringContent td,#LAY-Metering-Metering-testHtml th{ text-align: center;}
+                        #templates-MeteringContent .no-padding-td .layui-input {
+                            border: none;
+                            height: 40px;
+                            line-height: 40px;
+                        }
+                        #templates-MeteringContent em{
+                            font-size: 12px;
+                        }
+                        #templates-MeteringContent .layui-form-checkbox[lay-skin=primary] i{
+                            width: 12px;
+                            height: 12px;
+                            line-height: 12px;
+                        }
+                        #templates-MeteringContent .layui-form-checkbox span{
+                            font-size: 12px;
+                        }
+                        #templates-MeteringContent .layui-form-checkbox[lay-skin=primary] span{
+                            line-height: 16px;
+                            padding-right: 0!important;
+                        }
+                        #templates-MeteringContent .layui-form-checkbox span{
+                            padding: 0 3px;
+                        }
+                        #templates-MeteringContent .layui-table[lay-size=sm] td,#LAY-Metering-Metering-testHtml  .layui-table[lay-size=sm] th{
+                            padding: 5px!important;
+                        }
+                        #templates-MeteringContent .textLeft{
+                            text-align: left;
+                        }
+                        #templates-MeteringContent .textCenter{
+                            text-align: center;
+                        }
+                        #templates-MeteringContent .textRight{
+                            text-align: right;
+                        }
+                        #templates-MeteringContent .checkboxIcon{
+                            position: relative;top: 2px; padding-right: 2px;
+                        }
+                        #templates-MeteringContent .important{
+                            color: red;
+                        }
+                        #templates-MeteringContent .username{
+                            width: 430px;text-align: right;
+                        }
+                        #templates-MeteringContent .unit{
+                            width: 445px;height: 130px;text-align: right;
+                        }
+                        #templates-MeteringContent .indentText{
+                            text-indent: 3em;
+                        }
+                    </style>
+                    <div id="main-content">
+                        <h2 style="text-align: center; margin-bottom: 25px;">深圳市计量质量检测研究院强制检定计量器具确认表</h2>
+                        <div>
+                            <span style="float: right;margin-right: 150px;">编号：</span>
+                        </div>
+                        <br/>
+                        <form class="layui-form">
+                            <table class="layui-table" lay-size="sm" style="table-layout:fixed;">
+                                <tbody>
+                                <tr>
+                                    <th style="width: 160px;">
+                                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon"></i>备案
+                                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon" style="margin-left: 40px;"></i>申请检定
+                                    </th>
+                                    <td class="no-padding-td" colspan="3" style="text-align: left!important;">
+                                        单位类别：
+                                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon"></i>企业
+                                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon"></i>事业
+                                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon" style="margin-left: 40px;"></i>其他：
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="textLeft" style="width: 400px;">单位名称：</th>
+                                    <td class="textLeft" style="width: 130px;">联系人：</td>
+                                    <td class="textLeft">
+                                        <p>联系电话：</p>
+                                        <p>传真：</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="textLeft">单位地址：</th>
+                                    <td class="textLeft">行政区域：</td>
+                                    <td class="textLeft">填报日期：</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+                                <tbody>
+                                <tr>
+                                    <th class="textCenter" rowspan="2" style="width: 200px;">是否办理免征</th>
+                                    <td class="textCenter"  style="width: 50px;"><i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon"></i>是</td>
+                                    <td colspan="2" class="textLeft">
+                                        <p class="important">请仔细阅读以下声明并签名盖章</p>
+                                        <p style="text-indent: 2em;">我单位确认委托单号_____________________的相关项目属于免征范畴，保证填写内容及所提交材料的真实性，如有虚报，愿意承担相应的责任和后果。</p>
+                                        <p class="username">签名：</p>
+                                        <p class="unit">（单位公章）</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="textCenter"><i class="layui-icon layui-icon-gongsisvgtubiaozongji22 checkboxIcon"></i>否</td>
+                                    <td colspan="2" class="textLeft">
+                                        <p class="important">请仔细阅读以下声明并签名盖章</p>
+                                        <p style="text-indent: 2em;">我单位已知悉《财政部国家发展改革委关于清理规范一批行政事业性收费有关政策的通知》（财税[2017]20号）的相关政策内容，现针对委托单号_____________________的相关项目，自愿放弃该免征收费政策。</p>
+                                        <p class="username">签名：</p>
+                                        <p class="unit">（单位公章）</p>
+                                </tr>
+                                <tr>
+                                    <th class="text-left" colspan="4">二、器具信息</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+                                <colgroup>
+                                    <col width="50">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="150">
+                                    <col width="120">
+                                    <col width="80">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th rowspan="2">序号</th>
+                                    <th rowspan="2">器具名称</th>
+                                    <th rowspan="2">型号规格</th>
+                                    <th rowspan="2">出厂型号</th>
+                                    <th rowspan="2">测量范围</th>
+                                    <th rowspan="2">制造单位</th>
+                                    <th rowspan="2">器具用途</th>
+                                    <th rowspan="2">安装/使用地点</th>
+                                    <th rowspan="2">检定有效期</th>
+                                    <th rowspan="2">数量</th>
+                                    <th colspan="2">受理人员签字</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 60px;">受理</th>
+                                    <th style="width: 70px;">不受理</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <p>说明：1．安装/使用地点：指具体的科室、部门或使用场所，其中水、电、气表应如实填写到住宅区/栋；</p>
+                        <p class="indentText">器具用途：指用于企事业单位最高计量标准器具，以及用于贸易结算、安全防护、医疗卫生、环境监测等方面的工作计量器具；</p>
+                        <p class="indentText">检定有效期：指上次经法定计量检定机构检定合格的有效期。</p>
+                        <p class="indentText">2．申请单位应对照实物如实填写本表的各项内容，本表填满后可另外附表填写。</p>
+                        <p class="indentText">3．企事业单位最高计量标准器具需提供对应的计量标准考核证书复印件（需加盖公章）。</p>
+                        <p class="indentText">4．此表一式一份，由深圳市计量质量检测研究院保存。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery.PrintArea.js" type="text/javascript"></script>
+<script>
+    layui.use(['layer', 'form', 'element','laydate','table','admin'], function(){
+        var layer = layui.layer,form = layui.form,element = layui.element,laydate = layui.laydate,table = layui.table,admin = layui.admin;
+
+        //先更新页面部分需要提前渲染的控件
+        form.render();
+
+        //打印空白文档
+        $('#printTemp').on('click',function () {
+            $('#templates-MeteringContent').printArea();
+        });
+
+
+
+    });
+
+</script>

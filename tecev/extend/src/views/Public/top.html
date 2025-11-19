@@ -1,0 +1,141 @@
+<script>
+
+    function updateCache() {
+        var url = admin_name+'/Cache/index.html';
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            //datatype: "html",//"xml", "html", "script", "json", "jsonp", "text".
+            beforeSend: function () {
+                layer.msg('正在更新缓存，请稍候...', {
+                    icon: 16,
+                    time: 14000,
+                    shade: 0.01
+                });
+            },
+            //成功返回之后调用的函数
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.msg, {icon: 1});
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            },
+            //调用出错执行的函数
+            error: function () {
+                //请求出错处理
+                layer.msg('服务器繁忙', {icon: 2});
+            },
+            complete: function () {
+                layer.closeAll('msg');
+            }
+        });
+    }
+</script>
+<div class="top">
+    <div class="fl top_img">
+        <img src="__PUBLIC__/images/logomini.png" width="33" height="33"/>
+        <div class="fl f22 fcfff pl5">
+            <span>{$Think.config.COMPANY_JC}-</span>
+            <span class="f20 fcfff">资产管理系统</span>
+            <span class="fcfff f12">&nbsp;-&nbsp;Bate版</span>
+        </div>
+    </div>
+    <div class="fr mr20">
+        <div class="fl"><a style="cursor: pointer;color:#fff;" onclick="updateCache()" title="更新缓存">更新缓存</a></div>
+        <div class="fl ml20 mr20" style="margin-top: 13px;">
+            <a class="label label-warning" title="未读消息" onclick="task()">
+                <span class="glyphicon glyphicon-envelope padding-right-5"></span>  未读消息：{$taskNum}
+            </a>
+
+        </div>
+        <div class="fl fcfff">
+            <a style="cursor: pointer;color:#fff;" onclick="edit()" title="修改个人信息" class="fcfff">
+                <script language="javaScript">
+                    now = new Date(), hour = now.getHours()
+                    if (hour < 6) {
+                        document.write("凌晨好,")
+                    }
+                    else if (hour < 9) {
+                        document.write("早上好,")
+                    }
+                    else if (hour < 12) {
+                        document.write("上午好,")
+                    }
+                    else if (hour < 14) {
+                        document.write("中午好,")
+                    }
+                    else if (hour < 17) {
+                        document.write("下午好,")
+                    }
+                    else if (hour < 19) {
+                        document.write("傍晚好,")
+                    }
+                    else if (hour < 22) {
+                        document.write("晚上好,")
+                    }
+                    else {
+                        document.write("夜里好,")
+                    }
+                </script>
+                <?php echo $_SESSION['username']; ?>
+            </a>
+        </div>
+        <div class="fl top_user top_img"><a target="_top" href="{:U('Admin/Login/Login/logout');}" title="安全退出"><img
+                src="__PUBLIC__/images/close.png" width="16" height="16"/></a></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if (Cookies.get('taskStatus') == 1) {
+            task();
+            task();
+        }
+    });
+
+
+    function edit() {
+        top.layer.open({
+            type: 2,
+            title: '修改<?php echo $_SESSION[username]; ?>个人信息',
+            area: ['65%', '90%'],
+            offset: '20px',
+            shade: [0.8, '#393D49'],
+            shadeClose: true,
+            anim: 5,
+            scrollbar: false,
+            closeBtn: 1,
+            content: [admin_name+'/User/editUser?userid=<?php echo $_SESSION[userid]; ?>']
+        });
+    }
+    function task() {
+        top.layer.open({
+            type: 2,
+            area: ['25%', '385px'],
+            offset: ['44px', '75%'],
+            shade: 0,
+            closeBtn: 1,
+            anim: 5,
+            id: 10,
+            move: false,
+            fixed: true,
+            scrollbar: true,
+            title: '<i class="layui-icon" style="font-size: 18px; color:red">&#xe645;</i>   你有<?php echo $taskNum ?>条消息未读',
+            content: [admin_name+'/Index/taskList'],
+            end: function () {
+                Cookies.set('taskStatus', 0, 5000);
+            },
+            success: function () {
+                var thisId=$('#10');
+                thisId.find('iframe').removeAttr("style");
+                Cookies.set('taskStatus', 1, 5000);
+                var parentHeight=thisId.parent('.layui-layer-iframe').height();
+                var titleHeight=thisId.prev().height();
+                thisId.find('iframe').css("height",parentHeight-titleHeight);
+            }
+        });
+    }
+</script>

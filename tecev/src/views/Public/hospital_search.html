@@ -1,0 +1,13 @@
+<?php if(session('hospitals')){ ?>
+<div class="layui-inline">
+    <label class="layui-form-label">所属医院：</label>
+    <div class="layui-input-inline">
+        <select name="hospital_id" lay-search="" >
+            <option value="">全部</option>
+            <?php foreach(session('hospitals') as $k=>$v){ ?>
+            <option value="{$v['hospital_id']}">{$v['hospital_name']}</option>
+            <?php } ?>
+        </select>
+    </div>
+</div>
+<?php } ?>

@@ -1,0 +1,99 @@
+﻿<style>
+    #LAY-Repair-RepairSetting-typeSetting .layui-card-header{height: 58px;line-height: 58px;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-form-label{width: auto;}
+
+    /* 子侧边 */
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child{width: 180px!important; left: 235px; top: 105px!important; border-right: 1px solid #eee; background-color: #fff;margin-bottom: 20px;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-side-scroll{width: 180px;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav{padding: 10px 0; border-radius: 0; background: none}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-child{border-radius: 0;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-title a,
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-title a:hover,
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-itemed>a{color: #666 !important;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-itemed .layui-nav-child{margin-bottom: 10px; background: none !important;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-item a{height: 30px; line-height: 30px; color: #666;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-item a:hover{background: none !important;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-child a{color: #999 !important;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-more{display: none;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-tree .layui-this,
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-tree .layui-this>a,
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this,
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this a{background: none; color: #5FB878 !important;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-side-child .layui-nav .layui-nav-child a:hover{color: #009688 !important}
+    #LAY-Repair-RepairSetting-typeSetting .layui-nav .layui-nav-item a{padding: 0 10px;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-nav-item a{border-left: 5px solid #ffffff;}
+    #LAY-Repair-RepairSetting-typeSetting .layui-nav-item a:hover{border-left: 5px solid #009688;}
+
+    a:active{
+        border: none;
+    }
+
+    #LAY-Repair-RepairFaultType-typeSetting .layui-table-view .layui-table {width:100%}
+</style>
+<?php if($menuData = get_menu_name('Repair','RepairSetting','typeSetting')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var typeSetting = "{$typeSetting}";
+</script>
+<div class="layui-fluid" id="LAY-Repair-RepairSetting-typeSetting" >
+    <input type="hidden" name="id" value="{$first.id}"/>
+    <div class="layui-row">
+        <div class="layui-col-md12" style="background-color: white;margin-bottom: 20px;">
+            <div class="layui-side layui-side-child">
+                <div class="layui-side-scroll">
+                    <ul class="layui-nav layui-nav-tree" style="width: 180px;">
+                        <?php if($menuData = get_menu('Repair','RepairSetting','addType')):?>
+                        <div style="text-align: center;">
+                            <button class="layui-btn" id="addType" data-url="{$menuData['actionurl']}" >
+                                <i class="layui-icon">&#xe654;</i>新增类型
+                            </button>
+                        </div>
+                        <?php endif?>
+                        <hr>
+                        <volist name="type" id="vo">
+                            <li class="layui-nav-item">
+                                <a href="javascript:;" class="getProblem"  data-id="{$vo.id}" style="text-decoration: none">{$vo.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-card" style="margin-left: 185px;">
+                <div class="layui-card-header">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    &nbsp;&nbsp;<span class="problemTitle" style="margin-left: 5px;">{$first.title}</span> 问题▼
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="position: relative;">
+                            <label class="layui-form-label">故障问题：</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="typeSettingProblem" value=""  class="layui-input" placeholder="请输入故障问题" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn"  lay-submit lay-filter="typeSettingSearch"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                            <div class="layui-inline addProblem" style="right: 0;position: absolute;">
+                                <?php if($menuData = get_menu('Repair','RepairSetting','addType')):?>
+                                <button class="layui-btn" data-url="{$menuData['actionurl']}" id="addProblem">
+                                    <i class="layui-icon">&#xe654;</i>新增问题
+                                </button>
+                                <?php endif?>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="problems" lay-filter="problems"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('repair/repairSetting/typeSetting', layui.factory('repair/repairSetting/typeSetting'));
+</script>

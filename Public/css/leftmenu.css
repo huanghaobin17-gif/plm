@@ -1,0 +1,31 @@
+/* CSS Document */
+.parents{ position:absolute; width:200px; top:44px;}
+.parents_li{ height:40px; line-height:40px; padding-left:50px;}
+.parents_li:hover{ background:#1273a3; color:#ffffff;}
+.parents_li:hover .parents_name a{ color:#ffffff;}
+.child_box{ position:absolute; left:200px; width:650px; background:#ffffff; border:#999 1px solid}
+.child2_box{ width:650px; border-bottom:1px solid #999999;}
+.child_box .child2_box:last-child{ border-bottom:none;}
+.child2{ width:120px; text-align:right;}
+.child3{ width:530px}
+.child3 li{ float:left; height:40px; line-height:40px;}
+.true_menu{ padding:0px 5px; margin:0px 5px;}
+.true_menu:hover{background:#1273a3;}
+.true_menu:hover a{ color:#ffffff;}
+body{margin: 0;}
+.noRightBorder{
+    border-right: none !important;
+}
+.menu-nav a{
+    color: #00a6c8;!important;
+}
+.menu-nav-hid_a{
+    color:#00a6c8!important;
+    text-decoration:none!important;
+}
+.menu-nav-hid_a:hover{
+    color:#1273a3!important;
+    text-decoration:underline!important;
+
+}
+

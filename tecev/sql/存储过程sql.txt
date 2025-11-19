@@ -1,0 +1,29 @@
+##查询巡查计划是否已完成或验收
+DELIMITER @
+CREATE PROCEDURE `check_plan_iscomplete` (IN `planid` INT)
+BEGIN
+DECLARE v_patrid INT;
+
+DECLARE v_exallid INT;
+
+DECLARE v_tips VARCHAR (50);
+
+SELECT sb_patrol_plan_cycle.`patrid` INTO v_patrid FROM sb_patrol_plan_cycle WHERE sb_patrol_plan_cycle.`patrid` = planid AND sb_patrol_plan_cycle.`status` < 2 LIMIT 1;
+
+IF v_patrid IS NULL THEN SELECT sb_patrol_examine_all.`exallid` INTO v_exallid FROM sb_patrol_examine_all WHERE sb_patrol_examine_all.`patrid` = planid AND sb_patrol_examine_all.`status` = 0 LIMIT 1;
+
+	IF v_exallid IS NULL THEN SET v_tips = '已验收';
+
+	ELSE SET v_tips = '已完成待验收';
+
+	END IF;
+
+ELSE SET v_tips = '发布&修订';
+
+END IF;
+
+SELECT v_tips;
+
+END;
+@
+DELIMITER ;

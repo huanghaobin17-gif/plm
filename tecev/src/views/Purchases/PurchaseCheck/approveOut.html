@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 18%;
+        }
+        #addTenderingBook{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>出库人：</th>
+                <td>{$outWareInfo.out_user}</td>
+            </tr>
+            <tr>
+                <th>出库日期：</th>
+                <td>{$outWareInfo.out_date}</td>
+            </tr>
+            <tr>
+                <th>出库单号：</th>
+                <td>{$outWareInfo.out_num}</td>
+            </tr>
+            <tr>
+                <th>出库数量：</th>
+                <td>{$outWareInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>出库金额：</th>
+                <td>{$outWareInfo.total_price}</td>
+            </tr>
+            <tr>
+                <th>领用科室：</th>
+                <td>{$outWareInfo.department}</td>
+            </tr>
+            <tr>
+                <th>安装调试日期：</th>
+                <td>{$debugInfo.debug_start_date} ~ {$debugInfo.debug_end_date}</td>
+            </tr>
+            <tr>
+                <th>安装调试地点：</th>
+                <td>{$debugInfo.debug_area}</td>
+            </tr>
+            <tr>
+                <th>安装调试人员：</th>
+                <td>{$debugInfo.debug_user}</td>
+            </tr>
+            <tr>
+                <th>在场人员：</th>
+                <td>{$debugInfo.attendants_user}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td>{$debugInfo.debug_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            设备明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="10%">
+                <col width="30%">
+                <col width="10%">
+                <col width="10%">
+                <col width="15%">
+                <col width="15%">
+                <col width="10%">
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">设备名称</th>
+                <th style="text-align: left !important;">单位</th>
+                <th style="text-align: left !important;">数量</th>
+                <th style="text-align: left !important;">单价</th>
+                <th style="text-align: left !important;">总价</th>
+                <th style="text-align: left !important;">是否进口</th>
+            </tr>
+            <tbody>
+            <volist name="assets" id="vo">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.assets_name}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.nums}</td>
+                    <td>{$vo.buy_price}</td>
+                    <td>{$vo.total_price}</td>
+                    <td>
+                        <if condition="$vo.is_import eq 1">
+                            是
+                            <else/>
+                            否
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>审批信息</legend>
+        </fieldset>
+        <form class="layui-form">
+            <input type="hidden" name="out_id" value="{$outWareInfo.out_id}"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">审批人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$username}" class="layui-input" readonly>
+                </div>
+                <label class="layui-form-label">审批日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly value="{$nowday}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">审批结果：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="approve_status" value="1" title="通过" checked>
+                    <input type="radio" name="approve_status" value="2" title="不通过">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">审批意见：</label>
+                <div class="layui-input-block">
+                    <textarea name="approve_desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveApprove">
+                    <i class="layui-icon" >&#xe609;</i> 提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/approveOut', layui.factory('controller/purchases/purchaseCheck/approveOut'));
+</script>

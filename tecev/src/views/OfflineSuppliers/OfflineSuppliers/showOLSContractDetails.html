@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>厂商详细信息</title>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+        合同基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm" style="margin-top: -10px">
+        <colgroup>
+            <col width="120">
+            <col width="150">
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">合同编号：</td>
+            <td>{$contract.contract_num}</td>
+            <td class="text-right"> 合同名称：</td>
+            <td>{$contract.contract_name}</td>
+        </tr>
+        <tr>
+            <td class="text-right">合同类型：</td>
+            <td>{$contract.contract_type_name}</td>
+            <td class="text-right">乙方单位：</td>
+            <td>{$contract.supplier_name}</td>
+        </tr>
+        <tr>
+            <td class="text-right">合同金额：</td>
+            <td>{$contract.contract_amount}</td>
+            <td class="text-right">院方联系人：</td>
+            <td>{$contract.hospital_manager}</td>
+        </tr>
+        <tr>
+            <td class="text-right">厂商联系人：</td>
+            <td>{$contract.supplier_contacts}</td>
+            <td class="text-right">联系电话：</td>
+            <td>{$contract.supplier_phone}</td>
+        </tr>
+        <tr>
+            <td class="text-right">签订日期：</td>
+            <td>{$contract.sign_date}</td>
+            <td class="text-right">合同截止日期：</td>
+            <td>{$contract.end_date}</td>
+        </tr>
+        <tr>
+            <td class="text-right">验收日期：</td>
+            <td>{$contract.check_date}</td>
+            <td class="text-right">档案编号：</td>
+            <td>{$contract.archives_num}</td>
+        </tr>
+        <tr>
+            <td class="text-right">录入用户：</td>
+            <td>{$contract.add_user}</td>
+            <td class="text-right">录入时间：</td>
+            <td>{$contract.add_time}</td>
+        </tr>
+        <tr>
+            <td class="text-right">档案管理员：</td>
+            <td colspan="3">{$contract.archives_manager}</td>
+        </tr>
+        <tr>
+            <td class="text-right">合同内容：</td>
+            <td colspan="3">{$contract.contract_content}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <notempty name="contract_pay">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">合同付款明细</blockquote>
+        <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: -10px">
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>期数</th>
+                <th>付款金额</th>
+                <th>预计付款日期</th>
+                <th>付款日期</th>
+                <th>状态</th>
+            </tr>
+            <volist name="contract_pay" id="vo">
+                <tr>
+                    <td>{$vo.pay_period}</td>
+                    <td>{$vo.pay_amount}</td>
+                    <td>{$vo.estimate_pay_date}</td>
+                    <td>{$vo.real_pay_date}</td>
+                    <td>{$vo.pay_status_name}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+    <notempty name="fileData">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">合同附件</blockquote>
+        <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: -10px">
+            <colgroup>
+                <col width="40%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>文件名称</th>
+                <th>提交人</th>
+                <th>上传时间</th>
+                <th>操作</th>
+            </tr>
+            <volist name="fileData" id="vo">
+                <tr>
+                    <td>{$vo.file_name}</td>
+                    <td>{$vo.add_user}</td>
+                    <td>{$vo.add_time}</td>
+                    <td>{$vo.operation}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+    <notempty name="apply_assets">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">合同设备明细</blockquote>
+        <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: -10px">
+            <colgroup>
+                <col width="25%">
+                <col width="20%">
+                <col width="25%">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>设备名称</th>
+                <th>设备型号</th>
+                <th>生产厂家</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>总金额</th>
+            </tr>
+            <volist name="apply_assets" id="vo">
+                <tr>
+                    <td>{$vo.assets_name}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.factory_name}</td>
+                    <td>{$vo.company_price}</td>
+                    <td>{$vo.nums}</td>
+                    <td>{$vo.sum}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="assets_record">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">合同设备明细</blockquote>
+        <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: -10px">
+            <tbody>
+            <tr>
+                <th>设备名称</th>
+                <th>设备编号</th>
+                <th>资产序列号</th>
+                <td>规格型号</td>
+                <th>品牌</th>
+                <td>单位</td>
+                <th>设备原值</th>
+                <th>出厂日期</th>
+                <th>入库日期</th>
+                <th>资金来源</th>
+                <th>设备来源</th>
+            </tr>
+            <volist name="assets_record" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.serialnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.brand}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                    <td>{$vo.factorydate}</td>
+                    <td>{$vo.storage_date}</td>
+                    <td>{$vo.capitalfrom}</td>
+                    <td>{$vo.assfromid}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="inware_detail">
+        <div class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">入库配件明细</div>
+        <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+            <colgroup>
+                <col>
+                <col>
+                <col width="70">
+                <col width="70">
+                <col width="70">
+                <col width="70">
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>配件名称</th>
+                <th>配件型号</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>单位</th>
+                <th>品牌</th>
+                <th>生产厂商</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="inware_detail" id="vo">
+                <tr>
+                    <td>{$vo.parts}</td>
+                    <td>{$vo.parts_model}</td>
+                    <td>{$vo.max_sum}</td>
+                    <td>{$vo.price}</td>
+                    <td>{$vo.total_price}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.brand}</td>
+                    <td>{$vo.manufacturer_name}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+</div>
+</body>
+</html>
+<script>
+    var contract_type='{$contract_type}';
+
+    switch (parseInt(contract_type)) {
+        case parseInt(CONTRACT_TYPE_SUPPLIER):
+            addContractTypeDiv.hide();
+            addOLSContractAddAssets.show();
+            break;
+        case parseInt(CONTRACT_TYPE_REPAIR):
+            addContractTypeDiv.hide();
+            addOLSContractAddRepair.show();
+            break;
+    }
+
+
+    //下载
+    $(document).on('click', '.downFile', function () {
+        var params = {};
+        params.path = $(this).data('path');
+        params.filename = $(this).data('name');
+        postDownLoadFile({
+            url: admin_name+'/Tool/downFile',
+            data: params,
+            method: 'POST'
+        });
+        return false;
+    });
+
+    //预览
+    $(document).on('click', '.showFile', function () {
+        var path = $(this).data('path');
+        var name = $(this).data('name');
+        var url = admin_name+'/Tool/showFile';
+        top.layer.open({
+            id: 'showFiles',
+            type: 2,
+            title: name + '相关文件查看',
+            scrollbar: false,
+            offset: 'r',//弹窗位置固定在右边
+            anim: 2, //动画风格
+            area: ['75%', '100%'],
+            closeBtn: 1,
+            content: [url + '?path=' + path + '&filename=' + name]
+        });
+        return false;
+    });
+</script>

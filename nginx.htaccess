@@ -1,0 +1,194 @@
+# nginx rewrite rule
+location /A/ {
+    rewrite  ^/A/(.*)$  /Admin/$1  last;
+}
+location /M/ {
+    rewrite  ^/M/(.*)$  /Mobile/$1  last;
+}
+location /V/ {
+    rewrite  ^/V/(.*)$  /Vue/$1  last;
+}
+location /F/ {
+    rewrite  ^/F/(.*)$  /Fs/$1  last;
+}
+location /P/ {
+    rewrite  ^/P/(.*)$  /App/$1  last;
+}
+
+set $module '';
+if ( $request_uri ~* /(Lookup|Borrow|Outside|Print|Scrap|AssetsStatis|Storage|Subsidiary|Transfer|AssetsSetting)/ ) {
+    set $module Assets;
+}
+if ( $request_uri ~* /(Approval|ApproveSetting|BaseSetting|Cache|Dictionary|ExamApp|IntegratedSetting|Menu|ModuleSetting|Notice|Parameter|Permissions|Privilege|SmsModule|System|User)/ ) {
+    set $module BaseSetting;
+}
+if ( $request_uri ~* /Benefit/ ) {
+   set $module Benefit;
+}
+if ( $request_uri ~* /(Login|Index|CheckLogin)/ ) {
+   set $module Login;
+}
+if ( $request_uri ~* /Notin/ ) {
+   set $module Pub;
+}
+if ( $request_uri ~* /Metering/ ) {
+   set $module Metering;
+}
+if ( $request_uri ~* /OfflineSuppliers/ ) {
+   set $module OfflineSuppliers;
+}
+if ( $request_uri ~* /(PatModSetting|Patrol|PatrolRecords|PatrolSetting|PatrolRecordSearch|PatrolStatis)/ ) {
+   set $module Patrol;
+}
+if ( $request_uri ~* /(Contract|PurchaseApply|PurchaseCheck|PurchaseInvoice|PurchaseLife|PurchasePayment|PurchasePlace|PurchasePlans|Tendering|TenderRecord)/ ) {
+   set $module Purchases;
+}
+if ( $request_uri ~* /(ChangeData|Public)/ ) {
+   set $module NotCheckLogin;
+}
+if ( $request_uri ~* /(Quality|QualityStatis)/ ) {
+   set $module Qualities;
+}
+if ( $request_uri ~* /Remind/ ) {
+   set $module Remind;
+}
+if ( $request_uri ~* /(Repair|RepairParts|RepairSearch|RepairSetting|RepairStatis)/ ) {
+   set $module Repair;
+}
+if ( $request_uri ~* /Report/ ) {
+   set $module Report;
+}
+if ( $request_uri ~* /(StatisAdverse|StatisPurchases|StatisQuality|StatisRepair)/ ) {
+   set $module Statistics;
+}
+if ( $request_uri ~* /Stock/ ) {
+   set $module Stock;
+}
+if ( $request_uri ~* /Stramonitor/ ) {
+   set $module Strategy;
+}
+if ( $request_uri ~* /Monitor/ ) {
+   set $module Monitor;
+}
+if ( $request_uri ~* /(Supplier|Product)/ ) {
+   set $module Suppliers;
+}
+if ( $request_uri ~* /(Tasks|Redis)/ ) {
+   set $module Tasks;
+}
+if ( $request_uri ~* /Tool/ ) {
+   set $module Tool;
+}
+if ( $request_uri ~* /Adverse/ ) {
+   set $module Adverse;
+}
+if ( $request_uri ~* /(Emergency|Box)/ ) {
+   set $module Archives;
+}
+
+
+if ( $module = Adverse ) {
+    rewrite  ^/A/(.*)$  /Admin/Adverse/$1  last;
+}
+if ( $module = Archives ) {
+    rewrite  ^/A/(.*)$  /Admin/Archives/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Archives/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Archives/$1  last;
+    rewrite  ^/P/(.*)$  /App/Archives/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Archives/$1  last;
+}
+if ( $module = Assets ) {
+    rewrite  ^/A/(.*)$  /Admin/Assets/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Assets/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Assets/$1  last;
+    rewrite  ^/P/(.*)$  /App/Assets/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Assets/$1  last;
+}
+if ( $module = BaseSetting ) {
+    rewrite  ^/A/(.*)$  /Admin/BaseSetting/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/BaseSetting/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/BaseSetting/$1  last;
+    rewrite  ^/P/(.*)$  /App/BaseSetting/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/BaseSetting/$1  last;
+}
+if ( $module = Benefit ) {
+    rewrite  ^/A/(.*)$  /Admin/Benefit/$1  last;
+}
+if ( $module = Login ) {
+    rewrite  ^/A/(.*)$  /Admin/Login/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Login/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Login/$1  last;
+    rewrite  ^/P/(.*)$  /App/Login/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Login/$1  last;
+}
+if ( $module = Metering ) {
+    rewrite  ^/A/(.*)$  /Admin/Metering/$1  last;
+}
+if ( $module = OfflineSuppliers ) {
+    rewrite  ^/A/(.*)$  /Admin/OfflineSuppliers/$1  last;
+}
+if ( $module = Patrol ) {
+    rewrite  ^/A/(.*)$  /Admin/Patrol/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Patrol/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Patrol/$1  last;
+    rewrite  ^/P/(.*)$  /App/Patrol/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Patrol/$1  last;
+}
+if ( $module = Purchases ) {
+    rewrite  ^/A/(.*)$  /Admin/Purchases/$1  last;
+}
+if ( $module = Qualities ) {
+    rewrite  ^/A/(.*)$  /Admin/Qualities/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Qualities/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Qualities/$1  last;
+    rewrite  ^/P/(.*)$  /App/Qualities/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Qualities/$1  last;
+}
+if ( $module = NotCheckLogin ) {
+    rewrite  ^/A/(.*)$  /Admin/NotCheckLogin/$1  last;
+}
+if ( $module = Remind ) {
+    rewrite  ^/A/(.*)$  /Admin/Remind/$1  last;
+}
+if ( $module = Repair ) {
+    rewrite  ^/A/(.*)$  /Admin/Repair/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Repair/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Repair/$1  last;
+    rewrite  ^/P/(.*)$  /App/Repair/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Repair/$1  last;
+}
+if ( $module = Report ) {
+    rewrite  ^/A/(.*)$  /Admin/Report/$1  last;
+}
+if ( $module = Statistics ) {
+    rewrite  ^/A/(.*)$  /Admin/Statistics/$1  last;
+}
+if ( $module = Stock ) {
+    rewrite  ^/A/(.*)$  /Admin/Stock/$1  last;
+}
+if ( $module = Strategy ) {
+    rewrite  ^/A/(.*)$  /Admin/Strategy/$1  last;
+}
+if ( $module = Monitor ) {
+    rewrite  ^/A/(.*)$  /Admin/Monitor/$1  last;
+}
+if ( $module = Suppliers ) {
+    rewrite  ^/A/(.*)$  /Admin/Tool/$1  last;
+}
+if ( $module = Tasks ) {
+    rewrite  ^/A/(.*)$  /Admin/Tasks/$1  last;
+    rewrite  ^/M/(.*)$  /Mobile/Tasks/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Tasks/$1  last;
+    rewrite  ^/P/(.*)$  /App/Tasks/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Tasks/$1  last;
+}
+if ( $module = Tool ) {
+    rewrite  ^/A/(.*)$  /Admin/Tool/$1  last;
+}
+if ( $module = Pub ) {
+    rewrite  ^/M/(.*)$  /Mobile/Pub/$1  last;
+    rewrite  ^/V/(.*)$  /Vue/Pub/$1  last;
+    rewrite  ^/P/(.*)$  /App/Pub/$1  last;
+    rewrite  ^/F/(.*)$  /Fs/Pub/$1  last;
+}
+# end nginx rewrite rule

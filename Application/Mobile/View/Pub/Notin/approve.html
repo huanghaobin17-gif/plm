@@ -1,0 +1,264 @@
+<include file="Public:head"/>
+<title>审批</title>
+<style>
+    .line {
+        border-right: 1px solid #c9c9c9;
+        position: absolute;
+        right: 0;
+        width: 1px;
+        height: 80%;
+        top: 0;
+    }
+
+    .count {
+        text-align: center;
+        position: relative;
+    }
+
+    .count i {
+        position: absolute;
+        font-size: 2rem;
+        left: 1rem;
+    }
+
+    .sum {
+        color: #FF5722;
+    }
+
+    .using {
+        color: #009688
+    }
+
+    #ordersLists li {
+        margin-top: 0.625rem;
+        margin-bottom: 0.625rem;
+    }
+
+    .swiper-container {
+        height: 12.5rem;
+    }
+
+    .weui-popup__modal .weui-icon-cancel {
+        position: absolute;
+        right: 0.2rem;
+        top: 0.8rem;
+        color: #888;
+        font-size: 1.5rem;
+    }
+
+    .jumpButton {
+        bottom: 2rem;
+    }
+
+    .headerImageDiv {
+        height: 9rem;
+    }
+
+    .headerImageDiv div {
+        text-align: center;
+    }
+
+    .headerImage {
+        margin-top: 2rem;
+    }
+
+    .name {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    .detail {
+        padding-top: 0.5rem;
+    }
+
+    .detail li {
+        margin-bottom: 0.5rem;
+    }
+
+    .detailText {
+        width: auto;
+    }
+
+    .text {
+        color: #555;
+        font-size: 0.75rem;
+    }
+    .detailText{
+        color: #333;
+        font-size: 1rem;
+    }
+    .fx{
+        width: 19px;
+        padding-left: 10px;
+        margin-bottom: 2px;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <!--维修审批--> 
+    <if condition="$show_repair eq 1">
+        <div class="layui-card">
+            <div class="layui-card-header" onclick="display('repair')">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/wxcl.png">
+                <h2 class="list_title">维修流程审批</h2>
+                <span class="sum repair_sum"></span> 条
+                <a class="order r_order">排序
+                    <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                    <div class="orderList repair_order">
+                        <dl>
+                            <dt>降序</dt>
+                            <dd>
+                                <span class="orderTypeButton repair_button" orderType="DESC" orderSort="department">按科室名称</span>
+                            </dd>
+                            <dd>
+                                <span class="orderTypeButton repair_button" orderType="DESC" orderSort="applicant_time">按报修时间</span>
+                            </dd>
+                            <dt>升序</dt>
+                            <dd>
+                                <span class="orderTypeButton repair_button" orderType="ASC" orderSort="department">按科室名称</span>
+                            </dd>
+                            <dd>
+                                <span class="orderTypeButton repair_button" orderType="ASC" orderSort="applicant_time">按报修时间</span>
+                            </dd>
+                        </dl>
+                    </div>
+                </a>
+            </div>
+            <div class="layui-card-body" id="repair_body">
+                <ul id="repair_approve">
+
+                </ul>
+            </div>
+        </div>
+    </if>
+
+    <!--转科审批-->
+    <if condition="$show_transfer eq 1">
+        <div class="layui-card">
+        <div class="layui-card-header" onclick="display('transfer')">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/zksq.png">
+            <h2 class="list_title">转科流程审批</h2>
+            <span class="sum transfer_sum"></span> 条
+            <a class="order t_order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList transfer_order">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton transfer_button" orderType="DESC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton transfer_button" orderType="DESC" orderSort="applicant_time">按申请时间</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton transfer_button" orderType="ASC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton transfer_button" orderType="ASC" orderSort="applicant_time">按申请时间</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body" id="transfer_body">
+            <ul id="transfer_approve">
+
+            </ul>
+        </div>
+    </div>
+    </if>
+
+    <!--借调审批-->
+    <if condition="$show_borrow eq 1">
+        <div class="layui-card">
+        <div class="layui-card-header" onclick="display('borrow')">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/jdsq.png">
+            <h2 class="list_title">借调流程审批</h2>
+            <span class="sum borrow_sum"></span> 条
+            <a class="order b_order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList borrow_order">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton borrow_button" orderType="DESC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton borrow_button" orderType="DESC" orderSort="apply_time">按申请时间</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton borrow_button" orderType="ASC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton borrow_button" orderType="ASC" orderSort="apply_time">按申请时间</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body" id="borrow_body">
+            <ul id="borrow_approve">
+
+            </ul>
+        </div>
+    </div>
+    </if>
+    <!--报废审批-->
+    <if condition="$show_scrap eq 1">
+        <div class="layui-card">
+        <div class="layui-card-header" onclick="display('scrap')">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/bfsq.png">
+            <h2 class="list_title">报废流程审批</h2>
+            <span class="sum scrap_sum"></span> 条
+            <a class="order s_order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList scrap_order">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton scrap_button" orderType="DESC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton scrap_button" orderType="DESC" orderSort="apply_time">按申请时间</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton scrap_button" orderType="ASC" orderSort="department">按科室名称</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton scrap_button" orderType="ASC" orderSort="apply_time">按申请时间</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body" id="scrap_body">
+            <ul id="scrap_approve">
+
+            </ul>
+        </div>
+    </div>
+    </if>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var url = '{$url}';
+    var show_repair = "{$show_repair}";
+    var show_transfer = "{$show_transfer}";
+    var show_borrow = "{$show_borrow}";
+    var show_scrap = "{$show_scrap}";
+    //显示
+        function display(type){
+             var css =$("#"+type+"_body").css("display");
+             if (css=="block") {
+                $("#"+type+"_body").hide();
+            }else{
+                $("#"+type+"_body").show();
+            }
+            return false;
+        }
+</script>
+<script src="__PUBLIC__/mobile/js/pub/notin/approve.js?v={:mt_rand(1,54561)}"></script>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .page {
+        list-style: none
+    }
+
+    .page li {
+        float: left;
+        margin-left: 10px;
+        color: #009688;
+        cursor: pointer;
+    }
+
+    .page li:first-child {
+        color: #000;
+        cursor: text;
+    }
+</style>
+<body>
+<div id="app">
+    <label>
+        标题
+        <input type="text" v-model="search.title">
+    </label>
+    <label>
+        内容
+        <input type="text" v-model="search.content">
+    </label>
+    <label>
+        日期
+        <input type="date" v-model="search.date">
+    </label>
+    <label>
+        分类
+        <input type="text" v-model="search.cate">
+    </label>
+    <button type="button" @click="searchWhere">搜索</button>
+    <table>
+        <tr>
+            <th><input type="checkbox" @click="checkAll" v-model="checked"></th>
+            <th>标题</th>
+            <th>日期</th>
+            <th>分类</th>
+            <th>天眼地址</th>
+            <th>中国政府采购网地址</th>
+        </tr>
+        <tr v-for="item in list" :key="item.id">
+            <td><input type="checkbox" v-model="checkModel" :value="item.id"></td>
+            <td><a :href="item.href" target="_blank" rel="noopener noreferrer">{{item.title}}</a></td>
+            <td>{{item.zb_addtime}}</td>
+            <td>{{item.cate}}</td>
+            <td>
+                <button type="button" @click="goUrl(item.url)">跳转</button>
+            </td>
+            <td>
+                <button type="button" @click="goUrl(item.zb_url)">跳转</button>
+            </td>
+        </tr>
+    </table>
+    <label>
+        <select v-model="cate">
+            <volist name="cate" id="v">
+                <option value="{$v.id}">{$v.cate}</option>
+            </volist>
+        </select>
+        <button type="button" @click="setCate">设置分类</button>
+    </label>
+    <ul class="page">
+        <li>总数：{{total}} 当前 第 {{page}} 页 共 {{pages}} 页</li>
+        <li v-if="isShowFirst" @click="goPage(1)"><a>首页</a></li>
+        <li>
+            <input type="text" v-model="pagesNum">
+            <button type="button" @click="goPage(pagesNum)">跳转</button>
+        </li>
+        <li v-if="isShowEnd" @click="goPage(pages)"><a>末页</a></li>
+    </ul>
+</div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="https://cdn.bootcss.com/qs/6.9.4/qs.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            total: 0,
+            page: 1,//当前页数
+            pages: 0,//总共页数
+            pagesNum: '',//跳转页数
+            isShowFirst: false,
+            isShowEnd: true,
+            cate: 1,
+            list: [],
+            checked: false, //是否全选
+            checkModel: [], //双向数据绑定的数组,
+            search: {
+                title: '',
+                content: '',
+                date: '',
+                cate: '',
+                action: 'getList'
+            }
+        },
+        watch: {
+            checkModel: function () {
+                this.checked = this.checkModel.length === this.list.length;
+            },
+            page: function () {
+                this.isShowFirst = this.page > 1;
+                this.isShowEnd = this.page !== this.pages;
+            }
+        },
+        methods: {
+            getList: function (where = {action: 'getList'}) {
+                var that = this;
+                axios.get('cjsj', {params: where}).then(function (response) {
+                    that.list = response.data.data;
+                    that.pages = response.data.pages;
+                    that.total = response.data.total;
+                }).catch(function (error) {
+                    console.log('网络访问失败');
+                });
+            },
+            goPage: function (page) {
+                this.page = page;
+                var params = {action: 'getList', page: page};
+                this.getList(params);
+            },
+            goUrl: function (url) {
+                window.open(url)
+            },
+            //全选
+            checkAll: function () {
+                if (this.checked) {
+                    this.checkModel = [];
+                } else {
+                    var that = this;
+                    this.list.forEach(function (item) {
+                        if (that.checkModel.indexOf(item.id) === -1) {
+                            that.checkModel.push(item.id)
+                        }
+                    });
+                }
+            },
+            searchWhere: function () {
+                this.getList(this.search);
+            },
+            setCate: function () {
+                if (this.checkModel.length === 0) {
+                    alert('请先至少选择一个选项');
+                    return false;
+                }
+                var qs = Qs,that= this;
+                axios.post('cjsj', qs.stringify({
+                    cate_id: this.cate,
+                    checked_id: this.checkModel
+                })).then(function (response) {
+                    alert(response.data.msg);
+                    that.getList();
+                }).catch(function (error) {
+                    console.log('网络访问失败');
+                });
+            }
+        },
+        mounted: function () {
+            this.getList();
+        }
+    })
+</script>
+

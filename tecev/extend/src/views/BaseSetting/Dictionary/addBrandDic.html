@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+</head>
+<script>
+    var showHospital = "{$showHospital}";
+    var hosid = "{$hospital_id}";
+</script>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加品牌字典</legend>
+    </fieldset>
+
+    <div class="layer-to-top">
+        <form class="layui-form">
+            <input type="hidden" name="otherPage" value="{$otherPage}">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 品牌名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="brand_name" value="" placeholder="请输入品牌名称" required  lay-verify="required|brand_name" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="brand_desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/dictionary/addBrandDic', layui.factory('controller/basesetting/dictionary/addBrandDic'));
+</script>

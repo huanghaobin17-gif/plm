@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        @page {
+            margin: 20px auto 0;
+            font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+        }
+        .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{border-color: #666;}
+        .logo {
+            height: 60px;
+            position: absolute;
+            top: 20px;
+        }
+    </style>
+</head>
+<body style="width: 794px!important; margin: auto">
+<div class="layui-fluid" id="LAY-Patrol-ReportTemplate-patrolReport">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 15px;">{$title}保养报告</h2>
+        <notempty name="imageUrl">
+            <img src="{$imageUrl}" class="logo">
+        </notempty>
+        <div class="fr" style="width: 230px;">
+            <span>报告编号:<em>{$result.report_num}</em></span>
+        </div>
+        <div class="clear"></div>
+        <div class="fr" style="width: 230px;">
+            <span>制表日期:<em>{$time}</em></span>
+        </div>
+        <br/>
+        <table style="width: 100%;background-color: #fff;color: #666;border:1px solid grey;" lay-size="sm"  border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="130">
+                <col width="150">
+                <col width="130">
+                <col width="150">
+                <col width="130">
+                <col width="150">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" style="text-align: left!important;">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">设备名称：</th>
+                <td style="border:1px solid grey;">{$result.assets}</td>
+                <th style="border:1px solid grey;">设备编号：</th>
+                <td style="border:1px solid grey;">{$result.assnum}</td>
+                <th style="border:1px solid grey;">设备原编码：</th>
+                <td style="border:1px solid grey;">{$result.assorignum}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">规格型号：</th>
+                <td style="border:1px solid grey;">{$result.model}</td>
+                <th style="border:1px solid grey;">使用科室：</th>
+                <td style="border:1px solid grey;">{$result.department}</td>
+                <th style="border:1px solid grey;">设备序列号：</th>
+                <td style="border:1px solid grey;">{$result.assorignum}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">巡查周期(天)：</th>
+                <td style="border:1px solid grey;">{$result.patrol_xc_cycle}</td>
+                <th style="border:1px solid grey;">保养周期(天)：</th>
+                <td style="border:1px solid grey;">{$result.patrol_pm_cycle}</td>
+                <th style="border:1px solid grey;">即将到期天数：</th>
+                <td style="border:1px solid grey;">{$result.expiring}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">巡查次数：</th>
+                <td style="border:1px solid grey;">{$result.patrol_nums}</td>
+                <th style="border:1px solid grey;">保养次数：</th>
+                <td style="border:1px solid grey;">{$result.maintain_nums}</td>
+                <th style="border:1px solid grey;">上一次执行人：</th>
+                <td style="border:1px solid grey;">{$result.pre_maintain_executor}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">上一次巡查结果：</th>
+                <td style="border:1px solid grey;">{$result.pre_patrol_result}</td>
+                <th style="border:1px solid grey;">上一次保养结果：</th>
+                <td  colspan="3">{$result.pre_maintain_result}</td>
+            </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;background-color: #fff;color: #666;border:1px solid grey;margin-top: 20px;margin-bottom:20px " lay-size="sm"  border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="8%">
+                <col width="40%">
+                <col width="12%">
+                <col width="40%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" style="text-align: left!important;">二、保养内容信息</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;" width="8%">序号</th>
+                <th style="border:1px solid grey;" width="40%">明细名称</th>
+                <th style="border:1px solid grey;" width="12%">保养结果</th>
+                <th style="border:1px solid grey;" width="40%">异常处理详情</th>
+            </tr>
+            <volist name="data" id="vo">
+                <tr>
+                    <td style="border:1px solid grey;">{$vo.key}</td>
+                    <td style="border:1px solid grey;">{$vo.name}</td>
+                    <td style="border:1px solid grey;">{$vo.result}</td>
+                    <td style="border:1px solid grey;">{$vo.abnormal_remark}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        <table style="width: 100%;background-color: #fff;color: #666;border:1px solid grey;;margin-top: 20px;" lay-size="sm"  border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="110">
+                <col width="220">
+                <col width="100">
+                <col width="110">
+                <col width="100">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" style="text-align: left!important;">三、保养计划信息</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">计划名称：</th>
+                <td style="border:1px solid grey;">{$plan_data.patrol_name}</td>
+                <th style="border:1px solid grey;">计划编号：</th>
+                <td style="border:1px solid grey;"><em>{$plan_data.patrol_num}</em></td>
+                <th style="border:1px solid grey;">制定人：</th>
+                <td style="border:1px solid grey;">{$plan_data.add_user}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">周期计划：</th>
+                <td style="border:1px solid grey;">{$plan_data.cycle_name}</td>
+                <th style="border:1px solid grey;">计划开始日期：</th>
+                <td style="border:1px solid grey;">{$plan_data.cycle_start_date}</td>
+                <th style="border:1px solid grey;">计划结束日期：</th>
+                <td style="border:1px solid grey;">{$plan_data.cycle_end_date}</td>
+            </tr>
+            <tr>
+                <th colspan="2">该设备不保养的原因：</th>
+                <td colspan="4">{$plan_data.reason}</td>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">总期数：</th>
+                <td style="border:1px solid grey;">{$plan_data.total_cycle}</td>
+                <th style="border:1px solid grey;">本计划期次：</th>
+                <td style="border:1px solid grey;">{$plan_data.period}</td>
+                <th style="border:1px solid grey;">执行人：</th>
+                <td style="border:1px solid grey;">{$plan_data.execute_user}</td>
+            </tr>
+            <tr>
+                <th colspan="2">计划备注：</th>
+                <td colspan="4">{$plan_data.remark}</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <table style="width: 100%;background-color: #fff;color: #666;border:1px solid grey;margin-top: 20px" lay-size="sm"  border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="100">
+                <col width="120">
+                <col width="140">
+                <col width="100">
+                <col width="">
+            </colgroup>
+            <tr>
+                <th colspan="5" style="text-align: left!important;">四、审核信息</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;text-align: center">序号</th>
+                <th style="border:1px solid grey;">审核人</th>
+                <th style="border:1px solid grey;">审核时间</th>
+                <th style="border:1px solid grey;">审核状态</th>
+                <th style="border:1px solid grey;">审核意见</th>
+            </tr>
+            <tbody>
+            <empty name="approves">
+                <if condition="count($apps) eq 0">
+                    <tr>
+                        <td style="border:1px solid grey;" colspan="5">无审批记录</td>
+                    </tr>
+                    <else/>
+                    <volist name="apps" id="app">
+                        <tr>
+                            <td style="border:1px solid grey;">{$key+1}</td>
+                            <td style="border:1px solid grey;">{$app.approver}</td>
+                            <td style="border:1px solid grey;">{$app.approve_time}</td>
+                            <td style="border:1px solid grey;">{$app.approve_status}</td>
+                            <td style="border:1px solid grey;">{$app.remark}</td>
+                        </tr>
+                    </volist>
+                </if>
+            </empty>
+            </tbody>
+        </table>
+
+        <table style="width: 100%;background-color: #fff;color: #666;border:1px solid grey;margin-top: 20px" lay-size="sm"  border="0" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="3" style="text-align: left!important;">五、经办工程师及验收人员意见及签字</th>
+            </tr>
+            <tr>
+                <th style="border:1px solid grey;">经办工程师意见及签字</th>
+                <th style="border:1px solid grey;">设备科意见及签字</th>
+                <th style="border:1px solid grey;">验收科室意见及签字</th>
+            </tr>
+            <tr>
+                <td style="border:1px solid grey;">
+                    <div style="height: 60px"><br /><br /><br /></div>
+                    <div style="text-align: left">
+                        <table><tr><td width="100px"  style="text-align: left"><span>签字：</span></td><td><span>日期：</span></td></tr></table>
+                    </div>
+                </td>
+                <td style="border:1px solid grey;">
+                    <div style="height: 60px"><br /><br /><br /></div>
+                    <div style="text-align: left">
+                        <table><tr><td width="100px"  style="text-align: left"><span>签字：</span></td><td><span>日期：</span></td></tr></table>
+                    </div>
+                </td>
+                <td style="border:1px solid grey;">
+                    <div style="height: 60px"><br /><br /><br /></div>
+                    <div style="text-align: left">
+                        <table><tr><td width="100px"  style="text-align: left"><span>签字：</span></td><td><span>日期：</span></td></tr></table>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</body>
+</html>

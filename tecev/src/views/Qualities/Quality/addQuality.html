@@ -1,0 +1,153 @@
+<script>
+    var addQuality = "{$addQuality}";
+</script>
+<?php if($menuData = get_menu_name('Qualities','Quality','addQuality')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Qualities-Quality-addQuality" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询（检索计划设备）</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">所属科室：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="department" xm-select="department" xm-select-search="">
+                                            <option value="">请选择所属科室</option>
+                                            <volist name="departments" id="v">
+                                                <option value="{$v.departid}">{$v.department}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备名称：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="getAssetsAddPlan"  placeholder="请输入设备名称" name="assets">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备分类：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="getAssetsCategory-addplan" placeholder="请输入设备分类" name="category">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-form-label">辅助分类：</div>
+                                    <div class="layui-input-inline">
+                                        <select name="hlepcatid" lay-verify="">
+                                            <option value=""></option>
+                                            <volist name="helpcat" id="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <include file="Public:hospital_search"/>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <input type="checkbox" name="" lay-filter="quality" lay-skin="primary" title="质控设备" checked="">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="qualitySearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 设备查询结果列表
+                    </div>
+
+                </div>
+                <div class="layui-card-body">
+                    <div id="QAssetsLists" lay-filter="QAssetsData"></div>
+                    <div class="mt10">
+                        <button class="layui-btn" id="batchJoin"><i class="layui-icon layui-icon-zcome-l l-icon-in-btn"></i>一键纳入下面计划设备列表</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon">&#xe62d;</i> 已纳入计划设备列表 <span class="text-danger">（质控计划制定生成表单）</span>
+                </div>
+                <div class="layui-card-body">
+                    <div id="InAssetsList" lay-filter="InAssetsData"></div>
+                </div>
+                <div class="layui-card-body" style="margin-bottom: 50px;">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 220px"><span class="rquireCoin"> * </span>将已勾选设备分配给计划检测人：</label>
+                                <div class="layui-input-inline">
+                                    <select name="executors" id="executors" lay-filter="executors" lay-verify="">
+                                        <option value=""></option>
+                                        <volist name="executors" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" id="share">确定分配</button>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 220px;"><span class="rquireCoin"> * </span>质控计划名称：</label>
+                            <div class="layui-input-block" style="margin-left:140px">
+                                <input type="text" name="planName" value="" placeholder="请输入质控计划名称" lay-verify="planName" autocomplete="off" class="layui-input" style="width: 80%;">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 220px;">备注：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="planRemark" value="" placeholder="请输入内容" autocomplete="off" class="layui-input" style="width: 77.5%;">
+                            </div>
+                        </div>
+                        <div class="layui-form-item mt10 tbcenter">
+                            <button class="layui-btn" id="save"><i class="layui-icon" >&#xe609;</i> 确定并生成该质控计划</button>
+                            <!--提交提示语：“质控计划名称”质控计划制定成功！启用后便通知到检测人执行。-->
+                            <!--后关闭改Tab页面-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    layui.use('qualities/quality/addQuality', layui.factory('qualities/quality/addQuality'));
+</script>

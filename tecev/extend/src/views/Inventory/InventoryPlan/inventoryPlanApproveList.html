@@ -1,0 +1,101 @@
+<title>盘点计划审批列表</title>
+<style>
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .layui-card-body .layui-table-view td {
+        height: 80px !important;
+    }
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .layui-table-body .layui-table[lay-size=lg] .layui-table-cell{
+        height: 65px !important;
+        line-height: 50px !important;
+    }
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .layui-table-cell{
+        height: auto;
+    }
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineList{float: left;margin-left: 60px; height: 60px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineList li{width:110px;float: left;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineBox{margin-top: 15px;position: relative;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .layui-timeline-axis{ margin-top: 0; left: -15px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLine{width:120px;height: 3px;position: absolute; margin-top: 9px;top:0;left: -65px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineStart{height: 3px;background-color: #009688;position: absolute;top:7px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineStartTitle{position: absolute;top: -25px;left: -15px;font-size: 12px;color: #009688}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineTitle{position: absolute;top: -20px;font-size: 12px;left: -23px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineDate{position: absolute;top:15px;left: -55px;font-size: 12px;}
+
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineDetail{width: 300px;position: absolute;left: -80px;border-radius: 5px;background-color: #fff;color: #333;font-size: 12px;z-index: 100;display: none;  }
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .timeLineDetail tr th{text-align: right;}
+
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .patrolColorBg{background-color: #1E9FFF;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .patrolColor{color: #1E9FFF;}
+
+    /*已进行的 浅绿*/
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .executeddColorBg{background-color: #5FB878;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .executeddColor{color: #5FB878;}
+
+    /*进行中的 蓝色*/
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .haveColorBg{background-color: #1E9FFF;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .haveColor{color: #1E9FFF;}
+
+    /*未进行的 灰色*/
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .unexecutedColorBg{background-color: #a09e9e;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .unexecutedColor{color: #a09e9e;}
+
+    /*已完成 赤色*/
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .endColorBg{background-color: #FF5722;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .endColor{color: #FF5722;}
+
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .baseInfo{margin-left: 30px;font-size: 12px;}
+    #LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList .baseInfo .layui-inline{width: 200px;}
+</style>
+<div class="layui-fluid" id="LAY-InventoryPlan-InventoryPlan-inventoryPlanApproveList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">盘点单号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="inventory_plan_no" placeholder="请输入" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">盘点名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="inventory_plan_name" placeholder="请输入" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit lay-filter="inventoryplanapprovelistSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="inventoryplanapprovelist" lay-filter="inventoryplanapprovelist"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var inventoryPlanApproveListUrl = "{$inventoryPlanApproveListUrl}";
+    layui.use('inventory/inventoryplanapprovelist', layui.factory('inventory/inventoryplanapprovelist'));
+</script>

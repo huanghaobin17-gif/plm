@@ -1,0 +1,101 @@
+<?php if (!defined('THINK_PATH')) exit(); if($menuData = get_menu_name('Purchases','PurchasePlans','purchasePlansList')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var purchasePlansList = "<?php echo ($purchasePlansList); ?>";
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchasePlans-purchasePlansList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上报科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="purchasePlansListDepartment" xm-select-search="">
+                                        <option value="">请选择上报科室</option>
+                                        <?php if(is_array($departments)): $i = 0; $__LIST__ = $departments;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["departid"]); ?>"><?php echo ($vo["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">项目名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="plans_project"  placeholder="请输入项目名称" name="project_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划年份：</label>
+                                <div class="layui-input-inline">
+                                    <input name="plans_year" readonly type="text" id="year" placeholder="请选择计划年份"  class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="plans_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="1">启用</option>
+                                        <option value="0">未启用</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上报状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="apply_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="1">已上报</option>
+                                        <option value="0">未上报</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="plansListSearch" id="plansListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 年度采购计划
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="purchasePlansList" lay-filter="purchasePlansData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('purchases/plans/purchasePlansList', layui.factory('purchases/plans/purchasePlansList'));
+</script>
+<script type="text/html" id="LAY-Purchases-PurchasePlans-purchasePlansListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Purchases','PurchasePlans','addPlans')):?>
+        <button class="layui-btn layui-btn-xs" lay-event="addPlans" data-url="<?php echo ($menuData['actionurl']); ?>"><i class="layui-icon">&#xe654;</i> <?php echo ($menuData['actionname']); ?></button>
+        <?php endif?>
+    </div>
+</script>

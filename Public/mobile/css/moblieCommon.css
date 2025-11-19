@@ -1,0 +1,456 @@
+/*解决ios点击失效的问题*/
+html body{cursor: pointer;}
+/**/
+body {
+    background-color: #f5f5fa
+}
+
+.layui-fluid {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+.border-color-red{
+    border-color: red!important;
+}
+
+.title {
+    border-left-color: #1E9FFF;
+    font-size: 18px;
+    height: 6px;
+    line-height: 6px;
+    margin-bottom: 0;
+    background-color: #fff
+}
+
+.layui-table {
+    margin: 0
+}
+
+.layui-table tr th {
+    text-align: right;
+    width: 33%;
+    padding: 8px 6px;
+}
+
+.layui-table tr td {
+    text-align: left;
+    width: 67%;
+    padding: 8px 6px;
+}
+
+dl dt {
+    margin-bottom: 5px;
+    margin-left: 6px;
+}
+
+dl dd {
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px #EAE8E8 dashed;
+}
+
+dl {
+    margin-bottom: 10px;
+}
+
+.red_border {
+    border: 1px solid red !important;
+}
+
+#nameplate, #instrument_view {
+    margin-left: 10px;
+    width: auto;
+}
+
+.photoDiv {
+    position: relative;
+}
+
+.photoDelete {
+    position: absolute;
+    font-size: 2rem;
+    right: 2%;
+    top: 3%;
+    color:#E0E0E0;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-container {
+    height: 21.875rem;
+}
+
+.emptyPhoto {
+    width: 15rem;
+    height: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -7.5rem;
+    margin-top: -1rem;
+    color:#e6e6e6;
+}
+
+#show_error_tips {
+    height: 20px;
+    padding: 10px 0;
+    text-align: center;
+    background: #FC8A8A;
+    font-size: 16px;
+    color: white;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+.layui-card-header{font-size: 1rem;}
+.layui-card:first-child{margin-top: 0}
+.layui-card{box-shadow: none;margin:1.25rem 0 0 0;}
+.layui-card-header{border-bottom-color: #d2d2d2}
+/*版权*/
+.copyright{width: auto;color: #999999;margin: 0 auto;margin-bottom: 3.5rem;margin-top: 0.9375rem;text-align: center;}
+/**/
+/*底部导航菜单*/
+.buttomNav{width: 100%;height:3rem;background-color: #fbfbfb;position: fixed;bottom: 0;z-index: 99999;border-top: 1px solid #e2e2e2;}
+.buttomNav a{width: 100%;height: 3rem;display: block;text-align: center;line-height: 3rem;}
+.buttomNav li{position: relative;}
+.buttomNav li span{position: absolute;top: 0.2rem;right: 0.2rem;}
+.menuList{min-width: 100%;height: auto;position: absolute;top:auto;left: 0;bottom:3.4rem;background-color: #fff;line-height: 36px;padding: 5px 0;box-shadow: 0 2px 4px rgba(0,0,0,.12);border: 1px solid #d2d2d2;z-index: 100;border-radius: 2px;white-space: nowrap;display: none;}
+/**/
+/*左右灰色线 1px*/
+.bl1px{border-left: 5px solid #5FB878;position: absolute;width: 1px;height: 60%;top: 20%;left: 1rem;}
+.br1px{border-right: 1px solid #c9c9c9;position: absolute;right: 0;width: 1px;height: 60%;top: 20%;}
+/**/
+/*表单的图标及文字*/
+.formImage{width: 1.5rem;height: 1.5rem;margin-bottom: 0.3rem;}
+.formTitle{font-size: 1rem;display: inline-block;}
+/**/
+/*去边框*/
+.borderNone{border: none;}
+/**/
+/*常用*/
+.fl {
+    float: left
+}
+.fr {
+    float: right
+}
+.mgt0{margin-top: 0;}
+.mgt1rem{margin-top: 1rem}
+.mgt2rem{margin-top: 2rem}
+.mgb0{margin-bottom: 0}
+.mgb1rem{margin-bottom: 1rem}
+.mgb2rem{margin-bottom: 2rem}
+/**/
+/*提交的按钮*/
+.enterButton{height: 2.5rem !important;line-height: 2.5rem !important;font-size: 0.875rem !important;}
+/**/
+/*列表跳转箭头位置*/
+.jumpButton {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index:3;
+}
+
+.jumpButton i {
+    font-size: 3rem;
+    opacity: 0.3
+}
+/*排序样式*/
+.order {
+    float: right;
+    margin-bottom: 0.3rem;
+    position: relative;
+}
+.orderList {
+    width: 10rem;
+    position: absolute;
+    background-color: #000;
+    right: -1rem;
+    z-index: 999;
+    color: #fff;
+    height: auto;
+    opacity: 0.8;
+    display: none;
+}
+
+.orderList dl dt {
+    margin-bottom: 0;
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 0.2rem;
+}
+
+.orderList dl dd {
+    margin-bottom: 0;
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 1.2rem;
+}
+/**/
+
+/*列表样式*/
+.detail{
+    padding-left: 0.5rem;
+}
+.detailTitle{
+    padding-left: 1rem;
+    font-size: 1rem;
+    display: inline-block;
+}
+.list_title{
+    font-size: 1rem;
+    display: inline-block;
+}
+.content {
+    margin: 0 auto;
+    border: 1px solid #E5E5E5;
+    position: relative;
+    margin-top: 1rem;
+}
+
+.detailText {
+    text-align: right;
+    display: inline-block;
+    width: 5rem;
+    color:#555;
+    font-size: 0.875rem;
+}
+.text {
+    font-size: 1rem;
+    color:#333;
+}
+/**/
+
+/*搜索条样式*/
+.weui-search-bar{background-color: #fff !important;padding: 0 !important;}
+.weui-search-bar:before{border-top: none !important;}
+.weui-search-bar:after{border-bottom: none !important;}
+.weui-search-bar__box{height: 2.5rem !important;}
+.weui-search-bar__label{top: 7px !important;}
+.weui-search-bar__form{background-color: #fff !important;}
+.weui-search-bar__box .weui-search-bar__input{padding: 10px 2px !important;}
+/**/
+
+/*弹层样式*/
+.popupTopTitle{
+    padding-left: 0.4rem;
+}
+.popupTopTitleDiv {
+    position: relative;
+    height: 3rem;
+    padding: 0 0.375rem;
+    font-size: 1rem;
+    background-color: #f1f1f1;
+    line-height: 3rem;
+    border-bottom: 1px solid #dddddd;
+}
+/**/
+
+/*流加载文字样式 加载更多*/
+.layui-flow-more cite{
+    color: #2a7ae2 !important;
+    background-color: #fff !important;
+}
+
+/*表单置顶按钮*/
+.upFormButton{float: right;color: #2a7ae2;cursor: pointer;}
+.upFormButton:hover{color: #2a7ae2;}
+/*表单置底按钮*/
+.downFormButton{float: right;color: #2a7ae2;display: none;cursor: pointer;}
+.downFormButton:hover{color: #2a7ae2;}
+
+/*红点*/
+.rquireCoin {
+    color: red;
+}
+
+/*系统中所有的input select 单选多选等样式*/
+.layui-form-label{
+    overflow: inherit !important;
+}
+.xm-select-parent .xm-input{
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom-color: #c2c2c2 !important;
+    border-radius: 0 !important;
+}
+.setForm .layui-form-pane .layui-form-item[pane],
+.setForm .layui-form-pane .layui-form-label,
+.setForm .layui-input,
+.setForm .layui-select{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #c2c2c2;
+    border-radius: 0;
+}
+.setForm .layui-input:focus,
+.setForm .layui-textarea:focus{
+    border-color: #333333;
+}
+.setForm .layui-input:hover,
+.setForm .layui-textarea:hover{border-color: #c2c2c2;}
+.setForm .xm-select-parent .xm-form-select dl dd:first-child{margin-top: 0;}
+.setForm .xm-select-parent .xm-form-select dl dd{margin-top: 0.5rem;height: auto;}
+.setForm .xm-select-parent .xm-select-title div.xm-select-label>span{overflow: hidden;max-width: 6.5rem;text-overflow: ellipsis;white-space: nowrap;padding-right: 2px;}
+.setForm .xm-select-parent .xm-select-title div.xm-select-label>span i{display: none;}
+.setForm .xm-form-checkbox > span{word-break:normal; width:auto; display:block; white-space:pre-wrap;word-wrap : break-word ;overflow: hidden ;}
+
+/*移动端表单验证标红*/
+.setForm .layui-form-danger{border-bottom:1px #ff5722 solid}
+/**/
+.weui-grid__label{
+    color:#666 !important;
+}
+
+/*隐藏元素用*/
+.hide{display: none;}
+/**/
+
+/*layui xs 按钮大小*/
+.layui-btn-xs {
+    height: 25px!important;
+    line-height: 25px!important;
+    padding: 0 10px!important;
+}
+
+/*weui计数器按钮变为点击手势 适配ios*/
+.weui-count__decrease{cursor: pointer;}
+.weui-count__increase{cursor: pointer;}
+
+/*头像*/
+.headerImage {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 .24rem;
+    border-radius: 50%;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 1.2rem;
+    flex: 0 0 1.2rem;
+    background-repeat: no-repeat;
+    background-size: 1.2rem 1.2rem;
+}
+/**/
+/*无数据*/
+.no_data{
+    width: 100%;
+    text-align: center;
+}
+.no_data_img img{
+    width: 100px;
+}
+.no_data_tips{
+    font-size: 16px;
+    color:#999;
+}
+/*无数据*/
+
+/*修改layui自带table隔行变色的背景色*/
+.layui-table[lay-even] tr:nth-child(even){
+    background-color: #e6e6e654;
+}
+/**/
+/*流加载置顶按钮*/
+.layui-fixbar{
+    bottom: 10rem;
+}
+/**/
+
+.weui-photo-browser-modal{
+    z-index: 9999;
+}
+.weui-picker-modal,.weui-picker-calendar ,.weui-picker-modal-visiblel{
+    bottom: 2rem!important;
+}
+.picker-calendar-week-days {
+    height: 1.9rem!important;
+}
+/*阻止列表页面 搜索按钮点透事件*/
+.stopCancelSearch{
+    width: 2rem;height: 2rem;position: absolute;right: 0;z-index: 200;
+}
+/**/
+/*列表页 统计数量span 颜色*/
+.total_sum {
+    color: #FF5722;
+}
+.assetsHideDetail {
+    display: none;
+}
+.moreButton {
+    text-align: center;
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.moreButton a {
+    color: #2a7ae2;
+}
+.toolbar .title {
+    line-height: 2.8rem;
+}
+.toolbar .picker-button {
+    line-height: 2.8rem;
+}
+
+.timeLineList{float: left;margin-left: 60px; height: 60px;width: 86%;}
+.timeLineList li{width:80px;float: left;height: 60px;}
+.timeLineBox{margin-top: 15px;position: relative;}
+/*已进行的 浅绿*/
+.executeddColorBg{background-color: #5FB878;}
+.executeddColor{color: #5FB878;}
+
+/*进行中的 蓝色*/
+.haveColorBg{background-color: #1E9FFF;}
+.haveColor{color: #1E9FFF;}
+
+/*未进行的 灰色*/
+.unexecutedColorBg{background-color: #a09e9e;}
+.unexecutedColor{color: #a09e9e;}
+
+/*已完成 赤色*/
+.endColorBg{background-color: #FF5722;}
+.endColor{color: #FF5722;}
+.layui-timeline-axis{ margin-top: 3px; left: -36px;}
+.timeLine{width:80px;height: 3px;position: absolute; margin-top: 9px;top:3px;left: -65px;}
+.timeLineStart{height: 3px;background-color: #009688;position: absolute;top:7px;}
+.timeLineStartTitle{position: absolute;top: -25px;left: -15px;font-size: 12px;color: #009688}
+.timeLineTitle{position: absolute;top: -20px;font-size: 12px;left: -52px;}
+.timeLineDate{position: absolute;top:20px;left: -59px;font-size: 12px;}
+
+.list_li_width{
+    width: 97%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.list_title_3{
+    letter-spacing:3.5px;
+}
+.content_center{
+    text-align: center !important;
+}
+.layui-card-body{
+    padding: 10px 10px !important;
+}
+.no_margin{
+    margin: 0;
+}
+/*搜索栏样式*/
+#searchText{
+    text-align: left !important;
+    margin-left: 10px !important;
+}
+.weui-icon-search{
+    margin-right: 0 !important;
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.4.0.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/cropper.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css">
+    <style>
+        .img-container {
+            min-height: 430px;
+        }
+    </style>
+</head>
+<body>
+<!--[if lt IE 9]>
+<div class="alert alert-warning alert-dismissible fade show m-0 rounded-0" role="alert">
+    你的<strong>浏览器</strong>版本过低。请 <a href="http://browsehappy.com/">升级你的浏览器</a> 后再使用此功能！
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<![endif]-->
+<!-- Content -->
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-9">
+            <!-- <h3>Demo:</h3> -->
+            <div class="img-container">
+                <img id="image" style="width: 90%;" src="/Public/images/tips.jpg" alt="Picture">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <!-- <h3>Preview:</h3> -->
+            <div class="docs-preview clearfix">
+                <div class="img-preview preview-lg"></div>
+                <div class="img-preview preview-md"></div>
+                <div class="img-preview preview-sm"></div>
+                <div class="img-preview preview-xs"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 docs-buttons">
+            <!-- <h3>Toolbar:</h3> -->
+
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="放大">-->
+              <!--<span class="fa fa-search-plus"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="缩小">-->
+              <!--<span class="fa fa-search-minus"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary" data-method="move" data-option="-10"-->
+                        <!--data-second-option="0" title="Move Left">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="左移">-->
+              <!--<span class="fa fa-arrow-left"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="move" data-option="10" data-second-option="0"-->
+                        <!--title="Move Right">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="右移">-->
+              <!--<span class="fa fa-arrow-right"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="move" data-option="0"-->
+                        <!--data-second-option="-10" title="Move Up">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="上移">-->
+              <!--<span class="fa fa-arrow-up"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="10"-->
+                        <!--title="Move Down">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="下移">-->
+              <!--<span class="fa fa-arrow-down"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary" data-method="rotate" data-option="-45"-->
+                        <!--title="Rotate Left">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="逆时针转动">-->
+              <!--<span class="fa fa-rotate-left"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="rotate" data-option="45"-->
+                        <!--title="Rotate Right">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="顺时针转动">-->
+              <!--<span class="fa fa-rotate-right"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary" data-method="scaleX" data-option="-1"-->
+                        <!--title="Flip Horizontal">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="左右翻转">-->
+              <!--<span class="fa fa-arrows-h"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="scaleY" data-option="-1"-->
+                        <!--title="Flip Vertical">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="上下翻转">-->
+              <!--<span class="fa fa-arrows-v"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+
+
+            <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-primary" data-method="disable" title="Disable">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="锁定">-->
+              <!--<span class="fa fa-lock"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary" data-method="enable" title="Enable">-->
+            <!--<span class="docs-tooltip" data-toggle="tooltip" data-animation="false"-->
+                  <!--title="解锁">-->
+              <!--<span class="fa fa-unlock"></span>-->
+            <!--</span>-->
+                <!--</button>-->
+            <!--</div>-->
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" data-method="reset" title="Reset">
+            <span class="docs-tooltip" data-toggle="tooltip" data-animation="false"
+                  title="还原图片">
+              <span class="fa fa-refresh"> 还原</span>
+            </span>
+                </button>
+                <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                    <input type="file" class="sr-only" id="inputImage" name="file"
+                           accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff">
+                    <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="点击选择图片">
+                        <span class="fa fa-upload"> 上传图片</span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="btn-group btn-group-crop">
+                <button type="button" class="btn btn-success" data-method="getCroppedCanvas"
+                        data-option="{ &quot;maxWidth&quot;: 1096, &quot;maxHeight&quot;: 1096 }">
+            <span class="docs-tooltip" data-toggle="tooltip" data-animation="false"
+                  title="">
+              确定
+            </span>
+                </button>
+            </div>
+
+            <!-- Show the cropped image in modal -->
+            <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true"
+                 aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!--<div class="modal-header">-->
+                            <!--<h5 class="modal-title" id="getCroppedCanvasTitle">Cropped</h5>-->
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                                <!--<span aria-hidden="true">&times;</span>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                        <div class="modal-body"></div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="base64Data" value=""/>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="uploadPic" data-dismiss="modal" href="javascript:void(0);">上传</button>
+                            <a style="display: none;" class="btn btn-primary" id="download" href="javascript:void(0);" onclick="return false;" download="1234567890.jpg">上传</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="assid" value="{$assid}"/>
+<!-- Scripts -->
+<script src="__PUBLIC__/js/jquery-3.3.1.slim.min.js"></script>
+<script src="__PUBLIC__/js/bootstrap.bundle.min.js"></script>
+<script src="__PUBLIC__/js/common-copper.js"></script>
+<script src="__PUBLIC__/js/cropper.js"></script>
+<script src="__PUBLIC__/js/main.js"></script>
+<script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+<script src="__PUBLIC__/layui-v2.2.6/layui.js?v={:mt_rand(1,54561)}"></script>
+<script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    // 修改自官方demo的js
+    var initCropper = function (img, input){
+        var $image = img;
+        var options = {
+            aspectRatio: '', // 纵横比
+            viewMode: 2,
+            preview: '.img-preview' // 预览图的class名
+        };
+        $image.cropper(options);
+        var $inputImage = input;
+        var uploadedImageURL;
+        if (URL) {
+            // 给input添加监听
+            $inputImage.change(function () {
+                var files = this.files;
+                var file;
+                if (!$image.data('cropper')) {
+                    return;
+                }
+                if (files && files.length) {
+                    file = files[0];
+                    // 判断是否是图像文件
+                    if (/^image\/\w+$/.test(file.type)) {
+                        // 如果URL已存在就先释放
+                        if (uploadedImageURL) {
+                            URL.revokeObjectURL(uploadedImageURL);
+                        }
+                        uploadedImageURL = URL.createObjectURL(file);
+                        // 销毁cropper后更改src属性再重新创建cropper
+                        $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
+                        $inputImage.val('');
+                    } else {
+                        window.alert('请选择一个图像文件！');
+                    }
+                }
+            });
+        } else {
+            $inputImage.prop('disabled', true).addClass('disabled');
+        }
+    };
+    var crop = function(){
+        var $image = $('#image');
+        var $target = $('#result');
+        $image.cropper('getCroppedCanvas',{
+            width:300, // 裁剪后的长宽
+            height:300
+        }).toBlob(function(blob){
+            // 裁剪后将图片放到指定标签
+            $target.attr('src', URL.createObjectURL(blob));
+        });
+    };
+    $(function(){
+        initCropper($('#image'),$('#input'));
+    });
+</script>
+<script>
+    var $2 = $.noConflict(true);
+</script>
+</body>
+</html>
+<script>
+    layui.use(['layer', 'form', 'element','laydate','table','upload'], function(){
+        var layer = layui.layer,
+            form = layui.form,
+            element = layui.element,
+            laydate = layui.laydate,
+            table = layui.table,
+            upload = layui.upload;
+        $2("#uploadPic").on('click',function () {
+            var params = {};
+            params.action = 'uploadPic';
+            params.assid = $2('input[name="assid"]').val();
+            params.base64Data = base64Data;
+            var flag = false;
+            var picUrl = '';
+            $2.ajax({
+                timeout: 5000,
+                type: "POST",
+                url: 'addAssets',
+                data: params,
+                dataType: "json",
+                beforeSend:beforeSend,
+                async:false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        flag = true;
+                        picUrl = data.pic_url;
+                        layer.msg(data.msg,{icon : 1,time:2000});
+                    }else{
+                        layer.msg(data.msg,{icon : 2,time:1000});
+                    }
+                },
+                error: function () {
+                    layer.msg("网络访问失败",{icon : 2,time:1000});
+                },
+                complete:complete
+            });
+            if(flag){
+                //console.log(picUrl);
+            }else{
+                //console.log(2);
+            }
+        });
+    });
+</script>

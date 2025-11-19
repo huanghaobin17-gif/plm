@@ -1,0 +1,116 @@
+<?php if($menuData = get_menu_name('Assets','Lookup','getInsuranceList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getInsuranceList = "{$getInsuranceList}";
+</script>
+<div class="layui-fluid" id="LAY-Assets-Lookup-getInsuranceList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getInsuranceListAssName" placeholder="请输入设备名称" name="assName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getInsuranceListAssNum" placeholder="请输入设备编号" name="assNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="department" xm-select="getInsuranceListDepartment"
+                                            xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">维保日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" readonly name="startDate" id="getInsuranceListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" readonly name="endDate" id="getInsuranceListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="padding-bottom: 10px;">
+                                <div class="layui-input-inline" style="margin-left: 40px;">
+                                    <input type="checkbox" name="guarantee" lay-skin="primary" value="1" title="保修期内" checked>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否参保：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="insurance" value="-1" title="全部" checked>
+                                    <input type="radio" name="insurance" value="1" title="参保">
+                                    <input type="radio" name="insurance" value="0" title="未参保">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline" style="margin-top:12px;">
+                                        <button class="layui-btn" lay-submit="" lay-filter="getInsuranceListSearch" id="getInsuranceListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary" id="inreset">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="getInsuranceList" lay-filter="getInsuranceListData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['admin'], function(){
+        var $ = layui.$
+            ,admin = layui.admin
+            ,table = layui.table
+            ,element = layui.element;
+
+    });
+</script>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/lookup/getInsuranceList', layui.factory('assets/lookup/getInsuranceList'));
+</script>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看科室申请明细</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 90px;
+        }
+        #addTenderFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+        .read-table th{
+            width: 13%;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">基本信息</blockquote>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>申请科室：</th>
+                    <td>{$applyInfo.department}</td>
+                </tr>
+                <tr>
+                    <th>申请单号：</th>
+                    <td>{$applyInfo.apply_num}</td>
+                </tr>
+                <tr>
+                    <th>项目名称：</th>
+                    <td>{$applyInfo.project_name}</td>
+                </tr>
+                <tr>
+                    <th>申请人：</th>
+                    <td>{$applyInfo.apply_user}</td>
+                </tr>
+                <tr>
+                    <th>申请日期：</th>
+                    <td>{$applyInfo.apply_date}</td>
+                </tr>
+                <tr>
+                    <th>申请方式：</th>
+                    <td>{$applyInfo.apply_type_name}</td>
+                </tr>
+                <tr>
+                    <th>设备数量：</th>
+                    <td>{$applyInfo.assets_nums}</td>
+                </tr>
+                <tr>
+                    <th>设备总价：</th>
+                    <td>{$applyInfo.assets_amount}</td>
+                </tr>
+                <tr>
+                    <th>审核状态：</th>
+                    <td>{$applyInfo.approve_status_name}</td>
+                </tr>
+                <tr>
+                    <th>申请理由：</th>
+                    <td>{$applyInfo.apply_reason}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+                设备明细
+            </blockquote>
+            <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="6%">
+                    <col width="16%">
+                    <col width="7%">
+                    <col width="10%">
+                    <col width="7%">
+                    <col width="12%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="">
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">序号</th>
+                    <th style="text-align: left !important;">设备名称</th>
+                    <th style="text-align: left !important;">单位</th>
+                    <th style="text-align: left !important;">单价(元)</th>
+                    <th style="text-align: left !important;">数量</th>
+                    <th style="text-align: left !important;">总额(元)</th>
+                    <th style="text-align: left !important;">是否进口</th>
+                    <th style="text-align: left !important;">上报类别</th>
+                    <th style="text-align: left !important;">参考品牌</th>
+                </tr>
+                <if condition="$assetsInfo">
+                    <volist name="assetsInfo" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.assets_name}</td>
+                            <td>{$vo.unit}</td>
+                            <td>{$vo.market_price}</td>
+                            <td>{$vo.nums}</td>
+                            <td>{$vo.total_price}</td>
+                            <td>
+                                <if condition="$vo.is_import eq 1">
+                                    是
+                                    <else/>
+                                    否
+                                </if>
+                            </td>
+                            <td>
+                                <if condition="$vo.buy_type eq 1">
+                                    报废更新
+                                </if>
+                                <if condition="$vo.buy_type eq 2">
+                                    添置
+                                </if>
+                                <if condition="$vo.buy_type eq 3">
+                                    新增
+                                </if>
+                            </td>
+                            <td>{$vo.brand}</td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td colspan="9" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">附件信息</blockquote>
+            <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+                <colgroup>
+                    <col width="6%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>文件名称</th>
+                    <th>文件大小</th>
+                    <th>提交人</th>
+                    <th>提交时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="file_list">
+                <if condition="$fileInfo">
+                    <volist name="fileInfo" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.file_name}</td>
+                            <td>{$vo.file_size}M</td>
+                            <td>{$vo.add_user}</td>
+                            <td>{$vo.add_time}</td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <!--<button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>-->
+                                    <button class="layui-btn layui-btn-xs downFile" lay-submit lay-filter="downFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">下载</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;">审批信息</blockquote>
+                <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+                    <colgroup>
+                        <col width="6%">
+                        <col width="15%">
+                        <col width="20%">
+                        <col width="15%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>审批人</th>
+                        <th>审批时间</th>
+                        <th>审批状态</th>
+                        <th>审批意见</th>
+                    </tr>
+                    </thead>
+                    <tbody class="file_url">
+                    <if condition="$approveInfo">
+                    <volist name="approveInfo" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.approver}</td>
+                            <td>{$vo.approve_time}</td>
+                            <td>{$vo.is_adopt}</td>
+                            <td>{$vo.remark}</td>
+                        </tr>
+                    </volist>
+                        <else/>
+                        <tr>
+                            <td colspan="5" style="text-align: center !important;">暂无相关信息</td>
+                        </tr>
+                    </if>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseApply/showApply', layui.factory('controller/purchases/purchaseApply/showApply'));
+</script>

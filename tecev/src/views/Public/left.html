@@ -1,0 +1,62 @@
+<div class="leftmenuDiv" id="lmenu">
+    <ul>
+        <volist name="menu_1" id="vo">
+            <li class="leftmenuDiv-li">
+                <div class="menu-nav">
+                    <span class="{$vo.icon_style}" aria-hidden="true"></span> &nbsp;
+                    <a href="/A/{$vo.module}/{$vo.module}/index.html">{$vo.modulename}</a>
+                </div>
+                <div class="menu-nav-hid">
+                    <volist name="menu_2" id="vo2">
+                        <if condition="$vo[module] eq $vo2[module]">
+                            <div class="menu-three">
+                                <ul>
+                                    <div style="float: left">{$vo2.controllername} > </div>
+                                    <volist name="menu_3[$vo2[controller]]" id="vo3" key="k3">
+                                        <if condition="$vo[module] eq $vo3[module]">
+                                            <if condition="$vo2[sonNum] eq $k3">
+                                                <li class="noRightBorder"><a class="menu-nav-hid_a" href="{$vo3.url}">{$vo3.actionname}</a></li>
+                                                <else />
+                                                <if condition="$vo3.open eq 1">
+                                                    <li><a class="menu-nav-hid_a" href="{$vo3.url}" id="open">{$vo3.actionname}</a></li>
+                                                    <else/>
+                                                    <li><a class="menu-nav-hid_a" href="{$vo3.url}">{$vo3.actionname}</a></li>
+                                                </if>
+                                            </if>
+                                        </if>
+                                    </volist>
+                                    <div class="clear"></div>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </if>
+                    </volist>
+                </div>
+            </li>
+        </volist>
+    </ul>
+</div>
+<div class="side">
+    <!--<div id="side" class="side_on">&nbsp;</div>-->
+</div>
+<script>
+$(function(){
+    $("#open").click(function(){
+        var url = $(this).attr('href');
+        top.layer.open({
+            type: 2,
+            title: $(this).html(),
+            shade: [0.8, '#393D49'],
+            shadeClose:true,
+            anim:5,
+            scrollbar:false,
+            area: ['85%', '95%'],
+            offset: '10px',
+            closeBtn: 1,
+            content: url
+        });
+        return false;
+    });
+
+});
+</script>

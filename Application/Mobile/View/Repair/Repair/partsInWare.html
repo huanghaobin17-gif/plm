@@ -1,0 +1,207 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Repair','RepairParts','partsInWare')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .setForm .layui-card-header{
+        border-bottom-color: #d2d2d2;
+    }
+    .setForm .fixLabelWidth{float: left;min-width: 5em;color: #999;text-align: right;}
+    .setForm .fixText{display: block;font-size: 1.125rem;overflow: hidden;word-break: normal;word-wrap: break-word;}
+    .setForm .layui-form-label{width: 7rem;text-align: right;}
+    .setForm .addParts .layui-form-label{width: 5rem;text-align: right;}
+    .setForm .layui-input-inline{width: 5rem;margin-left: -0.5rem;margin-bottom:0;float: left}
+    .setForm .fillPartsLists{margin: 0.5rem;}
+    .setForm .fillPartsLists li{margin-top: 0.5rem;}
+    .uploadButton{position: relative;}
+    .uploadButton i{position: absolute;font-size: 2rem;left: 5rem;}
+    .content{padding: 1rem;}
+    .detail{position: relative;}
+    .detail .layui-form-checkbox[lay-skin=primary]{position: absolute;}
+    .detail .layui-form-checkbox[lay-skin=primary] i{position: absolute;left: -1.5625rem;top: -1.5625rem;}
+    .detail .layui-form-checkbox[lay-skin=primary]:hover i{border-color: #c2c2c2}
+    .detail li:first-child{margin-top: 0;}
+    .detail li{margin-top: 0.5rem;}
+    .number{display: inline-block;padding-top: 0.5rem;}
+    .chooseContent{display: block;}
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <div class="fillParts">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h2 class="detailTitle">配件库存信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <!--配件补充库存-->
+                <div class="layui-card-body">
+                    <ul class="fillPartsLists">
+                        <li>
+                            <div class="fixLabelWidth">配件名称：</div>
+                            <div class="fixText">监护仪电子开关</div>
+                        </li>
+                        <li>
+                            <div class="fixLabelWidth">配件型号：</div>
+                            <div class="fixText">1MK934</div>
+                        </li>
+                        <li>
+                            <div class="fixLabelWidth">库存数量：</div>
+                            <div class="fixText">8个</div>
+                        </li>
+                        <li>
+                            <div class="fixLabelWidth">配件单价：</div>
+                            <div class="fixText">300元<i class="wx-icon wx-icon-editPencil" style="margin-left: 1rem;color: #1E9FFF"></i></div>
+                        </li>
+                        <li>
+                            <div class="fixLabelWidth">供应商：</div>
+                            <div class="fixText">深圳理邦精密仪器股份有限公司<i class="wx-icon wx-icon-editPencil" style="margin-left: 1rem;color: #1E9FFF"></i></div>
+                        </li>
+                    </ul>
+                </div>
+                <!---->
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">配件入库表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <!--配件补充库存-->
+                <div class="fillParts">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">采购入库数量：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" value="" placeholder="" name="" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">费用合计：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" value="" placeholder="" name="" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                        <div class="number">
+                            元
+                        </div>
+                    </div>
+                </div>
+
+                <!--新增入库-->
+                <div class="addParts hide">
+                    <ul>
+                        <li>
+                            <div class="content">
+                                <ul class="detail">
+                                    <input type="checkbox" name="a" lay-skin="primary" lay-filter="choose">
+                                    <li>
+                                        <div class="fixLabelWidth">配件名称：</div>
+                                        <div class="fixText">监护仪电子开关</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">配件型号：</div>
+                                        <div class="fixText">1MK934</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">库存数量：</div>
+                                        <div class="fixText">8个</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">配件单价：</div>
+                                        <div class="fixText">300元</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">供应商：</div>
+                                        <div class="fixText">深圳理邦精密仪器股份有限公司</div>
+                                    </li>
+                                </ul>
+                                <div class="layui-form-item mgt1rem hide">
+                                    <label class="layui-form-label" style="width: 7rem;"><span class="rquireCoin"> * </span>采购入库数量：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="hidden" name="inwareid" value="1">
+                                        <input type="number" value="" placeholder="" name="" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="number">
+                                        个
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="content">
+                                <ul class="detail">
+                                    <input type="checkbox" name="a1"  lay-skin="primary" lay-filter="choose">
+                                    <li>
+                                        <div class="fixLabelWidth">配件名称：</div>
+                                        <div class="fixText">监护仪电子开关</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">配件型号：</div>
+                                        <div class="fixText">1MK934</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">库存数量：</div>
+                                        <div class="fixText">8个</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">配件单价：</div>
+                                        <div class="fixText">300元</div>
+                                    </li>
+                                    <li>
+                                        <div class="fixLabelWidth">供应商：</div>
+                                        <div class="fixText">深圳理邦精密仪器股份有限公司</div>
+                                    </li>
+                                </ul>
+                                <div class="layui-form-item mgt1rem hide">
+                                    <label class="layui-form-label" style="width: 7rem;"><span class="rquireCoin"> * </span>采购入库数量：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="hidden" name="inwareid" value="2">
+                                        <input type="number" value="" placeholder="" name="" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="number">
+                                        个
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label">入库时间：</label>
+                        <div class="number">
+                            2019-02-26 10:55
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>供应商：</label>
+                        <div class="layui-input-block">
+                            <select name="">
+                                <option value="">请选择供应商</option>
+                                <option value="1">啊哈哈</option>
+                                <option value="0">哈哈哈</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">备注：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <!---->
+                <div class="layui-form-item mgt1rem">
+                    <a href="javascript:void(0)" class="layui-btn layui-btn-fluid layui-btn-primary uploadButton"><i class="wx-icon wx-icon-camera"></i>上传验收单等详情</a>
+                </div>
+                <div class="layui-form-item mgt1rem">
+                    <a href="javascript:void(0)" class="layui-btn layui-btn-fluid" lay-submit lay-filter="submit">确认并入库</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var url = "{$url}";
+</script>
+<script src="__PUBLIC__/mobile/js/repair/repair/partsInWare.js?v={:mt_rand(1,54561)}"></script>

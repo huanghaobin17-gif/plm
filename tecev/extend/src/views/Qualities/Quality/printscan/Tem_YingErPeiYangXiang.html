@@ -1,0 +1,465 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        td,th{ text-align: center!important;}
+        th{ font-weight: bold!important;}
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+        em{
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] i{
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+        .layui-form-checkbox span{
+            font-size: 12px;
+        }
+        .layui-form-checkbox[lay-skin=primary] span{
+            line-height: 16px;
+            padding-right: 0px!important;
+        }
+        .layui-form-checkbox span{
+            padding: 0px 3px;
+        }
+        .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th{
+            padding: 5px!important;
+        }
+    </style>
+</head>
+<body style="width: 820px!important; margin: auto">
+<div class="layui-fluid">
+    <div class="layui-row">
+        <!--监护仪-->
+        <h2 style="text-align: center; margin-bottom: 25px;">监护仪质量检测原始记录</h2>
+        <div>
+            <span class="fl">检测报告编号：<em>{$qsInfo.plan_num}</em></span>
+            <span class="fr">制表日期：<em>{$date}</em></span>
+        </div>
+        <br/>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="150">
+                <col width="550">
+                <col width="200">
+                <col width="550">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>使用科室</th>
+                <td><em>{$asInfo.department}</em></td>
+                <th>质控计划名称</th>
+                <td><em>{$qsInfo.plan_name}</em></td>
+            </tr>
+            <tr>
+                <th>检测依据</th>
+                <td colspan="3">{$qsInfo.basis}</td>
+            </tr>
+            <tr>
+                <th>项目类型</th>
+                <th>被检设备</th>
+                <th colspan="2">检测仪器（标准器、模拟器）</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td><em>{$asInfo.assets}</em></td>
+                <td colspan="2">{$qsInfo.instrument}</td>
+            </tr>
+            <tr>
+                <th>品牌</th>
+                <td><em>{$asInfo.brand}</em></td>
+                <th>规格 / 型号</th>
+                <td><em>{$asInfo.model}</em></td>
+            </tr>
+            <tr>
+                <th>设备编号</th>
+                <td><em>{$asInfo.assnum}</em></td>
+                <th>产品序列号</th>
+                <td><em>{$asInfo.serialnum}</em></td>
+            </tr>
+            <tr>
+                <th>启用日期</th>
+                <td><em>{$asInfo.opendate}</em></td>
+                <th>上次质控日期</th>
+                <td><em>{$asInfo.test_date}</em></td>
+            </tr>
+            <tr>
+                <th class="text-left" colspan="4">二、性能检测、校准、记录</th>
+            </tr>
+            <tr>
+                <th>外观功能</th> 
+                <td class="no-padding-td" colspan="3" style="text-align: left!important;">
+                    <if condition="$detailInfo.exterior eq 1">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合&nbsp;
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+                    <elseif condition="$detailInfo.exterior eq 2"/>
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合&nbsp;
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：{$detailInfo.exterior_explain}
+                    <else/>
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                         &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+                    </if>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col width="130">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="50">
+            <col width="250">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="12"  style="text-align: left !important;">&emsp; 1.温度检测</th>
+        </tr>
+        <tr>
+            <th>设定温度Tk</th>
+            <th  colspan="10">34℃(每3分钟记录1次）</th>
+            <th >平均值（a）</th>
+        </tr>
+        <tr>
+            <th>Tx显示温度</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq 'Tx显示温度'">
+                        <volist name="detailInfo['preset_detection']['Tx']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+            </volist>
+            <td>Txa={$detailInfo['preset_detection']['Txa'][0]}</td>
+        </tr>
+        <tr>
+            <th>中心温度测试点T1</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq '中心温度测试点T1'">
+                        <volist name="detailInfo['preset_detection']['T1']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+                </volist>
+            <td>T1a={$detailInfo['preset_detection']['T1a'][0]}</td>
+        </tr>
+        <tr>
+            <th>测试点T2</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq '中心温度测试点T2'">
+                        <volist name="detailInfo['preset_detection']['T2']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+                </volist>
+            <td>T2a={$detailInfo['preset_detection']['T2a'][0]}</td>
+        </tr>
+        <tr>
+            <th>测试点T3</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq '中心温度测试点T3'">
+                        <volist name="detailInfo['preset_detection']['T3']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+                </volist>
+            <td>T3a={$detailInfo['preset_detection']['T3a'][0]}</td>
+        </tr>
+        <tr>
+            <th>测试点T4</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq '中心温度测试点T4'">
+                        <volist name="detailInfo['preset_detection']['T4']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+                </volist>
+            <td>T4a={$detailInfo['preset_detection']['T4a'][0]}</td>
+        </tr>
+        <tr>
+            <th>测试点T5</th>
+            <volist name="values" id="vo" empty="$empty">
+                    <if condition="$vo.detection_name eq '中心温度测试点T5'">
+                        <volist name="detailInfo['preset_detection']['T5']" id="ho" offset="0" length='10'>
+                            <td class="no-padding-td td-center">
+                                {$ho}
+                            </td>
+                        </volist>
+                    </if>
+                </volist>
+            <td>T5a={$detailInfo['preset_detection']['T5a'][0]}</td>
+        </tr>
+        <tr>
+            <th>检测项目</th>
+            <th colspan="5">允许误差值</th>
+            <td colspan="3">实际偏差值</td>
+            <td colspan="3">检测结果</td>
+        </tr>
+        <tr>
+            <th>温度偏差值</th>
+            <th colspan="5">|Txa-T1a|≤0.8℃</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Temperature_deviation'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Temperature_deviation_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Temperature_deviation_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>温度均匀性</th>
+            <th colspan="5">|T2a/3a/4a/5a-T1a|max≤0.8℃</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Temperature_uniformity'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Temperature_uniformity_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Temperature_uniformity_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>波动度</th>
+            <th colspan="5">|T1s-T1a|max≤0.5℃</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Volatility'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Volatility_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Volatility_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>温控偏差</th>
+            <th colspan="5">|Tk-T1a|≤1.5℃</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Temperature_control_deviation'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Temperature_control_deviation_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Temperature_control_deviation_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th colspan="12"  style="text-align: left !important;">&emsp; 2.声级检测</th>
+        </tr>
+        <tr>
+            <th>检测项目</th>
+            <th colspan="5">允许误差值</th>
+            <td colspan="3">实际偏差值</td>
+            <td colspan="3">检测结果</td>
+        </tr>
+        <tr>
+            <th>箱内正常噪音检测</th>
+            <th colspan="5">≤60dB</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Normal_noise_detection_in_the_box'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Normal_noise_detection_in_the_box_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Normal_noise_detection_in_the_box_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>箱内报警噪音测试</th>
+            <th colspan="5">≤80dB</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Alarm_noise_test_in_the_box'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Alarm_noise_test_in_the_box_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Alarm_noise_test_in_the_box_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>报警声级测试 (3米）</th>
+            <th colspan="5">≥65dB</th>
+            <td colspan="3">{$detailInfo['preset_detection']['Alarm_sound_level_test'][0]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Alarm_sound_level_test_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Alarm_sound_level_test_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>3.湿度检测</th>
+            <td colspan="2">设定值：{$detailInfo['preset_detection']['Humidity_detection'][0]}</td>
+            <th colspan="3">容许误差： ＜10%</th>
+            <td colspan="3">实际值：{$detailInfo['preset_detection']['Humidity_detection'][1]}</td>
+            <td colspan="3"><if condition="$detailInfo['preset_detection']['Humidity_detection_result'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['preset_detection']['Humidity_detection_result'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>4.报警测试</th>
+            <td colspan="2">断电报警</td>
+            <td colspan="3"><if condition="$detailInfo['fixed_detection']['Power_failure_alarm'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['fixed_detection']['Power_failure_alarm'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+            <td colspan="3">超温报警</td>
+            <td colspan="3"><if condition="$detailInfo['fixed_detection']['Over_temperature_alarm'] eq 1">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <elseif condition="$detailInfo['fixed_detection']['Over_temperature_alarm'] eq 2"/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                <else/>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+            </if></td>
+        </tr>
+        <tr>
+            <th>5.检测结论 </th>
+            <td colspan="11"><div class="layui-inline">
+                    <if condition="$detailInfo.result eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                        <elseif condition="$detailInfo.result eq 2"/>
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                            <else/>
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                        </if>
+                </div></td>
+        </tr>
+        <tr>
+            <th>备注： </th>
+            <td colspan="11">{$detailInfo.remark}</td>
+        </tr>
+        </tbody>
+    </table>
+        <!--签字表-->
+        <table class="layui-table" lay-size="sm" style="margin-top: -10px;">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td colspan="3" class="text-left">
+                    评分：
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>1分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>2分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>3分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>4分、
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>5分
+                </td>
+            </tr>
+            <tr>
+                <th colspan="3" class="text-left">三、经办工程师及验收人员意见及签字</th>
+            </tr>
+            <tr>
+                <th>设备使用部门负责人意见及签字 </th>
+                <th>经办工程师意见及签字</th>
+                <th>设备科意见及签字</th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$asInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$asInfoautograph}">
+                        <span>日期：{$asInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$qsInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$qsInfoautograph}">
+                        <span>日期：{$qsInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$departautograph}">
+                        <span>日期：{$departautograph_time}</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ilayui-form-item tbcenter printbtn" style=" margin: 30px auto;">
+    <button class="layui-btn" id="print" lay-submit lay-filter="print"><i class="layui-icon" >&#xe609;</i>打印模板</button>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/qualities/quality/scanTemplate', layui.factory('controller/qualities/quality/scanTemplate'));
+</script>

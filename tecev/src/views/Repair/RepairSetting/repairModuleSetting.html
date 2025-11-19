@@ -1,0 +1,25 @@
+<?php if($menuData = get_menu_name('Repair','RepairSetting','repairModuleSetting')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Repair-RepairSetting-repairModuleSetting" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form layui-form-pane"  action="">
+                        <input type="hidden" name="action" value="{$url}"/>
+                        <include file="BaseSetting:ModuleSetting:repairSetting"/>
+                        <div style="text-align: center;margin-top: 15px;" >
+                            <button class="layui-btn" lay-submit lay-filter="saveSetting" type="button"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('basesetting/modulesetting/module', layui.factory('basesetting/modulesetting/module'));
+</script>
+<script src="__PUBLIC__/js/ajax.js"></script>

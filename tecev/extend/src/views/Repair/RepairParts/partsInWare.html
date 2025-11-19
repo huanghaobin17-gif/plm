@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Repair-RepairParts-partsInWare .no-padding-td {
+            padding: 0 !important;
+        }
+
+        #LAY-Repair-RepairParts-partsInWare .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Repair-RepairParts-partsInWare .no-padding-td .layui-input{
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        #LAY-Repair-RepairParts-partsInWare .addIcon {
+            position: absolute;
+            right: -8px;
+            top: 9px;
+            cursor: pointer;
+            color: #0a8ddf;
+        }
+
+        #LAY-Repair-RepairParts-partsInWare .rightAddButton{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+        }
+        #addSuppliersDiv .layui-form-label {
+            width: 115px !important;
+        }
+
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairParts-partsInWare">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>入库单记录</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="margin-bottom: 5px;">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 入库日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="addtime" placeholder="请点击选择入库日期" style="cursor: pointer;" id="partsInWareAddtime" readonly class="layui-input" lay-verify="addtime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 供应商：</label>
+                <div class="layui-input-inline">
+                    <select name="supplier_id" lay-filter="supplier_id" lay-search lay-verify="supplier_id">
+                        <option value="">请选择供应商</option>
+                        <volist name="supplierList" id="vo">
+                            <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="addIcon">
+                    <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                    <i class="layui-icon" id="addSupplier"> &#xe654;</i>
+                    <?php endif?>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">入库备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="remark"></textarea>
+            </div>
+        </div>
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+            配件采购明细
+            <span class="rightAddButton" id="pushParts"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加明细</span>
+        </blockquote>
+        <table class="layui-table">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col width="80">
+                <col width="90">
+                <col width="90">
+                <col width="80">
+            </colgroup>
+            <thead>
+            <tr>
+                <th><span class="rquireCoin"> * </span>配件名称</th>
+                <th>配件型号</th>
+                <th>生产厂商</th>
+                <th>品牌</th>
+                <th>单位</th>
+                <th><span class="rquireCoin"> * </span>数量</th>
+                <th><span class="rquireCoin"> * </span>单价</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="pushPartTbody">
+                <tr class="emptyJoinPartsTr">
+                    <td colspan="8" style="text-align: center">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="addPartsInWare"><i class="layui-icon">&#xe609;</i>
+                    确认入库
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<div id="addPartsDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <form action="" class="layui-form">
+                            <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">配件名称：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="partsInWareBsSuggestParts" placeholder="请输入配件名称" name="parts">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">配件分类：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="partsInWareDicCategory" placeholder="请输配件分类" name="dic_category">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">生产厂商：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="supplier_id"  lay-search>
+                                            <option value="">请选择生产厂商</option>
+                                            <volist name="supplierList" id="vo">
+                                                <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-left: 10px;">
+                                    <div class="fl">
+                                        <button class="layui-btn" lay-submit="partsInWareCanJoinPartsSearch" lay-filter="partsInWareCanJoinPartsSearch">
+                                            <i class="layui-icon">&#xe615;</i> 搜 索
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row table-list">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table id="canJoinPartsList" lay-filter="canJoinPartsData"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="addSuppliersDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_num" readonly value="{$sup_num}">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_name" placeholder="请输入厂商名称" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="suppliers_type" xm-select="suppliers_type" xm-select-search="" lay-verify="required">
+                                <option value="1">供应商</option>
+                                <option value="2">生产商</option>
+                                <option value="3">维修商</option>
+                                <option value="4">维保商</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_name" placeholder="请输入业务联系人">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人电话：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_phone" placeholder="请输入业务联系人电话" lay-verify="tel">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">省份：</label>
+                        <div class="layui-input-inline">
+                            <select name="provinces" lay-filter="provinces" lay-search>
+                                <option value="">请选择</option>
+                                <volist name="provinces" id="vo">
+                                    <option value="{$vo.provinceid}">{$vo.province}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">城市：</label>
+                        <div class="layui-input-inline">
+                            <select name="city" lay-filter="city" lay-search>
+                                <option value="">请选择省份</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">区/城镇：</label>
+                        <div class="layui-input-inline">
+                            <select name="areas" lay-search>
+                                <option value="">请选择城市</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">通讯地址：</label>
+                    <div class="layui-input-block" style="width: 540px; margin-left: 145px;">
+                        <input type="text" class="layui-input" name="address" placeholder="请输入通讯地址">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addSuppliers">
+                        <i class="layui-icon">&#xe609;</i> 添加
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Repair-RepairParts-partsInWarePushPartsbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addAllParts" data-url="">
+            <i class="layui-icon">&#xe654;</i>一键纳入
+        </button>
+
+        <?php if($menuData = get_menu('BaseSetting','Dictionary','addPartsDic')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addPartsDic" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var partsInWareUrl = '{$partsInWareUrl}';
+</script>
+<script>
+    layui.use('controller/repair/repairParts/partsInWare', layui.factory('controller/repair/repairParts/partsInWare'));
+</script>

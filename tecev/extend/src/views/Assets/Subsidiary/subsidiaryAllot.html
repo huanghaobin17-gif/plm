@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <?php if($menuData = get_menu_name('Assets','Subsidiary','subsidiaryAllot')):?>
+    <title>{$menuData['actionname']}</title>
+    <?php endif?>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Assets-Subsidiary-subsidiaryAllot .bsSuggest{
+            height:24px;
+        }
+        #LAY-Assets-Subsidiary-subsidiaryAllot .layui-form-label{
+            width: 127px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Assets-Subsidiary-subsidiaryAllot">
+    <blockquote class="layui-elem-quote-sm">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">设备名称：</td>
+            <td>{$assets.assets}</td>
+            <td class="text-right">设备编号：</td>
+            <td>{$assets.assnum}</td>
+        </tr>
+        <tr>
+            <td class="text-right">规格/型号：</td>
+            <td>{$assets.model}</td>
+            <td class="text-right">品牌：</td>
+            <td>{$assets.brand}</td>
+        </tr>
+        <tr>
+            <td class="text-right">产品序列号：</td>
+            <td>{$assets.serialnum}</td>
+            <td class="text-right">生产厂家：</td>
+            <td>{$assets.factory}</td>
+        </tr>
+        <tr>
+            <td class="text-right">所属科室：</td>
+            <td>{$assets.department}</td>
+            <td class="text-right">设备管理员：</td>
+            <td>{$assets.assetsrespon}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备原值：</td>
+            <td>{$assets.buy_price}</td>
+            <td class="text-right">设备状态：</td>
+            <td>{$assets.statusName}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <fieldset class="layui-elem-field layui-field-title"><legend>分配申请单</legend></fieldset>
+    <form class="layui-form layui-form-pane" action="">
+        <input type="hidden" name="assid" value="{$assets.assid}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>分配至科室：</label>
+                <div class="layui-input-inline">
+                    <select name="departid" class="input_select" lay-search="" lay-verify="required" lay-filter="departid">
+                        <option value="">请选择</option>
+                        <volist name="departname" id="vo">
+                            <option value="{$vo.departid}">{$vo.department}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline subsidiaryAssets">
+                <label class="layui-form-label">所属设备<span class="rquireCoin">*</span></label>
+                <div class="layui-input-inline" id="main_assets_div">
+                    <div class="input-group">
+                        <input type="text" class="form-control bsSuggest" id="allotAssetsName" placeholder="请先选择科室" name="main_assets">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">管理科室 <span class="rquireCoin">*</span></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="managedepart" readonly autocomplete="off" class="layui-input" placeholder="选择主设备后自动填充">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">使用位置</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address" autocomplete="off" class="layui-input" placeholder="选择主设备后自动填充">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">资产负责人 <span class="rquireCoin">*</span></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="assetsrespon" lay-verify="assetsrespon" placeholder="请填写资产负债人" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label" style="width: auto">分配备注：</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="输入分配备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-inline">
+                    <label class="layui-form-label">申请人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" readonly value="{$apply_user}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">申请日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" readonly value="{$apply_time}" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addApplySubsidiary"><i class="layui-icon">&#xe609;</i>立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">清空重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var subsidiaryAllotUrl='{$subsidiaryAllotUrl}';
+    layui.use('controller/assets/subsidiary/subsidiaryAllot', layui.factory('controller/assets/subsidiary/subsidiaryAllot'));
+</script>

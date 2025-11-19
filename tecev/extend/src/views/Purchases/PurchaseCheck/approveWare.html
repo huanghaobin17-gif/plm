@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 18%;
+        }
+        #addTenderingBook{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>入库人：</th>
+                <td>{$inWareInfo.in_user}</td>
+            </tr>
+            <tr>
+                <th>入库日期：</th>
+                <td>{$inWareInfo.in_date}</td>
+            </tr>
+            <tr>
+                <th>入库单号：</th>
+                <td>{$inWareInfo.in_num}</td>
+            </tr>
+            <tr>
+                <th>入库数量：</th>
+                <td>{$inWareInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>入库金额：</th>
+                <td>{$inWareInfo.total_price}</td>
+            </tr>
+            <tr>
+                <th>供应商：</th>
+                <td>{$inWareInfo.supplier}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td>{$inWareInfo.in_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            设备明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="10%">
+                <col width="30%">
+                <col width="10%">
+                <col width="10%">
+                <col width="15%">
+                <col width="15%">
+                <col width="10%">
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">设备名称</th>
+                <th style="text-align: left !important;">单位</th>
+                <th style="text-align: left !important;">数量</th>
+                <th style="text-align: left !important;">单价</th>
+                <th style="text-align: left !important;">总价</th>
+                <th style="text-align: left !important;">是否进口</th>
+            </tr>
+            <tbody>
+            <volist name="assets" id="vo">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.assets_name}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.nums}</td>
+                    <td>{$vo.buy_price}</td>
+                    <td>{$vo.total_price}</td>
+                    <td>
+                        <if condition="$vo.is_import eq 1">
+                            是
+                        <else/>
+                            否
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote" style="margin-bottom: 20px;">
+            审批信息
+        </div>
+        <form class="layui-form">
+            <input type="hidden" name="in_id" value="{$inWareInfo.in_id}"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">审批人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$username}" class="layui-input" readonly>
+                </div>
+                <label class="layui-form-label">审批日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$nowday}" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">审批结果：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="approve_status" value="1" title="通过" checked>
+                    <input type="radio" name="approve_status" value="2" title="不通过">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">审批意见：</label>
+                <div class="layui-input-block">
+                    <textarea name="approve_desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveApprove">
+                    <i class="layui-icon" >&#xe609;</i> 提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/approveWare', layui.factory('controller/purchases/purchaseCheck/approveWare'));
+</script>

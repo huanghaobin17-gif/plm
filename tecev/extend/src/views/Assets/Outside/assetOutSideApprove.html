@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <?php if($menuData = get_menu_name('Assets','Outside','assetOutSideApprove')):?>
+    <title>{$menuData['actionname']}</title>
+    <?php endif?>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv" id="LAY-Assets-Outside-assetOutSideApprove" >
+    <blockquote class="layui-elem-quote-sm">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">设备名称：</td>
+            <td>{$assets.assets}</td>
+            <td class="text-right">设备编号：</td>
+            <td>{$assets.assnum}</td>
+        </tr>
+        <tr>
+            <td class="text-right">规格/型号：</td>
+            <td>{$assets.model}</td>
+            <td class="text-right">品牌：</td>
+            <td>{$assets.brand}</td>
+        </tr>
+        <tr>
+            <td class="text-right">产品序列号：</td>
+            <td>{$assets.serialnum}</td>
+            <td class="text-right">生产厂家：</td>
+            <td>{$assets.factory}</td>
+        </tr>
+        <tr>
+            <td class="text-right">所属科室：</td>
+            <td>{$assets.department}</td>
+            <td class="text-right">设备管理员：</td>
+            <td>{$assets.assetsrespon}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备原值：</td>
+            <td>{$assets.buy_price}</td>
+            <td class="text-right">启用日期：</td>
+            <td>{$assets.opendate}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备状态：</td>
+            <td>{$assets.statusName}</td>
+            <td class="text-right">维保状态：</td>
+            <td>{$assets.guarantee_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">巡查保养状态：</td>
+            <td>{$assets.patrol_status}</td>
+            <td class="text-right">计量状态：</td>
+            <td>{$assets.meterin_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">维修次数：</td>
+            <td>{$assets.repairNum}</td>
+            <td class="text-right">维保次数：</td>
+            <td>{$assets.insuredsum}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            外调附属设备明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <blockquote class="layui-elem-quote-sm">
+        设备外调申请单信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">申请类型：</td>
+            <td>{$outside.apply_type_name}</td>
+            <if condition="$outside['apply_type'] eq C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                <td class="text-right">外售金额：</td>
+                <td>{$outside.price}元</td>
+                <else/>
+                <td class="text-right">外调目的地：</td>
+                <td>{$outside.accept}</td>
+            </if>
+        </tr>
+        <tr>
+            <if condition="$outside['apply_type'] eq C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                <td class="text-right">外调目的地：</td>
+                <td>{$outside.accept}</td>
+                <td class="text-right">外调原因：</td>
+                <td>{$outside.reason}</td>
+                <else/>
+                <td class="text-right">外调原因：</td>
+                <td colspan="3">{$outside.reason}</td>
+            </if>
+        </tr>
+        <tr>
+            <td class="text-right">联系人：</td>
+            <td>{$outside.person}</td>
+            <td class="text-right">联系电话：</td>
+            <td>{$outside.phone}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请人：</td>
+            <td>{$outside.apply_user}</td>
+            <td class="text-right">申请时间：</td>
+            <td>{$outside.apply_time}</td>
+        </tr>
+        <tr>
+            <td class="text-right">预计调出日期：</td>
+            <td colspan="3">{$outside.outside_date}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+
+    <notempty name="fileData">
+        <blockquote class="layui-elem-quote-sm">外调申请附件</blockquote>
+        <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+            <colgroup>
+                <col width="15%">
+                <col width="40%">
+                <col width="30%">
+                <col width="15%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>序号：</th>
+                <th>文件名称：</th>
+                <td>上传时间</td>
+                <th>操作：</th>
+            </tr>
+            <volist name="fileData" id="vo">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.file_name}</td>
+                    <td>{$vo.add_time}</td>
+                    <td>{$vo.operation}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <notempty name="outside.app_user_status">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审批流程&进度</div>
+            <div class="layui-card-body splc">
+                {$outside.app_user_status}
+            </div>
+        </div>
+    </notempty>
+
+    <notempty name="approve">
+            <blockquote class="layui-elem-quote-sm">审批记录</blockquote>
+            <table class="layui-table" lay-even="" lay-size="sm">
+                <colgroup>
+                    <col width="60">
+                    <col width="100">
+                    <col width="140">
+                    <col width="100">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td style="text-align: center;">序号</td>
+                    <td style="text-align: center;">审批人</td>
+                    <td style="text-align: center;">审批时间</td>
+                    <td style="text-align: center;">审批意见</td>
+                    <td>备注</td>
+                </tr>
+                <volist name="approve" id="vo">
+                <tr>
+                    <td style="text-align: center;">{$key+1}</td>
+                    <td style="text-align: center;">{$vo.approver}</td>
+                    <td style="text-align: center;">{$vo.approve_time}</td>
+                    <td style="text-align: center;">{$vo.is_adoptName}</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+                </volist>
+                </tbody>
+            </table>
+    </notempty>
+
+    <fieldset class="layui-elem-field layui-field-title"><legend>审批表单</legend></fieldset>
+    <form action="" class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <input type="hidden" name="outid" value="{$outside.outid}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">审批人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly class="layui-input" value="{$approver}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审批日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly class="layui-input" value="{$approve_time}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否通过：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="is_adopt" value="1" title="通过" checked="">
+                    <input type="radio" name="is_adopt" value="2" title="不通过">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span>审批意见：</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center">
+                <button class="layui-btn" lay-submit="submit" lay-filter="OutSideApprove"><i class="layui-icon">&#xe609;</i>提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var assetOutSideApproveUrl='{$assetOutSideApproveUrl}';
+    layui.use('controller/assets/outside/assetOutSideApprove', layui.factory('controller/assets/outside/assetOutSideApprove'));
+</script>

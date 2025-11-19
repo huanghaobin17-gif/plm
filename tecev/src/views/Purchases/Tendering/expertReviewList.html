@@ -1,0 +1,102 @@
+<?php if($menuData = get_menu_name('Purchases','Tendering','expertReviewList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Purchases-Tendering-expertReviewList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="expertReviewListDepartment" xm-select-search="">
+                                        <option value="">请选择申请科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">项目名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="review_project"  placeholder="请输入项目名称" name="project_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请方式：</label>
+                                <div class="layui-input-inline">
+                                    <select name="apply_type" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="1">计划内</option>
+                                        <option value="2">计划外</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">评审状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="review_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未评审</option>
+                                        <option value="1">已评审</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始时间" style="cursor: pointer;" name="reviewStartDate" id="reviewStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束时间" style="cursor: pointer;" name="reviewEendDate" id="reviewEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="reviewSearch" id="reviewSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 专家评审列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="expertReviewList" lay-filter="expertReviewData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var expertReviewList = "{$expertReviewList}";
+    var hospital_id = "{$hospital_id}";
+</script>
+<script>
+    layui.use('purchases/tendering/expertReviewList', layui.factory('purchases/tendering/expertReviewList'));
+</script>

@@ -1,0 +1,29 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/common.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/formselects.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__/tecev-icon/iconfont.css">
+    <link rel="stylesheet" href="/tecev/start/layui/icon/icon.css" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js"></script>
+    <script src="/tecev/start/layui/layui.js"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/placeholder.js"></script>
+    <include file="Public:message"/>
+</head>
+<script>
+    var version = Math.random().toFixed(4);
+    layui.config({
+        version:version,//js版本号
+        base: '/tecev/src/' //拓展模块的根目录
+    }).extend({ //设定模块别名
+        tipsType: '../extend/tipsType',
+        suggest: '../extend/suggest',
+        formSelects: '../extend/formSelects',
+        tablePlug: '../extend/tablePlug/tablePlug',
+        asyncFalseUpload: '../extend/asyncFalseUpload'
+    });
+</script>

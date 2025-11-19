@@ -1,0 +1,17 @@
+<blockquote class="layui-elem-quote module-blockquote">质控管理模块配置</blockquote>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2" style="width: 190px !important;">模块状态：</label>
+    <div class="layui-input-block radio-margin-left" style="margin-left: 190px!important;">
+        <input type="radio" name="qualities[qualities_open][is_open]" lay-filter="qualities_open" value="1" title="开启" <if condition="$settings['qualities']['qualities_open'][is_open] eq 1">checked</if> >
+        <input type="radio" name="qualities[qualities_open][is_open]" lay-filter="qualities_open" value="0" title="关闭" <if condition="$settings['qualities']['qualities_open'][is_open] neq 1">checked</if> >
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">计划将到期提醒范围：</label>
+        <div class="layui-input-inline qualities" style="width: auto" >
+            <input type="text" name="qualities[qualities_soon_expire_day]" value="{$settings['qualities']['qualities_soon_expire_day']}" class="layui-input" style="width: 70px;" lay-verify="number">
+        </div>
+        <div class="layui-form-mid layui-word-aux">天</div>
+    </div>
+</div>

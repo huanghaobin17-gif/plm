@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="card-html-bg">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-examine .layui-elem-quote {
+        padding: 5px;
+    }
+    .read-table th {
+        width: 12%;
+        text-align: right!important;
+    }
+    .layui-form-item span{
+        margin-right: 50px; 
+    }
+</style>
+<body>
+<div class="layui-fluid layui-tab-content">
+    <!--验收单基本信息-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-elem-quote-sm">计划信息</div>
+                    <table class="layui-table read-table" lay-size="sm" lay-even>
+                        <tbody>
+                        <tr>
+                            <th>计划状态：</th>
+                            <td colspan="5" style="color: red;">{$cycleInfo.cycle_status_name}</td>
+                        </tr>
+                        <tr>
+                            <th>计划编号：</th>
+                            <td>{$cycleInfo.patrol_num}</td>
+                            <th>计划日期：</th>
+                            <td>{$cycleInfo.cycle_start_date} — {$cycleInfo.cycle_end_date}</td>
+                            <th>期次：</th>
+                            <td>{$cycleInfo.period}</td>
+                        </tr>
+                        <tr>
+                            <th>计划设备总数量：</th>
+                            <td>{$cycleInfo.assets_nums}</td>
+                            <th>已执行设备数量：</th>
+                            <td>{$cycleInfo.implement_sum}</td>
+                            <th>异常设备数量：</th>
+                            <td>{$cycleInfo.abnormal_sum}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <!--列表-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本计划设备列表<span style="color: red;">（注：单台验收或批量验收时，只能验收自己管理科室范围内的设备）</span>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="examLists" lay-filter="examData"></table>
+                    <if condition="$apps">
+                        <div class="layui-elem-quote-sm">审核情况</div>
+                        <table class="layui-table" lay-size="sm" lay-even>
+                            <colgroup>
+                                <col width="90">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                                <col width="">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>审核人</th>
+                                <th>审核时间</th>
+                                <th>审核状态</th>
+                                <th>审核意见</th>
+                            </tr>
+                            <volist name="apps" id="vo">
+                                <tr>
+                                    <td>{$key+1}</td>
+                                    <td>{$vo.approver}</td>
+                                    <td>{$vo.approve_time}</td>
+                                    <td>{$vo.approve_status}</td>
+                                    <td>{$vo.remark}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </if>
+                </div>
+            <div class="layui-card-body">
+            <div class="layui-form-item">
+                <span>计划{$status_name}设备台数：{$cycleInfo.assets_nums}台</span>
+                <span>实际{$status_name}设备台数：{$cycleInfo.actual_num}台</span>
+                <span>异常设备台数：{$cycleInfo.abnormal_sum}台</span>
+                <span>逾期执行数量：{$overdue_num}台</span>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本期计划验收总进度
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                        <div class="layui-progress-bar" lay-percent="{$cycleInfo.total_progress}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="fl">
+                            <i class="layui-icon">&#xe62d;</i> 本期计划各科室设备验收进度
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <table class="layui-table" lay-size="sm">
+                            <colgroup>
+                                <col width="70">
+                                <col width="200">
+                                <col width="120">
+                                <col width="120">
+                                <col width="120">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th class="th-center">序号</th>
+                                <th class="th-center">科室名称</th>
+                                <th class="th-center">计划设备台次</th>
+                                <th class="th-center">已验收台次</th>
+                                <th class="th-center">未验收台次</th>
+                                <th class="th-center">验收进度</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="department" id="vo" key="k">
+                                <tr>
+                                    <td class="th-center">{$k}</td>
+                                    <td class="th-center">{$vo.department}</td>
+                                    <td class="th-center">{$vo.assnum_nums}</td>
+                                    <td class="th-center">{$vo.total_exam}</td>
+                                    <td class="th-center">{$vo.not_exam}</td>
+                                    <td class="th-center">
+                                        <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                                            <div class="layui-progress-bar {$vo.bg}" lay-percent="{$vo.progress}"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+    <!--底部内容-->
+    <if condition="$canExamine">
+        <div class="layui-row margin-top-15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>验收表单</legend>
+                        </fieldset>
+                        <form class="layui-form layui-form" onsubmit="return false;">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">验收备注：</label>
+                                <div class="layui-input-block">
+                                    <textarea  placeholder="请输入验收备注" class="layui-textarea" name="remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div style="text-align: center">
+                                    <input type="hidden" name="url" value="{$url}">
+                                    <input type="hidden" name="pid" value="{$cycleInfo.patrid}"/>
+                                    <input type="hidden" name="cycid" value="{$cycleInfo.cycid}"/>
+                                    <button class="layui-btn" type="button"  id="examine_all"><i class="layui-icon" >&#xe609;</i> 确认全部验收</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </if>
+    <if condition="$allexam_info">
+        <div class="layui-row margin-top-15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="margin-bottom-15">
+                            <div class="layui-elem-quote-sm">巡查验收信息</div>
+                            <table class="layui-table read-table" lay-even lay-size="sm">
+                                <tr>
+                                    <th>验收人：</th>
+                                    <td>{$allexam_info.exam_user}</td>
+                                </tr>
+                                <tr>
+                                    <th>验收日期：</th>
+                                    <td>{$allexam_info.exam_time}</td>
+                                </tr>
+                                <tr>
+                                    <th>验收备注：</th>
+                                    <td>{$allexam_info.remark}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    var showPlans = "{$showPlans}";
+    var assets = {$assets};
+    var template_name = '{$template_name}';
+    var result_name = '{$result_name}';
+    layui.use('controller/patrol/patrol/examine', layui.factory('controller/patrol/patrol/examine'));
+</script>

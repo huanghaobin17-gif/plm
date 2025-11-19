@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看检测依据</title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-card-header {
+        height: 80px;
+    }
+
+    .notic_date {
+        font-weight: bold;
+        font-size: 16px;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-fluid">
+        <div class="layui-card layuiAdmin-msg-detail">
+            <div class="layui-card-header">
+                <h1 style="text-align: center">{$basisInfo.basis}</h1>
+                <p class="notic_date">
+                    <span>发布时间：{$basisInfo.adddate}</span>
+                </p>
+            </div>
+            <div class="layui-card-body layui-text">
+                <div class="layadmin-text">
+                    {$basisInfo.content}
+                </div>
+                <br>
+                <br>
+                <p>
+                    <b style="font-size: 16px;">发布者：{$basisInfo.adduser}</b>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<volist name="res" id="vo">
+			<div class="child2_box fl">
+                <div class="fl child2">{$vo.name}&nbsp;></div>
+				<assign name="length" value="$vo.sonNum" />
+                <ul class="fl child3">
+				<volist name="vo.sondata" id="vo1" key="k">
+					<if condition="$k eq $length">
+						<li class="true_menu">
+							<if condition="$vo1.url neq null"><a href="{$vo1.url}" target="main">{$vo1.name}</a><else />{$vo1.name}</if>
+						</li>
+					<else />
+						<li class="true_menu">
+							<if condition="$vo1.url neq null"><a href="{$vo1.url}" target="main">{$vo1.name}</a><else />{$vo1.name}</if>
+						</li>
+						<li>|</li>
+					</if>
+				</volist>
+                </ul>
+            </div>
+</volist>

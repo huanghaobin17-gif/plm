@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <link href="__PUBLIC__/tablesorter/themes/blue/style.css?v={:mt_rand(1,54561)}" rel="stylesheet" type="text/css"/>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <style>
+        .layui-table{margin: 0;}
+        .layui-colla-content{padding: 0;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">模板名称 </label>
+                <div class="layui-input-inline">
+                    <div class="input-group">
+                        <input type="text" class="layui-input" name="name" readonly="readonly" value="{$name}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="update" value="{$update}">
+        <input type="hidden" name="layerId" value="{$layerId}">
+        <input type="hidden" name="tpid" value="{$tpid}">
+        <input type="hidden" name="level1" value="{$level1str}">
+        <input type="hidden" name="level2" value="{$level2str}">
+        <input type="hidden" name="level3" value="{$level3str}">
+        <div class="layui-collapse">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">{$vo.name}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table tablesorter alltable" >
+                            <thead>
+                            <tr>
+                                <th style="width: 8%">编号</th>
+                                <th>明细名称</th>
+                                <th style="width: 13%;text-align: center;">日常保养</th>
+                                <th style="width: 13%;text-align: center;">巡查保养</th>
+                                <th style="width: 15%;text-align: center;">预防性维护</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo['detail']" id="v">
+                                <tr>
+                                    <td>{$v.num}</td>
+                                    <if condition="$v.require neq NULL">
+                                        <td>{$v.name}<br>(保养内容及明细：{$v.require})</td>
+                                        <else />
+                                        <td>{$v.name}</td>
+                                    </if>
+                                    <td style="text-align: center;">
+                                        <if condition="in_array($v['num'],$level1)">
+                                            √
+                                            <else />
+                                        </if>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <if condition="in_array($v['num'],$level2)">
+                                            √
+                                            <else />
+                                        </if>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        √
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center;margin-top: 20px;">
+                <button class="layui-btn" type="button" value="" id="prev" >返回上一步</button>
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add" >确定</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/confirmadd', layui.factory('controller/patrol/patrolsetting/confirmadd'));
+</script>

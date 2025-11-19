@@ -1,0 +1,92 @@
+<?php if($menuData = get_menu_name('Purchases','PurchaseCheck','assetsOutLists')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var assetsOutLists = "{$assetsOutLists}";
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchaseCheck-assetsOutLists" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >出库单号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="out_num"  value="" autocomplete="off" class="layui-input" placeholder="请输入入库单号" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">领用科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="hidden" name="departid" value="0"/>
+                                        <input type="text" class="form-control bsSuggest" id="outListDepartment" placeholder="请选择领用科室">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">审核状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="approve_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未审核</option>
+                                        <option value="1">已通过</option>
+                                        <option value="2">不通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出库日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly style="cursor: pointer;"
+                                           name="out_date_start" id="assetsOutListsStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly style="cursor: pointer;"
+                                           name="out_date_end" id="assetsOutListsEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="outListSearch" id="outListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary" id="resetSearch">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 出库单列表
+                    </div>
+                    <div class="fl m-left">
+                        <button class="layui-btn layui-btn-sm" id="addOut" data-url="/A/PurchaseCheck/addOut">新增出库单</button>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="assetsOutLists" lay-filter="assetsOutData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('purchases/purchaseCheck/assetsOutLists', layui.factory('purchases/purchaseCheck/assetsOutLists'));
+</script>

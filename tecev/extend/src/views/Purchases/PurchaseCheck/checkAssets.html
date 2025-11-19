@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 110px;
+        }
+        #LAY-Purchases-PurchaseCheck-checkAssets #addAssetsFile{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        #paizhao{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+            vertical-align:middle;
+        }
+        .read-table th{
+             width: 12%;
+        }
+        .qrcode {
+            display: none;
+            width: 218px;
+            height: 255px;
+            padding: 20px 14px;
+            box-sizing: border-box;
+            position: absolute;
+            background: url('/Public/images/qrcode.png') no-repeat;
+            background-size:188px 220px;
+            right:1px;
+            top: 85px;
+            z-index: 30;
+        }
+        .qrcode img{
+            width: 85%;
+        }
+        .qrcode .tip {
+            width: 170px;
+            text-align: center;
+            vertical-align: top;
+            display: block;
+            font-size: 14px;
+            color: #333;
+        }
+        .layui-form-item .layui-inline{margin-right: 0;}
+        .layui-form-item .layui-input-inline{margin-right: 0;}
+    </style>
+    <script>
+        var checkAssetsUrl = "{$checkAssetsUrl}";
+        var now_date = "{$now_date}";
+    </script>
+</head>
+<body>
+<div class="containDiv" id="LAY-Purchases-PurchaseCheck-checkAssets">
+    <div class="layui-tab layui-tab-brief" lay-filter="change">
+        <ul class="layui-tab-title">
+            <li class="layui-this">设备信息</li>
+            <li>采购信息</li>
+            <li>设备资料</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-row">
+                    <form class="layui-form" action="">
+                        <input type="hidden" name="assets_id" value="{$assets_id}">
+                        <input type="hidden" name="nums" value="{$assets.nums}">
+                        <blockquote class="layui-elem-quote" style="margin-bottom: 10px;">基本信息</blockquote>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label"> 设备名称：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="assets_name" value="{$assets.assets_name}" readonly class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label"> 购买数量：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="" value="{$assets.nums}" readonly class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备别名：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="alias_name" autocomplete="off" placeholder="请输入设备别名" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <select name="catid" lay-verify="catid" lay-search id="childCategory" disabled>
+                                        <option value="">请选择设备分类</option>
+                                        <volist name="category" id="vo">
+                                            <if condition="$vo['catid'] eq $dic['catid']">
+                                                <option value="{$vo.catid}" selected>{$vo.html}{$vo.category}</option>
+                                                <else/>
+                                                <option value="{$vo.catid}">{$vo.html}{$vo.category}</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">管理类别：</label>
+                                <div class="layui-input-inline">
+                                    <select name="assets_level" lay-search>
+                                        <option value="">请选择管理类别</option>
+                                        <volist name="assetsLevel" id="v">
+                                            <option value="{$v.value}">{$v.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备来源： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <select name="assfromid" lay-verify="assfromid" class="layui-input" lay-search="">
+                                        <option value="">请选择设备来源</option>
+                                        <volist name="assets_assfrom" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">辅助分类：</label>
+                                <div class="layui-input-inline">
+                                    <select name="helpcatid" class="layui-input" lay-search="">
+                                        <option value="">请选择辅助分类</option>
+                                        <volist name="assets_helpcat" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备原值：<span class="rquireCoin">*</span> </label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="buy_price" readonly  value="{$assets.buy_price}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">产品序列号：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="serialnum" lay-verify="serialnum" autocomplete="off" placeholder="多台需用(;)隔开" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label"> 预计使用年限：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="expected_life" lay-verify="expected_life" autocomplete="off" placeholder="请输入预计使用年限" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="hidden" name="departid" value="{$assets.departid}">
+                                    <input type="text" name="department" readonly value="{$department.department}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">管理科室： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="managedepart" readonly value="{$department.department}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">存放地点：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="address"  value="{$department.address}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备负责人： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="assetsrespon" lay-verify="assetsrespon"  autocomplete="off" value="{$department.assetsrespon}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">规格/型号： <span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="model" lay-verify="model" autocomplete="off" placeholder="请输入设备规格 / 型号" value="{$assets.model}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">单位：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="unit" placeholder="请输入单位" autocomplete="off" value="{$assets.unit}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">品牌：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="brand" placeholder="请输入设备品牌" autocomplete="off" value="{$assets.brand}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="supplier" readonly value="{$assets.supplier}" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">生产厂商：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="factory" readonly value="{$assets.factory}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">维保服务商：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="repair" lay-verify="repair" autocomplete="off" placeholder="请输入维保服务商" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">保修截止日期：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="guarantee_date" readonly id="guarantee_date" placeholder="请选择设备保修截止日期" lay-verify="guarantee_date|required" value="" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出厂日期：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="factorydate" readonly id="checkAssetsFactorydate" lay-verify="factorydate|required" placeholder="请选择出厂日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">付款日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="paytime" id="date6" placeholder="请选择付款日期" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">启用日期：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="opendate" readonly id="checkAssetsOpendate" lay-verify="opendate|required" placeholder="请选择启用日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">出厂编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="factorynum" lay-verify="factorynum" autocomplete="off" placeholder="多个需用(;)隔开" value="" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">发票编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="invoicenum" lay-verify="invoicenum" autocomplete="off" placeholder="多个需用(;)隔开" value="" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">财务分类：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <select name="financeid" lay-verify="financeid" class="layui-input" lay-search="">
+                                        <option value="">请选择财务分类</option>
+                                        <volist name="assets_finance" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">资金来源：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <select name="capitalfrom" lay-verify="capitalfrom" class="layui-input" lay-search="">
+                                        <option value="">请选择资金来源</option>
+                                        <volist name="assets_capitalfrom" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">折旧方式：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <select name="depreciation_method" lay-verify="depreciation_method" class="layui-input" lay-search="">
+                                        <option value="">请选择折旧方式</option>
+                                        <option value="1">平均折旧法</option>
+                                        <option value="2">工作量法</option>
+                                        <option value="3">加速折旧法</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">折旧年限：<span class="rquireCoin">*</span></label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="depreciable_lives" lay-verify="depreciable_lives|required|number" placeholder="请输入折旧年限" autocomplete="off" value="" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">国产&进口：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="is_domestic" value="1" title="国产">
+                                    <input type="radio" name="is_domestic" value="2" title="进口">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否付清：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="pay_status" value="1" title="已付清">
+                                    <input type="radio" name="pay_status" value="0" title="未付清">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" pane="">
+                            <label class="layui-form-label">设备类型：</label>
+                            <div class="layui-input-block">
+                                <if condition="$dic.is_firstaid eq 1">
+                                    <input type="checkbox" name="is_firstaid" value="1" checked="checked" title="急救设备" lay-skin="primary">
+                                    <else/>
+                                    <input type="checkbox" name="is_firstaid" value="1" title="急救设备" lay-skin="primary">
+                                </if>
+                                <if condition="$dic.is_special eq 1">
+                                    <input type="checkbox" name="is_special" value="1" checked="checked" title="特种设备" lay-skin="primary">
+                                    <else/>
+                                    <input type="checkbox" name="is_special" value="1" title="特种设备" lay-skin="primary">
+                                </if>
+                                <if condition="$dic.is_metering eq 1">
+                                    <input type="checkbox" name="is_metering" value="1" checked="checked" title="计量设备" lay-skin="primary">
+                                    <else/>
+                                    <input type="checkbox" name="is_metering" value="1" title="计量设备" lay-skin="primary">
+                                </if>
+                                <if condition="$dic.is_qualityAssets eq 1">
+                                    <input type="checkbox" name="is_qualityAssets" value="1" checked="checked" title="质控设备" lay-skin="primary">
+                                    <else/>
+                                    <input type="checkbox" name="is_qualityAssets" value="1" title="质控设备" lay-skin="primary">
+                                </if>
+                                <input type="checkbox" name="is_patrol" value="1" title="保养设备" lay-skin="primary">
+                                <if condition="$dic.is_benefit eq 1">
+                                    <input type="checkbox" name="is_benefit" value="1" title="效益分析" lay-skin="primary" checked>
+                                    <else/>
+                                    <input type="checkbox" name="is_benefit" value="1" title="效益分析" lay-skin="primary">
+                                </if>
+                                <if condition="$dic.is_lifesupport eq 1">
+                                    <input type="checkbox" name="is_lifesupport" value="1" title="生命支持类设备" lay-skin="primary" checked>
+                                    <else/>
+                                    <input type="checkbox" name="is_lifesupport" value="1" title="生命支持类设备" lay-skin="primary">
+                                </if>
+                            </div>
+                        </div>
+                        <div class="margin-bottom-15">
+                            <blockquote class="layui-elem-quote" style="margin-bottom: 10px;">
+                                验收信息
+                            </blockquote>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">验收人：<span class="rquireCoin">*</span></label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="check_user" readonly value="{$check_user}" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">验收日期：<span class="rquireCoin">*</span></label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="check_date" lay-verify="check_date" value="{$now_date}" readonly placeholder="请选择验收日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">到货日期：<span class="rquireCoin">*</span></label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="arrival_date" readonly lay-verify="arrival_date" id="checkAssetsArrival_date"  placeholder="请选择到货日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" pane="">
+                                <label class="layui-form-label">附属资料：</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="instructions" value="1" title="说明书" lay-skin="primary">
+                                    <input type="checkbox" name="certificate" value="1" title="合格证" lay-skin="primary">
+                                    <input type="checkbox" name="repair_card" value="1" title="报修卡" lay-skin="primary">
+                                    <input type="checkbox" name="inspection_report" value="1" title="检验审批单"
+                                           lay-skin="primary">
+                                    <input type="checkbox" name="customs_declaration" value="1" title="进出口报关单" lay-skin="primary">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">验收情况：</label>
+                                <div class="layui-input-block" style="margin-left: 140px;width: 878px;">
+                                    <textarea placeholder="请输入验收情况容" class="layui-textarea" name="remark"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                            <button class="layui-btn" type="button" lay-submit lay-filter="add">
+                                <i class="layui-icon" >&#xe609;</i> 确定验收
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon">ဂ</i> 重置
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <form class="layui-form" action="">
+                    <blockquote class="layui-elem-quote" style="padding: 5px 15px;">申购信息</blockquote>
+                    <table class="layui-table read-table" lay-even lay-size="sm">
+                        <tbody>
+                        <tr>
+                            <th>申请单号：</th>
+                            <td>{$apply.apply_num}</td>
+                            <th>项目名称：</th>
+                            <td>{$apply.project_name}</td>
+                            <th>申请科室：</th>
+                            <td>{$apply.department}</td>
+                        </tr>
+                        <tr>
+                            <th>申购日期：</th>
+                            <td>{$apply.apply_time}</td>
+                            <th>申购人：</th>
+                            <td>{$apply.apply_user}</td>
+                            <th>购置类型：</th>
+                            <td>{$assets.buy_type_name}</td>
+                        </tr>
+                        <tr>
+                            <th>申购理由：</th>
+                            <td colspan="5">{$apply.apply_reason}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--todo-->
+                    <!--<blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">招标信息</blockquote>-->
+                    <!--<table class="layui-table read-table" lay-even lay-size="sm">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<th>采购方式：</th>-->
+                            <!--<td></td>-->
+                            <!--<th>招标形式：</th>-->
+                            <!--<td></td>-->
+                            <!--<th>中标时间：</th>-->
+                            <!--<td></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>立项依据：</th>-->
+                            <!--<td colspan="5"></td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                    <!--todo-->
+                    <blockquote class="layui-elem-quote" style="padding: 5px 15px;">合同信息</blockquote>
+
+                    <table class="layui-table read-table" lay-even lay-size="sm">
+                        <tbody>
+                        <tr>
+                            <th>合同编号：</th>
+                            <td>{$contract.contract_num}</td>
+                            <th>合同名称：</th>
+                            <td>{$contract.contract_name}</td>
+                            <th>合同类型：</th>
+                            <td>{$contract.contract_type_name}</td>
+                        </tr>
+                        <tr>
+                            <th>乙方单位：</th>
+                            <td>{$contract.supplier_name}</td>
+                            <th>联系人：</th>
+                            <td>{$contract.supplier_contacts}</td>
+                            <th>联系电话：</th>
+                            <td>{$contract.supplier_phone}</td>
+                        </tr>
+                        <tr>
+                            <th>签订日期：</th>
+                            <td>{$contract.sign_date}</td>
+                            <th>合同截止日期：</th>
+                            <td>{$contract.end_date}</td>
+                            <th>合同金额：</th>
+                            <td>{$contract.contract_amount}</td>
+                        </tr>
+                        <tr>
+                            <th>档案编号：</th>
+                            <td>{$contract.archives_num}</td>
+                            <th>档案管理员：</th>
+                            <td>{$contract.archives_manager}</td>
+                            <th>院方联系人：</th>
+                            <td>{$contract.hospital_manager}</td>
+                        </tr>
+
+                        <tr>
+                            <th>录入人员：</th>
+                            <td>{$contract.add_user}</td>
+                            <th>验收日期：</th>
+                            <td colspan="3">{$contract.check_date}</td>
+                        </tr>
+                        <tr>
+                            <th>合同内容：</th>
+                            <td colspan="5">{$contract.contract_content}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="margin-bottom-15">
+                        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">合同付款信息</blockquote>
+                        <table class="layui-table read-table" lay-even lay-size="sm">
+                            <tbody>
+                            <colgroup>
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <tr>
+                                <th style="text-align: left !important;">期数</th>
+                                <th style="text-align: left !important;">付款金额</th>
+                                <th style="text-align: left !important;">预计付款日期</th>
+                                <th style="text-align: left !important;">付款日期</th>
+                                <th style="text-align: left !important;">状态</th>
+                            </tr>
+                            <notempty name="contractPay">
+                                <volist name="contractPay" id="vo">
+                                    <tr>
+                                        <td>{$vo.pay_period}</td>
+                                        <td>{$vo.pay_amount}</td>
+                                        <td>{$vo.estimate_pay_date}</td>
+                                        <td>{$vo.real_pay_date}</td>
+                                        <td>
+                                            <if condition="$vo.pay_status EQ C('YES_STATUS')">
+                                                已付款
+                                                <else/>
+                                                未付款
+                                            </if>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr>
+                                    <td colspan="5"style="text-align: center!important;">暂无付款记录</td>
+                                </tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                <div class="margin-bottom-15">
+                    <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                        附件信息
+                        <span id="paizhao"><i class="layui-icon layui-icon-zqrcode-l" style="font-size: 13px;"></i>
+                            扫码上传
+                            <div class="qrcode">
+                                <img src="{$codeUrl}" alt="扫码上传">
+                                <span class="tip">扫一扫，上传文件</span>
+                            </div>
+                        </span>
+                        <span id="addAssetsFile"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传 </span>
+                    </blockquote>
+                    <table class="layui-table read-table-l" lay-even lay-size="sm">
+                        <colgroup>
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="20%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th style="text-align: left !important;">文件名称</th>
+                            <th style="text-align: left !important;">提交人</th>
+                            <th style="text-align: left !important;">上传时间</th>
+                            <th style="text-align: left !important;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="addFileTbody">
+                        <notempty name="enclosure">
+                            <volist name="enclosure" id="vo">
+                                <tr class="fileDataTr">
+                                    <td class="file_name">{$vo.file_name}</td>
+                                    <td class="add_user">{$vo.add_user}</td>
+                                    <td class="add_time">{$vo.add_time}</td>
+                                    <td>{$vo.operation}</td>
+                                </tr>
+                            </volist>
+                            <else/>
+                            <tr class="notFileDataTr">
+                                <td colspan="4" style="text-align: center!important;">暂无数据</td>
+                            </tr>
+                        </notempty>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="margin-bottom-15">
+                    <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                        验收资料
+                    </blockquote>
+                    <table class="layui-table read-table-l" lay-size="sm">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="20%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center">资料名称</th>
+                            <th class="th-align-center">文件大小</th>
+                            <th class="th-align-center">上传人</th>
+                            <th class="th-align-center">上传时间</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="th-align-center">1</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                到货通知单
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('ARRIVAL_NOTICE_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('ARRIVAL_NOTICE_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="到货通知单">
+                                    <input type="hidden" name="file_type" value="{$file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('ARRIVAL_NOTICE_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('ARRIVAL_NOTICE_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="th-align-center">2</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('CONFIRM_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                设备技术标准确认表
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('CONFIRM_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('CONFIRM_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('CONFIRM_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('CONFIRM_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="设备技术标准确认表">
+                                    <input type="hidden" name="file_type" value="{$file[C('CONFIRM_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('CONFIRM_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('CONFIRM_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('CONFIRM_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="th-align-center">3</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('CONFIGURATION_LIST_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                设备配置清单
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('CONFIGURATION_LIST_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('CONFIGURATION_LIST_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('CONFIGURATION_LIST_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('CONFIGURATION_LIST_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="设备配置清单">
+                                    <input type="hidden" name="file_type" value="{$file[C('CONFIGURATION_LIST_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('CONFIGURATION_LIST_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('CONFIGURATION_LIST_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('CONFIGURATION_LIST_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="th-align-center">4</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                设备技术参数表
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="设备技术参数表">
+                                    <input type="hidden" name="file_type" value="{$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('TECHNICAL_PARAMETER_LIST_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="th-align-center">5</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('SERVICE_CLAUSE_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                设备技术服务条款
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('SERVICE_CLAUSE_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('SERVICE_CLAUSE_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('SERVICE_CLAUSE_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('SERVICE_CLAUSE_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="设备技术服务条款">
+                                    <input type="hidden" name="file_type" value="{$file[C('SERVICE_CLAUSE_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('SERVICE_CLAUSE_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('SERVICE_CLAUSE_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('SERVICE_CLAUSE_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="th-align-center">6</td>
+                            <td class="fileTitle">
+                                <notempty name="file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_id]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                中华人民共和国医疗器械注册证
+                            </td>
+                            <td class="no-padding-td file_size">
+                                {$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_size]}
+                            </td>
+                            <td class="no-padding-td add_user" >
+                                {$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][add_user]}
+                            </td>
+                            <td class="no-padding-td add_time" >
+                                {$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][add_time]}
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="file_id" value="{$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_id]}">
+                                    <input type="hidden" name="file_name" value="中华人民共和国医疗器械注册证">
+                                    <input type="hidden" name="file_type" value="{$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_type]}">
+                                    <input type="hidden" name="style" value="{$type=C('REGISTRATION_CERTIFICATE_FILE_STYLE')}">
+                                    <input type="hidden" name="file_url" value="{$file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_url]}">
+                                    <notempty name="file[C('REGISTRATION_CERTIFICATE_FILE_STYLE')][file_id]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/checkAssets', layui.factory('controller/purchases/purchaseCheck/checkAssets'));
+</script>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        label{margin-bottom: 0}
+        td{width: 120px;}
+        fieldset{width: auto;}
+    </style>
+</head>
+<body>
+<div class="containDiv" style="width:98%;">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>故障类型表单</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form" action="">
+            <input type="hidden" name="actionname" value="{$actionname}"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 类型名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type" value="" lay-verify="required|type" autocomplete="off" placeholder="请输入类型名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" value="" lay-submit lay-filter="save" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repairSetting/addType', layui.factory('controller/repair/repairSetting/addType'));
+</script>

@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Assets-Lookup-doRenewal .addIcon {
+            position: absolute;
+            right: -8px;
+            top: 9px;
+            cursor: pointer;
+            color: #0a8ddf;
+        }
+        #LAY-Assets-Lookup-doRenewal .layui-form-item .layui-input-inline{
+            margin-right: 17px;
+        }
+        .layui-form-label {
+            width: 115px;
+        }
+        .layui-textarea{
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid" id="LAY-Assets-Lookup-doRenewal">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tr>
+                <th>设备编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>设备名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department_name}</td>
+            </tr>
+            <tr>
+                <th>生产厂家：</th>
+                <td>{$asArr.factory}</td>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>资产原编号：</th>
+                <td>{$asArr.assorignum}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header" style="padding: 0">
+                    <div class="layui-elem-quote">参保信息</div>
+                </div>
+                <div class="layui-card-body" style="padding:0 0 0 1px;">
+                    <table id="doRenewal" lay-filter="doRenewalData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <fieldset style="margin-top: 15px;">
+        <legend style="color: #00a6c8;">新增维保信息</legend>
+        <form class="layui-form" action="" id="addInsurance">
+            <input type="hidden" name="assid" value="{$asArr.assid}">
+            <input type="hidden" name="action" value="{$url}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>维保购入日期：</label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" readonly placeholder="请选择维保购入日期" lay-verify="required" style="cursor: pointer;" name="buydate" id="doRenewalBuydate">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>维保性质：</label>
+                    <input type="hidden" name="ols_facid" value="{$ols_facid}">
+                    <div class="layui-input-inline">
+                        <select id="nature" name="nature" lay-verify="required" lay-filter="nature">
+                            <option value="">请选择</option>
+                            <notempty name="usecompany">
+                                <option value="0" >原厂续保</option>
+                            </notempty>
+                            <option value="1">第三方</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <div class="layui-form-label"><span class="rquireCoin"> * </span>维保公司：</div>
+                    <div class="layui-input-inline">
+                        <select name="company_id" class="input_select" lay-verify="required" lay-search="" lay-filter="company_id">
+                            <option value="-1">请先选择维保性质</option>
+                        </select>
+                    </div>
+                    <div class="addIcon">
+                        <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                        <i class="layui-icon" id="addSupplier"> &#xe654;</i>
+                        <?php endif?>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">维保费用：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" name="cost" lay-verify="cost" placeholder="请输入维保费用">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>维保开始日期：</label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" readonly placeholder="请选择选维保开始日期" style="cursor: pointer;" lay-verify="required" name="startdate" id="doRenewalStartdate">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>维保结束日期：</label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" readonly placeholder="请选择选维保结束日期" style="cursor: pointer;" lay-verify="required" name="overdate" id="doRenewalOverdate">
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>联系人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="" name="contacts" class="layui-input" lay-verify="required" placeholder="请输入联系人">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="" name="telephone" class="layui-input" lay-verify="phone" placeholder="请输入联系电话">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>维保内容：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入维保内容" class="layui-textarea" name="content" lay-verify="required"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">相关文件上传 ：</label>
+                    <div class="layui-input-inline" style="width: 500px;">
+                        <button type="button" class="layui-btn" id="file_url" name="file_url" lay-tips="只可以上传word文档、PDF文件、或扫描图片上传">
+                            <i class="layui-icon">&#xe67c;</i>上传文件
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <p class="file_url"></p>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea class="layui-textarea" name="remark"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="addDoRenewal" ><i class="layui-icon">&#xe609;</i> 新增参保信息</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+<!--添加厂商DIV-->
+<div id="addSuppliersDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_num" readonly value="{$sup_num}">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_name" placeholder="请输入厂商名称" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="suppliers_type" xm-select="suppliers_type" xm-select-search="" lay-verify="required">
+                                <option value="1">供应商</option>
+                                <option value="2">生产商</option>
+                                <option value="3">维修商</option>
+                                <option value="4">维保商</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_name" placeholder="请输入业务联系人">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人电话：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_phone" placeholder="请输入业务联系人电话" lay-verify="tel">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">省份：</label>
+                        <div class="layui-input-inline">
+                            <select name="provinces" lay-filter="provinces" lay-search>
+                                <option value="">请选择</option>
+                                <volist name="provinces" id="vo">
+                                    <option value="{$vo.provinceid}">{$vo.province}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">城市：</label>
+                        <div class="layui-input-inline">
+                            <select name="city" lay-filter="city" lay-search>
+                                <option value="">请选择省份</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">区/城镇：</label>
+                        <div class="layui-input-inline">
+                            <select name="areas" lay-search>
+                                <option value="">请选择城市</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">通讯地址：</label>
+                    <div class="layui-input-block" style="width: 540px; margin-left: 145px;">
+                        <input type="text" class="layui-input" name="address" placeholder="请输入通讯地址">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addSuppliers">
+                        <i class="layui-icon">&#xe609;</i> 添加
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var usecompany ='<?php echo($usecompany);?>';
+    if (usecompany!='') {
+        usecompany=JSON.parse(usecompany);
+    }
+    layui.use('controller/assets/lookup/doRenewal', layui.factory('controller/assets/lookup/doRenewal'));
+</script>

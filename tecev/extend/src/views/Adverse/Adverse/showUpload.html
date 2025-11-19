@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+    .layui-table{ margin-top: 0px;}
+    .layui-table img {
+        cursor: pointer;
+        max-width: 95% !important;
+    }
+    .media{
+        margin: 0 auto;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <table class="layui-table" lay-even>
+        <tbody>
+            <tr>
+                <if condition="$uploadinfo.type eq 1">
+                    <td class="td-align-center">
+                        <img src="{$uploadinfo.file_url}" class="bigImg">
+                    </td>
+                    <else />
+                    <td class="td-align-center">
+                        <a class="media" href="{$uploadinfo.file_url}"></a>
+                    </td>
+                </if>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        $('a.media').media({width:800, height:600});
+    });
+
+    $(".bigImg").click(function(){
+        var imgUrl = $(this).attr('src');
+        window.img_width = 355;
+        var html  = "<center>";
+        html += "<div style='position:fixed; left:50%; margin-left:-40px; bottom:5px;'>";
+        html += "  <button style='width:40px; height:40px; border-radius:20px;'";
+        html += "        onclick='window.img_width < 1000 ? window.img_width += 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width});'>";
+        html += "  放大";
+        html += "  </button>&nbsp; &nbsp; ";
+        html += "  <button style='width:40px;  height:40px;border-radius:20px;'";
+        html += "  onclick='window.img_width > 100 ? window.img_width -= 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width})' >";
+        html += "  缩小";
+        html += "  </button>";
+        html += "</div>";
+        html += "</center>";
+        html += "<br/>";
+        html += "<center>";
+        html += "<img class='img_url_class' style='width:100%;' src='"+imgUrl+"' />";
+        html += "</center>";
+        //页面层
+        layer.open({
+            title:'原始图缩放浏览',
+            type: 1,
+            anim: 2,
+            shadeClose: true,
+            area: ['75%', '100%'], //宽高
+            content: html
+        });
+    });
+</script>
+</body>
+</html>
+
+
+
+
+

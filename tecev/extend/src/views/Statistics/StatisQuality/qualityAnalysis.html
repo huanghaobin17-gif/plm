@@ -1,0 +1,87 @@
+<?php if($menuData = get_menu_name('Statistics','StatisQuality','qualityAnalysis')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var qualityAnalysis = "{$qualityAnalysis}";
+</script>
+<div class="layui-fluid" id="LAY-Statistics-StatisQuality-qualityAnalysis">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">启用日期：</label>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly value="{$start_date}" style="cursor: pointer;" name="startDate" id="qualityAnalysisS" lay-verify="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly value="{$end_date}" style="cursor: pointer;" name="endDate" id="qualityAnalysisE" lay-verify="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="staticQualitySearch" id="staticQualitySearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="qualityAnalysisLists" lay-filter="qualityAnalysisData"></table>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="chart-title">质控计划概况</div>
+                        <form class="layui-form" action="">
+                            <div class="layui-input-inline chart-sel">
+                                <select name="pic_type" lay-search="" lay-filter="change_pic_quality" >
+                                    <option value="pie" selected>饼图</option>
+                                    <option value="bar">柱状图</option>
+                                    <option value="line">折线图</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-card-body">
+                        <div class="hidden-contant">暂无相关数据</div>
+                        <div id="statics-contant-quality">
+                            <div class="layui-col-md4">
+                                <div id="over_or_not" class="static-chart-width-quality"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="assets_over_or_not" class="static-chart-width-quality"></div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div id="pass_over_or_not" class="static-chart-width-quality"></div>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisQuality/qualityAnalysis', layui.factory('statistics/statisQuality/qualityAnalysis'));
+</script>

@@ -1,0 +1,636 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .th_center th, .th_center {  text-align: center !important;  }
+        .layui-inline {  margin-bottom: 10px !important;  margin-right: 0 !important;  }
+        .layui-form-item {  clear: none  }
+        #tableRow tr th{  text-align: center;  }
+        #tableRow tr td{  text-align: center;  }
+        .editFollow:hover{  text-decoration: underline;  }
+        .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+            padding: 0;
+        }
+        .parts_table {  padding: 0 !important;  }
+        .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td{
+            padding: 0;
+        }
+        .layui-table th{
+            text-align: center;
+        }
+        .layui-table tr td {
+            text-align: center;
+        }
+        .offer_tbody textarea {
+            border: none;
+            resize: none;
+        }
+        .not_check{
+            color:#999999;
+        }
+        .layui-table {
+            margin: 0;
+        }
+
+        .no-padding-td {
+            padding: 0 !important;
+        }
+
+        .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        .layui-form-radio {
+            margin: 0;
+            padding-right: 5px;
+        }
+
+        .layui-textarea {
+            min-height: 90px;
+        }
+        .layui-icon-zeye-l:before{
+            position: relative;
+            top: 2px;
+        }
+        /*配件名称搜索建议样式*/
+        #LAY-Repair-Repair-startRepair .form-control::-webkit-input-placeholder{
+            color: #757575 !important;
+            font-size: 12px;
+        }
+        #LAY-Repair-Repair-startRepair .jhover{
+            background-color: #5FB878 !important;
+        }
+        #LAY-Repair-Repair-startRepair .input-group{
+            width: 99% !important;
+        }
+        #LAY-Repair-Repair-startRepair .input-group .form-control{
+            font-size: 12px;
+            border: none;
+            width: 98% !important;
+        }
+        #LAY-Repair-Repair-startRepair .input-group .form-control:focus{
+            box-shadow:none;
+            -webkit-box-shadow:none;
+        }
+        #LAY-Repair-Repair-startRepair .partsName{
+            border-radius: 0 !important;
+            outline:none !important;
+        }
+        #LAY-Repair-Repair-startRepair #startRepairFile{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+        }
+        #LAY-Repair-Repair-startRepair .border-color-red{
+            border-color: red;
+        }
+        .layui-form-label{width: 100px;}
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-Repair-startRepair">
+    <input type="hidden" value="{$asArr.repid}" name="repid">
+    <!--设备基础信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>资产编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>资产名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>资产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--报修申报信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">报修申请信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>报修人：</th>
+                <td>{$repArr.applicant}</td>
+                <th>报修日期：</th>
+                <td>{$repArr.applicant_time}</td>
+                <th>报修电话：</th>
+                <td>{$repArr.applicant_tel}</td>
+            </tr>
+            <tr>
+                <th>故障描述：</th>
+                <td colspan="5">{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$repArr.applicant_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--维修接单信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修接单与检修信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tr>
+                <th>响应人：</th>
+                <td>{$repArr.response}</td>
+                <th>响应时间：</th>
+                <td>{$repArr.response_date}</td>
+                <th>预计修复日期：</th>
+                <td>{$repArr.expect_time}</td>
+            </tr>
+            <tr>
+                <th>故障问题：</th>
+                <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+            </tr>
+            <tr>
+                <th>解决方式：</th>
+                <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                    <td colspan="5">现场解决</td>
+                    <else/>
+                    <td colspan="5">非现场解决</td>
+                </if>
+            </tr>
+            <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                <tr>
+                    <th>维修性质：</th>
+                    <td colspan="5">{$repArr.repTypeName}</td>
+                </tr>
+            </if>
+            <if condition="$repArr['repair_type'] eq 1">
+                <tr>
+                    <th>维修厂家：</th>
+                    <td>{$asArr.sup_name}</td>
+                    <th>维修公司联系人：</th>
+                    <td>{$asArr.salesman_name}</td>
+                    <th>维修公司联系电话：</th>
+                    <td>{$asArr.salesman_phone}</td>
+                </tr>
+            </if>
+            <tr>
+                <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                    <th>处理详情：</th>
+                    <td colspan="5">{$repArr.dispose_detail}</td>
+                    <else/>
+                    <th>检修备注：</th>
+                    <td colspan="5">{$repArr.repair_remark}</td>
+                </if>
+            </tr>
+        </table>
+    </div>
+
+    <!--第三方厂家-->
+    <notempty name="company">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">维修报价记录表单</div>
+            <table class="layui-table offerTbody" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center">公司名称</th>
+                    <th style="text-align: center">联系人</th>
+                    <th style="text-align: center">联系方式</th>
+                    <if condition="$isOpenOffer_formOffer neq C('NOT_DO_STATUS')">
+                        <th style="text-align: center;">服务金额</th>
+                    </if>
+                    <th style="text-align: center;">发票</th>
+                    <th style="text-align: center;">到货/服务周期</th>
+                    <if condition="$isOpenOffer_formOffer neq C('DO_STATUS')">
+                        <th style="text-align: center;">建议渠道</th>
+                        <th style="text-align: center;">建议说明</th>
+                    </if>
+                    <th style="text-align: center;">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="company" id="v">
+                    <?php $total_price=0; ?>
+                    <tr>
+                        <td>{$v.offer_company}</td>
+                        <td>{$v.offer_contacts}</td>
+                        <td>{$v.telphone}</td>
+                        <if condition="$isOpenOffer_formOffer NEQ C('NOT_DO_STATUS')">
+                            <td>{$v.total_price}</td>
+                        </if>
+                        <td>{$v.invoice}</td>
+                        <td>{$v.cycle}</td>
+                        <if condition="$isOpenOffer_formOffer NEQ C('DO_STATUS')">
+                            <td>
+                                <if condition="$v[proposal] EQ C('YES_STATUS')">
+                                    建议选用
+                                    <else/>
+                                    /
+                                </if>
+                            </td>
+                            <td>{$v.proposal_info}</td>
+                        </if>
+                        <td>{$v.remark}</td>
+                    </tr>
+                </volist>
+                <notempty name="companyLast">
+                    <tr>
+                        <th style="border-top: none;text-align: right">最终决定者：</th>
+                        <td style="border-top: none;text-align: left" colspan="8">{$companyLast.decision_user}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">最终决定时间：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.decision_adddate}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">最终选择：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.offer_company}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">原因说明：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.decision_reasion}</td>
+                    </tr>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--审批-->
+    <notempty name="approves">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审核信息</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="90">
+                    <col width="140">
+                    <col width="70">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>审核人</th>
+                    <th>审核时间</th>
+                    <th>审核状态</th>
+                    <th>审核意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="approves" id="app">
+                    <tr>
+                        <td>{$app.approver}</td>
+                        <td>{$app.approve_time}</td>
+                        <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                            <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                            <else/>
+                            <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                        </if>
+                        <td>{$app.remark}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--配件/服务明细-->
+    <div class="margin-bottom-15">
+        <fieldset class="layui-elem-field layui-field-title addParts">
+            <legend>配件/服务明细</legend>
+        </fieldset>
+        <form class="layui-form layui-form-pane">
+            <input type="hidden" value="{$repArr.repid}" name="repid">
+            <table class="layui-table" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center;width:240px;"><span class="rquireCoin">*</span>配件名称</th>
+                    <th style="text-align: center">型号</th>
+                    <th style="text-align: center;width:100px;"><span class="rquireCoin">*</span>数量</th>
+                    <!--<th style="text-align: center;width:100px;">是否出库</th>-->
+                    <th style="text-align: center;width:100px;">操作人</th>
+                    <th style="text-align: center;width:100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody class="partsTbody">
+                <notempty name="parts">
+                    <volist name="parts" id="v">
+                        <tr class="tr_part">
+                            <td class="not_check">{$v.parts}</td>
+                            <td class="not_check">{$v.part_model}</td>
+                            <td class="not_check">{$v.part_num}</td>
+                            <!--<td class="statusName">是</td>-->
+                            <td class="adduser not_check">
+                                <empty name="v[edituser]">
+                                    {$v[adduser]}
+                                    <else/>
+                                    {$v.edituser}
+                                </empty>
+                            </td>
+                            <td>-</td>
+                        </tr>
+                    </volist>
+                </notempty>
+                <tr class="add">
+                    <td class="no-padding-td partsNameDiv">
+                        <div class="input-group">
+                            <input type="text" class="form-control partsName" id="partsNameSearch" placeholder="配件/服务名称" name="parts">
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="part_model" class="layui-input" placeholder="型号">
+                    </td>
+                    <td class="no-padding-td">
+                        <input type="text" name="sum" class="layui-input" placeholder="数量">
+                    </td>
+                    <!--<td class="no-padding-td">-->
+                        <!--<input type="checkbox" name="status" lay-skin="primary" lay-filter="isOut" checked >-->
+                        <!--<input type="hidden" name="is_out" value="1">-->
+                    <!--</td>-->
+                    <td>
+                        <?php echo(session('username'))?>
+                    </td>
+                    <td>
+                        <div class="layui-btn-group">
+                            <input type="hidden" name="editPartId" value="">
+                            <button type="button" class="layui-btn layui-btn-xs addPartsInfo" lay-submit lay-filter="addParts">
+                                添加
+                            </button>
+                            <button class="layui-btn layui-btn-xs layui-btn-primary" id="partReset" style="margin-left:5px">
+                                重置
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+
+
+
+    <!--维修处理-->
+    <form class="layui-form">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>维修处理</legend>
+        </fieldset>
+        <div class="margin-bottom-15">
+            <input type="hidden" name="repid" value="{$repArr.repid}">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">维修性质：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$repArr.repTypeName}" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">维修工程师：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" readonly class="layui-input" value="{$repArr.response}">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="username_tel" autocomplete="off" class="layui-input" value="{$repArr.response_tel}">
+                    </div>
+                </div>
+            </div>
+            <if condition="empty($repArr['offer']) neq true">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">维修厂家：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="{$repArr.offer}" readonly class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </if>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">协助工程师：</label>
+                    <div class="layui-input-inline">
+                        <select name="assist_engineer" lay-filter="assist_engineer">
+                            <option value="-1">可选择</option>
+                            <volist name="user" id="v">
+                                <if condition="$repArr['assist_engineer'] eq $v['username']">
+                                    <option value="{$v.username}" selected >{$v.username}</option>
+                                    <else />
+                                    <option value="{$v.username}" >{$v.username}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="assist_engineer_tel" value="{$repArr.assist_engineer_tel}" name="assist_engineer_tel" autocomplete="off" class="layui-input" placeholder="请选择工程师或手动填写">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">其他费用：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$repArr.other_price}" class="layui-input" name="other_price">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">总维修费用：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="{$repArr.actual_price}" readonly class="layui-input" name="actual_price">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><if condition="$service_date eq C('SHUT_STATUS')"><span class="rquireCoin"> * </span></if>开始维修时间：</label>
+                    <div class="layui-input-inline">
+                        <if condition="$service_date eq C('OPEN_STATUS')">
+                            <input type="text" value="系统生成" readonly class="layui-input">
+                            <else />
+                            <input type="text" name="service_date" value="{$repArr.engineer_time}" placeholder="请点击选择开始维修时间" style="cursor: pointer;" id="service_date"  readonly="readonly" class="layui-input" lay-verify="required">
+                        </if>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><if condition="$service_working eq C('SHUT_STATUS')"><span class="rquireCoin"> * </span></if>维修工时：</label>
+                    <div class="layui-input-inline">
+                        <if condition="$service_working eq C('OPEN_STATUS')">
+                            <input type="text" class="layui-input"  name="working_hours" value="{$repArr.working_hours}" readonly style="width: 80%;float: left;"><span style="line-height: 38px;color:#c2c2c2;">(小时)</span>
+                            <else/>
+                            <input type="text" class="layui-input" lay-verify="requried" name="working_hours" placeholoder="请输入维修工时" value="{$repArr.working_hours}" style="width: 80%;float: left;"><span style="line-height: 38px;color:#c2c2c2;">(小时)</span>
+                        </if>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--维修处理跟进详情-->
+        <fieldset class="layui-elem-field layui-field-title addParts">
+            <legend>维修处理跟进详情</legend>
+        </fieldset>
+        <div class="margin-bottom-15">
+            <table class="layui-table" id="tableRow" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th width="15%"><span class="rquireCoin">*</span>跟进日期</th>
+                    <th width="50%"><span class="rquireCoin">*</span>处理详情</th>
+                    <th width="20%"><span class="rquireCoin">*</span>预计下一步跟进日期</th>
+                    <th width="10%">操作</th>
+                </tr>
+                </thead>
+                <tbody class="addFollow-list">
+                    <notempty name="follow">
+                        <volist name="follow" id="vo">
+                            <tr>
+                                <td>{$i}</td>
+                                <td class="followdate">{$vo.followdate}</td>
+                                <td class="remark">{$vo.detail}</td>
+                                <td class="nextdate">{$vo.nextdate}</td>
+                                <td>-</td>
+                            </tr>
+                        </volist>
+                    </notempty>
+                    <tr>
+                        <td class="layui-bg-gray addNumber" style="text-align: center">新增</td>
+                        <td class="no-padding-td">
+                            <input type="text" name="followdate" readonly id="followdate" style="cursor: pointer"
+                                   class="layui-input" placeholder="跟进日期">
+                        </td>
+                        <td class="no-padding-td">
+                            <input type="text" name="remark" id="detail" class="layui-input" placeholder="请输入处理详情">
+                        </td>
+                        <td class="no-padding-td">
+                            <input type="text" name="nextdate" id="nextdate" style="cursor: pointer" class="layui-input"
+                                   placeholder="预计下一步跟进日期">
+                        </td>
+                        <td>
+                            <input type="hidden" name="maxtime" value="{$maxtime}"/>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-xs addFollow" lay-submit lay-filter="addFollow">
+                                    添加
+                                </button>
+                                <button class="layui-btn layui-btn-xs layui-btn-primary" id="followReset">
+                                    重置
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--维修处理跟进详情 END-->
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span> 维修结果：</label>
+            <div class="layui-input-block" style="margin-left: 115px;">
+                <textarea id="editor_id" style="display: none;">{$repArr.dispose_detail}</textarea>
+                <script>
+                    var layedit;
+                    var layeditIndex;
+                    layui.use('layedit', function () {
+                        layedit = layui.layedit;
+                        layedit.set({
+                            uploadImage: {
+                                url: admin_name+'/Tool/addLayerImg' //接口url
+                            },
+                            height: 180
+                        });
+                        layeditIndex = layedit.build('editor_id'); //建立编辑器
+                    });
+                </script>
+            </div>
+        </div>
+
+        <!--有权限可以上传文件-->
+        <?php if($menuData = get_menu('Repair','Repair','uploadRepair')):?>
+        <div class="layui-elem-quote">
+            相关文件上传
+            <span id="startRepairFile" lay-tips="提示 : 上传文件后缀名只能为jpg/jpeg/pdf/png/bmp/gif/doc/docx"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+        </div>
+        <div class="margin-bottom-15">
+            <div class="layui-form-item">
+                <div class="layui-upload">
+                    <div class="layui-upload-list">
+                        <table class="layui-table read-table-l" lay-even lay-size="sm">
+                            <colgroup>
+                                <col width="30%">
+                                <col width="30%">
+                                <col width="20%">
+                                <col width="20%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="text-align: left !important;">文件名称</th>
+                                <th style="text-align: left !important;">提交人</th>
+                                <th style="text-align: left !important;">上传时间</th>
+                                <th style="text-align: left !important;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="addFileTbody">
+                            <notempty name="files">
+                                <volist name="files" id="vo">
+                                    <tr class="fileDataTr">
+                                        <td class="file_name">{$vo.file_name}</td>
+                                        <td class="add_user">{$vo.add_user}</td>
+                                        <td class="add_time">{$vo.add_time}</td>
+                                        <td>{$vo.operation}</td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr class="notFileDataTr">
+                                    <td colspan="4" style="text-align: center!important;">暂无数据</td>
+                                </tr>
+                            </notempty>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+
+
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="keepStartRepair" style="background: #F7B824"><i class="layui-icon">&#xe609;</i> 保存维修记录</button>
+                <button class="layui-btn" id="endRepair" lay-submit lay-filter="endStartRepair"><i class="layui-icon">&#xe609;</i> 维修结束并提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script>
+    var startRepairUrl = '{$startRepairUrl}';
+    var personalPartsInfo = {$personalPartsInfo};
+    var username = '<?php echo(session("username")); ?>';
+    var userJson =<?php echo($userJson);?>;
+</script>
+<script>
+    layui.use('controller/repair/repair/startRepair', layui.factory('controller/repair/repair/startRepair'));
+</script>
+</body>
+</html>
+

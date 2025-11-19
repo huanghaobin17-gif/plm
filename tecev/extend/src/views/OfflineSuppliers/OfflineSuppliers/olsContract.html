@@ -1,0 +1,92 @@
+<?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','olsContract')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-OfflineSuppliers-OfflineSuppliers-olsContract" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">乙方单位：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="olsContractSupName" placeholder="请输入乙方单位名称" name="supplier_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合同名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="olsContractContractName" placeholder="请输入合同名称" name="contract_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">合同类型：</label>
+                                <div class="layui-input-inline">
+                                    <select name="contract_type" lay-search="" >
+                                        <option value="">全部</option>
+                                        <option value="{$a=C('CONTRACT_TYPE_SUPPLIER')}">{$a=C('CONTRACT_TYPE_SUPPLIER_NAME')}</option>
+                                        <option value="{$a=C('CONTRACT_TYPE_REPAIR')}">{$a=C('CONTRACT_TYPE_REPAIR_NAME')}</option>
+                                        <option value="{$a=C('CONTRACT_TYPE_INSURANCE')}">{$a=C('CONTRACT_TYPE_INSURANCE_NAME')}</option>
+                                        <option value="{$a=C('CONTRACT_TYPE_RECORD_ASSETS')}">{$a=C('CONTRACT_TYPE_RECORD_ASSETS_NAME')}</option>
+                                        <option value="{$a=C('CONTRACT_TYPE_PARTS')}">{$a=C('CONTRACT_TYPE_PARTS_NAME')}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="olsContractListSearch" id="olsContractListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 合同列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="olsContractList" lay-filter="olsContractData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="LAY-OfflineSuppliers-OfflineSuppliers-olsContractbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOLSContract')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addOLSContract" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var olsContractUrl='{$olsContractUrl}';
+    layui.use('offlineSuppliers/offlineSuppliers/olsContract', layui.factory('offlineSuppliers/offlineSuppliers/olsContract'));
+</script>

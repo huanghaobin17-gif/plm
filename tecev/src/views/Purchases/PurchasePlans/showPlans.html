@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 10%;
+        }
+        #LAY-Purchases-PurchasePlans-departReport .detailed .no-padding-td {
+            padding: 0 !important;
+        }
+        #LAY-Purchases-PurchasePlans-departReport .detailed .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Purchases-PurchasePlans-departReport .xm-select-parent .xm-input{
+            border:none;
+        }
+        #addAssets,#addAssetsFile,#dwFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+    <blockquote class="layui-elem-quote">
+        年度采购计划信息
+    </blockquote>
+    <table class="layui-table read-table" lay-size="sm" lay-even="">
+        <colgroup>
+            <col width="100">
+            <col>
+        </colgroup>
+        <tbdoy>
+            <tr>
+                <th class="text-right">上报科室：</th>
+                <td >{$plansInfo.department}</td>
+            </tr>
+            <tr>
+                <th class="text-right">计划年份：</th>
+                <td>{$plansInfo.plans_year}</td>
+            </tr>
+            <tr>
+                <th class="text-right">项目名称：</th>
+                <td>{$plansInfo.project_name}</td>
+            </tr>
+            <tr>
+                <th class="text-right">创建人：</th>
+                <td>{$plansInfo.add_user}</td>
+            </tr>
+            <tr>
+                <th class="text-right">创建时间：</th>
+                <td>{$plansInfo.add_time}</td>
+            </tr>
+            <tr>
+                <th class="text-right">计划状态：</th>
+                <td>{$plansInfo.plans_status_name}</td>
+            </tr>
+            <tr>
+                <th class="text-right">计划时间：</th>
+                <td>{$plansInfo.plans_start} 至 {$plansInfo.plans_end}</td>
+            </tr>
+            <tr>
+                <th class="text-right">备注：</th>
+                <td>{$plansInfo.plans_desc}</td>
+            </tr>
+        </tbdoy>
+    </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            上报设备明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+            <colgroup>
+                <col width="5%">
+                <col width="18%">
+                <col width="6%">
+                <col width="10%">
+                <col width="7%">
+                <col width="10%">
+                <col width="8%">
+                <col width="8%">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="th-align-center">序号</th>
+                <th class="th-align-center">设备名称</th>
+                <th class="th-align-center">单位</th>
+                <th class="th-align-center">预计单价(元)</th>
+                <th class="th-align-center">数量</th>
+                <th class="th-align-center">预计总价</th>
+                <th class="th-align-center">是否进口</th>
+                <th class="th-align-center">上报类别</th>
+                <th class="th-align-center">参考品牌</th>
+            </tr>
+            </thead>
+            <tbody class="assets-list">
+            <if condition="$plansAssetsInfo">
+                <volist name="plansAssetsInfo" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.assets_name}</td>
+                        <td>{$vo.unit}</td>
+                        <td>{$vo.market_price}</td>
+                        <td>{$vo.nums}</td>
+                        <td>{$vo.total_price}</td>
+                        <td>
+                            <if condition="$vo['is_import'] eq 1">
+                                是
+                                <else/>
+                                否
+                            </if>
+                        </td>
+                        <td>
+                            <if condition="$vo['buy_type'] eq 1">
+                                报废更新
+                            </if>
+                            <if condition="$vo['buy_type'] eq 2">
+                                添置
+                            </if>
+                            <if condition="$vo['buy_type'] eq 3">
+                                新增
+                            </if>
+                        </td>
+                        <td>{$vo.brand}</td>
+                    </tr>
+                </volist>
+            <else/>
+                <tr class="no-data">
+                    <td colspan="9" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            附件信息
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+            <colgroup>
+                <col width="5%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>文件名称</th>
+                <th>文件大小</th>
+                <th>提交人</th>
+                <th>提交时间</th>
+            </tr>
+            </thead>
+            <tbody class="file_url">
+            <if condition="$plansFilesInfo">
+                <volist name="plansFilesInfo" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}M</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="5" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 110px;">上报科室：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$plansInfo.department}" readonly class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 110px;">上报时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$plansInfo.apply_date}" readonly class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px;"><span class="rquireCoin"> * </span>设备上报理由：</label>
+            <div class="layui-input-block" style="margin-left: 140px;">
+                <textarea placeholder="请输入上报理由" readonly lay-verify="apply_reason|required" name="apply_reason" class="layui-textarea">{$plansInfo.apply_reason}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var departReport = "{$departReport}";
+    layui.use('controller/purchases/plans/departReport', layui.factory('controller/purchases/plans/departReport'));
+</script>

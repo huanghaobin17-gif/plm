@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <link href="__PUBLIC__/tablesorter/themes/blue/style.css?v={:mt_rand(1,54561)}" rel="stylesheet" type="text/css"/>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".alltable").tablesorter({headers:{2:{sorter:false}}});
+        });
+    </script>
+    <style>
+        .layui-table{margin: -1px;}
+        .layui-colla-content{padding: 0;}
+        .layui-collapse{border-right: none}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="height: 39px;"><span class="rquireCoin"> * </span>模板名称 </label>
+                <div class="layui-input-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control bsSuggest" id="templateName" placeholder="可输入搜索并自动检索" name="name" lay-verify="name" value="{$tpInfo.name}">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="tpid" value="{$tpInfo.tpid}">
+        <div class="layui-collapse">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">{$vo.name}(共{$vo.sum}项)<span class="many">已选择{$vo.selectedNum}项</span></h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table tablesorter alltable" >
+                            <thead>
+                            <tr>
+                                <th style="width: 8%">编号</th>
+                                <th>明细名称</th>
+                                <th style="width: 18%;text-align: center;">请勾选模板保养项</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo['detail']" id="v">
+                                <tr class="choose">
+                                    <td>{$v.num}</td>
+                                    <if condition="$v.require neq NULL">
+                                        <td>{$v.name}<br>(保养内容及要求：{$v.require})</td>
+                                        <else />
+                                        <td>{$v.name}</td>
+                                    </if>
+                                    <td style="text-align: center;"><input type="checkbox" name="num" value="{$v.num}" lay-skin="primary" lay-filter="Choose" <if condition="in_array($v['num'],$pointNum)">checked</if> ></td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="layui-form-item layui-form-text" style="margin-top: 20px;">
+            <label class="layui-form-label">模板备注：</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入模板备注" name="remark" class="layui-textarea">{$tpInfo.remark}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center;margin-top: 20px;">
+                <button class="layui-btn" type="button"  value="" lay-submit lay-filter="editTemplate" >确认并提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+<script>
+    var tp =<?php echo($tp);?>;
+</script>
+<script>
+    layui.use('controller/patrol/patrolsetting/edittemplate', layui.factory('controller/patrol/patrolsetting/edittemplate'));
+</script>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>供应商详情</title>
+    <link rel="stylesheet" href="__PUBLIC__/layui-v2.2.6/css/layui.css?v={:mt_rand(1,54561)}">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css?v={:mt_rand(1,54561)}">
+    <link rel="stylesheet" href="/tecevAdmin/src/style/template.css?v={:mt_rand(1,54561)}" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/layui-v2.2.6/layui.js?v={:mt_rand(1,54561)}"></script>
+    <style>
+        .layadmin-homepage-list-inline a{border: 1px solid #C9C9C9!important;}
+    </style>
+</head>
+<body style="background-color: #ECF0F1; margin-top: 15px;">
+<div class="layui-fluid layadmin-homepage-fluid">
+    <div class="layui-row layui-col-space8">
+        <div class="layui-col-md2">
+            <div class="layadmin-homepage-panel layadmin-homepage-shadow">
+                <div class="layui-card text-center">
+                    <div class="layui-card-body">
+                        <div class="layadmin-homepage-pad-ver">
+                                <img class="layadmin-homepage-pad-img" src="/tecevAdmin/src/style/res/logo1.png" width="96" height="96">
+                        </div>
+                        <h4 class="layadmin-homepage-font">{$Think.config.COMPANY_NAME}</h4>
+                        <p class="layadmin-homepage-min-font">经营企业</p>
+                        <div class="layadmin-homepage-pad-ver">
+                            <a href="javascript:;" class="layui-icon layui-icon-auz" title="通过审核"></a>
+                            <a href="javascript:;" class="layui-icon layui-icon-zcertificate" title="证照齐全"></a>
+                            <a href="javascript:;" class="layui-icon layui-icon-zmedal-l" title="服务优等"></a>
+                            <a href="javascript:;" class="layui-icon layui-icon-zzhandshake-o" title="有过合作"></a>
+                        </div>
+                        <!--<button class="layui-btn layui-btn-fluid">联系</button>-->
+                    </div>
+                </div>
+                <p class="layadmin-homepage-about">
+                    公司介绍
+                </p>
+                <ul class="layadmin-homepage-list-group">
+                    <li class="list-group-item"><i class="layui-icon layui-icon-location"></i>广东广州</li>
+                </ul>
+                <div class="layadmin-homepage-pad-hor">
+                    <mdall>公司介绍</mdall>
+                </div>
+                <p class="layadmin-homepage-about">
+                    经营产品<!--生产产品-->
+                </p>
+                <ul class="layadmin-homepage-list-inline">
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">呼吸机</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">除颤仪</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">心电图机</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">输液泵</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">主注射泵</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">血压仪</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">监护仪</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">婴儿培养箱</a>
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">麻醉机</a>
+                </ul>
+                <p class="layadmin-homepage-about">
+                    经营品牌<!--生产产品-->
+                </p>
+                <ul class="layadmin-homepage-list-inline">
+                    <a href="javascript:;" class="layui-btn layui-btn-primary">飞利浦</a>
+                </ul>
+                <hr style="margin: 0px 10px 10px 10px;">
+                <ul class="layadmin-homepage-list-group">
+                    <li class="list-group-item"><i class="layui-icon layui-icon-zzuser" style="color: #C4CBCF"></i> 联系人：王喜娟</li>
+                    <li class="list-group-item"><i class="layui-icon layui-icon-zzvolume-control-phone" style="color: #C4CBCF"></i> 联系电话：132 0291 8082</li>
+                    <li class="list-group-item"><i class="layui-icon layui-icon-zzsign-in" style="color: #C4CBCF"></i> 平台注册日期：2018-06-29</li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-col-md10">
+            <div class="layui-fluid layadmin-homepage-content">
+                <div class="layui-row  layadmin-homepage-padding15">
+                    <hr class="new-section-xs"></hr>
+                    <div class="layui-col-md10 layadmin-homepage-padding8">
+                        <div class="layui-row layadmin-homepage-text-center">
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs3">
+                                <p class="h4"><i class="layui-icon layui-icon-star-fill"></i>4.5</p>
+                                <mdall>评价排名</mdall>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+                                <p class="h4"><i class="layui-icon layui-icon-zzthumbs-o-up"></i>52</p>
+                                <mdall>履约次数</mdall>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+                                <p class="h4">52</p>
+                                <mdall lay-tips="公司在服务商云平台上传产品数量" lay-direction="3">上传产品</mdall>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+                                <p class="h4">10</p>
+                                <mdall lay-tips="已采购验收入库设备数量" lay-direction="3">入库设备</mdall>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+                                <p class="h4">5</p>
+                                <mdall lay-tips="采购计划供遴选设备数量" lay-direction="3">遴选设备</mdall>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm2 layui-col-xs2">
+                                <p class="h4">5</p>
+                                <mdall lay-tips="设备参保计划供遴选维保服务数量" lay-direction="3">遴选维保</mdall>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="layui-col-md2">
+                        <a href="javascript:;" class="layui-btn layui-btn-normal">下载简历</a>
+                        <a href="javascript:;" class="layui-btn">发信息</a>
+                    </div>-->
+                </div>
+                <div class="layui-row layui-col-space20 layadmin-homepage-list-imgtxt">
+                    <div class="layui-col-md9">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span lay-tips="公司在服务商云平台上传产品数量"><i class="layui-icon layui-icon-zzlist-ul"></i> 产品列表</span>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" lay-skin="nob" lay-even="">
+                                    <colgroup>
+                                        <col width="60">
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col width="60">
+                                        <col width="60">
+                                        <col>
+                                        <col>
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>产品名称</th>
+                                        <th>品牌</th>
+                                        <th>规格/型号</th>
+                                        <th>单位</th>
+                                        <th>单价</th>
+                                        <th>产品类别</th>
+                                        <th>注册证</th>
+                                        <th>有限期至</th>
+                                        <th>68分类</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>便携式多参数监护仪</td>
+                                        <td>迈瑞</td>
+                                        <td>PM9000E</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>Ⅱ类</td>
+                                        <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                        <td>2018-06-29</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>便携式多参数监护仪</td>
+                                        <td>迈瑞</td>
+                                        <td>PM9000E</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>Ⅱ类</td>
+                                        <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                        <td>2018-06-29</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>便携式多参数监护仪</td>
+                                        <td>迈瑞</td>
+                                        <td>PM9000E</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>Ⅱ类</td>
+                                        <td><i class="layui-icon layui-icon-zzclose" style="color: #FF5722"></i></td>
+                                        <td>2018-06-29</td>
+                                        <td>无创监护仪器</td>
+                                    </tr><tr>
+                                        <td>4</td>
+                                        <td>便携式多参数监护仪</td>
+                                        <td>迈瑞</td>
+                                        <td>PM9000E</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>Ⅱ类</td>
+                                        <td><i class="layui-icon layui-icon-zzclose" style="color: #FF5722"></i></td>
+                                        <td>2018-06-29</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                               <span lay-tips="已采购验收入库设备数量"  lay-direction="1"><i class="layui-icon layui-icon-component"></i> 入库设备列表</span>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" lay-skin="nob" lay-even="">
+                                    <colgroup>
+                                        <col width="60">
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>设备编号</th>
+                                        <th>名称名称</th>
+                                        <th>品牌</th>
+                                        <th>规格/型号</th>
+                                        <th>单位</th>
+                                        <th>单价</th>
+                                        <th>产品序列号</th>
+                                        <th>科室</th>
+                                        <th>68分类</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>6821091271784</td>
+                                        <td>无创监护仪器</td>
+                                        <td>麦邦</td>
+                                        <td>MB625</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>MB67868U9</td>
+                                        <td>内科六区</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>6821091271784</td>
+                                        <td>无创监护仪器</td>
+                                        <td>麦邦</td>
+                                        <td>MB625</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>MB67868U9</td>
+                                        <td>内科六区</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>6821091271784</td>
+                                        <td>无创监护仪器</td>
+                                        <td>麦邦</td>
+                                        <td>MB625</td>
+                                        <td>台</td>
+                                        <td>37000</td>
+                                        <td>MB67868U9</td>
+                                        <td>内科六区</td>
+                                        <td>无创监护仪器</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon layui-icon-zzthumbs-o-up"></i> 履约情况</div>
+                            <div class="layui-card-body">
+                                <table class="layui-table" lay-even="" lay-skin="nob">
+                                    <colgroup>
+                                        <col width="60">
+                                        <col width="120">
+                                        <col>
+                                        <col width="120">
+                                        <col width="120">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>履约日期</th>
+                                        <th>履约内容</th>
+                                        <th>履约情况</th>
+                                        <th>履约评价</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2017-09-28</td>
+                                        <td>采购设备详情信息录入</td>
+                                        <td>完成</td>
+                                        <td>5分</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>2018-02-08</td>
+                                        <td>设备维保服务第一次</td>
+                                        <td>完成</td>
+                                        <td>4.5分</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>2018-06-30</td>
+                                        <td>设备维保服务第二次</td>
+                                        <td>完成</td>
+                                        <td>5分</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="grid-demo">
+                            <div class="layui-card homepage-top">
+                                <div class="layui-card-header">
+                                    <h3 class="panel-title">
+                                        <i class="layui-icon layui-icon-zcertificate"></i> 公司资质
+                                    </h3>
+                                </div>
+                                <div class="layui-card-body" style="padding: 5px;">
+                                    <table class="layui-table" lay-skin="nob">
+                                        <colgroup>
+                                            <col>
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th style="padding:9px 5px;">
+                                                    <span class="fl">证照名称</span>
+                                                    <span class="fr">有效期至</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td style="padding: 9px 5px;">
+                                                <span class="fl"><i class="layui-icon layui-icon-auz" style="color: #5FB878"></i>
+                                                营业执照</span>
+                                                <span class="fr"><i class="layui-icon layui-icon-zzban" style="color: #c2c2c2"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 9px 5px;">
+                                                <span class="fl">
+                                                <i class="layui-icon layui-icon-auz" style="color: #5FB878"></i>
+                                                医疗器械经营许可证
+                                                </span>
+                                                <span class="fr">
+                                                2020-02-20
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 9px 5px;"><span class="fl">
+                                                <i class="layui-icon layui-icon-auz" style="color: #5FB878"></i>
+                                                第二类医疗器械经营备案凭证
+                                            </span>
+                                                <span class="fr">
+                                                2020-02-20
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="layui-card">
+                                <div class="layui-card-header">
+                                    <h3 class="panel-title">
+                                        <i class="layui-icon layui-icon-tree"></i>
+                                        日志时间线
+                                    </h3>
+                                </div>
+                                <div class="layui-card-body">
+                                    <ul class="layui-timeline">
+                                        <li class="layui-timeline-item">
+                                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                            <div class="layui-timeline-content layui-text">
+                                                <h3 class="layui-timeline-title">8月18日</h3>
+                                                <ul>
+                                                    <li>添加产品【便携式监护仪】<i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></li>
+                                                    <li>添加产品【便携式多参数监护仪】<i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></li>
+                                                    <li>添加产品【便携式多参数监护仪】<i class="layui-icon layui-icon-zzclose" style="color: #FF5722"></i></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="layui-timeline-item">
+                                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                            <div class="layui-timeline-content layui-text">
+                                                <h3 class="layui-timeline-title">8月16日</h3>
+                                                <p>通过我方审核，注册成功！<i class="layui-icon layui-icon-auz" style="color: #5FB878"></i></p>
+                                            </div>
+                                        </li>
+                                        <li class="layui-timeline-item">
+                                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                            <div class="layui-timeline-content layui-text">
+                                                <h3 class="layui-timeline-title">8月15日</h3>
+                                                <p>注册待审核</p>
+                                            </div>
+                                        </li>
+                                        <!--此处不全部显示，只加载最新的5条，过去的由点击加载更多再显示，如不超过5条，没有加载更多-->
+                                        <li class="layui-timeline-item">
+                                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                                            <div class="layui-timeline-content layui-text">
+                                                <div class="layui-timeline-title">加载更多</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use(['layer', 'form', 'element','table'], function() {
+        var layer = layui.layer, form = layui.form, element = layui.element, laydate = layui.laydate, table = layui.table;
+        //先更新页面部分需要提前渲染的控件
+        form.render();
+        //tips
+        $ddd = $('.layui-fluid');
+        $ddd.on('mouseenter', '*[lay-tips]', function () {
+            var othis = $(this);
+
+            if (othis.parent().hasClass('layui-nav-item') && !container.hasClass(SIDE_SHRINK)) return;
+
+            var tips = othis.attr('lay-tips')
+                , offset = othis.attr('lay-offset')
+                , direction = othis.attr('lay-direction')
+                , index = layer.tips(tips, this, {
+                tips: direction || 1
+                , time: -1
+                , success: function (layero, index) {
+                    if (offset) {
+                        layero.css('margin-left', offset + 'px');
+                    }
+                }
+            });
+            othis.data('index', index);
+        }).on('mouseleave', '*[lay-tips]', function () {
+            layer.close($(this).data('index'));
+        });
+
+        //定义一个全局空对象
+        var gloabOptions = {};
+    })
+</script>

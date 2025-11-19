@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .cusquote1 {
+            padding: 5px !important;
+            width: 100%;
+            margin: 10px auto 10px;
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="action" value="{$url}"/>
+        <input type="hidden" name="detailid" value="{$detailInfo.detailid}"/>
+        <input type="hidden" name="processid" value="{$detailInfo.processid}"/>
+        <blockquote class="layui-elem-quote cusquote1">
+            如果该流程审批人存在多个的话，则审批排序数小的先审批
+        </blockquote>
+        <div class="layui-form-item">
+            <div class="layui-block marbot">
+                <label class="layui-form-label" style="height: 40px"><span class="rquireCoin"> * </span>审批人：</label>
+                <div class="layui-input-block">
+                    <div class="input-group cusgroup1">
+                        <input type="text" class="form-control" id="testNoBtn" value="{$detailInfo.approve_user}" placeholder="请选择审批人" style="padding-left:10px;">
+                        <input type="hidden" name="username" value="{$detailInfo.approve_user}" />
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>审批名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="approvename" value="{$detailInfo.approve_name}" required  lay-verify="required|approvename" placeholder="请输入审批名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>审批排序：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="listorder" value="{$detailInfo.listorder}" required  lay-verify="required|listorder" placeholder="请输入审批排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="editDetail"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/approveSetting/editDetail', layui.factory('controller/basesetting/approveSetting/editDetail'));
+</script>

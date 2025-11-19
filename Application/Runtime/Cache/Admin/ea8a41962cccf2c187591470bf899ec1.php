@@ -1,0 +1,86 @@
+<?php if (!defined('THINK_PATH')) exit(); if($menuData = get_menu_name('Statistics','StatisRepair','engineerCompar')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var engineerCompar = "<?php echo ($engineerCompar); ?>";
+</script>
+<div class="layui-fluid" id="LAY-Statistics-StatisRepair-engineerCompar">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">完成日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly value="<?php echo ($start_date); ?>" style="cursor: pointer;" name="startDate" id="engineerComparS" lay-verify="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly value="<?php echo ($end_date); ?>" style="cursor: pointer;" name="endDate" id="engineerComparE" lay-verify="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="engineerComparSearch" id="engineerComparSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" lay-submit="" lay-filter="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 图示</div>
+                <div class="layui-row" style="padding-right: 15px;">
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo grid-demo-bg1">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">维修次数分析</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="repair_num" class="div-chart-show-workjob"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">维修时长分析</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="repair_time" class="div-chart-show-workjob"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4 tb-padding">
+                        <div class="grid-demo">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title">修复占比分析</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="repair_rate" class="div-chart-show-workjob"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="engineerComparLists" lay-filter="engineerComparData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('statistics/statisRepair/engineerCompar', layui.factory('statistics/statisRepair/engineerCompar'));
+</script>

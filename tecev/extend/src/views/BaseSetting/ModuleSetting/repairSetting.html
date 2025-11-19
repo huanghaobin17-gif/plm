@@ -1,0 +1,202 @@
+<a name="repair"></a>
+<blockquote class="layui-elem-quote module-blockquote">维修管理模块配置</blockquote>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">模块状态：</label>
+    <div class="layui-input-block radio-margin-left">
+        <input type="radio" name="repair[repair_open][is_open]" lay-filter="repair_open" value="1" title="开启" <if condition="$settings['repair']['repair_open'][is_open] eq 1">checked</if> >
+        <input type="radio" name="repair[repair_open][is_open]" lay-filter="repair_open" value="0" title="关闭" <if condition="$settings['repair']['repair_open'][is_open] neq 1">checked</if> >
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2">维修单编码规则：</label>
+        <div class="layui-input-inline" style="width: 420px;">
+            <div class="layui-input-inline repair" style="width: 90px;">
+                <input style="width: 100px;" type="text" name="repair[repair_encoding_rules][prefix]" value="{$settings['repair']['repair_encoding_rules'][prefix]}" autocomplete="off" class="layui-input">
+            </div>
+            <span style='padding: 9px; line-height: 20px;float: left;'>+  报修日期 + “_” + 流水号 = 设备维修维护编号</span><br>
+        </div>
+        <div class="layui-form-mid layui-word-aux">注意：如维修单不需要前缀，请置空输入框</div>
+    </div>
+</div>
+<div class="layui-form-item repair">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel">自定义维修类别：</label>
+        <div class="layui-input-inline width450">
+            <input type="text" name="repair[repair_category]" value="{:(implode('|',$settings['repair']['repair_category']))}" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请用 | 分隔，设置好后，请勿频繁改动！</div>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2">维修报告标题：</label>
+        <div class="layui-input-inline" style="width: 600px;">
+            <div class="layui-input-inline repair">
+                <input  type="text" name="repair[repair_template][title]" value="{$settings['repair']['repair_template'][title]}" autocomplete="off" class="layui-input">
+            </div>
+            <span style='padding: 9px; line-height: 20px;float: left;'> + 维修报告 = 维修报告标题</span>
+            <div class="layui-form-mid layui-word-aux">如果为空，默认前缀为“医疗设备”</div>
+        </div>
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">维修报告模板：</label>
+    <div class="layui-input-block repair repairModuleSetting-input radio-margin-left">
+        <input type="radio" name="repair[repair_template][version]" value="1" title="默认"<if condition="$settings['repair']['repair_template'][version] eq 1">checked</if>>
+        <span data-src="/A/Repair/examine?action=printReport&onlyShow=1" onclick="showimg($(this).data('src'))">
+            点击预览
+        </span>
+        <input type="radio" name="repair[repair_template][version]" value="2" title="模板1"<if condition="$settings['repair']['repair_template'][version] neq 1">checked</if>>
+        <span data-src="/A/Repair/examine?action=printReport&onlyShow=2" onclick="showimg($(this).data('src'))">
+            点击预览
+        </span>
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">水印设置：</label>
+    <div class="layui-input-block repair repairModuleSetting-input radio-margin-left">
+        <!--<span data-src="__PUBLIC__/images/nowarterpdf.jpg" onclick="showimg($(this).data('src'))">-->
+        <!--点击预览-->
+        <!--</span>-->
+        <!---->
+        <!--<span data-src="__PUBLIC__/images/warterpdf.jpg" onclick="showimg($(this).data('src'))">-->
+        <!--点击预览-->
+        <!--</span>-->
+        <input type="radio" name="repair[repair_tmp][style]" lay-filter="repair_water" value="1" title="无水印"<if condition="$settings['repair']['repair_tmp'][style] eq 1">checked</if>>
+        <input type="radio" name="repair[repair_tmp][style]" lay-filter="repair_water" value="2" title="有水印"<if condition="$settings['repair']['repair_tmp'][style] neq 1">checked</if>>
+    </div>
+</div>
+<div class="layui-form-item watermark" style="display: none;">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2">水印文字：</label>
+        <div class="layui-input-inline repair">
+            <input type="text" name="repair[repair_print_watermark][watermark]" value="{$settings['repair']['repair_print_watermark'][watermark]}" autocomplete="off" class="layui-input" style="width: 220px;" maxlength="12">
+        </div>
+        <div class="layui-form-mid layui-word-aux input-tips">维修单模板选择有水印时必填，最长12个字符</div>
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">微信扫码签到功能：</label>
+    <div class="layui-input-block repair radio-margin-left">
+        <input type="radio" name="repair[open_sweepCode_overhaul][open]"  value="1" title="开启" <if condition="$settings['repair']['open_sweepCode_overhaul'][open] eq 1">checked</if> >
+        <input type="radio" name="repair[open_sweepCode_overhaul][open]"  value="0" title="关闭" <if condition="$settings['repair']['open_sweepCode_overhaul'][open] neq 1">checked</if> >
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important;">
+    <label class="layui-form-label modulelabel-2">表单必填项开关：</label>
+    <div class="layui-input-block repair radio-margin-left">
+        <input type="checkbox" name="repair[repair_required][repair_date]" lay-skin="primary" title="报修日期" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['repair_date'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][repair_person]" lay-skin="primary" title="报修人" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['repair_person'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][repair_phone]" lay-skin="primary" title="报修电话" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['repair_phone'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][service_date]" lay-skin="primary" title="维修日期" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['service_date'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][service_working]" lay-skin="primary" title="维修工时" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['service_working'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][repair_check]" lay-skin="primary" title="验收时间" value="1" disabled="disabled"<if condition="$settings['repair']['repair_required']['repair_check'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_required][repair_detail]" lay-skin="primary" title="报修故障描述" value="1"<if condition="$settings['repair']['repair_required']['repair_detail'] eq 1">checked</if>/>
+    </div>
+</div>
+
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important;">
+    <label class="layui-form-label modulelabel-2">系统生成字段开关：</label>
+    <div class="layui-input-block repair radio-margin-left">
+        <input type="checkbox" name="repair[repair_system][repair_date]" lay-skin="primary" title="报修日期" lay-filter="repair_date" value="1"<if condition="$settings['repair']['repair_system']['repair_date'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_system][repair_person]" lay-skin="primary" title="报修人" lay-filter="repair_person" value="1"<if condition="$settings['repair']['repair_system']['repair_person'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_system][repair_phone]" lay-skin="primary" title="报修电话" lay-filter="repair_phone" value="1"<if condition="$settings['repair']['repair_system']['repair_phone'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_system][service_date]" lay-skin="primary" title="维修日期" lay-filter="service_date" value="1"<if condition="$settings['repair']['repair_system']['service_date'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_system][service_working]" lay-skin="primary" title="维修工时" lay-filter="service_working" value="1"<if condition="$settings['repair']['repair_system']['service_working'] eq 1">checked</if>/>
+        <input type="checkbox" name="repair[repair_system][repair_check]" lay-skin="primary" title="验收时间" lay-filter="repair_check" value="1"<if condition="$settings['repair']['repair_system']['repair_check'] eq 1">checked</if>/>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">接单预计到场时间上限：</label>
+        <div class="layui-input-inline repair" >
+            <input type="text" name="repair[repair_uptime]" value="{$settings['repair']['repair_uptime']}" class="layui-input" lay-verify="uptime">
+        </div>
+        <div class="layui-form-mid layui-word-aux">分钟</div>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">配件库存不足预警数量：</label>
+        <div class="layui-input-inline repair" >
+            <input type="text" name="repair[parts_warning]" value="{$settings['repair']['parts_warning']}" class="layui-input" lay-verify="parts_warning">
+        </div>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">生命支持类设备超过：</label>
+        <div class="layui-input-inline repair" >
+            <input type="text" name="repair[life_assets_remind]" value="{$settings['repair']['life_assets_remind']}" class="layui-input" lay-verify="life_assets_remind">
+        </div>
+        <div class="layui-form-mid layui-word-aux">分钟未接单的，重新提醒(不设置或设置为0则无需提醒)</div>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">普通类设备超过：</label>
+        <div class="layui-input-inline repair" >
+            <input type="text" name="repair[normal_assets_remind]" value="{$settings['repair']['normal_assets_remind']}" class="layui-input" lay-verify="normal_assets_remind">
+        </div>
+        <div class="layui-form-mid layui-word-aux">分钟未接单的，重新提醒(不设置或设置为0则无需提醒)</div>
+    </div>
+</div>
+
+<div class="content">
+    <table class="layui-table t2">
+        <tbody>
+        <!--<tr>-->
+        <!--<th>服务分类 :</th>-->
+        <!--<td>-->
+        <!--<div class="layui-input-block repair">-->
+        <!--<input type="text" name="repair[repair_service]" placeholoder="" value="{:(implode('|',$settings['repair']['repair_service']))}" class="layui-input">-->
+        <!--</div>-->
+        <!--<span style="color: red;">(注意：请用 | 分隔，设置好后，请勿频繁改动！)</span>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+        <!--<th>导出维修单信息项 :</th>-->
+        <!--<td>-->
+        <!--<div class="layui-form-item repair" >-->
+        <!--<ul class="export">-->
+        <!--<volist name="repairPrint" id="vo">-->
+        <!--<if condition="in_array($vo['field'],$settings['repair']['repair_print'])">-->
+        <!--<li><input type="checkbox" name="repair[repair_print][{$vo.field}]" lay-skin="primary" title="{$vo.comment}" checked="checked"/></li>-->
+        <!--<else />-->
+        <!--<li><input type="checkbox" name="repair[repair_print][{$vo.field}]" lay-skin="primary" title="{$vo.comment}" /></li>-->
+        <!--</if>-->
+        <!--</volist>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    $(function () {
+        var haveWater = $('.repair input[name="repair[repair_tmp][style]"]:checked ').val();
+        if (haveWater == '2') {
+            $('.watermark').show();
+        }
+    });
+    function showimg(url) {
+        top.layer.open({
+            type: 2,
+            offset:'r',
+            title: '预览模板',
+            shade: [0.8, '#393D49'],
+            shadeClose:true,
+            anim:5,
+            scrollbar:false,
+            area: ['950px', '100%'],
+            closeBtn: 1,
+            content: [url]
+        });
+    }
+</script>

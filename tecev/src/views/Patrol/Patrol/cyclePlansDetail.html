@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="card-html-bg">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-examine .layui-elem-quote {
+        padding: 5px;
+    }
+
+    .read-table th {
+        width: 12%;
+        text-align: right !important;
+    }
+</style>
+<body>
+<div class="layui-fluid layui-tab-content">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-elem-quote-sm">计划信息</div>
+                    <table class="layui-table read-table" lay-size="sm" lay-even>
+                        <tbody>
+                        <tr>
+                            <th>计划状态：</th>
+                            <td colspan="5" style="color: red;">{$cycleInfo.cycle_status_name}</td>
+                        </tr>
+                        <tr>
+                            <th>计划编号：</th>
+                            <td>{$cycleInfo.patrol_num}</td>
+                            <th>计划日期：</th>
+                            <td>{$cycleInfo.cycle_start_date} — {$cycleInfo.cycle_end_date}</td>
+                            <th>期次：</th>
+                            <td>{$cycleInfo.period}</td>
+                        </tr>
+                        <tr>
+                            <th>计划设备总数量：</th>
+                            <td>{$cycleInfo.assets_nums}</td>
+                            <th>已执行设备数量：</th>
+                            <td>{$cycleInfo.implement_sum}</td>
+                            <th>异常设备数量：</th>
+                            <td>{$cycleInfo.abnormal_sum}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--列表-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本期计划设备列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="plansDetailLists" lay-filter="plansDetailData"></table>
+                </div>
+                <script type="text/html" id="plansDetailToolbar">
+                    <div class="layui-btn-container">
+                        <?php if($menuData = get_menu('Patrol','Patrol','doTask')):?>
+                        <button id="yijian" class="layui-btn layui-btn-sm" lay-event="yijian" data-url="{$menuData['actionurl']}">
+                            一键保养
+                        </button>
+                        <?php endif?>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本期计划完成总进度
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                        <div class="layui-progress-bar" lay-percent="{$cycleInfo.total_progress}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本期计划各科室设备保养进度
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-table" lay-size="sm">
+                        <colgroup>
+                            <col width="70">
+                            <col width="200">
+                            <col width="120">
+                            <col width="120">
+                            <col width="120">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-center">序号</th>
+                            <th class="th-center">科室名称</th>
+                            <th class="th-center">计划设备台次</th>
+                            <th class="th-center">已完成台次</th>
+                            <th class="th-center">未完成台次</th>
+                            <th class="th-center">完成进度</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="department" id="vo" key="k">
+                            <tr>
+                                <td class="th-center">{$k}</td>
+                                <td class="th-center">{$vo.department}</td>
+                                <td class="th-center">{$vo.assnum_nums}</td>
+                                <td class="th-center">{$vo.total_execute}</td>
+                                <td class="th-center">{$vo.not_execute}</td>
+                                <td class="th-center">
+                                    <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                                        <div class="layui-progress-bar {$vo.bg}" lay-percent="{$vo.progress}"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div id="execute_time" style="display: none;margin-top: 20px;">
+    <form class="layui-form" style="text-align: center;">
+        <div class="layui-form-item">
+            <div class="layui-form-mid layui-word-aux" style="margin-left: 38px;">
+                {$cycleInfo['hint']}
+            </div>
+            <div class="layui-inline" >
+                <label class="layui-form-label" style="width: 140px;">选择完成保养时间：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="complete_time" value="" placeholder="请点击选择完成时间" style="cursor: pointer;" id="executeData" readonly="readonly" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
+<script>
+    var assets = {$assets};
+    var is_overdue = "{$cycleInfo['is_overdue']}";
+    var now = "{$cycleInfo['now']}";
+    var min = "{$cycleInfo['min_date']}";
+    var max = "{$cycleInfo['max_date']}";
+    layui.use('controller/patrol/patrol/cyclePlansDetail', layui.factory('controller/patrol/patrol/cyclePlansDetail'));
+</script>

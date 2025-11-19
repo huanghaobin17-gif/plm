@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大屏显示</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/login.css"/>
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/tecev-icon/iconfont.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1345701_8yz9acgeev.css" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+    <script src="/tecev/start/layui/layui.js"></script>
+    <script src="/Public/js/echarts.min.js"></script>
+</head>
+<style>
+    table tr th {
+        color: black;
+        font-weight: bold;
+    }
+
+    .sg {
+        padding: 5px;
+    }
+
+    .layui-table[lay-size=sm] td, .layui-table[lay-size=sm] th {
+        font-size: 12px;
+        padding: 6px 5px;
+        text-align: center;
+    }
+
+    .line-height-row {
+        line-height: 6px;
+    }
+
+    .tj-title {
+        height: 25px;
+        line-height: 25px;
+        font-size: 16px;
+        padding-left: 10px;
+        padding-top: 4px;
+    }
+
+    .tj-num {
+        height: 25px;
+        line-height: 25px;
+        font-size: 25px;
+        color: orange;
+        padding-left: 10px;
+    }
+
+    .tj-bot {
+        height: 25px;
+        line-height: 25px;
+        font-size: 12px;
+        padding-left: 10px;
+    }
+
+    .mdrow {
+        width: 20%;
+    }
+
+    .mdtj {
+        height: 55px;
+        margin: 5px 0;
+    }
+
+    .mdc {
+        font-size: 16px;
+        height: 33px;
+        line-height: 33px;
+    }
+
+    .mdt {
+        font-size: 12px;
+    }
+
+    .hf {
+        font-size: 18px;
+    }
+
+    .hf img {
+        width: 23px;
+        margin-right: 10px;
+        margin-bottom: 3px;
+    }
+
+    .tdb {
+        padding-left: 55%;
+    }
+
+    .tdr {
+        color: red;
+        padding-left: 55%;
+    }
+
+    .tdg {
+        color: #19BE6B;
+        padding-left: 55%;
+    }
+    .hide_this {
+        display: none;
+    }
+    .zx,.zy{
+        padding-left: 16px;
+    }
+    .byxc,.byzk,.byjl,.bybx{
+        padding-right: 25px;
+    }
+    .xcgl,.zkgl,.pmgl,.bxgl{
+        padding-left: 25px;
+    }
+    .front_div{
+        position: relative;
+        display: inline-block;
+        color: #000;
+        text-align: center;
+        width: 20%;
+        height: 45px;
+        line-height: 45px;
+        font-size: 20px;
+        font-weight: bold;
+        left: 40%;
+    }
+    .front_div::before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        background: #fff;
+        transform: perspective(1.4em) rotateX(-5deg);
+        background: -webkit-gradient(linear,0 0,0 bottom, from(#fff),to(#fff));;
+    }
+    .transform_div{
+        position: absolute;
+        width: 20%;
+        height: 50px;
+    }
+    #rq{
+        margin-top: -18px;
+        width: 230px;
+        text-align: center;
+        color: #0D0D0D;
+    }
+    .bq{
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin-top: 5px;
+        font-size: 12px;
+    }
+    .layui-card:last-child {
+        margin-bottom: -5px;
+    }
+    .bq img {
+        width: 25px;
+        margin-bottom: 2px;
+        margin-right: 3px;
+    }
+</style>
+<body>
+<div class="front_div">
+    <div class="transform_div"></div>
+    <div class="box">
+        医疗设备运维实时监控大屏
+    </div>
+</div>
+<div id="rq">2021年9月9日 15:33:09 星期四</div>
+<div style="margin: 0px">
+    <div class="layui-row">
+        <div class="layui-col-md8 sg" style="width: 64%;">
+            <div class="layui-card">
+                <div class="layui-card-header hf"><img src="/Public/images/sswx.png"/>维修实时动态数据</div>
+                <div class="layui-card-body">
+                    <table class="layui-table contable" lay-size="sm">
+                        <colgroup>
+                            <col width="4%">
+                            <col width="15%">
+                            <col width="11%">
+                            <col width="15%">
+                            <col width="10%">
+                            <col width="12%">
+                            <col width="9%">
+                            <col width="8%">
+                            <col width="16%">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>科室</th>
+                            <th>设备编码</th>
+                            <th>设备名称</th>
+                            <th>型号</th>
+                            <th>报修时间</th>
+                            <th>维修工程师</th>
+                            <th>当前状态</th>
+                            <th>维修进度</th>
+                        </tr>
+                        </thead>
+                        <tbody class="repair_status">
+                        <tr>
+                            <td colspan="9" style="text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md1 sg" style="width: 8.5%;">
+            <div class="layui-card">
+                <div class="tj-title">维修中</div>
+                <div class="tj-num"><span class="wxz">0</span> <span style="font-size: 14px;color:grey">台</span></div>
+                <div class="tj-bot">截至<span class="jz"></span></div>
+            </div>
+            <div class="layui-card">
+                <div class="tj-title">自修率</div>
+                <div class="tj-num zxl" style="color: #1E9FFF;">0%</div>
+                <div class="tj-bot">自行维修 <span class="zx">0</span>台</div>
+            </div>
+            <div class="layui-card">
+                <div class="tj-title">开机率</div>
+                <div class="tj-num kjl" style="color: #5FB878;">0%</div>
+                <div class="tj-bot">在用设备 <span class="zy">0</span>台</div>
+            </div>
+            <div class="layui-card">
+                <div class="tj-title">本月及时率</div>
+                <div class="tj-num jsl" style="color: red;">0%</div>
+                <div class="tj-bot"></div>
+            </div>
+        </div>
+        <div class="layui-col-md3 sg" style="width: 27.5%;">
+            <div class="layui-card">
+                <div class="layui-card-header hf"><img src="/Public/images/wxfy.png"/>维修费用</div>
+                <div class="layui-card-body">
+                    <div id="repair_fee" style="width: 100%;height: 298px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space10" style="padding: 0 5px">
+        <div class="layui-col-md2 mdrow">
+            <div class="layui-card mdtj">
+                <div class="layui-col-md3">
+                    <img src="/Public/images/byby.png" style="height: 55px;">
+                </div>
+                <div class="layui-col-md9">
+                    <div class="mdc"><span style="color: #19BE6B;">本月保养计划：</span> <span class="byxc">0</span> <span style="font-size: 12px;">台次</span>
+                    </div>
+                    <div class="mdt">计划完成率<span class="xcgl">0%</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md2 mdrow">
+            <div class="layui-card mdtj">
+                <div class="layui-col-md3">
+                    <img src="/Public/images/byjl.png" style="height: 40px;margin: 5px 0 0 12px">
+                </div>
+                <div class="layui-col-md9">
+                    <div class="mdc"><span style="color: #5CADFF;">本月预防性维护：</span> <span class="pmjl">0</span> <span style="font-size: 12px;">台次</span>
+                    </div>
+                    <div class="mdt">计划完成率<span class="pmgl">0%</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md2 mdrow">
+            <div class="layui-card mdtj">
+                <div class="layui-col-md3">
+                    <img src="/Public/images/byzk.png" style="height: 45px;margin: 5px 0 0 8px">
+                </div>
+                <div class="layui-col-md9">
+                    <div class="mdc"><span style="color: red;">本月质控计划：</span> <span class="byzk">0</span> <span style="font-size: 12px;">台次</span>
+                    </div>
+                    <div class="mdt">计划完成率<span class="zkgl">0%</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md2 mdrow">
+            <div class="layui-card mdtj">
+                <div class="layui-col-md3">
+                    <img src="/Public/images/bybx.png" style="height: 55px;">
+                </div>
+                <div class="layui-col-md9">
+                    <div class="mdc"><span style="color: #19BE6B;">本月报修总数：</span> <span class="bybx">0</span> <span style="font-size: 12px;">台次</span>
+                    </div>
+                    <div class="mdt">环比<span class="bxgl">0%</span> <span class="hb"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md2 mdrow">
+            <div class="layui-card mdtj">
+                <div class="layui-col-md3">
+                    <img src="/Public/images/qysb.png" style="height: 46px;margin: 5px 0 0 12px">
+                </div>
+                <div class="layui-col-md9">
+                    <div class="mdc" style="height: 58px;line-height: 58px;"><span
+                            style="color: #FF9900;">全院医疗设备台账：</span> <span class="sbzs">0</span> <span style="font-size: 12px;"> 台</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space10" style="padding: 0 5px">
+        <div class="layui-col-md7" style="width: 60%;">
+            <div class="layui-card">
+                <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md4">
+                        <div id="byjh" style="width: 100%;height: 352px;"></div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <div id="yfxjh" style="width: 100%;height: 352px;"></div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <div id="zkjh" style="width: 100%;height: 352px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5" style="width: 40%;margin-top: -5px;">
+            <div class="layui-card">
+                <div class="layui-card-header hf"><img src="/Public/images/gzjd.png"/>工程师工作进度</div>
+                <div class="layui-card-body">
+                    <table class="layui-table protable" lay-size="sm">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="15%">
+                            <col width="35%">
+                            <col width="35%">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>工程师</th>
+                            <th>未完成维修</th>
+                            <th>本月已完成保养台次</th>
+                            <th>已完成 / 本月质控台次</th>
+                        </tr>
+                        </thead>
+                        <tbody class="engineers_progress">
+                        <tr>
+                            <td colspan="4" style="text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bq">
+    <img src="/Public/images/{$Think.config.APP_MIN_LOGO}" /> {$Think.config.COMPANY_NAME} 版权所有 © 2021~2025
+</div>
+</body>
+</html>
+<script>
+    layui.use(['element', 'layer','form'], function () {
+        var $ = layui.jquery
+            , element = layui.element, layer = layui.layer,form = layui.form; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        element.render();
+        var http_host = '{$http_host}';
+        //接收推送信息
+        var ws = new WebSocket('ws://' + http_host + ':1234');
+        ws.onopen = function () {
+            var uid = '{$uid}';
+            ws.send(uid);
+        };
+
+        //定时发送心跳检测信息，避免被服务端断开连接
+        setInterval(function () {
+            ws.send('test connection');
+        }, 50000);
+
+        //维修费用
+        echarts.init(document.getElementById('repair_fee')).showLoading();
+        function repair_fee(res) {
+            var idname = echarts.init(document.getElementById('repair_fee'));
+            idname.clear();
+            idname.hideLoading();
+            idname.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: 'yellow'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data: ['报修次数', '维修费用'],
+                    left: 'center',
+                    top: '0'
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: res.depart_name,
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 28
+                        },
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '报修次数',
+                        min: 0,
+                        max: 10,
+                        interval: 1,
+                        axisLabel: {
+                            formatter: '{value} 次'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '金额（千）',
+                        min: 0,
+                        max: 10,
+                        interval: 1,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '报修次数',
+                        type: 'bar',
+                        itemStyle: {
+                            color: '#1E9FFF'
+                        },
+                        //data: [2, 9, 9, 4, 7, 7, 6, 8, 7, 8]
+                        data: res.data.total_nums
+                    },
+                    {
+                        name: '维修费用',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        itemStyle: {
+                            color: 'orange'
+                        },
+                        //data: [2.0, 0.1, 3.3, 0.5, 0.3, 1.2, 2.3, 3.4, 2.0, 0.5]
+                        data: res.data.total_price
+                    }
+                ]
+            });
+            // idname.option = {
+            //
+            // };
+            //id_name.setOption(option);
+        }
+
+        //保养计划完成情况
+        echarts.init(document.getElementById('byjh')).showLoading();
+        function rc_patrol_plan(res) {
+            var idname = echarts.init(document.getElementById('byjh'));
+            idname.clear();
+            idname.hideLoading();
+            idname.setOption({
+                title: {
+                    text: '巡查保养完成情况',
+                    left: 'center',
+                    top: 16,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '20',
+                },
+                series: [
+                    {
+                        name: '完成情况',
+                        type: 'pie',
+                        radius: '75%',
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: '{b}: {c} ({d}%)',
+                            color: '#fff',
+                            align: 'center',
+                            padding: [20, 10, 15, 22]
+                        },
+                        data: [
+                            {
+                                value: res.data.not_complete,
+                                name: '未保养',
+                                itemStyle: {
+                                    color: '#515A6E'
+                                },
+                            },
+                            {
+                                value: res.data.implement_sum,
+                                name: '已完成保养',
+                                itemStyle: {
+                                    color: '#19BE6B'
+                                },
+                            }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+            // idname.option = {
+            //
+            // };
+            //id_name.setOption(option);
+        }
+
+        //预防性维护完成情况
+        echarts.init(document.getElementById('yfxjh')).showLoading();
+        function pm_patrol_plan(res) {
+            var idname = echarts.init(document.getElementById('yfxjh'));
+            idname.clear();
+            idname.hideLoading();
+            idname.setOption({
+                title: {
+                    text: '预防性维护完成情况',
+                    left: 'center',
+                    top: 16,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '20',
+                },
+                series: [
+                    {
+                        name: '完成情况',
+                        type: 'pie',
+                        radius: '75%',
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: '{b}: {c} ({d}%)',
+                            color: '#fff',
+                            align: 'center',
+                            padding: [20, 10, 15, 22]
+                        },
+                        data: [
+                            {
+                                value: res.data.not_complete,
+                                name: '未保养',
+                                itemStyle: {
+                                    color: '#515A6E'
+                                },
+                            },
+                            {
+                                value: res.data.implement_sum,
+                                name: '已完成保养',
+                                itemStyle: {
+                                    color: '#5CADFF'
+                                },
+                            }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        //质控计划完成情况
+        echarts.init(document.getElementById('zkjh')).showLoading();
+        function quality_plan(res) {
+            var idname = echarts.init(document.getElementById('zkjh'));
+            idname.clear();
+            idname.hideLoading();
+            idname.setOption({
+                title: {
+                    text: '质控计划完成情况',
+                    left: 'center',
+                    top: 16,
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '20',
+                },
+                series: [
+                    {
+                        name: '完成情况',
+                        type: 'pie',
+                        radius: '75%',
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: '{b}: {c} ({d}%)',
+                            color: '#fff',
+                            align: 'center',
+                            padding: [20, 10, 15, 22]
+                        },
+                        data: [
+                            {
+                                value: res.data.not_complete,
+                                name: '未检测',
+                                itemStyle: {
+                                    color: '#515A6E'
+                                },
+                            },
+                            {
+                                value: res.data.complete_nums,
+                                name: '已完成检测',
+                                itemStyle: {
+                                    color: '#ED4014'
+                                },
+                            }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        ws.onmessage = function (e) {
+            var result = JSON.parse(e.data);
+            if(result.code == -1){
+                //断线了，需重新连接
+                window.location.reload();
+            }else{
+                switch (result.target) {
+                    case 'repair_status'://维修实时动态
+                        repair_status(result.data);
+                        break;
+                    case 'other_repair'://每月维修单汇总
+                        $('.wxz').html(result.data.wxz);
+                        $('.jz').html(result.data.jz);
+                        $('.zxl').html(result.data.zxl);
+                        $('.zx').html(result.data.zx);
+                        $('.kjl').html(result.data.kjl);
+                        $('.zy').html(result.data.zy);
+                        $('.jxl').html(result.data.jxl);
+                        $('.jsl').html(result.data.jsl);
+                        break;
+                    case 'top_repair'://科室维修TOP10
+                        repair_fee(result);
+                        break;
+                    case 'rc_patrol'://本月保养计划
+                        rc_patrol_plan(result);
+                        $('.byxc').html(result.data.plans_num);
+                        $('.xcgl').html(result.data.complete);
+                        break;
+                    case 'pm_patrol'://本月预防性维护
+                        pm_patrol_plan(result);
+                        $('.pmjl').html(result.data.plans_num);
+                        $('.pmgl').html(result.data.complete);
+                        break;
+                    case 'assets_quality'://本月质控计划
+                        quality_plan(result);
+                        $('.byzk').html(result.data.plans_num);
+                        $('.zkgl').html(result.data.complete);
+                        break;
+                    case 'current_repair'://本月报修数和全院设备数
+                        $('.bybx').html(result.data.current_month);
+                        $('.bxgl').html(result.data.huanbi);
+                        $('.hb').html(result.data.icon);
+                        $('.sbzs').html(result.data.assets_nums);
+                        break;
+                    case 'engineers_progress':
+                        engineers_progress(result.data);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        //维修实时动态
+        var page = 8;
+        function repair_status(data_arr) {
+            var len = data_arr.length;
+            var html = '';
+            var class_name = '';
+            for (i = 0; i < len; i++) {
+                if (i % page == 0) {
+                    if (i == 0) {
+                        class_name = 'show_this';
+                    } else {
+                        class_name = 'hide_this';
+                    }
+                    html += '<tbody class="' + class_name + '">\n' +
+                        '<tr>\n' +
+                        '     <td>' + (i + 1) + '</td>\n' +
+                        '     <td>' + data_arr[i]['department'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['assnum'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['assets'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['model'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['applicant_date'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['response'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['status_name'] + '</td>\n' +
+                        '     <td>' + data_arr[i]['progress'] + '</td>\n' +
+                        '</tr>';
+                } else if (i % page == (page - 1)) {
+                    html += '<tr>\n' +
+                        '                            <td>' + (i + 1) + '</td>\n' +
+                        '                            <td>' + data_arr[i]['department'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['assnum'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['assets'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['model'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['applicant_date'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['response'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['status_name'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['progress'] + '</td>\n' +
+                        '                        </tr>';
+                    html += '</tbody>\n';
+                } else {
+                    html += '<tr>\n' +
+                        '                            <td>' + (i + 1) + '</td>\n' +
+                        '                            <td>' + data_arr[i]['department'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['assnum'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['assets'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['model'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['applicant_date'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['response'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['status_name'] + '</td>\n' +
+                        '                            <td>' + data_arr[i]['progress'] + '</td>\n' +
+                        '                        </tr>';
+                }
+            }
+            var contableObj = $(".contable");
+            contableObj.find('tbody').remove();
+            contableObj.find('thead').after(html);
+            setTimeout(function () {
+                var sec = 10;//10秒轮换
+                sec = parseInt(sec) * 1000;
+                var tbody = contableObj.find('tbody');
+                setInterval(function () {
+                    var len = tbody.length;
+                    if (len >= 2) {
+                        var cur = 0;
+                        $.each(tbody, function (i, e) {
+                            if ($(e).attr('class') === 'show_this') {
+                                if (i < (len - 1)) {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = i + 1;
+                                } else {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = 0;
+                                }
+                            }
+                        });
+                        $(tbody[cur]).attr('class', 'show_this');
+                    }
+                }, sec)
+            }, 500);
+            element.render();
+        }
+
+        //工程师工作进度
+        var page = 8;
+        function engineers_progress(data_arr) {
+            var len = data_arr.length;
+            var html = '';
+            var class_name = '';
+            for (i = 0; i < len; i++) {
+                if (i % page == 0) {
+                    if (i == 0) {
+                        class_name = 'show_this';
+                    } else {
+                        class_name = 'hide_this';
+                    }
+                    html += '<tbody class="' + class_name + '">\n' +
+                        '<tr>\n' +
+                        '                                <td>' + data_arr[i]['username'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['not_complete_repair'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['patrol_show'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['quality_show'] + '</td>\n' +
+                        '                            </tr>';
+                } else if (i % page == (page - 1)) {
+                    html += '<tr>\n' +
+                        '                                <td>' + data_arr[i]['username'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['not_complete_repair'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['patrol_show'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['quality_show'] + '</td>\n' +
+                        '                            </tr>';
+                    html += '</tbody>\n';
+                } else {
+                    html += '<tr>\n' +
+                        '                                <td>' + data_arr[i]['username'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['not_complete_repair'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['patrol_show'] + '</td>\n' +
+                        '                                <td>' + data_arr[i]['quality_show'] + '</td>\n' +
+                        '                            </tr>';
+                }
+            }
+            var protableObj = $(".protable");
+            protableObj.find('tbody').remove();
+            protableObj.find('thead').after(html);
+            setTimeout(function () {
+                var sec = 10;//10秒轮换
+                sec = parseInt(sec) * 1000;
+                var tbody = protableObj.find('tbody');
+                setInterval(function () {
+                    var len = tbody.length;
+                    if (len >= 2) {
+                        var cur = 0;
+                        $.each(tbody, function (i, e) {
+                            if ($(e).attr('class') === 'show_this') {
+                                if (i < (len - 1)) {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = i + 1;
+                                } else {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = 0;
+                                }
+                            }
+                        });
+                        $(tbody[cur]).attr('class', 'show_this');
+                    }
+                }, sec)
+            }, 500);
+            element.render();
+        }
+
+        //初始化数据
+        $.ajax({
+            timeout: 30000,
+            type: "POST",
+            url: 'newScr',
+            dataType: "json",
+            async: true,
+            beforeSend: function () {
+                layer.msg('正在初始化数据，请稍候...', {
+                    icon: 16,
+                    time: 3000,
+                    shade: 0.01
+                });
+            },
+            success: function (data) {
+
+            }
+        });
+
+        //使用定时器每秒向div写入当前时间
+        setTime();
+        setInterval("setTime()",1000);
+    });
+    function week(option){
+        var week = "日一二三四五六";
+        return "星期" + week.charAt(option);
+    }
+    function setTime(){
+        var dateTime = new Date();
+        var year = dateTime.getFullYear();
+        var month = dateTime.getMonth()+1;
+        month = month < 10 ? "0" + month : month;
+        var date = dateTime.getDate();
+        date = date < 10 ? "0" + date : date;
+        var hour = dateTime.getHours();
+        hour = hour < 10 ? "0" + hour : hour;
+        var minute = dateTime.getMinutes();
+        minute = minute < 10 ? "0" + minute : minute;
+        var second = dateTime.getSeconds();
+        second = second < 10 ? "0" + second : second;
+        var day = week(dateTime.getDay());
+        var str = `${year}年${month}月${date}日  ${hour}:${minute}:${second}  ${day}`;
+        document.getElementById("rq").innerHTML = str;
+    }
+</script>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>类别表单</legend>
+    </fieldset>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="rquireCoin"> * </span> 类别名称：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" value="" placeholder="请输入类别名称" autocomplete="off" class="layui-input" lay-verify="Type">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">类别备注：</label>
+            <div class="layui-input-block">
+                <textarea name="remark"  class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/addpoints', layui.factory('controller/patrol/patrolsetting/addpoints'));
+</script>

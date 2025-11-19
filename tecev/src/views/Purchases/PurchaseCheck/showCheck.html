@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 110px;
+        }
+        #addAssetsFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+    <script>
+        var checkAssets = "{$checkAssets}";
+    </script>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">基本信息</blockquote>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>设备编号：</th>
+                    <td>SW-SQ18090008</td>
+                    <th>设备名称：</th>
+                    <td>外科二区采购计划</td>
+                    <th>产品序列号：</th>
+                    <td>外科二区</td>
+                </tr>
+                <tr>
+                    <th>单位：</th>
+                    <td>2018-09-11</td>
+                    <th>规格 / 型号：</th>
+                    <td>听诊台</td>
+                    <th>品牌：</th>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <th>所属科室：</th>
+                    <td>6800</td>
+                    <th>管理科室：</th>
+                    <td>否</td>
+                    <th>所在位置：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>设备分类：</th>
+                    <td>6800</td>
+                    <th>辅助分类：</th>
+                    <td>否</td>
+                    <th>财务分类：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>供应商：</th>
+                    <td>6800</td>
+                    <th>生产厂商：</th>
+                    <td>否</td>
+                    <th>维保服务商：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>出厂日期：</th>
+                    <td>6800</td>
+                    <th>启用日期：</th>
+                    <td>否</td>
+                    <th>入库日期：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>保修到期日期：</th>
+                    <td>6800</td>
+                    <th>出厂编号：</th>
+                    <td>否</td>
+                    <th>发票编号：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>折旧方式：</th>
+                    <td>6800</td>
+                    <th>折旧年限：</th>
+                    <td>否</td>
+                    <th>设备原值：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>品牌：</th>
+                    <td>6800</td>
+                    <th>资金来源：</th>
+                    <td>否</td>
+                    <th>预计使用年限：</th>
+                    <td>台</td>
+                </tr>
+                <tr>
+                    <th>设备类型：</th>
+                    <td colspan="5">6800</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+                采购信息
+            </blockquote>
+            <table class="layui-table read-table-1" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>申请单号：</th>
+                    <td>SW-SQ18090008</td>
+                    <th>项目名称：</th>
+                    <td>外科二区采购计划</td>
+                    <th>申请科室：</th>
+                    <td>外科二区</td>
+                </tr>
+                <tr>
+                    <th>申请日期：</th>
+                    <td>2018-09-11</td>
+                    <th>设备名称：</th>
+                    <td>听诊台</td>
+                    <th>申请数量：</th>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <th>申请单价：</th>
+                    <td>6800</td>
+                    <th>是否进口：</th>
+                    <td>否</td>
+                    <th>单位：</th>
+                    <td>台</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                附件信息
+            </blockquote>
+            <table class="layui-table read-table-l" lay-skin="line" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="30%">
+                    <col width="30%">
+                    <col width="30%">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th>文件名称</th>
+                    <th>提交人</th>
+                    <th>上传时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr>
+                    <td><a href="#" style="color: #0a8ddf">招标说明书.jpg</a></td>
+                    <td>张三</td>
+                    <td>2018-09-11 12:20:20</td>
+                    <td><a href="#" style="color: #0a8ddf">下载</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+                招标明细
+            </blockquote>
+            <table class="layui-table read-table-l" style="margin-top: 0" lay-skin="line" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="13%">
+                    <col width="13%">
+                    <col width="9%">
+                    <col width="9%">
+                    <col width="8%">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">供应商名称</th>
+                    <th style="text-align: left !important;">生产厂商</th>
+                    <th style="text-align: left !important;">设备型号</th>
+                    <th style="text-align: left !important;">品牌</th>
+                    <th style="text-align: left !important;">市场价</th>
+                    <th style="text-align: left !important;">最终报价</th>
+                    <th style="text-align: left !important;">保修年限</th>
+                    <th style="text-align: left !important;">操作</th>
+                </tr>
+                <tr>
+                    <td>{$Think.config.COMPANY_NAME}</td>
+                    <td>广州和康医疗</td>
+                    <td>YU-90KIL-67</td>
+                    <td>和康</td>
+                    <td>3000.00</td>
+                    <td>3000.00</td>
+                    <td>3年</td>
+                    <td><a href="javascript:void(0)" data-id="1" class="showDetail" style="color: #0a8ddf">查看</a></td>
+                </tr>
+                <tr>
+                    <td>{$Think.config.COMPANY_NAME}</td>
+                    <td>广州和康医疗</td>
+                    <td>YU-90KIL-67</td>
+                    <td>和康</td>
+                    <td>3000.00</td>
+                    <td>3000.00</td>
+                    <td>3年</td>
+                    <td><a href="javascript:void(0)" data-id="2" class="showDetail" style="color: #0a8ddf">查看</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+                验收信息
+            </blockquote>
+            <table class="layui-table read-table-1" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>验收人：</th>
+                    <td>SW-SQ18090008</td>
+                    <th>验收日期：</th>
+                    <td>外科二区采购计划</td>
+                    <th>到货日期：</th>
+                    <td>外科二区</td>
+                </tr>
+                <tr>
+                    <th>验收情况：</th>
+                    <td colspan="5">3</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/checkAssets', layui.factory('controller/purchases/purchaseCheck/checkAssets'));
+</script>

@@ -1,0 +1,90 @@
+<script>
+    var departLabelLists = "{$departLabel}";
+</script>
+<?php if($menuData = get_menu_name('BaseSetting','IntegratedSetting','departLabel')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .dHead {
+        height:35px;
+        line-height: 35px;
+        width:120px;
+        text-align: center;
+        margin-left: 60px;
+        margin-top: 5px;
+        cursor: pointer;
+        border: 1px solid #C9C9C9;
+        background-color: #fff;
+        color: #555;
+    }
+    .dHead:hover{
+        border: 1px solid #009688;
+    }
+    p{height: auto !important;}
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-IntegratedSetting-departLabel" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="departLabelList" xm-select-search="">
+                                        <option value="">点击选择科室名称搜索</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="departLabelListSearch"
+                                        id="departmentListSearch"><i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-hidden" lay-filter="departLabelData" id="departLabelList"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="print_depart" style="width: auto;display: none;">
+
+</div>
+<script src="__PUBLIC__/js/jquery.PrintArea.js" type="text/javascript"></script>
+<script>
+    layui.use('basesetting/integratedSetting/departLabel', layui.factory('basesetting/integratedSetting/departLabel'));
+</script>
+<script type="text/html" id="LAY-BaseSetting-IntegratedSetting-departLabelToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','print')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchPrint" id="batchPrint" data-url="{$menuData['actionurl']}">
+            批量打印
+        </button>
+        <?php endif?>
+    </div>
+</script>

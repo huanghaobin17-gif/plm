@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-BaseSetting-User-addUser .cusselect .layui-select-title{display: none}
+        #LAY-BaseSetting-User-addUser .layui-form-pane .layui-form-label{width: 150px;}
+        #LAY-BaseSetting-User-addUser .layui-form-item .layui-input-inline{width: 210px;}
+        #LAY-BaseSetting-User-addUser .layui-form-pane .layui-input-block {
+            margin-left: 150px;
+        }
+        #LAY-BaseSetting-User-addUser .cusquote1 {
+            padding: 5px !important;
+            font-size: 12px;
+            color: red;
+        }
+        #LAY-BaseSetting-User-addUser .cusselect{
+            width: 410px;
+            height: 38px;
+            margin-bottom: 15px;
+        }
+        #LAY-BaseSetting-User-addUser .cuslabel{
+            background-color: #FBFBFB;
+            border: 1px solid #e6e6e6;
+            width:110px;
+            font-weight: normal;
+            height: 36px;
+            text-align: center;
+            line-height: 36px;
+            display: block;
+            float: left;
+            border-right: 0;
+        }
+        #LAY-BaseSetting-User-addUser .boldManger{
+            color: black;
+            font-size: 15px;
+            display: none;
+        }
+        #LAY-BaseSetting-User-addUser .tips{
+            line-height: 38px;
+        }
+        #LAY-BaseSetting-User-addUser .tooltip-inner{
+            white-space: normal;
+            width: auto;
+            text-align: left;
+            word-wrap:break-word;
+            word-break:break-all;
+        }
+        #LAY-BaseSetting-User-addUser .radioWidth{
+            width: 358px;
+        }
+        #LAY-BaseSetting-User-addUser .manageDepartment{
+            width: 310px;
+        }
+        #LAY-BaseSetting-User-addUser .yes_supplier{
+            display: none;
+        }
+        #LAY-BaseSetting-User-addUser .supplier_tips{
+            position: absolute;
+            left: 357px;
+        }
+        .layui-form-label{width: 100px;}
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-BaseSetting-User-addUser">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加用户表单</legend>
+    </fieldset>
+    <blockquote class="layui-elem-quote cusquote1">
+        注：系统暂不允许对用户名称进行修改，添加用户时候请确认用户名称是否正确！
+    </blockquote>
+    <div class="layer-to-top">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>用户名：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" value="" placeholder="请输入用户名" required  lay-verify="required|username" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>密码：</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" value="" id="password" required lay-verify="required|password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+                <i class="layui-icon layui-icon-zzeye-slash" style="cursor: pointer; margin-right: 10px;"></i>
+                <i class="layui-icon tips" lay-direction="2" tips-type="2" lay-tips='输入密码长度必须为8到18位，且大写字母 小写字母 数字 特殊字符，四种包括两种，且不能出现空格'>&#xe702;</i>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>密码确认：</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="passwordconfirm"  placeholder="确认密码" required lay-verify="required|password|passwordconfirm" autocomplete="off" class="layui-input">
+                </div>
+                <button class="layui-btn layui-btn-xs makeP"  style="margin-top: 8px;" lay-direction="2" tips-type="2" lay-tips='请及时储存并分配给用户，系统不能查看密码'>生成密码</button>
+            </div>
+            <?php if($menuData = get_menu('BaseSetting','User','uploadautograph')):?>
+            <div class="layui-form-item">
+                <label class="layui-form-label">签字字迹：</label>
+                <div class="layui-input-inline">
+                    <button  class="layui-btn" type="button" lay-filter="addautograph" id="addautograph">上传</button>
+                    <img id="autographpic" src='' style="display: none;" width="140px" height="40px">
+                    <input type="hidden" name="autograph" id="autograph">
+                </div>
+                <i class="layui-icon tips" lay-direction="2" tips-type="2" lay-tips="签字将在各类报告打印中对应报告签字用户盖章使用，无上传字迹的报告签字处将为空。">&#xe702;</i>
+            </div>
+            <?php endif?>
+            <if condition="C('OPEN_SUPPLIER_USER') EQ C('YES_STATUS')">
+                <i class="layui-icon tips supplier_tips" lay-direction="2" tips-type="2" lay-tips="供应商用户拥有录入设备质控记录权限">&#xe702;</i>
+                <div class="layui-form-item radioWidth" pane="">
+                    <label class="layui-form-label">供应商用户：</label>
+                    <div class="layui-input-block" id="is_supplier" >
+                        <input type="radio" name="is_supplier" lay-filter="is_supplier" value="1" title="是">
+                        <input type="radio" name="is_supplier" lay-filter="is_supplier" value="0" title="否" checked>
+                    </div>
+                </div>
+
+
+                <!--厂商用户 start-->
+                <div class="layui-form-item yes_supplier">
+                    <div class="layui-inline" id="olsid">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>所属供应商：</label>
+                        <div class="layui-input-inline">
+                            <select name="olsid" lay-search="" lay-filter="olsid" >
+                                <option value="">请选择供应商</option>
+                                <volist name="suppliers" id="vo">
+                                    <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!--厂商用户 end-->
+            </if>
+
+            <!--普通用户 start-->
+            <div class="layui-form-item not_supplier">
+                <div class="layui-inline" id="manageDepartment">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>工作科室：</label>
+                    <div class="layui-input-inline">
+                        <select name="belongDepartment" lay-search="" lay-filter="manageDepartment" >
+                            <option value="">请选择工作科室</option>
+                            <volist name="department" id="vo">
+                                <option value="{$vo.departid}">{$vo.department}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <i class="layui-icon tips" lay-direction="2" tips-type="2" lay-tips="如需修改相关负责人等信息，请移步到 基础设置 - 基础参数 - 科室设置 进行相关设置">&#xe702;</i>
+                </div>
+            </div>
+            <div class="layui-form-item not_supplier">
+                <div class="layui-input-inline">
+                    <b class="boldManger">当前工作科室负责人：<span class="manager">无</span></b>
+                </div>
+            </div>
+            <div class="layui-form-item not_supplier">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>管理科室：</label>
+                <div class="layui-input-inline">
+                    <select name="department" xm-select="department" xm-select-search="" lay-verify="department">
+                        <option value="">请选择管理科室</option>
+                        <volist name="department" id="vo">
+                            <option value="{$vo.departid}">{$vo.department}</option>
+                        </volist>
+                    </select>
+                </div>
+                <i class="layui-icon tips" lay-direction="2" tips-type="2" lay-tips='管理科室为用户日常工作中涉及到的科室，例如维修工程师可能需要负责医院中多个科室的设备维修工作等'>&#xe702;</i>
+            </div>
+            <div class="layui-form-item not_supplier">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>用户角色：</label>
+                <div class="layui-input-inline">
+                    <select name="character" xm-select="character" xm-select-search="" lay-verify="character">
+                        <option value="">请选择用户角色</option>
+                        <volist name="character" id="vo">
+                            <option value="{$vo.roleid}">{$vo.role}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <!--普通用户 end-->
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系电话：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="telephone" value="" placeholder="请输入电话" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <if condition="$is_super eq 1">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">有效期至：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="validity" value="" readonly id="validity" placeholder="账户有效期，不填则永久有效" autocomplete="off" class="layui-input">
+                    </div>
+                    <i class="layui-icon tips" lay-direction="2" tips-type="2" lay-tips='账户有效期，不填写则账户永久有效！'>&#xe702;</i>
+                </div>
+            </if>
+            <div class="layui-form-item radioWidth" pane="">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-block" id="gender" >
+                    <input type="radio" name="gender" value="1" title="男" checked>
+                    <input type="radio" name="gender" value="0" title="女">
+                </div>
+            </div>
+            <div class="layui-form-item radioWidth" pane="">
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-block" id="status">
+                    <input type="radio" name="status" value="1" title="启用" checked>
+                    <input type="radio" name="status" value="0" title="停用">
+                </div>
+            </div>
+
+            <i class="layui-icon tips supplier_tips" lay-direction="2" tips-type="2" lay-tips='微信公共账号支持不同的微信用户登录该账号进行使用（非必要勿选，因为可能会导致接收微信消息时出现混乱）'>&#xe702;</i>
+            <div class="layui-form-item radioWidth" pane="">
+                <label class="layui-form-label">微信公共账号：</label>
+                <div class="layui-input-block" id="wx_public_account" >
+                    <input type="radio" name="wx_public_account" value="0" title="否" checked>
+                    <input type="radio" name="wx_public_account" value="1" title="是">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="请输入内容" class="layui-textarea" style="width: 90%;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var today = "{$today}";
+    layui.use('controller/basesetting/user/addUser', layui.factory('controller/basesetting/user/addUser'));
+</script>

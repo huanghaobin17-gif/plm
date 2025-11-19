@@ -1,0 +1,118 @@
+<?php if($menuData = get_menu_name('Assets','Print','verify')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){$('input, textarea').placeholder();});
+    var verify = "{$verify}";
+</script>
+<div class="layui-fluid" id="LAY-Assets-Print-verify" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe615;</i> 查询
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="verifyName"  placeholder="请输入设备名称" name="assets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="verifyAssnum"  placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">打印状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="code_status"  lay-search="">
+                                        <option value="">请选择</option>
+                                        <option value="1">未打印</option>
+                                        <option value="2">已打印</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">标签状态：</label>
+                                <div class="layui-input-inline">
+                                     <select name="print_status"  lay-search="">
+                                        <option value="">请选择</option>
+                                        <option value="0">初始状态</option>
+                                        <option value="1">已核实</option>
+                                        <option value="2">已核实(无法贴标)</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="department" xm-select="verifyDepartment" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="" lay-filter="verifySearch" ><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="verifyLists" lay-filter="verifyData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="print_assets" style="width: auto;display: none;">
+
+</div>
+<script type="text/html" id="LAY-Assets-Print-verifyToolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="exportAssets" data-url="/A/Print/verify">
+            <i class="layui-icon iconfont icon-download"></i>导出
+        </button>
+        
+    </div>
+</script>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/print/verify', layui.factory('assets/print/verify'));
+</script>

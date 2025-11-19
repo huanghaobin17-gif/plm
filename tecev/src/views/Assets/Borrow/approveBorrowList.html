@@ -1,0 +1,88 @@
+<?php if($menuData = get_menu_name('Assets','Borrow','approveBorrowList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Assets-Borrow-approveBorrowList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="approveBorrowListAssetsName" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">规格/型号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="approveBorrowListModel" placeholder="请输入规格/型号" name="assetsModel">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-form-label">申请科室：</div>
+                                <div class="layui-input-inline">
+                                    <select name="departid" class="input_select" lay-search="">
+                                        <option value="">全部</option>
+                                        <volist name="department" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="approveBorrowListSearch" id="approveBorrowListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 借调申请列表
+                    </div>
+                    <div class="fl m-left">
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="approveBorrowList" lay-filter="approveBorrowData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    var approveBorrowListUrl='{$approveBorrowListUrl}'
+</script>
+<script>
+    layui.use('assets/borrow/approveBorrowList', layui.factory('assets/borrow/approveBorrowList'));
+</script>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 90px;
+        }
+        #showBtn{
+            display: none;
+        }
+    </style>
+    <script>
+        //解决ie placeholder兼容性
+        $(function(){ $('input, textarea').placeholder(); });
+        var addOut = "{$addOut}";
+    </script>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form">
+        <input type="hidden" name="wid" value="{$asInfo.ware_assets_id}"/>
+        <input type="hidden" name="oid" value="{$asInfo.out_id}"/>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                质量验收资料
+            </blockquote>
+            <table class="layui-table read-table-l" lay-size="sm">
+                <colgroup>
+                    <col width="6%">
+                    <col width="15%">
+                    <col width="35%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="16%">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="th-align-center">序号</th>
+                    <th class="th-align-center">资料名称</th>
+                    <th class="th-align-center">文件名称</th>
+                    <th class="th-align-center">文件大小</th>
+                    <th class="th-align-center">上传人</th>
+                    <th class="th-align-center">上传时间</th>
+                    <th class="th-align-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <if condition="$y">
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                            验收报告
+                        </td>
+                        <td>{$y.file_name}</td>
+                        <td>{$y.file_size}</td>
+                        <td>{$y.add_user}</td>
+                        <td>{$y.add_time}</td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$y.file_url}" data-name="{$y.file_name}" data-id="{$y.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                            验收报告
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs" id="addY">本地上传</button>
+                            </div>
+                        </td>
+                    </tr>
+                </if>
+                <if condition="$m">
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                            铭牌照片
+                        </td>
+                        <td>{$m.file_name}</td>
+                        <td>{$m.file_size}</td>
+                        <td>{$m.add_user}</td>
+                        <td>{$m.add_time}</td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$m.file_url}" data-name="{$m.file_name}" data-id="{$m.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                            铭牌照片
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs" id="addM">本地上传</button>
+                            </div>
+                        </td>
+                    </tr>
+                </if>
+                <if condition="$h">
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                            合格证
+                        </td>
+                        <td>{$h.file_name}</td>
+                        <td>{$h.file_size}</td>
+                        <td>{$h.add_user}</td>
+                        <td>{$h.add_time}</td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$h.file_url}" data-name="{$h.file_name}" data-id="{$h.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                            合格证
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs" id="addH">本地上传</button>
+                            </div>
+                        </td>
+                    </tr>
+                </if>
+                <if condition="$c">
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                            操作手册
+                        </td>
+                        <td>{$c.file_name}</td>
+                        <td>{$c.file_size}</td>
+                        <td>{$c.add_user}</td>
+                        <td>{$c.add_time}</td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$c.file_url}" data-name="{$c.file_name}" data-id="{$c.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td class="th-align-center">1</td>
+                        <td>
+                            <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                            操作手册
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="th-align-center">
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs" id="addC">本地上传</button>
+                            </div>
+                        </td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+            <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveQualityReport">
+                <i class="layui-icon" >&#xe609;</i> 确认交付科室使用
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/qualityReport', layui.factory('controller/purchases/purchaseCheck/qualityReport'));
+</script>

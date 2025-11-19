@@ -1,0 +1,195 @@
+<style>
+    #LAY-Repair-Statistics-faultSummary .listTitle {
+        position: relative;
+    }
+    #LAY-Repair-Statistics-faultSummary .layui-table thead tr th,#LAY-Repair-Statistics-faultSummary .layui-table tbody tr td{
+        text-align: center;
+    }
+    #LAY-Repair-Statistics-faultSummary{
+        padding: 15px 5px;
+    }
+</style>
+<?php if($menuData = get_menu_name('Repair','RepairStatis','faultSummary')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Repair-RepairStatis-faultSummary" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+
+            <div lay-filter="faultSummaryTab" class="layui-tab layui-tab-brief" style="margin: 0;">
+                <ul class="layui-tab-title" style="margin:0 10px; background-color: #ffffff">
+                    <li class="layui-this">设备故障统计</li>
+                    <li>设备故障明细统计</li>
+                </ul>
+
+
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form">
+                                    <div class="layui-form-item spacingBalance">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计类型：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="type" class="" lay-search="">
+                                                    <option value="1">按故障类型统计</option>
+                                                    <option value="2">按设备分类统计</option>
+                                                    <option value="3">按资产类型统计（急救、特种、计量、质控、效益分析、生命支持类、普通）</option>
+                                                    <option value="4">按维修性质统计（现场解决、自修、维保厂家、第三方维修）</option>
+                                                    <option value="5">按资产价值区间统计</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计日期：</label>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input class="layui-input" readonly placeholder="开始日期" style="cursor: pointer;" name="startDate" value="{$start_date}" id="faultSummaryStartDate">
+                                            </div>
+                                            <div class="layui-form-mid">-</div>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input class="layui-input" readonly placeholder="结束日期" style="cursor: pointer;" name="endDate" value="{$end_date}" id="faultSummaryEndDate">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button class="layui-btn" lay-submit="" lay-filter="faultSummarySearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl">
+                                    <i class="layui-icon">&#xe62d;</i> 列表
+                                </div>
+                                <div class="fl m-left">
+                                    <?php if($menuData = get_menu('Repair','RepairStatis','exportFaultSummary')):?>
+                                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportData" lay-tips="提示 : 如修改了查询条件，请点击搜索后再进行导出" data-url="{$menuData['actionurl']}">
+                                        <i class="layui-icon">&#xe61e;</i>
+                                        {$menuData['actionname']}
+                                    </button>
+                                    <?php endif?>
+                                </div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain" id="faultSummaryContain">
+                                    <div class="layui-row">
+                                        <div class="layui-col-lg4 layui-col-md5 layui-col-sm6 layui-col-xs12" id="faultSummaryLeft">
+                                            <div class="reportHeader">
+                                                <div class="reportTitle">设备故障统计</div>
+                                                <div class="faultSummaryReportConditions">统计类型：按故障类型 &nbsp;&nbsp;&nbsp;&nbsp;统计报表日期：2015-01-01 至 2018-12-31</div>
+                                            </div>
+                                            <table class="layui-table" lay-size="sm" lay-even>
+                                                <colgroup>
+                                                    <col width="55">
+                                                    <col width="140">
+                                                    <col width="120">
+                                                    <col width="120">
+                                                </colgroup>
+                                                <thead>
+                                                <tr>
+                                                    <th>序号</th>
+                                                    <th class="faultSummaryTableTh"></th>
+                                                    <th>维修次数</th>
+                                                    <th>百分比（%）</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="faultSummaryConData"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="layui-col-lg8 layui-col-md7 layui-col-sm6 layui-col-xs12">
+                                            <div id="faultSummaryMain" style="min-height:600px;min-width: 600px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form">
+                                    <div class="layui-form-item spacingBalance">
+                                        <include file="Public:hospital_search"/>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">科室：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="departid" class="input_select" lay-search="">
+                                                    <option value="">请选择</option>
+                                                    <volist name="departments" id="vo">
+                                                        <option value="{$vo.departid}">{$vo.department}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计日期：</label>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input class="layui-input" readonly placeholder="开始日期" style="cursor: pointer;" name="tab_startDate" value="{$start_date}" id="tab_startDate">
+                                            </div>
+                                            <div class="layui-form-mid">-</div>
+                                            <div class="layui-input-inline" style="width: 120px;">
+                                                <input class="layui-input" readonly placeholder="结束日期" style="cursor: pointer;" name="tab_endDate" value="{$end_date}" id="tab_endDate">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="width: 86px;">按维修次数：</label>
+                                            <div class="layui-input-inline">
+                                                <input type="radio" name="sortAsc" value="0" title="降序" checked>
+                                                <input type="radio" name="sortAsc" value="1" title="升序">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button class="layui-btn" lay-submit="" lay-filter="Tab_eventquery"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl">
+                                    <i class="layui-icon">&#xe62d;</i> 列表
+                                </div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain " id="faultSummaryTable">
+                                    <table id="faultSummary" lay-filter="faultSummary" ></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="LAY-Repair-RepairStatis-exportFaultDetailed">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Repair','RepairStatis','exportFaultDetailed')):?>
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportRecordData" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe61e;</i>
+            {$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('repair/statistics/faultSummary', layui.factory('repair/statistics/faultSummary'));
+</script>
+
+
+

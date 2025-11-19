@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-examineOne .layui-colla-content {
+        padding: 0;
+    }
+    #LAY-Patrol-Patrol-examineOne .layui-table {
+        margin: 0;
+    }
+    #LAY-Patrol-Patrol-examineOne .layui-form-radio{
+        margin-left: 0;
+    }
+    #LAY-Patrol-Patrol-examineOne .red_border {
+        border: 1px solid #CC0000 !important;
+    }
+    #LAY-Patrol-Patrol-examineOne .user {
+        display: none;
+    }
+    #LAY-Patrol-Patrol-examineOne .layui-form-radio{
+        margin-left: 0 !important;
+    }
+    #LAY-Patrol-Patrol-examineOne .green{
+        color: green;
+    }
+    #LAY-Patrol-Patrol-examineOne .reason{
+        display: none;
+    }
+    #LAY-Patrol-Patrol-examineOne .layui-elem-quote {
+        padding: 5px;
+    }
+</style>
+<body>
+<div class="layui-tab-content" id="LAY-Patrol-Patrol-examineOne">
+
+    <div class="layui-elem-quote">{$asArr.assets}-基本信息</div>
+    <table class="layui-table read-table" lay-even lay-size="sm">
+        <tr>
+            <th style="text-align: right;width: 16%">设备编号：</th>
+            <td style="width: 16%">{$asArr.assnum}</td>
+            <th style="text-align: right;width: 16%">设备名称：</th>
+            <td style="width: 16%">{$asArr.assets}</td>
+            <th style="text-align: right;width: 16%">规格型号：</th>
+            <td>{$asArr.model}</td>
+        </tr>
+        <tr>
+            <th style="text-align: right">设备分类：</th>
+            <td>{$asArr.cat_name}</td>
+            <th style="text-align: right">使用科室：</th>
+            <td>{$asArr.department_name}</td>
+            <th style="text-align: right">当前状态：</th>
+            <td>{$asArr.status_name}</td>
+        </tr>
+        <tr>
+            <th style="text-align: right">设备类型：</th>
+            <td>{$asArr.type_name}</td>
+            <th style="text-align: right">保养明细项：</th>
+            <td id="count" colspan="3">{$asArr.count}</td>
+        </tr>
+    </table>
+
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="url" value="{$url}"/>
+        <input type="hidden" name="action" value="{$action}"/>
+        <input type="hidden" name="cycid" value="{$executeData.cycid}">
+        <input type="hidden" name="assnum" value="{$executeData.assetnum}">
+        <div class="layui-collapse margin-top-15 margin-bottom-15">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">{$vo.name}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table tablesorter alltable">
+                            <thead>
+                            <tr>
+                                <th style="width: 8%">编号</th>
+                                <th style="width: 20%">明细名称</th>
+                                <th style="width: 38%;">保养结果</th>
+                                <th style="text-align: center;">异常处理详情</th>
+                            </tr>
+                            </thead>
+                            <tbody id="parentid_{$vo.ppid}">
+                            <volist name="vo['detail']" id="v">
+                                <tr class="choose">
+                                    <td>{$v.num}<input type="hidden" class="ppid" value="{$v.ppid}"></td>
+                                    <td>{$v.name}</td>
+                                    <td class="tdRadio">
+                                        <?php
+                                        $passCheck=$pass='';
+                                        $repairCheck=$repair='';
+                                        $availCheck=$avail='';
+                                        $repairedCheck=$repaired='';
+                                        $passTitle='合格';
+                                        $repairTitle='修复';
+                                        $availTitle='可用';
+                                        $repairedTitle='待修';
+                                        if($executeData['asset_status_num']==C('ASSETS_STATUS_IN_MAINTENANCE') or $executeData['asset_status_num'] == C('ASSETS_STATUS_SCRAPPED')){
+                                            $pass='disabled';
+                                            $repair='disabled';
+                                            $avail='disabled';
+                                            $repaired='disabled';
+                                        }else{
+                                            switch ($v['result']){
+                                            case '合格':
+                                            $passCheck='checked';
+                                            $passTitle="<span class='green'>合格</span>";
+                                        $repair='disabled';
+                                        $avail='disabled';
+                                        $repaired='disabled';
+                                        break;
+                                        case '修复':
+                                        $repairCheck='checked';
+                                        $repairTitle="<span class='rquireCoin'>修复</span>";
+                                        $pass='disabled';
+                                        $avail='disabled';
+                                        $repaired='disabled';
+                                        break;
+                                        case '可用':
+                                        $availCheck='checked';
+                                        $availTitle="<span class='rquireCoin'>可用</span>";
+                                        $pass='disabled';
+                                        $repair='disabled';
+                                        $repaired='disabled';
+                                        break;
+                                        case '待修':
+                                        $repairedCheck='checked';
+                                        $pass='disabled';
+                                        $repair='disabled';
+                                        $avail='disabled';
+                                        $repairedTitle="<span class='rquireCoin'>待修</span>";
+                                        break;
+                                        }
+                                        }
+                                        ?>
+                                        <input type="radio" title="{$passTitle}" name="result[{$v.ppid}]" class="result"
+                                               value="合格" lay-filter="result" {$passCheck} {$pass}>
+                                        <input type="radio" title="{$repairTitle}" name="result[{$v.ppid}]"
+                                               class="result"
+                                               value="修复" lay-filter="result" {$repairCheck} {$repair}>
+                                        <input type="radio" title="{$availTitle}" name="result[{$v.ppid}]"
+                                               class="result"
+                                               value="可用" lay-filter="result" {$availCheck} {$avail}>
+                                        <input type="radio" title="{$repairedTitle}" name="result[{$v.ppid}]"
+                                               class="result"
+                                               value="待修" lay-filter="result" {$repairedCheck} {$repaired}>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <if condition="$v[result] neq '合格'">
+                                            <span class="rquireCoin">{$v.remark}</span>
+                                        </if>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+            <table class="layui-table tablesorter alltable">
+                <tr>
+                    <td width="14%">设备现状：</td>
+                    <td colspan="2">{$executeData.asset_status}</td>
+                </tr>
+                <tr>
+                    <td>执行人：</td>
+                    <td colspan="2">{$executeData.execute_user}</td>
+                </tr>
+                <tr>
+                    <td>完成日期：</td>
+                    <td colspan="2">{$executeData.finish_time}</td>
+                </tr>
+
+                <tr>
+                    <td>改善建议：</td>
+                    <td colspan="2">{$executeData.remark}</td>
+                </tr>
+                <if condition="$examineData[status] neq C('CYCLE_COMPLETE')">
+                    <tr>
+                        <td colspan="3">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">验收备注：</label>
+                                    <div class="layui-input-block">
+                                        <textarea class="layui-textarea" name="remark" lay-filter="remark"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div style="text-align: center">
+                                    <button class="layui-btn" lay-submit lay-filter="examine" >确定验收</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </if>
+            </table>
+        </div>
+    </form>
+    <if condition="$examineData[status] eq C('CYCLE_COMPLETE')">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">巡查验收信息</div>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tr>
+                    <th>验收人：</th>
+                    <td>{$examineData.examine_username}</td>
+                </tr>
+                <tr>
+                    <th>验收日期：</th>
+                    <td>{$examineData.examdate}</td>
+                </tr>
+                <tr>
+                    <th>验收备注：</th>
+                    <td>{$examineData.remark}</td>
+                </tr>
+            </table>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrol/examineOne', layui.factory('controller/patrol/patrol/examineOne'));
+</script>

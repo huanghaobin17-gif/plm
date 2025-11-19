@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单台设备巡查保养</title>
+    <include file="Public:layerHeader"/>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".alltable").tablesorter({headers: {2: {sorter: false}, 3: {sorter: false}}});
+        });
+    </script>
+    <style>
+        .layui-form-item .layui-inline {
+            margin-bottom: 0;
+            margin-right: 0;
+        }
+        label {
+            margin-bottom: 0
+        }
+
+        td {
+            width: 120px;
+        }
+
+        .layui-table thead tr {
+            background-color: white;
+        }
+
+        .layui-table {
+            margin: 0;
+        }
+
+        .layui-colla-content {
+            padding: 0;
+        }
+
+        .red_border {
+            border: 1px solid #CC0000 !important;
+        }
+
+        .user {
+            display: none;
+        }
+
+        .layui-form-radio {
+            margin-top: auto !important;
+            margin-left: 0 !important;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset style="width: auto;margin: auto;margin-bottom: 15px;">
+        <legend style="margin-bottom:auto">基本信息</legend>
+        <table class="layui-table" style="width: 98%;margin-left: 1%;">
+            <tbody>
+            <tr>
+                <th style="text-align: right;width: 15%">设备编号：</th>
+                <td style="width: 16%">{$asArr.assnum}</td>
+                <th style="text-align: right;width: 15%">设备名称：</th>
+                <td style="width: 16%">{$asArr.assets}</td>
+                <th style="text-align: right;width: 15%">设备类型：</th>
+                <td>{$asArr.type_name}</td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr>
+                <th style="text-align: right">设备分类：</th>
+                <td>{$asArr.category}</td>
+                <th style="text-align: right">使用科室：</th>
+                <td>{$asArr.department_name}</td>
+                <th style="text-align: right">当前状态：</th>
+                <td>{$asArr.status_name}</td>
+            </tr>
+            </tbody>
+            <tbody>
+
+
+            <tr>
+                <th style="text-align: right;">规格型号：</th>
+                <td>{$asArr.model}</td>
+                <th style="text-align: right">计划名称：</th>
+                <td>{$asArr.patrolname}</td>
+                <th style="text-align: right">保养级别：</th>
+                <td>{$asArr.patrol_level}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right">执行人：</th>
+                <td>{$asArr.patroluser}</td>
+                <th style="text-align: right">明细项/异常项：</th>
+                <td>{$asArr.count}/ <span class="rquireCoin">{$asArr.abnormalCount}</span></td>
+                <th style="text-align: right">周期开始时间：</th>
+                <td>{$asArr.startdate}</td>
+            </tr>
+            <tr>
+                <th style="text-align: right">周期结束时间：</th>
+                <td>{$asArr.overdate}</td>
+                <th style="text-align: right"></th>
+                <td></td>
+                <th style="text-align: right"></th>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset style="width: auto;margin: auto;margin-bottom: 15px;">
+        <legend style="margin-bottom:auto">异常项</legend>
+        <form class="layui-form layui-form-pane">
+            <volist name="data" id="vo">
+                <div class="layui-collapse">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">{$vo.name}</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table tablesorter alltable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 8%;text-align: center;">编号</th>
+                                        <th style="width: 22%;text-align: center;">明细名称</th>
+                                        <th style="width: 40%;text-align: center;">保养结果</th>
+                                        <th style="text-align: center;">异常处理详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="parentid_{$vo.ppid}">
+                                <volist name="vo['detail']" id="v">
+                                    <tr class="choose">
+                                        <td style="text-align: center;">{$v.num}</td>
+                                        <td>{$v.name}</td>
+                                        <td class="tdRadio">
+                                            <input disabled type="radio" title="合格" name="result[{$v.ppid}]" class="result" value="合格" lay-filter="result"<if condition="$v[result] eq '合格'">checked</if>>
+                                            <input disabled type="radio" title="修复" name="result[{$v.ppid}]" class="result" value="修复" lay-filter="result"<if condition="$v[result] eq '修复'">checked</if>>
+                                            <input disabled type="radio" title="可用" name="result[{$v.ppid}]" class="result" value="可用" lay-filter="result"<if condition="$v[result] eq '可用'">checked</if>>
+                                            <input type="radio" title="待修" name="result[{$v.ppid}]" class="result" value="待修" lay-filter="result"<if condition="$v[result] eq '待修'">checked</if>>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                                                <if condition="$v[result] neq '合格'">
+                                                    <span class="rquireCoin">{$v.remark}</span>
+                                                </if>
+                                                <else/>
+                                                <if condition="is_null($doTask[actionurl])">
+                                                    <span class="rquireCoin">{$v.remark}</span>
+                                                    <else/>
+                                                    <textarea class="abnormal_remark <if condition=" $v[result] neq '合格' and$v[remark] eq null">red_border</if>" data-ppid="{$v.ppid}" style="width:100%;border: 1px solid #dddddd">{$v.remark}</textarea>
+                                            </if>
+                                            </if>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </form>
+    </fieldset>
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="action" value="{$url}">
+        <input type="hidden" name="confirmId" value="{$asArr.confirmId}">
+        <div class="layui-collapse">
+            <table class="layui-table tablesorter alltable">
+                <tbody>
+                <tr>
+                    <td>
+                        设备现状
+                    </td>
+                    <td colspan="2">
+                        {$asArr.asset_status}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        报修原因
+                    </td>
+                    <td colspan="2">
+                        <textarea disabled class="layui-textarea">{$asArr.abnormalText}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="layui-form-item" style="margin:10px 0 20px 0">
+                            <if condition="$asArr[status] eq C('SWITCH_REPAIR_CONFIRM')">
+                            <div class="layui-inline" style="margin-right: 35px;">
+                                <span>确认人：</span>
+                                <span>{$asArr.applicant}</span>
+                            </div>
+                            <div class="layui-inline" style="margin-right: 35px;">
+                                <span>确认日期：</span>
+                                <span>{$asArr.comfirmDate}</span>
+                            </div>
+                            </if>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">备注：</label>
+                                <div class="layui-input-block">
+                                    <if condition="$asArr[status] eq C('SWITCH_REPAIR_CONFIRM')">
+                                        <textarea disabled class="layui-textarea">{$asArr.applicant_remark}</textarea>
+                                        <else/>
+                                        <textarea name="remark" class="layui-textarea" style="width: 100%;border: 1px solid #dddddd"></textarea>
+                                    </if>
+                                </div>
+                            </div>
+                        </div>
+                        <if condition="$asArr[status] eq C('SWITCH_REPAIR_CONFIRM')">
+                            <button  disabled class="layui-btn layui-btn-disabled" type="button" lay-filter="suer" style="margin: 0 auto;display: block;">确认转至报修</button>
+                            <else/>
+                            <button  class="layui-btn" lay-submit lay-filter="suer" style="margin: 0 auto;display: block;"><i class="layui-icon">&#xe609;</i> 确认转至报修</button>
+                        </if>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repair/confirmAddRepair', layui.factory('controller/repair/repair/confirmAddRepair'));
+</script>

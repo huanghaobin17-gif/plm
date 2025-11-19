@@ -1,0 +1,76 @@
+.wap_header{width: 100%;height: 55px;}
+.header_img{height: 53px;}
+.float{float: left}
+.header_f{margin-left:-10px;}
+.header_title{width:102px;height:55px;}
+.topMenu{ width:19px; height:25px; margin-top:0px;}
+.topMenu li{ border-bottom:1px solid #f1f1f1}
+.dropdown {position: relative;}
+.fr{ float:right;}
+.dropdown-menu{margin-top:30px;}
+.short-nav .dropdown-menu {padding: 0px 0;min-width: 120px;border: 0px solid #cccccc;background-color: #FFFFFF;}
+.short-nav .dropdown-menu li {border-bottom:1px solid #f1f1f1; }
+.short-nav .dropdown-menu li a {padding: 6px 10px;color: #333;font-size: 14px;line-height:2;}
+.short-nav .dropdown-menu > li > a:hover, .short-nav .dropdown-menu > li > a:focus { background: #000; background-image: none; color: #333; text-decoration: none; }
+.short-nav .dropdown-menu > li > a i { display: inline; padding: 0px 5px 0px 0px; font-size: 24px; }
+#asNextPage{color:#777;cursor: pointer;}
+#reNextPage{color:#777;cursor: pointer;}
+#hisReNextPage{color:#777;cursor: pointer;}
+#nowReNextPage{color:#777;cursor: pointer;}
+#nowApNextPage{color:#777;cursor: pointer;}
+#hisApNextPage{color:#777;cursor: pointer;}
+.assHid{display: none}
+.date{
+    width:100%;
+    margin:0 auto;
+    padding-top:6px;
+    font-size:12px;
+    overflow:hidden;
+    text-align:right;
+}
+.asNumTh{width: 75px;}
+.asNumTh{width: 75px;}
+.asnameh{line-height: 20px;text-align: center}
+.asDepartTh{width: 100px;}
+.asOpeTh{width: 60px}
+.asInfoName{width: 95px;}
+.nowRap{width:100px;overflow: hidden;text-overflow:ellipsis; white-space: nowrap;}
+.gztitle{width: 28%;max-width:100px;height: 40px;line-height: 40px;float: left;padding-left:15px;}
+.gzdesc{width: 70%;float: left;margin-top:10px;}
+.asStatus{width:90px;}
+#afterScan{display: none}
+/*蓝色按钮,绝对定位*/
+.blueButton
+{
+    position: absolute;
+    display: block;
+    width: 45px;
+    height: 20px;
+    background-color: #00b3ee;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font:normal normal normal 12px/20px 'Microsoft YaHei';
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: -10px;
+    margin-left: 12px;
+}
+.blueButton:hover
+{
+    text-decoration: none;
+}
+/*自定义上传,位置大小都和a完全一样,而且完全透明*/
+.myFileUpload
+{
+    position: absolute;
+    display: block;
+    width: 45px;
+    height: 20px;
+    opacity: 0;
+    margin-top: -10px;
+    margin-left: 12px;
+}
+.acss a{text-decoration: none;}
+.acss a:hover{text-decoration: none;}
+.acss a:active{text-decoration: none;}

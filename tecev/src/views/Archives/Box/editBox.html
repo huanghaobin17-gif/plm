@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{width: 115px;}
+        .layui-input-block {
+            margin-left: 145px;
+            min-height: 36px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layer-to-top">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 档案盒名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="box_name" value="{$boxInfo.box_name}" placeholder="请输入档案盒名称" required  lay-verify="required|box_name"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 档案盒编号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="box_num" value="{$boxInfo.box_num}" placeholder="请输入档案盒编号" required readonly lay-verify="required|box_num"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">绑定设备：</label>
+                <div class="layui-input-inline">
+                    <select name="departid" xm-select="addBoxDepartment" xm-select-search="" lay-filter="department">
+                        <option value="">请选择所属科室</option>
+                        <volist name="departmentInfo" id="v">
+                            <option value="{$v.departid}" {$v.selected}>{$v.department}</option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline" style="width: 400px;">
+                        <select name="assid" xm-select="addBoxAssets" xm-select-search="">
+                            <option value="">请选择设备</option>
+                            <volist name="assets" id="vo">
+                                <option value="{$vo.value}" {$vo.selected} {$vo.disabled}>{$vo.name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" class="layui-textarea">{$boxInfo.remark}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <input type="hidden" name="id" value="{$boxInfo.box_id}"/>
+                    <button class="layui-btn" lay-submit lay-filter="editBox"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/archives/box/editBox', layui.factory('controller/archives/box/editBox'));
+</script>

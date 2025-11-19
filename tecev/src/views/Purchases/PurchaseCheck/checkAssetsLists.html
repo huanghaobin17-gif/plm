@@ -1,0 +1,71 @@
+<?php if($menuData = get_menu_name('Purchases','PurchaseCheck','checkAssetsLists')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var checkAssetsListsUrl = "{$checkAssetsListsUrl}";
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchaseCheck-checkAssetsLists" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" lay-verify="supplier_name" name="supplier_name" id="check_assets_supplier" placeholder="请输入供应商" />
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group" id="dic_assets_sel">
+                                        <input type="text" class="form-control bsSuggest" id="check_assets_name" lay-verify="assets_name" name="assets_name" placeholder="请输入设备名称" />
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="checkAssetsListsSearch" id="checkAssetsListsSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 合同列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="checkAssetsLists" lay-filter="checkAssetsData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('purchases/purchaseCheck/checkAssetsLists', layui.factory('purchases/purchaseCheck/checkAssetsLists'));
+</script>

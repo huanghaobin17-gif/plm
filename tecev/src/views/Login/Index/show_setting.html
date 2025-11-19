@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .form_ul{
+           height: 130px;
+        }
+        .form_ul li{
+            float: left;
+            width: 195px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layer-to-top">
+        <form class="layui-form layui-form-pane">
+            <ul class="form_ul">
+                <li><input type="checkbox" name="" checked="checked" disabled value="1" title="设备维修情况" lay-skin="primary"></li>
+
+                <if condition="in_array('target_chart_depart_repair',$sys_showids)">
+                    <if condition="in_array('target_chart_depart_repair',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_depart_repair" checked="checked" value="1" title="科室维修费用分析" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_depart_repair" value="1" title="科室维修费用分析" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_add',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_add',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_add" checked="checked" value="1" title="设备增加情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_add" value="1" title="设备增加情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_scrap',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_scrap',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_scrap" checked="checked" value="1" title="设备报废情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_scrap" value="1" title="设备报废情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_purchases',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_purchases',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_purchases" checked="checked" value="1" title="设备采购支出情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_purchases" value="1" title="设备采购支出情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_benefit',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_benefit',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_benefit" checked="checked" value="1" title="设备效益分析" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_benefit" value="1" title="设备效益分析" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_adverse',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_adverse',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_adverse" checked="checked" value="1" title="不良事件情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_adverse" value="1" title="不良事件情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_move',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_move',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_move" checked="checked" value="1" title="设备转移情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_move" value="1" title="设备转移情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_patrol',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_patrol',$show_ids)">
+                        <li><input type="checkbox" name="target_chart_assets_patrol" checked="checked" value="1" title="设备保养情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="target_chart_assets_patrol" value="1" title="设备保养情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+            </ul>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/login/index/show_setting', layui.factory('controller/login/index/show_setting'));
+</script>

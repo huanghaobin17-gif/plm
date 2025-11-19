@@ -1,0 +1,106 @@
+<?php if($menuData = get_menu_name('BaseSetting','IntegratedSetting','operationLog')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var operationLog = "{$operationLog}";
+</script>
+<style>
+    #LAY-BaseSetting-IntegratedSetting-operationLog .layui-table-view .layui-table {width:100%}
+</style>
+<div class="layui-fluid" id="LAY-BaseSetting-IntegratedSetting-operationLog" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">用户名：</label>
+                                <div class="layui-input-inline">
+                                    <select name="operationListUsername" lay-search="">
+                                        <option value="">请选择用户</option>
+                                        <volist name="username" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">模块名称：</label>
+                                <div class="layui-input-inline">
+                                    <select name="operationListModule" lay-search="" lay-filter="module">
+                                        <option value="">请选择模块</option>
+                                        <volist name="module" id="vo">
+                                            <option value="{$vo.name}">{$vo.title}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">事件：</label>
+                                <div class="layui-input-inline">
+                                    <select name="operationListAction" lay-search="">
+                                        <option value="">请先选择模块名称</option>
+                                        <volist name="action" id="vo">
+                                            <option value="{$vo.action}">{$vo.actionname}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">操作日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;"
+                                           name="operationListAction_timeStart" id="operationListAction_timeStart">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;"
+                                           name="operationListAction_timeEnd" id="operationListAction_timeEnd">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">登录&退出：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="login" value="1" title="全部显示">
+                                    <input type="radio" name="login" value="2" title="全部不显示" checked>
+                                </div>
+                            </div>
+                            <div class="layui-inline" >
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="operationLogSearch"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="operationList" lay-filter="operationList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/integratedSetting/operationLog', layui.factory('basesetting/integratedSetting/operationLog'));
+</script>
+
+
+

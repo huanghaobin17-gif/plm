@@ -1,0 +1,110 @@
+<?php if($menuData = get_menu_name('Purchases','PurchaseApply','purchaseApplyList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchaseApply-purchaseApplyList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="purchaseApplyListDepartment" xm-select-search="">
+                                        <option value="">请选择上报科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请方式：</label>
+                                <div class="layui-input-inline">
+                                    <select name="apply_type">
+                                        <option value=""></option>
+                                        <option value="1">正常申请（计划内）</option>
+                                        <option value="2">特殊申请（计划外）</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">项目名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getProjects"  placeholder="请输入项目名称" name="project_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">审核状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="approve_status">
+                                        <option value=""></option>
+                                        <option value="0">未审批</option>
+                                        <option value="1">已通过</option>
+                                        <option value="2">不通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" name="apply_date_start" id="apply_date_start">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" name="apply_date_end" id="apply_date_end">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="departApplySearch" id="">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 科室采购申请
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="purchaseApplyList" lay-filter="purchaseApplyData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    var purchaseApplyList = "{$purchaseApplyList}";
+    var hospital_id = "{$hospital_id}";
+    layui.use('purchases/purchaseApply/purchaseApplyList', layui.factory('purchases/purchaseApply/purchaseApplyList'));
+</script>
+<script type="text/html" id="LAY-Purchases-PurchaseApply-purchaseApplyListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Purchases','PurchaseApply','addPurchaseApply')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addPurchaseApply" data-url="{$menuData['actionurl']}"><i class="layui-icon">&#xe654;</i> {$menuData['actionname']}</button>
+        <?php endif?>
+    </div>
+</script>

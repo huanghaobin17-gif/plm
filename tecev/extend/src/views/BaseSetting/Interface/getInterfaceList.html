@@ -1,0 +1,71 @@
+<title>接口日志</title>
+<script>
+    var getInterfaceList = "{$getInterfaceList}";
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-Interface-getInterfaceList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">系统名称：</label>
+                                <div class="layui-input-inline">
+                                    <input name="system" class="layui-input" placeholder="请输入系统名称">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">接口名称：</label>
+                                <div class="layui-input-inline">
+                                    <input name="interface" class="layui-input" placeholder="请输入接口名称">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">返回数据：</label>
+                                <div class="layui-input-inline">
+                                    <input name="response" class="layui-input" placeholder="请输入返回数据">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">状态：</label>
+                                <div class="layui-input-inline">
+                                    <input name="status" class="layui-input" placeholder="请输入状态">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                            <div class="layui-input-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="searchInterface"><i
+                                        class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="interfaceLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('basesetting/interface/getInterfaceList', layui.factory('basesetting/interface/getInterfaceList'));
+</script>
+
+
+

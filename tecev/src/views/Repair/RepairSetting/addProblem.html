@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        label{margin-bottom: 0}
+        td{width: 120px;}
+        fieldset{width: auto;}
+        .layui-form-label{width: 90px;}
+        .layui-textarea{width: 95%;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>故障问题表单</legend>
+    </fieldset>
+    <div class="margin-bottom-15">
+        <form class="layui-form">
+            <input type="hidden" name="id" value="{$id}">
+            <input type="hidden" name="actionname" value="{$actionname}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">故障类型：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" readonly value="{$type}">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">&nbsp;<span class="rquireCoin"> * </span> 故障问题：</label>
+                <div class="layui-input-block">
+                    <textarea rows="3" placeholder="请输入故障问题，一行一个，文字中请不要使用&符号。" lay-verify="required" class="layui-textarea" name="title"  ></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 是否启用：</label>
+                <div class="layui-input-block" style="margin-left: 120px;">
+                    <input type="radio" name="status" value="1" title="启用" checked="checked">
+                    <input type="radio" name="status" value="0" title="停用">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">&nbsp;<span class="rquireCoin"> * </span> 解决办法：</label>
+                <div class="layui-input-block">
+                    <textarea rows="3" placeholder="请输入解决办法，一行一个。" lay-verify="required" class="layui-textarea" name="solve"  ></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea rows="3" class="layui-textarea" placeholder="请输入备注，一行一个。" name="remark"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" value="" lay-submit lay-filter="save" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    layui.use('controller/repair/repairSetting/addProblem', layui.factory('controller/repair/repairSetting/addProblem'));
+</script>

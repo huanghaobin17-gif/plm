@@ -1,0 +1,55 @@
+RewriteRule ^/A/(Login|Index|CheckLogin)/(.*)$              /index.php/Admin/Login/$1/$2  [L]
+RewriteRule ^/M/(Login|Index)/(.*)$              /index.php/Mobile/Login/$1/$2  [L]
+RewriteRule ^/V/(Login|Index)/(.*)$              /index.php/Vue/Login/$1/$2  [L]
+RewriteRule ^/F/(Login|Index)/(.*)$              /index.php/Fs/Login/$1/$2  [L]
+
+RewriteRule ^/A/(Lookup|Borrow|Outside|Print|Scrap|AssetsStatis|Storage|Subsidiary|Transfer|AssetsSetting)/(.*)$              /index.php/Admin/Assets/$1/$2  [L]
+RewriteRule ^/M/(Lookup|Borrow|Print|Scrap|Transfer)/(.*)$              /index.php/Mobile/Assets/$1/$2  [L]
+RewriteRule ^/V/(Lookup|Borrow|Print|Scrap|Transfer)/(.*)$              /index.php/Vue/Assets/$1/$2  [L]
+RewriteRule ^/F/(Lookup|Borrow|Print|Scrap|Transfer)/(.*)$              /index.php/Fs/Assets/$1/$2  [L]
+
+RewriteRule ^/A/(Approval|ApproveSetting|BaseSetting|Cache|Dictionary|ExamApp|IntegratedSetting|Menu|ModuleSetting|Notice|Parameter|Permissions|Privilege|SmsModule|System|User)/(.*)$              /index.php/Admin/BaseSetting/$1/$2  [L]
+RewriteRule ^/M/Notice/(.*)$              /index.php/Mobile/BaseSetting/Notice/$1  [L]
+RewriteRule ^/V/Notice/(.*)$              /index.php/Vue/BaseSetting/Notice/$1  [L]
+RewriteRule ^/F/Notice/(.*)$              /index.php/Fs/BaseSetting/Notice/$1  [L]
+
+RewriteRule ^/A/Metering/(.*)$            /index.php/Admin/Metering/Metering/$1  [L]
+RewriteRule ^/A/Benefit/(.*)$            /index.php/Admin/Benefit/Benefit/$1  [L]
+RewriteRule ^/A/OfflineSuppliers/(.*)$            /index.php/Admin/OfflineSuppliers/OfflineSuppliers/$1  [L]
+RewriteRule ^/A/Report/(.*)$            /index.php/Admin/Report/Report/$1  [L]
+RewriteRule ^/A/Stock/(.*)$            /index.php/Admin/Stock/Stock/$1  [L]
+RewriteRule ^/A/Stramonitor/(.*)$            /index.php/Admin/Strategy/Stramonitor/$1  [L]
+RewriteRule ^/A/Tool/(.*)$            /index.php/Admin/Tool/Tool/$1  [L]
+RewriteRule ^/A/Adverse/(.*)$            /index.php/Admin/Adverse/Adverse/$1  [L]
+
+
+RewriteRule ^/A/(PatModSetting|Patrol|PatrolRecords|PatrolSetting|PatrolRecordSearch|PatrolStatis)/(.*)$            /index.php/Admin/Patrol/$1/$2  [L]
+RewriteRule ^/V/Patrol/(.*)$            /index.php/Vue/Patrol/Patrol/$1  [L]
+RewriteRule ^/M/Patrol/(.*)$            /index.php/Mobile/Patrol/Patrol/$1  [L]
+RewriteRule ^/F/Patrol/(.*)$            /index.php/Fs/Patrol/Patrol/$1  [L]
+
+RewriteRule ^/A/(Contract|PurchaseApply|PurchaseCheck|PurchaseInvoice|PurchaseLife|PurchasePayment|PurchasePlace|PurchasePlans|Tendering|TenderRecord)/(.*)$            /index.php/Admin/Purchases/$1/$2  [L]
+RewriteRule ^/A/(ChangeData|Public)/(.*)$            /index.php/Admin/NotCheckLogin/$1/$2  [L]
+RewriteRule ^/A/(Quality|QualityStatis)/(.*)$            /index.php/Admin/Qualities/$1/$2  [L]
+
+RewriteRule ^/A/(Repair|RepairParts|RepairSearch|RepairSetting|RepairStatis)/(.*)$            /index.php/Admin/Repair/$1/$2  [L]
+RewriteRule ^/V/(Repair|RepairParts)/(.*)$            /index.php/Vue/Repair/$1/$2  [L]
+RewriteRule ^/M/(Repair|RepairParts)/(.*)$            /index.php/Mobile/Repair/$1/$2  [L]
+RewriteRule ^/F/(Repair|RepairParts)/(.*)$            /index.php/Fs/Repair/$1/$2  [L]
+
+RewriteRule ^/A/(StatisAdverse|StatisPurchases|StatisQuality|StatisRepair)/(.*)$            /index.php/Admin/Statistics/$1/$2  [L]
+RewriteRule ^/A/(Supplier|Product)/(.*)$            /index.php/Admin/Suppliers/$1/$2  [L]
+
+RewriteRule ^/A/(Tasks|Redis)/(.*)$            /index.php/Admin/Tasks/$1/$2  [L]
+RewriteRule ^/M/Tasks/(.*)$              /index.php/Mobile/Tasks/Tasks/$1  [L]
+RewriteRule ^/V/Tasks/(.*)$              /index.php/Vue/Tasks/Tasks/$1  [L]
+RewriteRule ^/F/Tasks/(.*)$              /index.php/Fs/Tasks/Tasks/$1  [L]
+
+RewriteRule ^/A/(Emergency|Box)/(.*)$            /index.php/Admin/Archives/$1/$2  [L]
+RewriteRule ^/V/(Emergency|Box)/(.*)$            /index.php/Vue/Archives/$1/$2  [L]
+RewriteRule ^/M/(Emergency|Box)/(.*)$            /index.php/Mobile/Archives/$1/$2  [L]
+RewriteRule ^/F/(Emergency|Box)/(.*)$            /index.php/Fs/Archives/$1/$2  [L]
+
+RewriteRule ^/M/Notin/(.*)$              /index.php/Mobile/Pub/Notin/$1  [L]
+RewriteRule ^/V/Notin/(.*)$              /index.php/Vue/Pub/Notin/$1  [L]
+RewriteRule ^/F/Notin/(.*)$              /index.php/Fs/Pub/Notin/$1  [L]

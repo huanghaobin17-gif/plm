@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <include file="Public:head"/>
+    <style>
+        .layui-form-item .layui-inline {
+            margin-bottom: 0px;
+            margin-right: -5px;
+        }
+        .layui-table th, .layui-table td {
+            padding: 6px 0 !important;
+        }
+        .layui-table{
+            margin:0;
+        }
+        .jlinfo{
+            margin: 5px;
+        }
+        .pdffile{
+            width: 680px;
+            height: 950px;
+            margin: 5px auto 0;
+            border: 1px solid #e2e2e2;
+        }
+        .botinfo ul{
+            background: antiquewhite;
+            margin-top: 20px !important;
+        }
+        .botinfo ul li{
+            float: left;
+            width: 280px;;
+        }
+        .prititle{
+            padding-bottom:2px;
+            padding-left: 10px;
+            padding-top: 2px;
+            border: 1px solid #e2e2e2;
+        }
+        .layui-form-pane .layui-input-block {
+            margin-left: 135px;
+            left: -1px;
+        }
+        .cuscheck{
+            border: 1px solid #e2e2e2;
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 10px;
+        }
+        .pdftop{
+            width: 680px;
+            height: 50px;
+            margin: 0 auto;
+        }
+        .topleft{
+            float: left;
+            width: 170px;
+            height: 25px;
+            padding-top:25px;
+            font-size: 16px;
+            padding-left: 10px;
+        }
+        .topmid{
+            float: left;
+            width: 265px;
+            text-align: center;
+        }
+        .topright{
+            float: left;
+            max-width: 230px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            height: 25px;
+            padding-top:25px;
+            font-size: 16px;
+        }
+        .topmidtitle{
+            font-size: 24px;
+            font-weight: 200;
+        }
+        .myremark{
+            width: 680px;
+            height: 106px;
+        }
+        .remarktitle{
+            height: 35px;
+            line-height: 35px;
+            background: #FBFBFB;
+            padding-left: 10px;
+            border-bottom: 1px solid #e2e2e2 ;
+        }
+        .remarkcont{
+            height: 70px;
+            border-left: none;
+            border-right: none;
+        }
+        .mytextarea{
+            height: 68px;
+            width: 678px;
+            border-color: #e2e2e2;
+        }
+        .zk{
+            border: 1px solid #e2e2e2;
+            height: 30px;
+            font-size: 13px;
+        }
+        .zktitle{
+            width: 110px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-right: 1px solid #e2e2e2;
+            float: left;
+            background: #FBFBFB;
+        }
+        .zkcont{
+            float: left;
+            width: 500px;
+            border: none;
+        }
+        .zkcont ul{
+            width: 400px;;
+        }
+        .zkcont ul li{
+            float: left;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="pdftop">
+    <div class="topleft">日期：{$printDate}</div>
+    <div class="topmid">
+        <div class="topmidtitle">医疗设备维修/服务报告</div>
+        <div>版次: A/O</div>
+    </div>
+    <div class="topright">NO: {$repInfo.repnum}</div>
+</div>
+<div style="clear:both;"></div>
+<div class="pdffile">
+    <form class="layui-form layui-form-pane">
+        <div>
+            <div class="prititle">一、设备基础信息</div>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="100">
+                    <col width="110">
+                    <col width="100">
+                    <col width="110">
+                    <col width="100">
+                    <col width="110">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th style="text-align:center;width: 100px;">资产名称</th>
+                    <td style="width: 116px;">&nbsp;{$repInfo.assets}</td>
+                    <th style="text-align:center;width: 100px;">资产编号</th>
+                    <td style="width: 116px;">&nbsp;{$repInfo.assnum}</td>
+                    <th style="text-align:center;width: 100px;">规格型号</th>
+                    <td>&nbsp;{$repInfo.model}</td>
+                </tr>
+                <tr>
+                    <th style="text-align:center;">资产厂家</th>
+                    <td>&nbsp;{$repInfo.factory}</td>
+                    <th style="text-align: center">分类名称</th>
+                    <td>&nbsp;{$repInfo.catName}</td>
+                    <th style="text-align: center">使用科室</th>
+                    <td>&nbsp;{$repInfo.departmentName}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: center">报修人</th>
+                    <td>&nbsp;{$repInfo.applicant}</td>
+                    <th style="text-align: center">报修时间</th>
+                    <td>&nbsp;{$repInfo.applicant_time|date='Y-m-d',###}</td>
+                    <th style="text-align: center">接单人</th>
+                    <td>&nbsp;{$repInfo.response}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: center">预计修复日期</th>
+                    <if condition="$repInfo.expect_time neq 0">
+                        <td>&nbsp;{$repInfo.expect_time|date='Y-m-d',###}</td>
+                        <else />
+                        <td></td>
+                    </if>
+                    <th style="text-align: center">预计维修费用</th>
+                    <if condition="$repInfo.expect_price neq 0">
+                    <td>&nbsp;{$repInfo.expect_price}</td>
+                    <else />
+                    <td></td>
+                    </if>
+                    <th style="text-align: center">接单时间</th>
+                    <if condition="$repInfo.response_date neq 0">
+                        <td>&nbsp;{$repInfo.response_date|date='Y-m-d',###}</td>
+                        <else />
+                        <td></td>
+                    </if>
+                </tr>
+                <tr>
+                    <th style="text-align: center;height: 68px;">故障描述</th>
+                    <td colspan="5">&nbsp;{$repInfo.breakdown}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: center;height: 68px;">检修意见</th>
+                    <td colspan="5">&nbsp;{$repInfo.repair_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <div class="prititle">二、配件/服务信息</div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;width: 50px;">序号</th>
+                        <th style="text-align: center">配件/服务名称</th>
+                        <th style="text-align: center">规格型号</th>
+                        <th style="text-align: center;width: 70px;">配件数量</th>
+                        <th style="text-align: center;width: 70px;">配件单价</th>
+                        <th style="text-align: center;width: 100px;">合计(元)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <if condition="$parts">
+                    <volist name="parts" id="vo">
+                        <assign name="partsNum" value="$key+1" />
+                        <tr>
+                            <td style="text-align: center">{$partsNum}</td>
+                            <td style="text-align: center">{$vo.parts}</td>
+                            <td style="text-align: center">{$vo.part_model}</td>
+                            <td style="text-align: center">{$vo.part_num}</td>
+                            <td style="text-align: center">{$vo.part_price}</td>
+                            <td style="text-align: center">{$vo.price_sum}</td>
+                        </tr>
+                    </volist>
+                    <if condition="$partsNum lt 4">
+                        <for start="$partsNum" end="4" name="vo" >
+                            <tr>
+                                <td style="text-align: center">{$vo+1}</td>
+                                <td style="text-align: center"></td>
+                                <td style="text-align: center"></td>
+                                <td style="text-align: center"></td>
+                                <td style="text-align: center"></td>
+                                <td style="text-align: center"></td>
+                            </tr>
+                        </for>
+                    </if>
+                    <else />
+                    <tr>
+                        <td style="text-align: center">1</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">2</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">3</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">4</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <div class="prititle">三、移交设备/附件信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;移交设备/附件清单确认：<span style="color:#E9E7E7;">_____________</span>&nbsp;&nbsp;日期：<span style="color:#E9E7E7;">_____________</span></div>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th style="text-align: center;width: 50px;">序号</th>
+                    <th style="text-align: center">设备/附件名称</th>
+                    <th style="text-align: center">所属科室</th>
+                    <th style="text-align: center;width: 80px;">数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="text-align: center">1</td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">2</td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">3</td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">4</td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="myremark">
+            <div class="remarktitle">备注</div>
+            <div class="remarkcont">
+                <textarea placeholder="" class="mytextarea"></textarea>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="zk">
+            <div class="zktitle">维修后设备状况</div>
+            <div class="zkcont">
+                <ul>
+                    <li>
+                        &nbsp;&nbsp;[ ] 已修复
+                    </li>
+                    <li>
+                        [ ] 未修复
+                    </li>
+                    <div style="clear: both;"></div>
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div>
+            <table class="layui-table">
+                <tbody>
+                <tr>
+                    <td style="text-align: center;width: 100px;">维修工程师</td>
+                    <td style="text-align: center;width: 110px;"></td>
+                    <td style="text-align: center;width: 100px;">验收时间</td>
+                    <td style="text-align: center;width: 110px;"> </td>
+                    <td style="text-align: center;width: 160px;">科室验收确认（签名）</td>
+                    <td style="text-align: center;min-width: 110px;"> </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('form', function(){
+        var form = layui.form();
+        //监听提交
+        form.on('submit(eventquery)', function(data){
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

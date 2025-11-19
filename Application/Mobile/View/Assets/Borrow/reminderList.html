@@ -1,0 +1,18 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Assets','Borrow','borrowAssetsList')):?>
+<title>借调逾期催还</title>
+<?php endif?>
+<body>
+<style>
+    .enter{padding: 1.25rem}
+</style>
+<div class="layui-fluid" id="reminderList">
+
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+	var borid='{$borid}';
+    var reminderListUrl='{$reminderListUrl}';
+</script>
+<script src="__PUBLIC__/mobile/js/assets/borrow/reminderList.js?v={:mt_rand(1,54561)}"></script>

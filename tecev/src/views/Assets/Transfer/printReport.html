@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        td, th {
+            text-align: center !important;
+        }
+        .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{border-color: #666;}
+        th {
+            font-weight: bold !important;
+        }
+
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        em {
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] i {
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+
+        .layui-form-checkbox span {
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] span {
+            line-height: 16px;
+            padding-right: 0 !important;
+        }
+
+        .layui-form-checkbox span {
+            padding: 0 3px;
+        }
+
+        .text-align-left {
+            text-align: left !important;
+        }
+
+        .layui-table[lay-size=sm] td,
+        .layui-table[lay-size=sm] th {
+            padding: 5px !important;
+        }
+
+        .layui-table[lay-size=sm] td.text-align-left {
+            padding-left: 15px !important;
+        }
+
+        .logo {
+            height: 60px;
+            position: absolute;
+            top: 20px;
+        }
+    </style>
+</head>
+<body style="width: 794px!important; margin: auto;">
+<div class="layui-fluid">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;"><!--中山大学附属第一医院东院-->{$title}转科审批单</h2>
+        <notempty name="imageUrl">
+            <img src="{$imageUrl}" class="logo">
+        </notempty>
+        <div class="fr" style="width: 230px;">
+            <span>转科单号:<em>{$zkInfo.transfernum}</em></span>
+        </div>
+        <div class="clear"></div>
+        <div class="fr" style="width: 230px;">
+            <span>制表日期:<em>{$date}</em></span>
+        </div>
+        <br/>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col width="260">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td><em>{$zkInfo.assets}</em></td>
+                <th>资产编号</th>
+                <td><em>{$zkInfo.assnum}</em></td>
+            </tr>
+            <tr>
+                <th>规格型号</th>
+                <td>{$zkInfo.model}</td>
+                <th>产品序列号</th>
+                <td>{$zkInfo.serialnum}</td>
+
+            </tr>
+            <tr>
+                <th>生产厂家</th>
+                <td>{$zkInfo.factory}</td>
+                <th>品牌</th>
+                <td>{$zkInfo.brand}</td>
+            </tr>
+            <tr>
+                <th>单位</th>
+                <td>{$zkInfo.unit}</td>
+                <th>分类名称</th>
+                <td>{$zkInfo.category}</td>
+            </tr>
+            <tr>
+                <th>使用科室</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+                <th>保修截止日期</th>
+                <td>{$zkInfo.guarantee_date}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="110">
+                <col width="150">
+                <col width="120">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" class="text-left">二、转科申请信息</th>
+            </tr>
+            <tr>
+                <th>申请人</th>
+                <td>{$zkInfo.applicant_user}</td>
+                <th>联系电话</th>
+                <td>{$zkInfo.telephone}</td>
+                <th>申请时间</th>
+                <td>{$zkInfo.applicant_time}</td>
+            </tr>
+            <tr>
+                <th>转科日期</th>
+                <td>{$zkInfo.transfer_date}</td>
+                <th>转出科室</th>
+                <td>{$zkInfo.tranout_depart_name}</td>
+                <th>转出科室负责人</th>
+                <td>{$zkInfo.tranout_departrespon}</td>
+            </tr>
+            <tr>
+                <th>存放地点</th>
+                <td>{$zkInfo.address}</td>
+                <th>转入科室</th>
+                <td>{$zkInfo.tranin_depart_name}</td>
+                <th>转入科室负责人</th>
+                <td>{$zkInfo.tranin_departrespon}</td>
+            </tr>
+            <tr>
+                <th>转科文号</th>
+                <td class="text-align-left" colspan="5">{$zkInfo.tran_docnum}</td>
+            </tr>
+            <tr>
+                <th>转科原因</th>
+                <td class="text-align-left" colspan="5">{$zkInfo.tran_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="60">
+                <col width="160">
+                <col width="160">
+                <col width="120">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tr>
+                <th colspan="6" class="text-left">三、随同转科附属设备</th>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>附属设备名称</th>
+                <th>附属设备编号</th>
+                <th>品牌</th>
+                <th>型号</th>
+                <th>序列号</th>
+            </tr>
+            <tbody>
+            <empty name="details">
+                <tr>
+                    <td colspan="6" style="text-align: center;">暂无相关数据</td>
+                </tr>
+                <else/>
+                <volist name="details" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.assets}</td>
+                        <td>{$vo.assnum}</td>
+                        <td>{$vo.brand}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.serialnum}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="60">
+                <col width="120">
+                <col width="140">
+                <col width="70">
+                <col width="">
+            </colgroup>
+            <tr>
+                <th colspan="5" class="text-left">四、审核信息</th>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>审核人</th>
+                <th>审核时间</th>
+                <th>审核状态</th>
+                <th>审核意见</th>
+            </tr>
+            <tbody>
+            <empty name="approves">
+                <tr>
+                    <td colspan="5">无审批记录</td>
+                </tr>
+                <else/>
+                <volist name="approves" id="app">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$app.approver}</td>
+                        <td>{$app.approve_time|date="Y-m-d H:i:s",###}</td>
+                        <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                            <td>通过</td>
+                            <else/>
+                            <td>未通过</td>
+                        </if>
+                        <td class="text-align-left">{$app.remark}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="150">
+                <col width="120">
+                <col width="150">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" class="text-left">五、验收信息</th>
+            </tr>
+            <tr>
+                <th>验收人</th>
+                <td>{$zkInfo.check_user}</td>
+                <th>验收时间</th>
+                <td>{$zkInfo.check_time}</td>
+                <th>是否通过</th>
+                <td>
+                    <if condition="$zkInfo.is_check eq 1">
+                        通过
+                        <else/>
+                        不通过
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>意见/建议</th>
+                <td colspan="5" class="text-align-left">{$zkInfo.check}</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="3" class="text-left">六、设备科及相关科室负责人意见及签字</th>
+            </tr>
+            <tr>
+                <th>转出科室负责人意见及签字 </th>
+                <th>转入科室负责人意见及签字</th>
+                <th>设备科意见及签字</th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$tranout_autograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$tranout_autograph}">
+                        <span>日期：{$tranout_autograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$tranin_autograph"><else/>style="padding-right: 100px;"</if>>签字：<img src="{$tranin_autograph}"></span>
+                        <span>日期：{$tranin_autograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：<img src="{$departautograph}"></span>
+                        <span>日期：{$departautograph_time}</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<div class="ilayui-form-item tbcenter printbtn" style=" margin: 30px auto;">
+    <button class="layui-btn" id="print" lay-submit lay-filter="print"><i class="layui-icon layui-icon-zprinter-l"
+                                                                          style="font-size: 16px;"></i>打印审批单
+    </button>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/qualities/quality/scanTemplate', layui.factory('controller/qualities/quality/scanTemplate'));
+</script>

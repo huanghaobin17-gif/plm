@@ -1,0 +1,101 @@
+<style>
+    #LAY-patrol-patrolsetting-points .layui-card-header{height: 58px;line-height: 58px;}
+    #LAY-patrol-patrolsetting-points .layui-form-label{width: auto;}
+
+    /* 子侧边 */
+    #LAY-patrol-patrolsetting-points .layui-side-child{width: 220px!important; left: 235px; top: 105px!important; border-right: 1px solid #eee; background-color: #fff;margin-bottom: 20px;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-side-scroll{width: 220px;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav{padding: 10px 0; width: 210px; border-radius: 0; background: none}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-child{border-radius: 0;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-title a,
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-title a:hover,
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-itemed>a{color: #666 !important;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-itemed .layui-nav-child{margin-bottom: 10px; background: none !important;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-item a{height: 30px; line-height: 30px; color: #666;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-item a:hover{background: none !important;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-child a{color: #999 !important;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-more{display: none;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-tree .layui-this,
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-tree .layui-this>a,
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this,
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav-tree .layui-nav-child dd.layui-this a{background: none; color: #5FB878 !important;}
+    #LAY-patrol-patrolsetting-points .layui-side-child .layui-nav .layui-nav-child a:hover{color: #009688 !important}
+    #LAY-patrol-patrolsetting-points .layui-nav .layui-nav-item a{padding: 0 10px;}
+    #LAY-patrol-patrolsetting-points .layui-nav-item a{border-left: 5px solid #ffffff;}
+    #LAY-patrol-patrolsetting-points .layui-nav-item a:hover{border-left: 5px solid #009688;}
+
+    a:active{
+        border: none;
+    }
+
+
+</style>
+<?php if($menuData = get_menu_name('Patrol','PatrolSetting','points')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-patrol-patrolsetting-points" >
+    <div class="layui-row">
+        <div class="layui-col-md12" style="background-color: white;margin-bottom: 20px;">
+            <div class="layui-side layui-side-child">
+                <div class="layui-side-scroll">
+                    <ul class="layui-nav layui-nav-tree">
+                        <?php if($menuData = get_menu('Patrol','PatrolSetting','addPoints')):?>
+                        <div style="text-align: center;">
+                            <button class="layui-btn" id="addType" data-url="{$menuData['actionurl']}" >
+                                <i class="layui-icon">&#xe654;</i> {$menuData['actionname']}
+                            </button>
+                        </div>
+                        <hr>
+                        <?php endif?>
+                        <volist name="points" id="vo">
+                            <li class="layui-nav-item" data-url="sdsd">
+                                <a href="javascript:;" class="getDetail"  data-ppid="{$vo.ppid}" style="text-decoration: none">{$vo.name}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-card" style="margin-left: 230px;">
+                <div class="layui-card-header">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    &nbsp;&nbsp;<span class="detailName">{$firstname.name}</span>明细项▼
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item" style="position: relative;margin-bottom:5px;">
+                            <label class="layui-form-label">明细名称：</label>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="pointsDetail" value=""  class="layui-input" placeholder="请输入明细名称" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn"  lay-submit lay-filter="pointsSearch"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                            <div class="layui-inline addDetail" style="right: 0;position: absolute;">
+                                <?php if($menuData = get_menu('Patrol','PatrolSetting','addPoints')):?>
+                                <input type="hidden" name="typeid" value="{$firstname.ppid}"/>
+                                <button class="layui-btn" data-url="{$menuData['actionurl']}" id="addDetail">
+                                    <i class="layui-icon">&#xe654;</i> 新增明细
+                                </button>
+                                <?php endif?>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="points" lay-filter="points"></table>
+                    <div class="layui-form-item">
+                        备注：<span class="pointsRemark">{$firstname.remark}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('patrol/patrolsetting/points', layui.factory('patrol/patrolsetting/points'));
+</script>

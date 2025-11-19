@@ -1,0 +1,92 @@
+<include file="Public:layerHeader"/>
+<style>
+    .tl {
+        text-align: left;
+    }
+
+    .tr {
+        text-align: right;
+    }
+    .layui-table-cell{
+        height: 30px !important;
+        line-height: 30px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: visible;
+    }
+    .dropdown-menu{
+        left: 0;
+    }
+    .ulwidth .table-condensed tbody tr:hover{
+        background-color: #5FB878 !important;
+        color: #fff;
+    }
+    .layui-table-body{
+        overflow: visible;
+    }
+    .layui-table-box{
+        overflow: visible;
+    }
+</style>
+<div class="layui-fluid layui-tab-content">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <blockquote class="layui-elem-quote">
+                计划信息
+            </blockquote>
+            <table class="layui-table" lay-size="sm" lay-even>
+                <tbody>
+                <tr>
+                    <td class="tr" style="width: 25%;">盘点单号：</td>
+                    <td class="tl inventory_plan_no" style="width: 25%;"></td>
+                    <td class="tr" style="width: 25%;">盘点名称：</td>
+                    <td class="tl inventory_plan_name" style="width: 25%;"></td>
+                </tr>
+                <tr>
+                    <td class="tr">开始时间：</td>
+                    <td class="tl inventory_plan_start_time"></td>
+                    <td class="tr">结束时间：</td>
+                    <td class="tl inventory_plan_end_time"></td>
+                </tr>
+                <tr>
+                    <td class="tr">状态：</td>
+                    <td class="tl inventory_plan_status_name"></td>
+                    <td class="tr">盘点员：</td>
+                    <td class="tl inventory_users"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-col-md12">
+            <blockquote class="layui-elem-quote">
+                盘点设备列表
+            </blockquote>
+            <table id="tableList" lay-filter="tableList"></table>
+        </div>
+        <div class="layui-col-md12">
+            <div style="display: flex;justify-content: center">
+                <button type="submit" lay-submit lay-filter="temp_save" class="layui-btn" style="margin-right: 100px">暂时保存</button>
+                <button type="submit" lay-submit lay-filter="save" class="layui-btn" style="margin-left: 100px">结束盘点</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 工具栏模板 -->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+    </div>
+</script>
+<script>
+    var saveOrEndInventoryPlanUrl = "{$saveOrEndInventoryPlanUrl}";
+    var inventoryPlanData = JSON.parse('{$inventoryPlanData}');
+    var department = JSON.parse('{$department}');
+    var dicAssets = JSON.parse('{$dicAssets}');
+    var assetsFinance = JSON.parse('{$assetsFinance}');
+    console.log(inventoryPlanData)
+    // console.log(department)
+    // console.log(dicAssets)
+    // console.log(assetsFinance)
+    layui.use('controller/inventory/saveOrEndInventoryPlan', layui.factory('controller/inventory/saveOrEndInventoryPlan'));
+</script>

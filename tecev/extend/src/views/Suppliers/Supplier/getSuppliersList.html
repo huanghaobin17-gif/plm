@@ -1,0 +1,184 @@
+<?php if($menuData = get_menu_name('Suppliers','Supplier','getSuppliersList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Suppliers-Supplier-getSuppliersList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">注册审核：</label>
+                                    <div class="layui-input-inline" style="width: 275px;">
+                                        <input type="radio" name="sex" value="2" title="全部" checked>
+                                        <input type="radio" name="sex" value="0" title="待审核">
+                                        <input type="radio" name="sex" value="1" title="已通过">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">公司类型：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="" id="">
+                                            <option value="">请选择企业类型</option>
+                                            <option value="1">经营企业</option>
+                                            <option value="2">生产企业</option>
+                                            <option value="3">经营生产企业</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">公司位置：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="quiz" lay-search="">
+                                            <option value="">请选择公司位置</option>
+                                            <optgroup label="广东省">
+                                                <option value="广州">广州</option>
+                                                <option value="佛山">佛山</option>
+                                                <option value="揭阳">揭阳</option>
+                                            </optgroup>
+                                            <optgroup label="湖南省">
+                                                <option value="长沙">长沙</option>
+                                                <option value="湘潭">湘潭</option>
+                                            </optgroup>
+                                            <optgroup label="浙江省">
+                                                <option value="杭州">杭州</option>
+                                                <option value="宁波">宁波</option>
+                                                <option value="温州">温州</option>
+                                                <option value="温州">台州</option>
+                                                <option value="温州">绍兴</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">公司名称：</label>
+                                    <div class="layui-input-inline" style="width: 300px">
+                                        <input type="text" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">合作情况：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="" id="">
+                                            <option value="">请选择合作情况</option>
+                                            <option value="2">有合作过</option>
+                                            <option value="3">未合作过</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">评价排名：</label>
+                                    <div class="layui-input-inline" style="width: 300px;">
+                                        <input type="radio" name="s" value="2" title="全部" checked>
+                                        <input type="radio" name="s" value="2" title="一般">
+                                        <input type="radio" name="s" value="0" title="良">
+                                        <input type="radio" name="s" value="1" title="优">
+                                    </div>
+                                </div>
+                                <!--<div class="layui-inline">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-inline">
+
+                                    </div>
+                                </div>-->
+                                <div class="layui-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="searchPlan">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" lay-submit="" lay-filter="resetPlan" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row  table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <!--<i class="layui-icon layui-icon-zzusers"></i> 供应商列表-->
+                        <div class="fl">
+                            <i class="layui-icon layui-icon-zzusers"></i> 供应商列表
+                        </div>
+                        <div class="fl m-left">
+                            <button class="layui-btn layui-btn-xs layui-btn-normal" id="supplierDetailInfo" data-url="/Admin/Suppliers/Supplier/supplierDetailInfo">
+                                详情
+                            </button>
+                        </div>
+                    </div>
+                <div class="layui-card-body">
+                    <!--公司资质效果图，数据表格开发完后删除效果图-->
+                    <table class="layui-table" lay-size="sm">
+                        <colgroup>
+
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th rowspan="2">序号</th>
+                            <th rowspan="2">公司位置</th>
+                            <th rowspan="2">公司名称</th>
+                            <th rowspan="2">公司类型</th>
+                            <th rowspan="2">合作情况</th>
+                            <th rowspan="2">评价排名</th>
+                            <th colspan="3">公司资质</th>
+                        </tr>
+                        <tr>
+                            <th>证照名称</th>
+                            <th>已提交</th>
+                            <th>有效期至</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="5">1</td>
+                                <td rowspan="5">广州</td>
+                                <td rowspan="5">{$Think.config.COMPANY_NAME}</td>
+                                <td rowspan="5">经营企业</td>
+                                <td rowspan="5">有合作过</td>
+                                <td rowspan="5">5</td>
+                                <td>营业执照</td>
+                                <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                <td>2018-06-28</td>
+                            </tr>
+                            <tr>
+                                <td>医疗器械经营许可证</td>
+                                <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>第二类医疗器械经营备案凭证</td>
+                                <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>医疗器械生产许可证</td>
+                                <td><i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i></td>
+                                <td><i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i></td>
+                            </tr>
+                            <tr>
+                                <td>第一类医疗器械生产备案凭证</td>
+                                <td><i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i></td>
+                                <td><i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="suppliersList" lay-filter="supplierList"></table>
+                </div>
+                <div class="layui-card-body">
+                    <button class="layui-btn">一键导出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    layui.use('suppliers/supplier/getList', layui.factory('suppliers/supplier/getSuppliersList'));
+</script>

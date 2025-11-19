@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="card-html-bg">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-examine .layui-elem-quote {
+        padding: 5px;
+    }
+
+    .read-table th {
+        width: 12%;
+        text-align: right !important;
+    }
+</style>
+<body>
+<div class="layui-fluid layui-tab-content">
+    <!--验收单基本信息-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-elem-quote-sm">计划信息</div>
+                    <table class="layui-table read-table" lay-size="sm" lay-even>
+                        <tbody>
+                        <tr>
+                            <th>计划状态：</th>
+                            <td colspan="5" style="color: red;">{$patrol_info.patrol_status_name}</td>
+                        </tr>
+                        <tr>
+                            <th>计划名称：</th>
+                            <td>{$patrol_info.patrol_name}</td>
+                            <th>计划日期：</th>
+                            <td>{$patrol_info.patrol_start_date} — {$patrol_info.patrol_end_date}</td>
+                            <th>是否周期计划：</th>
+                            <td>{$patrol_info.cycle_name}</td>
+                        </tr>
+                        <tr>
+                            <th>周期设置：</th>
+                            <td>{$patrol_info.cycle_setting_name}</td>
+                            <th>总周期数：</th>
+                            <td>{$patrol_info.total_cycle}</td>
+                            <th>当前期数：</th>
+                            <td>{$patrol_info.current_cycle}</td>
+                        </tr>
+                        <tr>
+                            <th>计划备注：</th>
+                            <td colspan="5">{$patrol_info.remark}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <!--列表-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本计划设备列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="showPlansLists" lay-filter="showPlansData"></table>
+                    <if condition="$apps">
+                        <div class="layui-elem-quote-sm">审核情况</div>
+                        <table class="layui-table" lay-size="sm" lay-even>
+                            <colgroup>
+                                <col width="90">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                                <col width="">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>审核人</th>
+                                <th>审核时间</th>
+                                <th>审核状态</th>
+                                <th>审核意见</th>
+                            </tr>
+                            <volist name="apps" id="vo">
+                                <tr>
+                                    <td>{$key+1}</td>
+                                    <td>{$vo.approver}</td>
+                                    <td>{$vo.approve_time}</td>
+                                    <td>{$vo.approve_status}</td>
+                                    <td>{$vo.remark}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--计划列表-->
+    <if condition="$get_plan_cycle eq 1">
+        <if condition="$patrol_info.is_cycle eq 1">
+            <div class="layui-row" style="margin-top: 15px">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <div class="fl">
+                                <i class="layui-icon">&#xe62d;</i> 周期计划生成进度
+                            </div>
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                                <div class="layui-progress-bar" lay-percent="{$patrol_info.total_progress}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+        <div class="layui-row" style="margin-top: 15px">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="fl">
+                            <i class="layui-icon">&#xe62d;</i> 计划列表
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <table id="plan_list" lay-filter="plansData"></table>
+                    </div>
+                    <if condition="$show_create_next_cycle eq 1">
+                        <script type="text/html" id="plansDataToolbar">
+                            <div class="layui-btn-container">
+                                <?php if($menuData = get_menu('Patrol','Patrol','addPatrol')):?>
+                                <button id="createNewPlan" class="layui-btn layui-btn-sm" lay-event="createNewPlan" data-id="{$patrol_info.patrid}" data-url="{$menuData['actionurl']}">
+                                    生成下一周期计划
+                                </button>
+                                <?php endif?>
+                            </div>
+                        </script>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </if>
+
+    <!--底部内容-->
+    <if condition="$canApprove">
+        <div class="layui-row margin-top-15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>审核表单</legend>
+                        </fieldset>
+                        <form class="layui-form layui-form" onsubmit="return false;">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">审核人：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" readonly="readonly" value="{$username}" name="approvaluser" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label"><span class="rquireCoin"> * </span>审核日期：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" readonly="readonly" name="approvaldate" value="{$date}"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" pane="">
+                                <label class="layui-form-label">是否通过：</label>
+                                <div class="layui-input-block" id="status">
+                                    <input type="radio" name="is_adopt" id="optionsRadios1" value="1" title="是" checked>
+                                    <input type="radio" name="is_adopt" id="optionsRadios2" value="2" title="否">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">审批意见：</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="请输入审批意见" class="layui-textarea" name="remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div style="text-align: center">
+                                    <input type="hidden" name="pid" value="{$patrol_info.patrid}"/>
+                                    <button class="layui-btn" type="button" id="approval"><i class="layui-icon">&#xe609;</i> 确认无误并提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    var showPlans = "{$showPlans}";
+    var show_detail_table = "{$show_detail_table}";
+    var assets = {$assets};
+    var get_plan_cycle = "{$get_plan_cycle}";
+    var plans = {$plans};
+    var pre_date_name = '{$pre_date_name}';
+    var detail_name = '{$detail_name}';
+    var template_name = '{$template_name}';
+    var operation_name = '{$operation_name}';
+    layui.use('controller/patrol/patrol/showPlans', layui.factory('controller/patrol/patrol/showPlans'));
+</script>

@@ -1,0 +1,248 @@
+<?php if($menuData = get_menu_name('Qualities','QualityStatis','qualityDepartStatistics')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var qualityDepartStatisticsUrl = "{$qualityDepartStatisticsUrl}";
+    var year = "{$year}";
+</script>
+<style>
+    #LAY-Qualities-QualityStatistics-qualityDepartStatistics .listTitle {
+        position: relative;
+    }
+    #LAY-Qualities-QualityStatistics-qualityDepartStatistics #faiTypeTermLeft .layui-table thead tr th,#LAY-Qualities-QualityStatistics-qualityDepartStatistics #faiTypeTermLeft .layui-table tbody tr td{
+        text-align: center;
+    }
+    #LAY-Qualities-QualityStatistics-qualityDepartStatistics{
+        padding: 15px 5px;
+    }
+    #LAY-Qualities-QualityStatistics-qualityDepartStatistics .layui-icon-zanalysis{
+        float: left;
+        margin-right: 5px;
+        height: 41px;
+        margin-top: 1px;
+    }
+    #LAY-Qualities-QualityStatistics-qualityDepartStatistics .div-chart-show{
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="layui-fluid" id="LAY-Qualities-QualityStatis-qualityDepartStatistics">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-tab layui-tab-brief" lay-filter="qualityDepartTab" style="margin: 0">
+                <ul class="layui-tab-title" style="margin:0 10px; background-color: #ffffff">
+                    <li class="layui-this">质控结果统计</li>
+                    <li>模板明细不符合项统计</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <!--质控结果统计-->
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form" lay-filter="component-form-group">
+                                    <div class="layui-form-item spacingBalance">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计年份：</label>
+                                            <div class="layui-input-inline">
+                                                <input name="year" value="{$thisdate}" readonly type="text" id="searchYear" placeholder="请选择统计年份"  class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计科室：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="departid" id="qualityDepartid" xm-select="departid" xm-select-search="" lay-verify="department">
+                                                    <option value="">请选择</option>
+                                                    <volist name="department" id="vo">
+                                                    <option value="{$vo.departid}" <if condition="$thisdepartid[$vo[departid]] EQ true">selected</if> >{$vo.department}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" style="margin-left: 10px;">
+                                            <div class="fl">
+                                                <button class="layui-btn" type="button" lay-submit="" lay-filter="qualityDepartStatisticsSearch" id="qualityDepartStatisticsSearch">
+                                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                                </button>
+                                                <button type="reset" lay-submit="" lay-filter="resetQualityDepart" class="layui-btn layui-btn-primary">重置</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl">
+                                    <i class="layui-icon layui-icon-zanalysis"></i> <span>图示</span><div class="clear"></div>
+                                </div>
+                                <div class="fl m-left">
+                                    <?php if($menuData = get_menu('Qualities','QualityStatis','exportDepartStatistics')):?>
+                                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportQualityDepart" lay-tips="提示 : 如修改了查询条件，请点击搜索后再进行导出" data-url="{$menuData['actionurl']}">
+                                        <i class="layui-icon">&#xe61e;</i>
+                                        {$menuData['actionname']}
+                                    </button>
+                                    <?php endif?>
+                                </div>
+                            </div>
+                            <div class="layui-tab layui-tab-brief"  lay-filter="qualityTab">
+                                <div class="layui-row" style="padding: 15px;">
+                                    <div class="grid-demo grid-demo-bg1">
+                                        <div class="div-chart-show">
+                                            <div class="div-chart-show-title">模板使用概况</div>
+                                            <div class="div-chart-show-pic">
+                                                <div class="hidden-contant">暂无相关数据</div>
+                                                <div id="qualitySurveyMain" class="div-chart-show-pic-chart" style="min-height:300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-demo grid-demo-bg1">
+                                        <div class="div-chart-show">
+                                            <div class="div-chart-show-title">模板质控结果概况</div>
+                                            <div class="div-chart-show-pic">
+                                                <div class="hidden-contant">暂无相关数据</div>
+                                                <div id="qualityQualifiedMain" class="div-chart-show-pic-chart" style="min-height:300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-demo grid-demo-bg1">
+                                        <div class="div-chart-show">
+                                            <div class="div-chart-show-title">质控计划结果概况</div>
+                                            <div class="div-chart-show-pic">
+                                                <div class="hidden-contant">暂无相关数据</div>
+                                                <div id="qualityPlanResultMain" class="div-chart-show-pic-chart" style="min-height:300px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">质控概况</li>
+                                    <li>质控计划结果概况</li>
+                                </ul>
+                                <div class="layui-tab-content">
+                                    <div class="layui-tab-item layui-show">
+                                        <table id="qualitySurveyLists" lay-filter="qualitySurveyData"></table>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-row">
+
+                                        </div>
+                                        <table id="planResultLists" lay-filter="planResultData"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--质控模板明细项统计-->
+                    <div class="layui-tab-item">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form" lay-filter="component-form-group">
+                                    <div class="layui-form-item spacingBalance">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">模板类型：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="templates" lay-verify="required">
+                                                    <volist name="templates" id="vo">
+                                                        <option value="{$vo.qtemid}"  <if condition="$vo.qtemid EQ $thistemplates">selected</if>>{$vo.name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计年份：</label>
+                                            <div class="layui-input-inline">
+                                                <input name="year" value="{$thisdate}" readonly type="text" id="searchTypeYear" placeholder="请选择统计年份"  class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">统计科室：</label>
+                                            <div class="layui-input-inline">
+                                                <select name="departid" id="searchTypeDepartid"  xm-select="searchTypeDepartid" xm-select-search="" lay-verify="department">
+                                                    <option value="">请选择</option>
+                                                    <volist name="department" id="vo">
+                                                        <option value="{$vo.departid}" <if condition="$thisdepartid[$vo[departid]] EQ true">selected</if> >{$vo.department}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline" style="margin-left: 10px;">
+                                            <div class="fl">
+                                                <button class="layui-btn" type="button" lay-submit="" lay-filter="faiTypeTermChartSearch" id="faiTypeTermChartSearch">
+                                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                                </button>
+                                                <button type="reset" lay-submit="" lay-filter="resetFaiTypeTerm" class="layui-btn layui-btn-primary">重置</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <div class="fl">
+                                    <i class="layui-icon">&#xe62d;</i> 报表
+                                </div>
+                                <div class="fl m-left">
+                                    <?php if($menuData = get_menu('Qualities','QualityStatis','exportDepartStatistics')):?>
+                                    <button class="layui-btn layui-btn-sm" lay-submit lay-filter="exportFaiTypeTerm" lay-tips="提示 : 如修改了查询条件，请点击搜索后再进行导出" data-url="{$menuData['actionurl']}">
+                                        <i class="layui-icon">&#xe61e;</i>
+                                        {$menuData['actionname']}
+                                    </button>
+                                    <?php endif?>
+                                </div>
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="contain" id="faiTypeTermContain">
+                                    <div class="layui-row">
+                                        <div class="layui-col-lg4 layui-col-md6 layui-col-sm6 layui-col-xs12" id="faiTypeTermLeft">
+                                            <div class="reportHeader">
+                                                <div class="reportTitle" style="font-size:26px;">模板明细不符合项统计</div>
+                                            </div>
+                                            <table class="layui-table" lay-size="sm" lay-even>
+                                                <colgroup>
+                                                    <col>
+                                                    <col>
+                                                    <col>
+                                                    <col>
+                                                    <col>
+                                                </colgroup>
+                                                <thead>
+                                                <tr>
+                                                    <th>序号</th>
+                                                    <th>质控明细项</th>
+                                                    <th>符合</th>
+                                                    <th>不符合</th>
+                                                    <th>符合占比</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="faiTypeTermConData"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="layui-col-lg8 layui-col-md6 layui-col-sm6 layui-col-xs12">
+                                            <div id="faiTypeTermMain" style="min-height:600px;min-width: 600px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var thisdepartids='{$thisdepartids}';
+    var thisdate='{$thisdate}';
+    var thistemplates='{$thistemplates}';
+</script>
+<script>
+    layui.use('qualities/qualityStatis/qualityDepartStatistics', layui.factory('qualities/qualityStatis/qualityDepartStatistics'));
+</script>

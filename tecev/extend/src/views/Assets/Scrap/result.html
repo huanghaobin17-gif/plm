@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-table{ margin-top: 0;}
+    #fileList tr td{text-align: center}
+    #multifile{
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        color: #0a8ddf;
+        cursor: pointer;
+    }
+    .layui-form-label{width: 86px;}
+    .layui-textarea{width: 97%;}
+</style>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">设备基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$assetsinfo.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$assetsinfo.assets}</td>
+
+            </tr>
+            <tr>
+                <th>规格型号：</th>
+                <td>{$assetsinfo.model}</td>
+                <th>生产厂家：</th>
+                <td>{$assetsinfo.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$assetsinfo.category}</td>
+                <th>使用科室：</th>
+                <td>{$assetsinfo.department}</td>
+            </tr>
+            <tr>
+                <th>入库日期：</th>
+                <td>{$assetsinfo.storage_date}</td>
+                <th>启用日期：</th>
+                <td>{$assetsinfo.opendate}</td>
+
+            </tr>
+            <tr>
+                <th>保修日截止期：</th>
+                <td>{$assetsinfo.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$assetsinfo.guaranteeStatus}</td>
+            </tr>
+            <tr>
+                <th>设备原值（元）：</th>
+                <td>{$assetsinfo.buy_price}</td>
+                <th>残净值率（%）：</th>
+                <td>{$assetsinfo.residual_value}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            附属设备报废明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">报废申请信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>报废单号：</th>
+                <td>{$scrapinfo.scrapnum}</td>
+                <th>报废日期：</th>
+                <td>{$scrapinfo.scrapdate}</td>
+                <th>申请人：</th>
+                <td>{$scrapinfo.apply_user}</td>
+            </tr>
+            <tr>
+                <th>报废原因：</th>
+                <td colspan="5">{$scrapinfo.scrap_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$isOpenApprove eq 1">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">审批进程记录</div>
+        <table class="layui-table" lay-size="sm" lay-even>
+            <colgroup>
+                <col width="100">
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col width="160">
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th style="text-align: center;">序号</th>
+                <th style="text-align: center;">进程名称</th>
+                <th style="text-align: center;">审批人</th>
+                <th style="text-align: center;">状态</th>
+                <th style="text-align: center;">审批日期</th>
+                <th>审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <empty name="examine">
+                <tr>
+                    <td colspan="6" style="text-align: center;">无记录</td>
+                </tr>
+                <else />
+                <volist name="examine" key="k" id="vo">
+                    <tr>
+                        <td style="text-align: center;">{$k}</td>
+                        <td style="text-align: center;">{$vo.approve_name}</td>
+                        <td style="text-align: center;">{$vo.approver}</td>
+                        <td style="text-align: center;">
+                            <if condition="$vo.is_adopt eq 1">
+                                <span style="color:green;">通过</span>
+                            <else/>
+                                <span style="color:red;">不通过</span>
+                            </if>
+                        </td>
+                        <td style="text-align: center;">{$vo.approve_time}</td>
+                        <td>{$vo.remark}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+    </div>
+    </if>
+    <empty name="scrapinfo.clear_cross_user">
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>处理表单</legend>
+        </fieldset>
+        <form class="layui-form" enctype="multipart/form-data">
+            <div class="margin-bottom-15">
+                <input type="hidden" name="scrid" value="{$scrid}">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">处置日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" readonly name="cleardate" id="cleardate" value="" placeholder="请点击选择处置日期" style="cursor: pointer;"  class="layui-input" >
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">处置经手人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="{$clear_cross}"  readonly="readonly" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">清理公司：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="" name="clear_company"  class="layui-input" placeholder="请输入清理公司">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="" name="clear_contacter"  class="layui-input" placeholder="请输入联系人">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系电话：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" value="" name="clear_telephone"  class="layui-input" placeholder="请输入联系电话">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        <textarea name="clear_remark" class="layui-textarea" placeholder="请输入备注"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-elem-quote-sm">
+                相关文件上传
+                <span id="multifile" lay-tips="提示 : 上传文件后缀名只能为jpg/jpeg/pdf/png/bmp/gif/doc/docx"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+            </div>
+            <div class="margin-bottom-15">
+                <div class="layui-form-item">
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <table class="layui-table" lay-size="sm">
+                                <thead>
+                                <tr>
+                                    <th class="th-align-center">文件名</th>
+                                    <th class="th-align-center">状态</th>
+                                    <th class="th-align-center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="fileList">
+                                <tr>
+                                    <td colspan="4" style="text-align: center;" id="empty">暂无记录</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn uploadFile" type="button" value="" lay-submit lay-filter="add" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+                </div>
+            </div>
+        </form>
+    <else />
+        <div class="margin-bottom-15">
+            <input type="hidden" name="scrid" value="{$scrid}">
+            <div class="layui-elem-quote-sm">报废处理信息</div>
+            <table class="layui-table read-table" lay-size="sm" lay-even>
+                <tbody>
+                <tr>
+                    <th>处置日期：</th>
+                    <td>{$scrapinfo.cleardate}</td>
+                    <th>处置经手人：</th>
+                    <td>{$scrapinfo.clear_cross_user}</td>
+                    <th>相关文件上传：</th>
+                    <td>
+                        <if condition="$empty eq 1">
+                            无相关文件
+                            <else />
+                            <button class="layui-btn layui-btn-xs layui-btn-normal" id="showFile">点击查看</button>
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>清理公司：</th>
+                    <td>{$scrapinfo.clear_company}</td>
+                    <th>联系人：</th>
+                    <td>{$scrapinfo.clear_contacter}</td>
+                    <th>联系电话：</th>
+                    <td>{$scrapinfo.clear_telephone}</td>
+                </tr>
+                <tr>
+                    <th>备注：</th>
+                    <td colspan="5">{$scrapinfo.clear_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </empty>
+</div>
+<script>
+    layui.use('controller/assets/scrap/result', layui.factory('controller/assets/scrap/result'));
+</script>
+</body>
+</html>

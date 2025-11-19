@@ -1,0 +1,239 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__PUBLIC__/css/formselects.css?v={:mt_rand(1,54561)}">
+<title>维修接单</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    .formDiv {
+        margin-top: 1.25rem;
+    }
+
+    .emptyDiv {
+        display: none;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .weui-photo-browser-modal {
+        z-index: 100000;
+    }
+
+    .layui-form-label {
+        width: 5.375rem;
+    }
+
+    .layui-input-block {
+        margin-left: 7.5rem;
+    }
+
+    .layui-form-select dl {
+        z-index: 100000 !important;
+    }
+
+    .xm-select-parent .xm-form-select dl {
+        z-index: 100000
+    }
+
+    .layui-form-select dl dd {
+        margin-bottom: 0.625rem;
+    }
+
+    .partsTable .layui-table tbody tr:first-child td {
+        text-align: center;
+    }
+
+    .partsTable .layui-table tr td {
+        width: auto;
+    }
+
+    .partsTable .layui-table tbody tr td {
+        text-align: left;
+    }
+    #media,#showImages{
+        color:#76ABDF;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <div class="emptyDiv">
+    </div>
+    <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <table class="layui-table" lay-even>
+            <tbody>
+            <tr>
+                <th>设备名称</th>
+                <td>{$asArr.assets}</td>
+            </tr>
+            <tr>
+                <th>规格/型号</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>设备编号</th>
+                <td>{$asArr.assnum}</td>
+            </tr>
+            <tr>
+                <th>使用科室</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>启用日期</th>
+                <td>{$asArr.opendate}</td>
+            </tr>
+            <tr>
+                <th>产品序列号</th>
+                <td>{$asArr.serialnum}</td>
+            </tr>
+            <tr>
+                <th>保修状态</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-card moveAnimatedDiv">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">报修信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <table class="layui-table" lay-even>
+            <tbody>
+            <tr>
+                <th>报修人</th>
+                <td>{$repArr.applicant}</td>
+            </tr>
+            <tr>
+                <th>报修时间</th>
+                <td>{$repArr.applicant_time}</td>
+            </tr>
+            <tr>
+                <th>维修单号</th>
+                <td>{$repArr.repnum}</td>
+            </tr>
+            <tr>
+                <th>故障描述</th>
+                <td>{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>语音描述</th>
+                <td>
+                    <if condition="$repArr['wxTapeAmr']">
+                        <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                        <span id="media">点击播放</span>
+                        <else/>
+                        无
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>故障照片</th>
+                <td>
+                    <empty name="repArr['pic_url']">
+                        无
+                        <else/>
+                        <a class="green" id="showImages">查看 （总共{$repArr.imgCount}张）</a>
+                    </empty>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$repArr.status neq 1">
+        <div class="layui-card moveAnimatedDiv">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">接单信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>接单人</th>
+                    <td>{$repArr.response}</td>
+                </tr>
+                <tr>
+                    <th>接单时间</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr>
+                    <th>预计到场时间</th>
+                    <td>{$repArr.expect_arrive}(分钟)</td>
+                </tr>
+                <tr>
+                    <th>备注</th>
+                    <td>{$repArr.reponse_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <notempty name="is_display">
+    <div class="formDiv">
+        <div class="layui-card isScene mgt0">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">接单表单</h2>
+                <a class="upFormButton">表单置顶<i class="layui-icon layui-icon-zarrow-up-l"></i></a>
+                <a class="downFormButton">表单置底<i class="layui-icon layui-icon-zarrow-down-l"></i></a>
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form">
+                    <input type="hidden" name="repid" value="{$repArr.repid}">
+                    <input type="hidden" name="uptime" value="{$uptime}"/>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>预计：</label>
+                        <div class="layui-input-inline" style="width: 50px;margin-left: 0.5rem;margin-bottom:0;float: left">
+                            <input type="number" value="" placeholder="" name="expect_arrive" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label" style="padding-left: 0">分钟后到现场</label>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">备注：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="reponse_remark" placeholder="请输入备注" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">接单人：</label>
+                        <div class="layui-input-block" style="line-height: 36px;">
+                            {$response}
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">接单时间：</label>
+                        <div class="layui-input-block" style="line-height: 36px;">
+                            {$response_date}
+                        </div>
+                    </div>
+                    <div class="layui-btn layui-btn-fluid confirm" lay-submit lay-filter="confirm">确认并提交</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </notempty>
+</div>
+</body>
+<include file="Public:buttom"/>
+</html>
+<script src="__PUBLIC__/mobile/js/weui/showImages.js"></script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/repair/repair/accept.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    var acceptUrl = '{$acceptUrl}';
+    <notempty name="repArr['pic_url']">
+    var pic_url = {$repArr.pic_url};
+    var photos = $.photoBrowser({
+        items: pic_url
+    });
+    </notempty>
+</script>

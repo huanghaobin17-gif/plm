@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .pic_content{
+            width: 100%;
+            height: auto;
+            overflow:scroll;
+            background: #FCFBFD;
+        }
+        .pic_but{
+            margin-top: 10px;
+            border-top: 1px solid gray;
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+        }
+        .but_left{
+            margin-top: 30px;
+            float: left;
+            width: 50%;
+            height: 90px;
+        }
+        .but_right{
+            margin-top: 30px;
+            float: left;
+            width: 50%;
+            height: 90px;
+        }
+        .add_pic{
+            float: left;
+            width: 70%;
+            text-align: center;
+            margin-left: 5%;
+            height: 90px;
+            line-height: 90px;
+            font-size: 40px;
+            border-radius: 15px;
+            color:#1E9FFF;
+            border: 1px solid #1E9FFF;
+        }
+        .upload_pic{
+            background: #1E9FFF;
+            margin-right: 5%;
+            float: right;
+            width: 70%;
+            text-align: center;
+            margin-left: 5%;
+            height: 90px;
+            line-height: 90px;
+            font-size: 40px;
+            border-radius: 15px;
+            color:white;
+            border: 1px solid #1E9FFF;
+        }
+
+        .not_upload_pic {
+            background: #e6e6e6;
+            margin-right: 5%;
+            float: right;
+            width: 70%;
+            text-align: center;
+            margin-left: 5%;
+            height: 90px;
+            line-height: 90px;
+            font-size: 40px;
+            border-radius: 15px;
+            color: white;
+            border: 1px solid #e6e6e6;
+        }
+        .pic_content ul li{
+            margin-bottom: 10px;
+            width: 98%;
+        }
+        .pic_content ul li img{
+            padding: 10px;
+            /*width: 100%;*/
+        }
+    </style>
+</head>
+<body>
+<form>
+    <input type="hidden" name="assets_id" value="{$assets_id}">
+    <input type="hidden" name="username" value="{$username}">
+    <input type="hidden" name="url" value="{$url}">
+    <div class="pic_content">
+        <ul>
+
+        </ul>
+    </div>
+
+    <div class="pic_but">
+        <div class="but_left">
+            <input type="file" id="fileElem" multiple accept="image/*" style="display:none">
+            <div class="add_pic">添加文件</div>
+        </div>
+        <div class="but_right">
+            <div class="not_upload_pic">确认保存</div>
+        </div>
+    </div>
+</form>
+<canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+</body>
+</html>
+<script>
+    layui.use(['form','laydate','element','upload'], function(){
+        var $ = layui.$
+            , laydate = layui.laydate
+            , element = layui.element
+            ,upload = layui.upload
+            ,form = layui.form;
+        form.render();
+        var height = $(window).height();
+        $('.pic_content').css('height',height - 170);
+        var url = $("input[name='url']").val();
+        var assets_id = $("input[name='assets_id']").val();
+        var username = $("input[name='username']").val();
+        var filename = '';
+
+        var add_picObj = $('.add_pic'), add_pic = add_picObj[0];
+        var fileElemObj = $('#fileElem'), fileElem = fileElemObj[0];
+        add_pic.addEventListener("click", function (e) {
+            if (fileElem) {
+                fileElem.click();
+            }
+            e.preventDefault(); // prevent navigation to "#"
+        }, false);
+
+        fileElemObj.change(function () {
+            var file = this.files[0];
+            filename = file['name'];
+            var reader = new FileReader();
+            reader.onload = function () {
+                // 通过 reader.result 来访问生成的 DataURL
+                var url = reader.result;
+                setImageURL(url);
+                layer.load(2);
+                setTimeout(function () {
+                    uploadImage();
+                },500);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        var image = new Image();
+        var targetWidth = targetHeight = 1000;
+        image.onload = function() {
+            // 图片原始尺寸
+            var originWidth = this.width;
+            var originHeight = this.height;
+            // 最大尺寸限制，可通过国设置宽高来实现图片压缩程度
+            var maxWidth = 1600,
+                maxHeight = 1600;
+            // 目标尺寸
+            targetWidth = originWidth;
+            targetHeight = originHeight;
+            // 图片尺寸超过400x400的限制
+            if(originWidth > maxWidth || originHeight > maxHeight) {
+                if(originWidth / originHeight > maxWidth / maxHeight) {
+                    // 更宽，按照宽度限定尺寸
+                    targetWidth = maxWidth;
+                    targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+                } else {
+                    targetHeight = maxHeight;
+                    targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+                }
+            }
+        };
+        function setImageURL(url) {
+            image.src = url;
+            var li = '<li><img src="' + image.src + '" style="display: none;"/></li>';
+            $('.pic_content ul').append(li);
+        }
+
+        function uploadImage() {
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            ctx.imageSmoothingEnabled = true;
+            img = $('.pic_content').find('li:last').find('img')[0];
+            $("#myCanvas").attr('width',targetWidth);
+            $("#myCanvas").attr('height',targetHeight);
+            // 设置画布的实际渲染大小，只是简单的对画布进行缩放
+            canvas.style.width = canvas.width;
+            canvas.style.height = canvas.height;
+
+            // 以实际渲染倍率来放大画布
+            //canvas.width = canvas.width * ratio;
+            //canvas.height = canvas.height * ratio;
+            // 清除画布
+            ctx.clearRect(0, 0, targetWidth, targetHeight);
+            // 图片压缩
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+            /*第一个参数是创建的img对象；第二个参数是左上角坐标，后面两个是画布区域宽高*/
+            //压缩后的图片base64 url
+            /*canvas.toDataURL(mimeType, qualityArgument),mimeType 默认值是'image/jpeg';
+             * qualityArgument表示导出的图片质量，只要导出为jpg和webp格式的时候此参数才有效果，默认值是0.92*/
+            var data = canvas.toDataURL('image/jpeg', 0.99);
+            data = data.split(',')[1];
+            data = window.atob(data);
+            var ia = new Uint8Array(data.length);
+            for (var i = 0; i < data.length; i++) {
+                ia[i] = data.charCodeAt(i);
+            }
+
+            // canvas.toDataURL 返回的默认格式就是 image/png
+            var blob = new Blob([ia], {type: "image/png"});
+            var fd = new FormData();
+
+            fd.append('file', blob);
+            fd.append('action', 'upload');
+            fd.append('zm', 'canvas');
+            fd.append('filename', filename);
+            var url = $("input[name='url']").val();
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: fd,
+                //beforeSend:beforeSend,
+                processData: false,  //tell jQuery not to process the data
+                contentType: false,  //tell jQuery not to set contentType
+                success: function (res) {
+                    if (res.status === 1) {
+                        layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                            $('.pic_content ul').find("li:last").remove();
+                            var li = '<li><img src="'+res.file_url+'" data-save="'+res.save_name+'" data-name="'+res.file_name+'" data-type="'+res.file_type+'" data-size="'+res.file_size+'"/></li>';
+                            $('.pic_content ul').append(li);
+                            $('.not_upload_pic').addClass('upload_pic');
+                            $('.not_upload_pic').removeClass('not_upload_pic');
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 2}, 1000);
+                    }
+                },
+                complete:complete
+            });
+        }
+        function beforeSend(){
+            layer.load(2);
+        }
+        function complete(){
+            layer.closeAll('loading');
+        }
+
+
+
+//        fileElemObj.change(function () {
+//            var v = $(this).val();
+//            var reader = new FileReader();
+//            reader.readAsDataURL(this.files[0]);
+//            reader.onload = function (e) {
+//                var params = {};
+//                params.base64 = e.target.result;
+//                params.action = "upload";
+//                $.ajax({
+//                    timeout: 5000,
+//                    type: "POST",
+//                    url: url,
+//                    data: params,
+//                    dataType: "json",
+//                    async: true,
+//                    beforeSend: beforeSend,
+//                    success: function (res) {
+//                        if (res.status === 1) {
+//                            layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+//                                var li = '<li><img src="'+res.file_url+'" data-save="'+res.save_name+'" data-name="'+res.file_name+'" data-type="'+res.file_type+'" data-size="'+res.file_size+'"/></li>';
+//                                $('.pic_content ul').append(li);
+//                            });
+//                        } else {
+//                            layer.msg(res.msg, {icon: 2}, 1000);
+//                        }
+//                    },
+//                    error: function () {
+//                        layer.msg("网络访问失败", {icon: 2}, 1000);
+//                    },
+//                    complete: complete
+//                });
+//            };
+//        });
+
+        $(document).on('click','.upload_pic',function(){
+            var target = $(".pic_content").find('img');
+            var file_url = [],file_size = [],file_type = [],file_name = [],save_name = [];
+            $.each(target,function (index,item) {
+                file_url.push($(item).attr('src'));
+                file_size.push($(item).attr('data-size'));
+                save_name.push($(item).attr('data-save'));
+                file_name.push($(item).attr('data-name'));
+                file_type.push($(item).attr('data-type'));
+            });
+            $.ajax({
+                timeout: 5000,
+                type: "POST",
+                url: url,
+                data: {"action":"save","assets_id":assets_id,"username":username,"file_url":file_url,"file_size":file_size,"save_name":save_name,"file_name":file_name,"file_type":file_type},
+                dataType: "json",
+                async: true,
+                beforeSend:beforeSend,
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg('保存成功！',{icon : 1,time:2000},function () {
+                            $(".pic_content ul").html('');
+                            $('.upload_pic').addClass('not_upload_pic');
+                            $('.upload_pic').removeClass('upload_pic');
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon : 2},1000);
+                    }
+                },
+                error: function () {
+                    layer.msg("网络访问失败",{icon : 2},1000);
+                },
+                complete:complete
+            });
+        });
+    });
+</script>

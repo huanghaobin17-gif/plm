@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract .layui-form-label {
+            width: 110px;
+        }
+
+        #LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract .rightAddButton{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+        }
+
+        #LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract .addContractTypeDiv {
+            display: none;
+        }
+
+        #LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract .addPhaseTbody input {
+            height: 26px;
+        }
+
+        #addOLSContractOpenAddAssets .addIcon,
+        #LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract .addIcon {
+            position: absolute;
+            right: -20px;
+            top: 9px;
+            cursor: pointer;
+            color: #0a8ddf;
+            z-index: 999999;
+        }
+
+        #addSuppliersDiv .layui-form-label {
+            width: 115px !important;
+        }
+        .layui-form-item .layui-inline{margin-right: 0;}
+        .layui-form-item .layui-input-inline{margin-right: 0;}
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-OfflineSuppliers-OfflineSuppliers-addOLSContract">
+    <div class="layui-row">
+        <form class="layui-form" action="">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">基本信息</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_num" lay-verify="required" autocomplete="off" placeholder="请输入合同编号">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_name" lay-verify="required" autocomplete="off" placeholder="请输入合同名称">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同类型：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline">
+                            <select name="contract_type" lay-filter="contract_type" lay-verify="required" lay-search>
+                                <option value="">请选择</option>
+                                <!--<option value="{$a=C('CONTRACT_TYPE_SUPPLIER')}">{$a=C('CONTRACT_TYPE_SUPPLIER_NAME')}</option>-->
+                                <!--<option value="{$a=C('CONTRACT_TYPE_REPAIR')}">{$a=C('CONTRACT_TYPE_REPAIR_NAME')}</option>-->
+                                <!--<option value="{$a=C('CONTRACT_TYPE_INSURANCE')}">{$a=C('CONTRACT_TYPE_INSURANCE_NAME')}</option>-->
+                                <option value="{$a=C('CONTRACT_TYPE_RECORD_ASSETS')}">{$a=C('CONTRACT_TYPE_RECORD_ASSETS_NAME')}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 乙方单位：</label>
+                    <div class="layui-input-inline">
+                        <select name="supplier_id" lay-filter="supplier_id" lay-search lay-verify="supplier_id">
+                            <option value="">请先选择合同类型</option>
+                        </select>
+                    </div>
+                    <div class="addIcon">
+                        <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                        <i class="layui-icon" id="addSupplier"> &#xe654;</i>
+                        <?php endif?>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="contract_amount" lay-verify="price" autocomplete="off" placeholder="请输入合同金额">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 院方联系人：</label>
+                    <div class="layui-input-inline">
+                        <select name="hospital_manager" id="" lay-search>
+                            <option value="">请选择院方联系人</option>
+                            <volist name="user" id="vo">
+                                <option value="{$vo.username}">{$vo.username}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 联系人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="supplier_contacts" lay-verify="required" autocomplete="off" placeholder="请输入联系人">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="supplier_phone" lay-verify="tel" autocomplete="off" placeholder="请输入联系电话">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 签订日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sign_date" id="addOLSContractSign_date" lay-verify="required" placeholder="请选择签订日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 合同截止日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_date" id="addOLSContractEnd_date" lay-verify="required" placeholder="请选择合同截止日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">验收日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="check_date" id="addOLSContractCheck_date" placeholder="请选择验收日期" autocomplete="off" style="cursor: pointer;" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 档案编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="archives_num" lay-verify="required" autocomplete="off" placeholder="请输入档案编号" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">档案管理员：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="archives_manager" autocomplete="off" placeholder="请输入档案管理员" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">合同内容：</label>
+                <div class="layui-input-block" style="margin-left: 140px;width:880px;">
+                    <textarea name="contract_content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    合同付款明细
+                    <span class="rightAddButton" id="addPhase" lay-tips="提示 : 付款总额需等于合同总金额"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加期数</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col width="20%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">期数</th>
+                        <th style="text-align: left !important;">付款金额</th>
+                        <th style="text-align: left !important;">预计付款日期</th>
+                        <th style="text-align: left !important;">付款日期</th>
+                        <th style="text-align: left !important;">状态</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addPhaseTbody">
+                    <tr class="notPhaseDataTr">
+                        <td colspan="6" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    合同附件
+                    <span class="rightAddButton" id="addOLSContractFile" lay-tips="提示 : 上传文件后缀名只能为word文档、PDF文件、扫描图片上传"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">文件名称</th>
+                        <th style="text-align: left !important;">提交人</th>
+                        <th style="text-align: left !important;">上传时间</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addFileTbody">
+                    <tr class="notFileDataTr">
+                        <td colspan="4" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="margin-bottom-15 addContractTypeDiv" id="addOLSContractAddAssets">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    设备明细单
+                    <span class="rightAddButton" id="addPurchaseAssets"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加设备明细</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm" style="margin-top: -10px">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="15%">
+                        <col width="25%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: left !important;">设备名称</th>
+                        <th style="text-align: left !important;">设备型号</th>
+                        <th style="text-align: left !important;">生产厂家</th>
+                        <th style="text-align: left !important;">单价</th>
+                        <th style="text-align: left !important;">数量</th>
+                        <th style="text-align: left !important;">总金额</th>
+                        <th style="text-align: left !important;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="addAssetsTbody">
+                    <tr class="notAssetsDataTr">
+                        <td colspan="7" style="text-align: center!important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="margin-bottom-15 addContractTypeDiv" id="addOLSContractAddRepair">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    维修明细单
+                    <span class="rightAddButton" id="pushRepair"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加维修明细</span>
+                </blockquote>
+                <div class="layui-row margin-top-15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <table id="joinedRepairList" lay-filter="joinedRepairData"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="margin-bottom-15 addContractTypeDiv" id="addOLSContractAddInsurance">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    维保明细单
+                    <span class="rightAddButton" id="pushInsurance"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加维保明细</span>
+                </blockquote>
+                待开发...........................
+            </div>
+            <div class="margin-bottom-15 addContractTypeDiv" id="addOLSContractAddRecordAssets">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                    设备明细单
+                    <span class="rightAddButton" id="pushRecordAssets"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加设备明细</span>
+                </blockquote>
+                <div class="layui-row margin-top-15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <table id="joinedRecordAssetsList" lay-filter="joinedRecordAssetsData"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add">
+                    <i class="layui-icon">&#xe609;</i> 确认无误并提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--添加设备DIV-->
+<div id="addPurchaseAssetsDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 设备名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="assets_name" lay-search>
+                                <option value="">请选择设备</option>
+                                <volist name="dic_assets" id="vo">
+                                    <option value="{$vo.assets}">{$vo.assets}</option>
+                                </volist>
+                            </select>
+                        </div>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('BaseSetting','Dictionary','addAssetsDic')):?>
+                            <i class="layui-icon" id="addAssetsDic"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备型号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="model" autocomplete="off" placeholder="请输入设备型号">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 生产厂商：</label>
+                        <div class="layui-input-inline">
+                            <select name="assets_supplier_id" lay-filter="required" lay-search>
+                                <option value="">请选择生产厂商</option>
+                                <volist name="supplierList" id="vo">
+                                    <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                                </volist>
+                            </select>
+                        </div>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                            <i class="layui-icon" id="addAssetsSupplier"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span>单价：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" lay-filter="required|price" name="assets_price" autocomplete="off" placeholder="请输入设备单价">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span>数量：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" lay-filter="number" name="assets_num" autocomplete="off" placeholder="请输入数量">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addPurchaseAssets">
+                        <i class="layui-icon">&#xe609;</i> 添加
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--添加厂商DIV-->
+<div id="addSuppliersDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_num" readonly value="{$sup_num}">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="sup_name" placeholder="请输入厂商名称" lay-verify="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="suppliers_type" xm-select="suppliers_type" xm-select-search="" lay-verify="required">
+                                <option value="1">供应商</option>
+                                <option value="2">生产商</option>
+                                <option value="3">维修商</option>
+                                <option value="4">维保商</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_name" placeholder="请输入业务联系人">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">业务联系人电话：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="salesman_phone" placeholder="请输入业务联系人电话" lay-verify="tel">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">省份：</label>
+                        <div class="layui-input-inline">
+                            <select name="provinces" lay-filter="provinces" lay-search>
+                                <option value="">请选择</option>
+                                <volist name="provinces" id="vo">
+                                    <option value="{$vo.provinceid}">{$vo.province}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">城市：</label>
+                        <div class="layui-input-inline">
+                            <select name="city" lay-filter="city" lay-search>
+                                <option value="">请选择省份</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">区/城镇：</label>
+                        <div class="layui-input-inline">
+                            <select name="areas" lay-search>
+                                <option value="">请选择城市</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">通讯地址：</label>
+                    <div class="layui-input-block" style="width: 540px; margin-left: 145px;">
+                        <input type="text" class="layui-input" name="address" placeholder="请输入通讯地址">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addSuppliers">
+                        <i class="layui-icon">&#xe609;</i> 添加
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--设备字典DIV-->
+<div id="addAssetsDicDiv" style="display: none">
+    <div class="containDiv">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>设备名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assets" value="" placeholder="请输入设备名称" required lay-verify="required|assets" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="catid" lay-search lay-verify="required|catid" lay-filter="cat_id">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>设备类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="assets_category" xm-select="assets_category" xm-select-search="" lay-verify="assets_category">
+                            <option value="">请选择设备类型</option>
+                            <option value="is_firstaid">急救设备</option>
+                            <option value="is_special">特种设备</option>
+                            <option value="is_metering">计量设备</option>
+                            <option value="is_qualityAssets">质控设备</option>
+                            <option value="is_benefit">效益分析</option>
+                            <option value="is_lifesupport">生命支持</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">字典类别：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="bdepart">
+                            <input type="text" class="form-control bsSuggest" name="dic_category" id="dic_category_add" placeholder="选择或填写新类别"/>
+                            <div class="input-group-btn">
+                                <ul id="showhos" class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" value="" placeholder="请输入设备单位" required lay-verify="unit" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="addDic"><i class="layui-icon">&#xe609;</i> 保存
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--添加设备采购补录明细DIV-->
+<div id="addRecordAssetsDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <form action="" class="layui-form">
+                            <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备名称：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="addOLSContractSearchdRecordAssets" placeholder="请输入设备名称" name="assets">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">规格/型号：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="addOLSContractSearchdRecordModel" placeholder="请输入规格/型号" name="model">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-left: 10px;">
+                                    <div class="fl">
+                                        <button class="layui-btn" lay-submit="addOLSContractRecordAssetsSearch" lay-filter="addOLSContractRecordAssetsSearch">
+                                            <i class="layui-icon">&#xe615;</i> 搜 索
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row table-list">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <div class="fl">
+                            <i class="layui-icon">&#xe62d;</i> 可纳入的设备明细列表
+                        </div>
+                    </div>
+                    <div class="layui-card-body">
+                        <table id="canJoinRecordAssetsList" lay-filter="canJoinRecordAssetsData"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="LAY-OfflineSuppliers-OfflineSuppliers-addOLSContractAddRepairbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addAllRepair" data-url="">
+            <i class="layui-icon">&#xe654;</i>一键纳入
+        </button>
+    </div>
+</script>
+<script type="text/html" id="LAY-OfflineSuppliers-OfflineSuppliers-addOLSContractAddRecordAssetsbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addAllRecordAssets" data-url="">
+            <i class="layui-icon">&#xe654;</i>一键纳入
+        </button>
+    </div>
+</script>
+
+</body>
+</html>
+<script>
+    var current_hosid = '{$current_hosid}';
+    var addOLSContractUrl = "{$addOLSContractUrl}";
+    layui.use('controller/offlineSuppliers/offlineSuppliers/addOLSContract', layui.factory('controller/offlineSuppliers/offlineSuppliers/addOLSContract'));
+</script>

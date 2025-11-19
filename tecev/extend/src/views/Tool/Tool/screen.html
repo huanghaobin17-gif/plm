@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$Think.config.APP_TITLE}</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="/Public/images/favicon.ico"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/login.css"/>
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1345701_8yz9acgeev.css" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+    <if condition="$bj_ys eq 1">
+        <style>
+            .layui-table,.layui-table thead tr{
+                background-color: transparent;
+            }
+            .show_sel {
+                width: 100%;
+                text-align: center;
+            }
+            .tz {
+                padding-top: 20px;
+            }
+            .ts {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                background: <?php echo $background; ?>;
+            }
+
+            table {
+                text-align: center !important;
+            }
+
+            .th-center {
+                text-align: center !important;
+                background: <?php echo $background; ?>;
+                color: <?php echo $xtitle; ?>;
+            }
+
+            .layui-table td, .layui-table th {
+                padding: 9px 5px !important;
+            }
+
+            .layui-table td {
+                color: <?php echo $zcon; ?>;
+                border:1px <?php echo $biankuang; ?> solid;
+            }
+
+            .layui-table th {
+                border: 1px <?php echo $biankuang; ?> solid;
+            }
+            .hos_name {
+                width: 98%;
+                margin: 0 auto;
+                text-align: center;
+                height: 80px;
+                line-height: 80px;
+                font-size: 45px;
+                color: <?php echo $btitle; ?>;
+                letter-spacing: 8px;
+                border: 1px <?php echo $biankuang; ?> solid;
+            }
+
+            .layui-table, .layui-table-view {
+                margin: 0;
+            }
+
+            .screen_content {
+                width: 100%;
+                height: 100%;
+                padding-top: 20px;
+                background: <?php echo $background; ?>;
+            }
+
+            .hide_this {
+                display: none;
+            }
+            .contable {
+                background: <?php echo $background; ?>;
+                width: 98.2%;
+                margin: 0 auto;
+            }
+            .szys{
+                margin-top: 10px;
+            }
+            .szys li {
+                float: left;
+                margin-right: 50px;
+                width: 168px;
+                height: 40px;
+            }
+            .tz .layui-form-item .layui-input-inline{width: auto;}
+            .tz .layui-form-item .layui-form-checkbox[lay-skin=primary]{margin-top: 0;}
+            .bjtp{
+                height: 38px;
+            }
+            .bjtp img{
+                height: 38px;
+                cursor: pointer;
+            }
+        </style>
+    </if>
+    <if condition="$bj_img eq 1">
+        <style>
+            .layui-table,.layui-table thead tr{
+                background-color: transparent;
+            }
+            .layui-layout-body{
+                background-image: url("{$img_url}");
+            }
+            .show_sel {
+                width: 100%;
+                text-align: center;
+            }
+            .tz {
+                padding-top: 20px;
+            }
+            .ts {
+                padding-top: 40px;
+                padding-bottom: 20px;
+            }
+
+            table {
+                text-align: center !important;
+            }
+
+            .th-center {
+                text-align: center !important;
+                color: <?php echo $xtitle; ?>;
+            }
+
+            .layui-table td, .layui-table th {
+                padding: 9px 5px !important;
+            }
+
+            .layui-table td {
+                color: <?php echo $zcon; ?>;
+                border:1px <?php echo $biankuang; ?> solid;
+            }
+
+            .layui-table th {
+                border: 1px <?php echo $biankuang; ?> solid;
+            }
+            .hos_name {
+                width: 98%;
+                margin: 0 auto;
+                text-align: center;
+                height: 80px;
+                line-height: 80px;
+                font-size: 45px;
+                color: <?php echo $btitle; ?>;
+                letter-spacing: 8px;
+                border: 1px <?php echo $biankuang; ?> solid;
+            }
+
+            .layui-table, .layui-table-view {
+                margin: 0;
+            }
+
+            .screen_content {
+                width: 100%;
+                height: 100%;
+                padding-top: 20px;
+            }
+
+            .hide_this {
+                display: none;
+            }
+            .contable {
+                width: 98.2%;
+                margin: 0 auto;
+            }
+            .szys{
+                margin-top: 10px;
+            }
+            .szys li {
+                float: left;
+                margin-right: 50px;
+                width: 168px;
+                height: 40px;
+            }
+            .tz .layui-form-item .layui-input-inline{width: auto;}
+            .tz .layui-form-item .layui-form-checkbox[lay-skin=primary]{margin-top: 0;}
+            .bjtp{
+                height: 30px;
+            }
+        </style>
+    </if>
+</head>
+<body class="layui-layout-body">
+<if condition="$show_sel eq 1">
+    <div class="show_sel">
+        <form class="layui-form tz" action="">
+            <div class="layui-inline">
+                <label class="layui-form-label">显示标题：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" maxlength="20" style="width: 300px;" autocomplete="off" placeholder="请输入标题，不填则显示医院名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">翻页时间(s)</label>
+                <div class="layui-input-inline">
+                    <select name="sec" lay-verify="required" lay-search="">
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                        <option value="32">32</option>
+                        <option value="33">33</option>
+                        <option value="34">34</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="42">42</option>
+                        <option value="43">43</option>
+                        <option value="44">44</option>
+                        <option value="45">45</option>
+                        <option value="46">46</option>
+                        <option value="47">47</option>
+                        <option value="48">48</option>
+                        <option value="49">49</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">每页数量</label>
+                <div class="layui-input-inline">
+                    <select name="page" lay-verify="required" lay-search="">
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                        <option value="32">32</option>
+                        <option value="33">33</option>
+                        <option value="34">34</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="42">42</option>
+                        <option value="43">43</option>
+                        <option value="44">44</option>
+                        <option value="45">45</option>
+                        <option value="46">46</option>
+                        <option value="47">47</option>
+                        <option value="48">48</option>
+                        <option value="49">49</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="layui-btn-group">
+                <volist name="hosinfo" id="vo">
+                    <button type="button" class="layui-btn" data-code="{$vo.hospital_code}" lay-submit
+                            lay-filter="tohos">只显示【{$vo.hospital_name}】的信息
+                    </button>
+                </volist>
+                <button type="button" class="layui-btn" data-code="all" lay-submit lay-filter="tohos">显示全部医院的信息</button>
+            </div>
+        </form>
+    </div>
+</if>
+<eq name="show_sel" value="0">
+    <eq name="page" value="0">
+        <div class="show_sel">
+            <div class="ts">
+                <div class="hos_name">{$title}</div>
+                <table class="layui-table" style="width: 98.2%;margin: 0 auto;background: black;">
+                    <colgroup>
+                        <col width="4%">
+                        <col width="7%">
+                        <col width="8%">
+                        <col width="14%">
+                        <col width="10%">
+                        <col width="12%">
+                        <col width="15%">
+                        <col width="12%">
+                        <col width="18%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr style="background: black;color: yellow;">
+                        <th>序号</th>
+                        <th>操作类型</th>
+                        <th>当前状态</th>
+                        <th>设备名称</th>
+                        <th>设备编码</th>
+                        <th>所属科室</th>
+                        <th>操作人(手机号码)</th>
+                        <th>操作时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td>设备维修</td>
+                        <td class="judge_status">已报修</td>
+                        <td>新生儿辐射保暖台</td>
+                        <td>1262031</td>
+                        <td>心血管内科</td>
+                        <td>牛年(13800138000)</td>
+                        <td>2019-10-03 09:52</td>
+                        <td>设备无法开机，启动报错</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>设备维修</td>
+                        <td class="judge_status">已检修</td>
+                        <td>新生儿辐射保暖台</td>
+                        <td>1262031</td>
+                        <td>心血管内科</td>
+                        <td>牛年(13800138000)</td>
+                        <td>2019-10-03 09:52</td>
+                        <td>设备已检修</td>
+                    </tr>
+                </table>
+            </div>
+            <form class="layui-form tz" action="" lay-filter="formSZ">
+                <div style="text-align: left;margin-left: 50px;">
+                    <div class="layui-form-item">
+                        <div class="layui-inline" id="bjsz">
+                            <label class="layui-form-label">背景设置：</label>
+                            <div class="layui-input-inline" style="width: 120px;">
+                                <select name="bj" lay-filter="set_bj">
+                                    <option value="bj_ys">纯色</option>
+                                    <option value="bj_img">背景图片</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline" id="csbj" style="margin-bottom: -5px;">
+                            <div class="layui-input-inline" style="width: 120px;">
+                                <input type="text" name="background" value="" placeholder="背景颜色" class="layui-input" id="background">
+                            </div>
+                            <div class="layui-inline" style="left: -10px;">
+                                <div id="bj"></div>
+                            </div>
+                        </div>
+                        <ul class="szys">
+                            <li>
+                                <!--边框颜色-->
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="biankuang" value="" placeholder="边框颜色" class="layui-input" id="biankuang">
+                                </div>
+                                <div class="layui-inline" style="left: -10px;">
+                                    <div id="bk"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <!--大标题颜色-->
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="btitle" value="" placeholder="大标题颜色" class="layui-input" id="btitle">
+                                </div>
+                                <div class="layui-inline" style="left: -10px;">
+                                    <div id="dbt"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <!--小标题颜色-->
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="xtitle" value="" placeholder="小标题颜色" class="layui-input" id="xtitle">
+                                </div>
+                                <div class="layui-inline" style="left: -10px;">
+                                    <div id="xbt"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <!--主体内容颜色-->
+                                <div class="layui-input-inline" style="width: 120px;">
+                                    <input type="text" name="zcon" value="" placeholder="主内容颜色" class="layui-input"
+                                           id="zcon">
+                                </div>
+                                <div class="layui-inline" style="left: -10px;">
+                                    <div id="znr"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align: left;margin-left: 25px;">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">显示标题：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="title" maxlength="20" style="width: 300px;" autocomplete="off"
+                                       placeholder="请输入标题，不填则显示医院名称" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">翻页时间(s)</label>
+                            <div class="layui-input-inline" style="width: 66px;">
+                                <select name="sec" lay-verify="required" lay-search="">
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                    <option value="49">49</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">每页数量</label>
+                            <div class="layui-input-inline" style="width: 66px;">
+                                <select name="page" lay-verify="required" lay-filter="change" lay-search="">
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                    <option value="49">49</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="position: relative;top: 5px;">
+                            <div class="layui-input-inline">
+                                <select name="status_color" lay-filter="status_color">
+                                    <option value="">请选择状态颜色</option>
+                                </select>
+                            </div>
+                            <div id="status_color_select"></div>
+                        </div>
+                        <div class="layui-inline" style="margin-left: 20px;">
+                            <input type="checkbox" name="remember" lay-skin="primary" title="记住我的设置">
+                        </div>
+                        <div class="layui-btn-group" style="margin-left: 20px;">
+                            <button type="button" class="layui-btn" lay-submit lay-filter="queding">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <else/>
+        <div class="screen_content">
+            <div class="hos_name">{$title}</div>
+            <div class="layui-form">
+                <table class="layui-table contable">
+                    <colgroup>
+                        <col width="4%">
+                        <col width="7%">
+                        <col width="8%">
+                        <col width="14%">
+                        <col width="10%">
+                        <col width="12%">
+                        <col width="15%">
+                        <col width="12%">
+                        <col width="18%">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="th-center">序号</th>
+                        <th class="th-center">操作类型</th>
+                        <th class="th-center">当前状态</th>
+                        <th class="th-center">设备名称</th>
+                        <th class="th-center">设备编码</th>
+                        <th class="th-center">所属科室</th>
+                        <th class="th-center">操作人(手机号码)</th>
+                        <th class="th-center">操作时间</th>
+                        <th class="th-center">备注</th>
+                    </tr>
+                    </thead>
+                    <if condition="$data neq null">
+                        <volist name="data" id="vo">
+                            <if condition="$key%$page eq 0">
+                                <eq name="key" value="0">
+                                    <tbody class="show_this">
+                                    <else/>
+                                    <tbody class="hide_this">
+                                </eq>
+                            </if>
+                            <tr>
+                                <td>{$key+1}</td>
+                                <td>{$vo.type_name}</td>
+                                <td class="judge_status"><?php echo urldecode($vo['status_name']);?></td>
+                                <td>{$vo.assets}</td>
+                                <td>{$vo.assnum}</td>
+                                <td>{$vo.department}</td>
+                                <td>{$vo.username}</td>
+                                <td>{$vo.time}</td>
+                                <td>{$vo.remark}</td>
+                            </tr>
+                            <if condition="$key%$page eq ($page-1)">
+                                </tbody>
+                            </if>
+                        </volist>
+                        <else/>
+                        <tbody>
+                        <td colspan="9">暂时没有数据</td>
+                        </tbody>
+                    </if>
+                </table>
+            </div>
+        </div>
+    </eq>
+</eq>
+</body>
+</html>
+<script src="/tecev/start/layui/layui.js"></script>
+<script>
+    let statusInit,start;
+    layui.use(['form','colorpicker','upload'], function () {
+        var $ = layui.$, form = layui.form,colorpicker = layui.colorpicker,upload = layui.upload;
+        form.render();
+        var screen = localStorage.getItem('screen');
+        screen = JSON.parse(screen);
+        if(screen){
+            $("input[name='remember']:checkbox").prop('checked',true);
+            form.render('checkbox');
+        }
+
+        //背景颜色
+        var background = '#000';
+        if(screen && screen.background){
+            background = screen.background;
+            $('#background').val(background);
+            var ts = $('.ts');
+            ts.css('background',background);
+            ts.find('table').css('background',background);
+            ts.find('table').find('thead').find('tr').css('background',background);
+        }
+        colorpicker.render({
+            elem: '#bj'
+            ,color: background
+            ,done: function(color){
+                $('#background').val(color);
+                var ts = $('.ts');
+                ts.css('background',color);
+                ts.find('table').css('background',color);
+                ts.find('table').find('thead').find('tr').css('background',color);
+            }
+        });
+
+        //背景设置
+        if(screen && screen.img_url){
+            form.val("formSZ", {
+                "bj": "bj_img"
+            });
+            bj_img();
+        }
+        form.on('select(set_bj)', function (data) {
+            if(data.value == 'bj_img'){
+                bj_img();
+            }else{
+                bj_ys();
+            }
+        });
+        //预览图片
+        $(document).on('click','.scan_pic',function () {
+            var img_url = $(this).attr('src');
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: ['78%', '95%'],
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: '<img src="'+img_url+'" style="width: 100%"/>'
+            });
+            return false;
+        });
+
+        function bj_img(){
+            //移除纯色设置
+            $("#csbj").remove();
+            $("#imgbj").remove();
+            var img_url = '/Public/images/screen.jfif';
+            if(screen && screen.img_url){
+                img_url = screen.img_url;
+            }
+            var html = '<div class="layui-inline" id="imgbj">\n' +
+                '<input type="hidden" name="img_url" value="'+img_url+'"/>\n' +
+                '<div class="bjtp">\n' +
+                '    <img src="'+img_url+'" class="scan_pic" title="点击预览图片"/>&nbsp;&nbsp;' +
+                '    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary" id="upimg">\n' +
+                '         <i class="layui-icon"></i>更换背景图\n' +
+                '    </button>\n' +
+                '</div>\n' +
+                '</div>';
+            $("#bjsz").append(html);
+            $('.ts').find('table').css("background","");
+            $('.ts').find('table').find('tr').css("background","");
+            $('.ts').css("background-image","url("+img_url+")");
+            layui.upload.render({
+                elem: '#upimg' //绑定元素
+                ,method: 'post'
+                ,accept: 'images' //只允许上传图片
+                ,url: '/A/Tool/screen' //上传接口
+                ,done: function(res){
+                    //上传完毕回调
+                    $('#imgbj').find('img').attr('src',res.path);
+                    $('#imgbj').find('input[name="img_url"]').val(res.path);
+                    $('.ts').css("background-image","url("+res.path+")");
+                    $('.ts').find('table').css("background","");
+                    $('.ts').find('table').find('tr').css("background","");
+                }
+            });
+        }
+        function bj_ys() {
+            //移除背景图设置
+            $("#imgbj").remove();
+            var html = '<div class="layui-inline" id="csbj" style="margin-bottom: -5px;">\n' +
+                '                            <div class="layui-input-inline" style="width: 120px;">\n' +
+                '                                <input type="text" name="background" value="" placeholder="背景颜色" class="layui-input" id="background">\n' +
+                '                            </div>\n' +
+                '                            <div class="layui-inline" style="left: -10px;">\n' +
+                '                                <div id="bj"></div>\n' +
+                '                            </div>\n' +
+                '                        </div>';
+            $("#bjsz").append(html);
+            colorpicker.render({
+                elem: '#bj'
+                ,color: background
+                ,done: function(color){
+                    $('#background').val(color);
+                    var ts = $('.ts');
+                    ts.css('background',color);
+                    ts.find('table').css('background',color);
+                    ts.find('table').find('thead').find('tr').css('background',color);
+                }
+            });
+            $('.ts').css("background-image","");
+        }
+
+        //边框颜色
+        var biankuang = '#ff0000';
+        if(screen && screen.biankuang){
+            biankuang = screen.biankuang;
+            $('#biankuang').val(biankuang);
+            $('.hos_name').css('border-color',biankuang);
+            var ts = $('.ts');
+            ts.find('table').find('td').css('border-color',biankuang);
+            ts.find('table').find('th').css('border-color',biankuang);
+        }
+        colorpicker.render({
+            elem: '#bk'
+            ,color: biankuang
+            ,done: function(color){
+                $('#biankuang').val(color);
+                $('.hos_name').css('border-color',color);
+                var ts = $('.ts');
+                ts.find('table').find('td').css('border-color',color);
+                ts.find('table').find('th').css('border-color',color);
+            }
+        });
+        //大标题颜色
+        var btitle = '#FFC000';
+        if(screen && screen.btitle){
+            btitle = screen.btitle;
+            $('#btitle').val(btitle);
+            $('.hos_name').css('color',btitle);
+        }
+        colorpicker.render({
+            elem: '#dbt'
+            ,color: btitle
+            ,done: function(color){
+                $('#btitle').val(color);
+                $('.hos_name').css('color',color);
+            }
+        });
+        //小标题颜色
+        var xtitle = '#FFFF00';
+        if(screen && screen.xtitle){
+            xtitle = screen.xtitle;
+            $('#xtitle').val(xtitle);
+            var ts = $('.ts');
+            ts.find('table').find('th').css('color',xtitle);
+        }
+        colorpicker.render({
+            elem: '#xbt'
+            ,color: xtitle
+            ,done: function(color){
+                $('#xtitle').val(color);
+                var ts = $('.ts');
+                ts.find('table').find('th').css('color',color);
+            }
+        });
+        //主内容颜色
+        var zcon = '#FF0000';
+        if(screen && screen.zcon){
+            zcon = screen.zcon;
+            $('#zcon').val(zcon);
+            var ts = $('.ts');
+            ts.find('table').find('td').css('color',zcon);
+        }
+        colorpicker.render({
+            elem: '#znr'
+            , color: zcon
+            , done: function (color) {
+                $('#zcon').val(color);
+                var ts = $('.ts');
+                ts.find('table').find('td').css('color', color);
+            }
+        });
+        /*汤圆酱 start */
+        //状态颜色
+        if (screen && screen.status_color) {
+            statusInit = screen.status_color;
+        } else {
+            statusInit = JSON.parse('{$status_color}');
+        }
+        let statusHtml = '';
+        $.each(statusInit, function (k, v) {
+            statusHtml += '<option value="' + v.value + '" data-color="' + v.color + '">' + v.name + '</option>';
+            let ts = $('.ts');
+            ts.find('table').find('.judge_status').each(function (k1, v1) {
+                if (v.name === $(v1).text().replace(/\ +/g,"")) {
+                    $(v1).parent().find('td').css('color', v.color)
+                }
+            });
+        });
+        $("select[name='status_color']").append(statusHtml);
+        form.render('select');
+        //渲染选择板
+        colorpicker.render({
+            elem: '#status_color_select'
+            , color: "blue"
+            , done: function (color) {
+                let currentObj = $("select[name='status_color']"),
+                    currentValue = currentObj.next().find('.layui-this').attr('lay-value'),
+                    currentName = currentObj.next().find('.layui-this').html(),
+                    ts = $('.ts');
+                if (currentValue === '' || typeof currentValue === 'undefined') {
+                    layer.alert('请先选择一个要改变的状态颜色');
+                } else {
+                    let changeColor = '';
+                    $.each(statusInit, function (k, v) {
+                        if (parseInt(currentValue) === v.value) {
+                            v.color = color;
+                            changeColor = color;
+                            return false;
+                        }
+                    });
+                    ts.find('table').find('.judge_status').each(function (k, v) {
+                        if (currentName === $(v).html()) {
+                            $(v).parent().find('td').css('color', color)
+                        }
+                    });
+                }
+            }
+        });
+        //根据选择框变换选择的颜色
+        form.on('select(status_color)', function (data) {
+            let changeColor = '#fff';
+            $.each(statusInit, function (k, v) {
+                if (parseInt(data.value) === v.value) {
+                    changeColor = v.color;
+                    return false;
+                }
+            });
+            $("#status_color_select").find(".layui-colorpicker-trigger-span").css("background-color", changeColor);
+        });
+        /*汤圆酱 end */
+        //提交
+        form.on('submit(tohos)', function (obj) {
+            var code = $(this).attr('data-code');
+            var page = obj.field.page;
+            var sec = obj.field.sec;
+            var title = obj.field.title;
+            window.location = admin_name + '/Tool/screen.html?code=' + code + '&page=' + page + '&sec=' + sec + '&title=' + title;
+        });
+
+        form.on('submit(queding)', function (data) {
+            var params = data.field;
+            var page = params.page;
+            var title = params.title;
+            var sec = params.sec;
+            if(params.img_url){
+                var bj = 'img';
+                var img_url = params.img_url;
+            }else{
+                var background = params.background.replace('#','');
+            }
+            var biankuang = params.biankuang.replace('#','');
+            var btitle = params.btitle.replace('#','');
+            var xtitle = params.xtitle.replace('#','');
+            var zcon = params.zcon.replace('#','');
+            params.status_color = statusInit;
+            //记住我的设置
+            var remember = params.remember;
+            if (remember === 'on') {
+                localStorage.setItem('screen', JSON.stringify(params));
+            } else {
+                localStorage.removeItem('screen');
+            }
+            if(!params.img_url){
+                var quest = 'p=' + page + '&t=' + title + '&sec=' + sec + '&bd=' + background + '&bg=' + biankuang + '&bt=' + btitle + '&xt=' + xtitle + '&zc=' + zcon + '&status_color=' + encodeURIComponent(JSON.stringify(statusInit));
+            }else{
+                var quest = 'p=' + page + '&t=' + title + '&sec=' + sec + '&bj=' + bj + '&iurl='+img_url+'&bg=' + biankuang + '&bt=' + btitle + '&xt=' + xtitle + '&zc=' + zcon + '&status_color=' + encodeURIComponent(JSON.stringify(statusInit));
+            }
+            window.location = admin_name+'/Tool/screen.html?'+quest;
+        });
+
+        var http_host = '{$http_host}';
+        //接收推送信息
+        //console.log(http_host);
+        var ws = new WebSocket('ws://'+http_host+':1234');
+        ws.onopen = function () {
+            var uid = '{$uid}';
+            ws.send(uid);
+        };
+
+        //定时发送心跳检测信息，避免被服务端断开连接
+        setInterval(function () {
+            ws.send('test connection');
+        }, 40000);
+
+        var page = {$page};
+        var del_odata = new Array();
+        var del_ndata = new Array();
+        ws.onmessage = function (e) {
+            console.log(e);
+            var res_data = new Array();
+            var td = JSON.parse(e.data);
+            if(td.type_action == 'loss'){
+                //自动刷新页面，重新连接服务器
+                layer.msg('连接已断开，正在为你重新连接，请稍候...', {
+                    icon: 16,
+                    time: 10000,
+                    shade: 0.01
+                },function () {
+                    parent.location.reload();
+                });
+            }else{
+                for (var k = 0; k < td.length; k++) {
+                    res_data[k] = new Array();
+                    $.each(td[k],function (index,value) {
+                        res_data[k][index] = value;
+                    });
+                }
+                //处理数据
+                fmdata(data_arr,res_data);
+                //删除相应的数据
+                for(i=0;i<del_odata.length;i++){
+                    for(j=0;j<data_arr.length;j++){
+                        if(del_odata[i] == data_arr[j]['assnum']){
+                            data_arr.splice(j,1);
+                        }
+                    }
+                }
+                for(i=0;i<del_ndata.length;i++){
+                    for(j=0;j<res_data.length;j++){
+                        if(del_ndata[i] == res_data[j]['assnum']){
+                            res_data.splice(j,1);
+                        }
+                    }
+                }
+                if(res_data.length > 0){
+                    for(j=0;j<res_data.length;j++){
+                        var tmp_data = new Array();
+                        tmp_data['type_name'] = res_data[j]['type_name'];
+                        tmp_data['status_name'] = res_data[j]['status_name'];
+                        tmp_data['assets'] = res_data[j]['assets'];
+                        tmp_data['assnum'] = res_data[j]['assnum'];
+                        tmp_data['department'] = res_data[j]['department'];
+                        tmp_data['username'] = res_data[j]['username'];
+                        tmp_data['time'] = res_data[j]['time'];
+                        tmp_data['remark'] = res_data[j]['remark'];
+                        data_arr.unshift(tmp_data);
+                    }
+                }
+                //重新组织要显示的数据
+                format_new_show_data(data_arr);
+            }
+        };
+
+        //组织第一次进入页面后返回的信息
+        var data_arr = new Array();
+        var data = '{$alldata}';
+        var json_data = JSON.parse(data);
+        for (var k = 0; k < json_data.length; k++) {
+            data_arr[k] = new Array();
+            $.each(json_data[k],function (index,value) {
+                if(index == 'status_name'){
+                    data_arr[k][index] = decodeURIComponent(value).replace(/\+/g, " ");
+                }else{
+                    data_arr[k][index] = value;
+                }
+            });
+        }
+        function fmdata(data_arr,res_data) {
+            var olen = data_arr.length;
+            for(n=0;n<res_data.length;n++){
+                for(i=0;i<olen;i++){
+                    if(res_data[n]['assnum'] == data_arr[i]['assnum'] && res_data[n]['type_name'] == data_arr[i]['type_name']){
+                        switch (res_data[n]['type_action']){
+                            case 'edit':
+                                var tmp_data = new Array();
+                                tmp_data['type_name'] = res_data[n]['type_name'];
+                                tmp_data['status_name'] = res_data[n]['status_name'];
+                                tmp_data['assets'] = res_data[n]['assets'];
+                                tmp_data['assnum'] = res_data[n]['assnum'];
+                                tmp_data['department'] = res_data[n]['department'];
+                                tmp_data['username'] = res_data[n]['username'];
+                                tmp_data['time'] = res_data[n]['time'];
+                                tmp_data['remark'] = res_data[n]['remark'];
+                                data_arr.splice(i,1);
+                                data_arr.unshift(tmp_data);
+                                del_ndata.push(res_data[n]['assnum']);
+                                break;
+                            case 'del':
+                                del_odata.push(res_data[n]['assnum']);
+                                del_ndata.push(res_data[n]['assnum']);
+                                break;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        function format_new_show_data(data_arr){
+            var len = data_arr.length;
+            var html = '';
+            var class_name = '';
+            clearInterval(start);
+            for(i=0;i<len;i++){
+                if(i%page == 0){
+                    if(i==0){
+                        class_name = 'show_this';
+                    }else{
+                        class_name = 'hide_this';
+                    }
+                    html += '<tbody class="'+class_name+'">\n'+
+                        '<tr>\n' +
+                        '    <td>'+(i+1)+'</td>\n' +
+                        '    <td>'+data_arr[i]['type_name']+'</td>\n' +
+                        '    <td class="judge_status">'+data_arr[i]['status_name']+'</td>\n' +
+                        '    <td>'+data_arr[i]['assets']+'</td>\n' +
+                        '    <td>'+data_arr[i]['assnum']+'</td>\n' +
+                        '    <td>'+data_arr[i]['department']+'</td>\n' +
+                        '    <td>'+data_arr[i]['username']+'</td>\n' +
+                        '    <td>'+data_arr[i]['time']+'</td>\n' +
+                        '    <td>'+data_arr[i]['remark']+'</td>\n' +
+                        '</tr>\n';
+                }else if(i%page == (page-1)){
+                    html += '<tr>\n' +
+                        '    <td>' + (i + 1) + '</td>\n' +
+                        '    <td>' + data_arr[i]['type_name'] + '</td>\n' +
+                        '    <td class="judge_status">' + data_arr[i]['status_name'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['assets'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['assnum'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['department'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['username'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['time'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['remark'] + '</td>\n' +
+                        '</tr>\n';
+                    html += '</tbody>\n';
+                }else{
+                    html += '<tr>\n' +
+                        '    <td>'+(i+1)+'</td>\n' +
+                        '    <td>'+data_arr[i]['type_name']+'</td>\n' +
+                        '    <td class="judge_status">' + data_arr[i]['status_name'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['assets'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['assnum'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['department'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['username'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['time'] + '</td>\n' +
+                        '    <td>' + data_arr[i]['remark'] + '</td>\n' +
+                        '</tr>\n';
+                }
+            }
+            let contableObj = $(".contable");
+            contableObj.find('tbody').remove();
+            contableObj.find('thead').after(html);
+            setTimeout(function () {
+                if (contableObj && statusInit){
+                    $.each(statusInit, function (k, v) {
+                        contableObj.find('tbody').find('.judge_status').each(function (k1, v1) {
+                            if (v.name === $(v1).text().replace(/\ +/g,"")) {
+                                $(v1).parent().find('td').css('color', v.color)
+                            }
+                        })
+                    });
+                }
+                var sec = '{$sec}';
+                sec = parseInt(sec) * 1000;
+                var tbody = contableObj.find('tbody');
+                setInterval(function () {
+                    var len = tbody.length;
+                    if (len >= 2) {
+                        var cur = 0;
+                        $.each(tbody, function (i, e) {
+                            if ($(e).attr('class') === 'show_this') {
+                                if (i < (len - 1)) {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = i + 1;
+                                } else {
+                                    $(e).attr('class', 'hide_this');
+                                    cur = 0;
+                                }
+                            }
+                        });
+                        $(tbody[cur]).attr('class', 'show_this');
+                    }
+                },sec)
+            }, 500);
+        }
+    });
+
+    //循环显示数据
+    $(function () {
+        var sec = '{$sec}';
+        sec = parseInt(sec) * 1000;
+        var tbody = $('.contable').find('tbody');
+        setTimeout(function () {
+            if (tbody && statusInit){
+                $.each(statusInit, function (k, v) {
+                    tbody.find('.judge_status').each(function (k1, v1) {
+                        if (v.name === $(v1).text().replace(/\ +/g,"")) {
+                            $(v1).parent().find('td').css('color', v.color)
+                        }
+                    })
+                });
+            }
+        }, 500);
+        start = setInterval(function () {
+            var len = tbody.length;
+            if (len >= 2) {
+                var cur = 0;
+                $.each(tbody, function (i, e) {
+                    if ($(e).attr('class') === 'show_this') {
+                        if (i < (len - 1)) {
+                            $(e).attr('class', 'hide_this');
+                            cur = i + 1;
+                        } else {
+                            $(e).attr('class', 'hide_this');
+                            cur = 0;
+                        }
+                    }
+                });
+                $(tbody[cur]).attr('class', 'show_this');
+            }
+        }, sec);
+
+        setInterval(function () {
+            $('.contable').find('tbody').find('td').find('img').remove();
+        }, 28800000);
+    });
+</script>

@@ -1,0 +1,97 @@
+<?php if($menuData = get_menu_name('Repair','Repair','batchAddRepair')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .td-input-border-r{
+        height: 25px;
+        padding: 0;
+        border: 1px solid red;
+    }
+    #LAY-Repair-Repair-batchAddRepair .layui-table td,#LAY-Repair-Repair-batchAddRepair .layui-table th{
+        padding: 3px 5px;
+   }
+</style>
+<script>
+    var assnum = new Array;
+    var other = {$assnum};
+    for (var i = 0; i < other.length; i++) {
+        assnum.push(other[i]['assnum']);
+    }
+</script>
+<div class="layui-fluid" id="LAY-Repair-Repair-batchAddRepair">
+
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="layui-inline">
+                        <div class="fl">
+                            <button class="layui-btn layui-btn-sm" id="exportRepairModel"><i class="layui-icon">&#xe61e;</i> 导出维修单模板</button>
+                        </div>
+                        <?php if($menuData = get_menu('Repair','Repair','batchAddRepair')):?>
+                        <div class="fl" style="margin-left: 20px;">
+                        <button type="button" class="layui-btn layui-btn-sm" id="batchAddRepairupload" data-url="{$menuData['actionurl']}">
+                            <i class="layui-icon">&#xe67c;</i>上传文件
+                        </button>
+                        </div>
+                        <div class="clear"></div>
+                        <?php endif?>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                        <legend>上传的维修单信息</legend>
+                        <blockquote class="layui-elem-quote cusquote1">
+                            资产编号不能为空，且必须填写系统内存在的资产设备编号，当数据出现红色方框提示时，请先修改正确再提交保存。
+                            另外，为了方便进行修改编辑，每次最多只显示100条数据，保存成功后会自动返回100条新数据，以此类推
+                        </blockquote>
+                        <div style="overflow:auto; width: 100%;">
+                            <table class="layui-table" style="max-height: 60px !important; ">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center;width: 50px;">序号</th>
+                                    <th style="text-align: center">设备名称</th>
+                                    <th style="text-align: center">设备编号</th>
+                                    <th style="text-align: center">申报人</th>
+                                    <th style="text-align: center">申报日期</th>
+                                    <th style="text-align: center">申报时间</th>
+                                    <th style="text-align: center">申报人电话</th>
+                                    <th style="text-align: center">故障问题</th>
+                                    <th style="text-align: center">故障描述</th>
+                                    <th style="text-align: center">接单人</th>
+                                    <th style="text-align: center">接单时间</th>
+                                    <th style="text-align: center">接单人电话</th>
+                                    <th style="text-align: center">维修工程师</th>
+                                    <th style="text-align: center">维修工程师电话</th>
+                                    <th style="text-align: center">协助工程师</th>
+                                    <th style="text-align: center">协助工程师电话</th>
+                                    <th style="text-align: center">开始维修时间</th>
+                                    <th style="text-align: center">维修结束日期</th>
+                                    <th style="text-align: center">维修结束时间</th>
+                                    <th style="text-align: center">实际维修费用</th>
+                                    <th style="text-align: center">处理详情</th>
+                                    <th style="text-align: center">验收人</th>
+                                    <th style="text-align: center">验收日期</th>
+                                    <th style="text-align: center;">配件信息</th>
+                                    <th style="text-align: center">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="repairData">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    <div class="layui-form-item">
+                        <div style="text-align: center">
+                            <button class="layui-btn" id="save" lay-submit lay-filter="add"><i class="layui-icon" >&#xe609;</i> 保存当前数据</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    layui.use('repair/repair/importRepair', layui.factory('repair/repair/importRepair'));
+</script>
+

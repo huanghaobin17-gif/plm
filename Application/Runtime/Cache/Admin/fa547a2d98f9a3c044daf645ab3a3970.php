@@ -1,0 +1,180 @@
+<?php if (!defined('THINK_PATH')) exit();?><style>
+    /*多选框样式*/
+    .SumoSelect > .CaptionCont > span.placeholder {
+        text-align: left;
+        line-height: 18px !important;
+    }
+    .search{
+        width: 172px;
+    }
+    .optWrapper{
+        width: 192px !important;
+    }
+    #LAY-Qualities-Quality-qualityResult .abnormal_detail_pic{
+        width: 600px;
+        height: 300px;
+    }
+</style>
+<script>
+    var qualityResult = "<?php echo ($qualityResult); ?>";
+</script>
+<?php if($menuData = get_menu_name('Qualities','Quality','qualityResult')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Qualities-Quality-qualityResult">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form">
+                            <div class="layui-form-item spacingBalance">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备名称：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="getAssetsQualityResult" placeholder="请输入设备名称" name="assets">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备编号：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="getAssetsQualityResultAssnum"  placeholder="请输入设备编号" name="assnum">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-form-label">执行方式：</div>
+                                    <div class="layui-input-inline">
+                                        <select name="isSycle" lay-verify="">
+                                            <option value="">全部</option>
+                                            <option value="0">非周期执行</option>
+                                            <option value="1">周期执行</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label" style="width: 80px;border-right: none;">质控模板：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="departid" xm-select="quality_templates" xm-select-search="">
+                                            <option value="">请选择质控模板</option>
+                                            <?php if(is_array($templates)): $i = 0; $__LIST__ = $templates;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["qtemid"]); ?>"><?php echo ($v["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-form-label">计划状态：</div>
+                                    <div class="layui-input-inline">
+                                        <select name="status" xm-select="quality_plan_status" xm-select-search="">
+                                            <option value="">全部</option>
+                                            <option value="1">执行中</option>
+                                            <option value="2">已暂停</option>
+                                            <option value="3">已完成</option>
+                                            <option value="4">已结束</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label" style="width: 80px;border-right: none;">计划科室：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="departid" xm-select="qualityResultDepartment" xm-select-search="">
+                                            <option value="">请选择计划科室</option>
+                                            <?php if(is_array($department)): $i = 0; $__LIST__ = $department;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="searchResultPlans">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" lay-submit="" lay-filter="resetPlan" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 计划列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="qualityResultList" lay-filter="qualityResultData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="chart_pic" style="display: none;">
+        <div id="jianhuyi_result" data-name="jianhuyi_result" style="width:550px;height: 300px;"></div>
+        <div id="shuye_result" data-name="shuye_result" style="width:550px;height: 300px;"></div>
+        <div id="chuchanyi_result" data-name="chuchanyi_result" style="width:480px;height: 300px;"></div>
+        <div id="huxiji_result" data-name="huxiji_result" style="width:550px;height: 300px;"></div>
+
+        <!--监护仪-->
+        <div class="show_detail_list show_detail_jianhuyi">
+            <div id="abnormal_heartRate_1" class="abnormal_detail_pic"></div>
+            <div id="abnormal_breathRate_1" class="abnormal_detail_pic"></div>
+            <div id="abnormal_pressure_1" class="abnormal_detail_pic"></div>
+            <div id="abnormal_BOS_1" class="abnormal_detail_pic"></div>
+            <div id="abnormal_other_1" class="abnormal_detail_pic"></div>
+        </div>
+
+        <!--输液装置-->
+        <div class="show_detail_list show_detail_shuye">
+            <div id="abnormal_flow_2" class="abnormal_detail_pic"></div>
+            <div id="abnormal_block_2" class="abnormal_detail_pic"></div>
+            <div id="abnormal_other_2" class="abnormal_detail_pic"></div>
+        </div>
+
+        <!--除颤仪-->
+        <div class="show_detail_list show_detail_chuchanyi">
+            <div id="abnormal_heartRate_3" class="abnormal_detail_pic"></div>
+            <div id="abnormal_energesis_3" class="abnormal_detail_pic"></div>
+            <div id="abnormal_other_3" class="abnormal_detail_pic"></div>
+        </div>
+
+        <!--呼吸机-->
+        <div class="show_detail_list show_detail_huxiji">
+            <div id="abnormal_humidity_4" class="abnormal_detail_pic"></div>
+            <div id="abnormal_aeration_4" class="abnormal_detail_pic"></div>
+            <div id="abnormal_IOI_4" class="abnormal_detail_pic"></div>
+            <div id="abnormal_IPAP_4" class="abnormal_detail_pic"></div>
+            <div id="abnormal_PEEP_4" class="abnormal_detail_pic"></div>
+            <div id="abnormal_other_4" style="width:850px !important;height: 500px !important;margin-top: 50px;" class="abnormal_detail_pic"></div>
+        </div>
+    </div>
+</div>
+<div id="printTem_result" style="width: 794px!important; margin: auto;display: none;">
+
+</div>
+<script type="text/html" id="LAY-Qualities-Quality-qualityResultToolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="printResults"><i class="layui-icon layui-icon-zprinter-l l-icon-in-btn"></i>一键打印质控结果</button>
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="batchPrint_result"><i class="layui-icon layui-icon-zprinter-l l-icon-in-btn"></i>一键打印设备模板</button>
+        <button class="layui-btn layui-btn-sm" lay-submit lay-filter="batchExport"><i class="iconfont icon-Excel"></i> 一键导出质控结果报表</button>
+    </div>
+</script>
+<script src="/Public/js/jquery.PrintArea.js" type="text/javascript"></script>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('qualities/quality/qualityResult', layui.factory('qualities/quality/qualityResult'));
+</script>

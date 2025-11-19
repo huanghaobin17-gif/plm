@@ -1,0 +1,62 @@
+<?php if($menuData = get_menu_name('Assets','Borrow','borrowLife')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    #LAY-Assets-Borrow-borrowLife td{ height: 100px!important;}
+    #LAY-Assets-Borrow-borrowLife .layui-table-body .layui-table[lay-size=lg] .layui-table-cell{ height: 100px!important; line-height: 50px!important;}
+    #LAY-Assets-Borrow-borrowLife .timeLineList{float: left;margin-left: 100px; height: 100px;}
+    #LAY-Assets-Borrow-borrowLife .timeLineList li{width:120px;float: left;height: 80px;}
+    #LAY-Assets-Borrow-borrowLife .timeLineBox{margin-top: 30px;position: relative;}
+    #LAY-Assets-Borrow-borrowLife .layui-timeline-axis{ margin-top: 15px; left: -15px;}
+    #LAY-Assets-Borrow-borrowLife .timeLine{width:120px;height: 3px;position: absolute; margin-top: 15px;top:7px;left: -65px;}
+    #LAY-Assets-Borrow-borrowLife .timeLineStart{height: 3px;background-color: #009688;position: absolute;top:7px;}
+    #LAY-Assets-Borrow-borrowLife .timeLineStartTitle{position: absolute;top: -25px;left: -15px;font-size: 12px;color: #009688}
+    #LAY-Assets-Borrow-borrowLife .timeLineTitle{position: absolute;top: -25px;font-size: 12px;left: -30px;}
+    #LAY-Assets-Borrow-borrowLife .timeLineDate{position: absolute;top:25px;left: -55px;font-size: 12px;}
+
+
+
+
+    #LAY-Assets-Borrow-borrowLife .timeLineDetail{width: 300px;position: absolute;left: -80px;border-radius: 5px;background-color: #fff;color: #333;font-size: 12px;z-index: 100;display: none;  }
+    #LAY-Assets-Borrow-borrowLife .timeLineDetail tr th{text-align: right;}
+
+
+    #LAY-Assets-Borrow-borrowLife .patrolColorBg{background-color: #1E9FFF;}
+    #LAY-Assets-Borrow-borrowLife .patrolColor{color: #1E9FFF;}
+
+    /*已进行的 浅绿*/
+    #LAY-Assets-Borrow-borrowLife .executeddColorBg{background-color: #5FB878;}
+    #LAY-Assets-Borrow-borrowLife .executeddColor{color: #5FB878;}
+
+    /*进行中的 蓝色*/
+    #LAY-Assets-Borrow-borrowLife .haveColorBg{background-color: #1E9FFF;}
+    #LAY-Assets-Borrow-borrowLife .haveColor{color: #1E9FFF;}
+
+    /*未进行的 灰色*/
+    #LAY-Assets-Borrow-borrowLife .unexecutedColorBg{background-color: #a09e9e;}
+    #LAY-Assets-Borrow-borrowLife .unexecutedColor{color: #a09e9e;}
+
+    /*已完成 赤色*/
+    #LAY-Assets-Borrow-borrowLife .endColorBg{background-color: #FF5722;}
+    #LAY-Assets-Borrow-borrowLife .endColor{color: #FF5722;}
+
+
+    #LAY-Assets-Borrow-borrowLife .baseInfo{margin-left: 30px;font-size: 12px;}
+    #LAY-Assets-Borrow-borrowLife .baseInfo .layui-inline{width: 200px;}
+</style>
+<div class="layui-fluid" id="LAY-Assets-Borrow-borrowLife" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-zzterminal"></i> 借调进程</div>
+                <div class="layui-card-body">
+                    <table id="borrowLife"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var borrowLifeUrl='{$borrowLifeUrl}';
+    layui.use('assets/borrow/borrowLife', layui.factory('assets/borrow/borrowLife'));
+</script>

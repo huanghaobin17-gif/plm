@@ -1,0 +1,691 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><?php echo (C("APP_TITLE")); ?></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://res.wx.qq.com/connect/zh_CN/htmledition/style/impowerApp45a337.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/Public/images/favicon.ico"/>
+    <link rel="stylesheet" href="/Public/css/login.css" />
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/Public/css/tecev.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1345701_8yz9acgeev.css" media="all">
+    <script src="/Public/js/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="/Public/js/particleground.js" type="text/javascript"></script>
+    <script src="/Public/js/common.js?v=<?php echo mt_rand(1,54561);?>" type="text/javascript"></script>
+</head>
+<style>
+    .layadmin-user-login{
+        padding-top: 0;
+    }
+    .loginBg{
+        width: 100%;
+        height: 100%;
+        background:url('/Public/images/loginBg.jpg') no-repeat;
+        background-size:100% 100%;
+    }
+    .copyRight{
+        font-size: 16px;
+        padding-left: 20px;
+        margin-top: 10px;
+        color: #fff;
+    }
+    .copyRight a{
+        color: #fff;
+    }
+    .copyRight a:hover,.layadmin-user-login-footer p a:hover{
+        color: #009688;
+    }
+    .mainText{
+        text-align: center;
+        color: #fff;
+    }
+    .custom{
+        font-size: 16px;
+        float: right;
+        margin-right: 20px;
+        color: #fff;
+    }
+    .layui-layout-body{
+        overflow: hidden !important;
+    }
+    .layadmin-user-login-header{
+        text-align: center;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        top: 20%;
+        left: 50%
+    }
+    .layadmin-user-login-main{
+        width: 375px;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        top: <?php echo ($top); ?>%;
+        left: 50%;
+        background: rgba(67, 73, 78, 0.3);
+        -webkit-transform: translate(-50%, -50%);
+    }
+    .layadmin-user-login-main:hover{
+        background: rgba(67, 73, 78, 0.8);
+        border-radius: 30px;
+    }
+    .layadmin-user-login-footer{
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        line-height: 30px;
+        padding: 20px;
+        text-align: center;
+        box-sizing: border-box;
+        color: #fff;
+    }
+    .layadmin-user-login-footer a{
+        color: #fff;
+    }
+    .layui-form-checkbox[lay-skin=primary] span{
+        color: #fff;
+    }
+    .layui-btn:hover{opacity: 1}
+
+    /*切换扫码 密码登录样式*/
+    .scanLoginStyle {
+        width: 160px;
+        height: 70px;
+        float: right;
+        margin-bottom: 10px;
+    }
+
+    .thisInputTypeTitle {
+        float: left;
+        margin-left: 20px;
+        margin-top: 30px;
+        font-size: 18px;
+        font-weight: 400;
+        color: #fff;
+    }
+
+    .changeStyleTips {
+        position: absolute;
+        top: 15px;
+        right: 60px;
+        display: block;
+    }
+
+    .tipsAround {
+        background-color: #ffe1cc;
+        border: 1px solid #ff6a00;;
+        line-height: 16px;
+        position: relative;
+        z-index: 9999;
+        padding: 5px 10px;
+    }
+
+    .tipsDiv {
+        position: absolute;
+        z-index: 10;
+        top: 8px;
+        right: 0;
+    }
+
+    .iconfont {
+        color: #fff;
+        right: 10px;
+        position: absolute;
+        font-size: 44px;
+        top: 5px;
+        cursor: pointer;
+    }
+
+    .tipsContent {
+        color: #ff6a00
+    }
+
+    .trigle {
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-left: 10px solid #ffe1cc;
+        position: absolute;
+        border-bottom: 5px solid transparent;
+    }
+
+    .qrcodeDiv {
+        display: none;
+    }
+
+    .impowerBox .qrcode {
+        width: 150px;
+    }
+
+    .layui-layer-content {
+        color: #666 !important;
+    }
+    /*.hideCorner{position: absolute;width: 0;height: 0;right: 19px;top: 17px; border-bottom: 33px solid rgba(67, 73, 78, 0.3);border-right: 33px solid transparent;}*/
+</style>
+<body class="layui-layout-body" style="overflow: auto;">
+<div>
+    <div class="layadmin-user-login">
+        <div class="loginBg" >
+            <!--上-->
+            <div class="navheader">
+                <div class="layui-col-md4 copyRight">
+                    Copyright © 2022.<a href="/" rel="noopener noreferrer"><?php echo (C("COMPANY_NAME")); ?></a>
+                </div>
+                <div class="layui-col-md4 mainText">
+                    <h2><?php echo (C("APP_TITLE")); ?><span style="font-size: 14px;">Beta-2.0</span></h2>
+                    <p>TianCheng Medical Equipment Management System</p>
+                </div>
+                <div class="layui-col-md4" style="margin-top: 10px;">
+                    <div class="custom">
+                        咨询电话：159 755 03475
+                        <!--<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=335418588&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:335418588:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>-->
+                    </div>
+                </div>
+            </div>
+            <!--中-->
+<!--            <div class="layadmin-user-login-box layadmin-user-login-header">-->
+<!--                <img src="/Public/images/<?php echo (C("APP_LOGO")); ?>">-->
+<!--            </div>-->
+            <div class="layadmin-user-login-main">
+                <div class="thisInputTypeTitle" style="display: <?php echo ($tips_show); ?>">
+                    密码登录
+                </div>
+                <div class="scanLoginStyle" style="display: <?php echo ($tips_show); ?>">
+                    <i class="iconfont icon-qrcode"></i>
+                    <!--<div class="hideCorner"></div>-->
+                    <div class="changeStyleTips">
+                        <div class="tipsAround">
+                            <div class="tipsDiv">
+                                <div class="trigle"></div>
+                            </div>
+                            <div class="tipsContent">
+                                扫码登录
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="passwordDiv">
+                    <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                        <div class="layui-form-item">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                                   for="LAY-user-login-username"></label>
+                            <input type="text" name="username" id="LAY-user-login-username" lay-verify="required"
+                                   placeholder="用户名" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                                   for="LAY-user-login-password"></label>
+                            <input type="password" name="pd" id="LAY-user-login-password" lay-verify="required"
+                                   placeholder="密码" class="layui-input">
+                        </div>
+<!--                        <div class="layui-form-item">-->
+<!--                                <div id="slider"></div>-->
+<!--                        </div>-->
+                        <!-- <div class="layui-form-item" style="margin-bottom: 20px;">
+                            <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
+                        </div> -->
+<!--                        <div class="layui-form-item"  style="margin-bottom: 20px;color: white">-->
+<!--                            点击[登录]按钮，既代表你同意《<a style="color: #e56639" target="_blank" href="https://www.tecenet.com/announce/show-10246.html">天成医疗隐私协议</a>》-->
+<!--                        </div>-->
+                        <div class="layui-form-item"  style="margin-bottom: 20px;color: white">
+                            <input type="checkbox" name="privacy_agreement" value="1" lay-skin="primary" lay-filter="login-control">
+                            <a style="color: #e56639;position: relative;top: 5px;cursor: pointer;" id="tecev-ysxy"><?php echo (C("COMPANY_JC")); ?>隐私协议</a>
+                        </div>
+                        <div class="layui-form-item" id="tecev-login-button">
+                            <button id="submit_button" class="layui-btn layui-btn-fluid login layui-btn-disabled" lay-submit
+                                    lay-filter="LAY-user-login-submit">登 录
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="qrcodeDiv">
+                    <div class="old-template" style="display: none;">
+                        <div class="main impowerBox">
+                            <div class="loginPanel normalPanel">
+                                <div class="waiting panelContent">
+                                    <div class="wrp_code"><img class="qrcode lightBorder" src=""/></div>
+                                    <div class="info">
+                                        <div class="status status_browser js_status js_wx_default_tip"
+                                             id="wx_default_tip">
+                                            <p>请使用微信扫描二维码登录</p>
+                                            <p>“<?php echo (C("APP_TITLE")); ?>”</p>
+                                        </div>
+                                        <div class="status status_succ js_status js_wx_after_scan" style="display:none"
+                                             id="wx_after_scan">
+                                            <i class="status_icon icon38_msg succ"></i>
+                                            <div class="status_txt">
+                                                <h4>扫描成功</h4>
+                                                <p>请在微信中点击确认即可登录</p>
+                                            </div>
+                                        </div>
+                                        <div class="status status_fail js_status js_wx_after_cancel"
+                                             style="display:none"
+                                             id="wx_after_cancel">
+                                            <i class="status_icon icon38_msg warn"></i>
+                                            <div class="status_txt">
+                                                <h4>您已取消此次登录</h4>
+                                                <p>您可再次扫描登录，或关闭窗口</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="qr_codeImage">-->
+                    <!--<img src="/Public/images/qr_code.png">-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div id="particles"></div>
+            <!--下-->
+            <div class="layui-trans layadmin-user-login-footer">
+                <p>© 2024 <a href="http://www.tecev.com/" target="_blank" rel="noopener noreferrer"><?php echo (C("COMPANY_JC")); ?></a></p>
+                <p><a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备17098446号</a></p>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="publickey" id="publickey" value="">
+</div>
+<div id="tecev-ysxy-text" style="display: none">
+    <p style="font-size:16pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:justify; widows:0"><span style="font-family:宋体; font-size:16pt">&#xa0;</span></p>
+    <p style="font-size:22pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:宋体; font-size:22pt; font-weight:bold">用户隐私条款</span></p>
+    <p style="font-size:22pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:center; widows:0"><span style="font-family:宋体; font-size:22pt; font-weight:bold">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">以下为</span><span style="font-family:宋体; font-size:12pt; font-weight:normal"><?php echo (C("APP_TITLE")); ?></span><span style="font-family:宋体; font-size:12pt; font-weight:normal">的隐私规则条款。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您成为本网站用户前务必仔细阅读本隐私条款并同意本隐私条款。作为本网站服务的正常操作程序的一部分，本网站收集、使用并（在一些情况下）向第三方披露有关您的资料。本隐私条款作为本网站服务协议的附件，在您注册成为本网站用户后立即生效，并对您及本网站产生约束力。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">1、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">用户身份限制</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">未成年人（年龄18周岁以下人士）、限制行为能力人无资格注册成为本网站用户并使用本网站的服务，本网站要求未成年人、限制行为能力人不要向本网站提交任何个人资料。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">2、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">涉及的个人资料</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站收集个人资料的主要目的在于向您提供一个顺利、有效和度身订造的</span><span style="font-family:宋体; font-size:12pt; font-weight:normal">服务</span><span style="font-family:宋体; font-size:12pt; font-weight:normal">。本网站仅收集本网站认为就此目的及达成该目的所必须的关于您的个人资料。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站可能自公开及私人资料来源收集您的额外资料，以更好地了解本网站用户，并为其度身订造本网站服务、解决争议并有助确保在网站进行交易的安全性。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站在本网站的某些网页上使用诸如“Cookies”的资料收集装置。“Cookies”是设置在您的硬盘上的小档案，以协助本网站为您提供度身订造的服务。本网站亦提供某些只能通过使用“Cookies”才可得到的功能。本网站还利用“Cookies”使您能够在某段期间内减少输入密码的次数。“Cookies”还可以协助本网站提供专门针对您的兴趣而提供的资料。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">如果您将个人通讯信息（例如：手机短信、电邮或信件）交付给本网站，或如果其他用户或第三方向本网站发出关于您在本网站上的活动或登录事项的通讯信息，本网站可以将这些资料收集在您的专门档案中。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">3、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">本网站对您的资料的使用</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您同意本网站可使用关于您的个人资料（包括但不限于本网站持有的有关您的档案中的资料，及本网站从您目前及以前在本网站上的活动所获取的其他资料）以解决争议、对纠纷进行调停、有助于确保在本网站进行安全交易，并执行本网站的用户协议。本网站有时候可能调查多个用户以识别问题或解决争议，特别是本网站可审查您的资料以区分使用多个用户名或别名的用户。为限制在网站上的欺诈、非法或其他刑事犯罪活动，使本网站免受其害，您同意本网站可通过人工或自动程序对您的个人资料进行评价。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您同意本网站可以使用您的个人资料以改进本网站的推广和促销工作、分析网站的使用率、改善本网站的内容和产品推广形式，并使本网站的网站内容、设计和服务更能符合用户的要求。这些使用能改善本网站的网页，以调整本网站的网页使其更能符合您的需求，从而使您在使用本网站服务时得到更为顺利、有效、安全及度身订造的交易体验。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您同意本网站利用您的资料与您联络并（在某些情况下）向您传递针对您的兴趣而提供的信息，例如：有针对性的广告条、行政管理方面的通知、产品提供以及有关您使用本网站的通讯。您接受服务协议和隐私条款即为明示同意收取这些资料。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">4、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">本网站对您的资料的修改或删除</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您可以授权本网站帮助您修改您在本网站填写的一切个人资料。如您违反服务协议等本网站规则或法律规定，本网站有权经电子邮件告知后在网站数据库中删除您的个人资料、关闭账户或者限制您使用本网站。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">网站有权根据实际审核结果在不通知您的情况下对您所填写的与事实不符的资料进行修正或更改。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">5、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">本网站对您的资料的披露</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站采用行业标准惯例以保护您的个人资料，但鉴于技术限制，本网站不能确保您的全部私人通讯及其他个人资料不会通过本隐私条款中未列明的途径泄露出去，对此本网站不承担任何责任。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站有权根据有关法律和监管要求，本网站风险控制要求以及相关协议要求向司法机关等政府部门、社会组织或团体、其他第三方服务或合作机构提供您的个人资料。在您未能按照与本网站签订的服务协议、居间协议或者与本网站企业用户签订的借款（担保）协议的约定履行自己应尽的义务时，本网站有权根据自己的判断或者与该笔交易有关的其他用户的请求披露您的个人资料，并作出评论。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">6、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">您对其他用户的资料的使用</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">在本网站提供的交易活动中，您无权要求本网站提供其他用户的个人资料，除非符合以下条件：</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">（1）您已向法院起诉其他用户的在本网站活动中的违约行为；</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">（2）本网站被吊销营业执照、解散、清算、宣告破产或者其他有碍于您收回借款本息的情形。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">7、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">电子邮件</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您不得使用本网站提供的服务或其他电子邮件转发服务发送垃圾邮件或其他可能影响本网站系统运行或违反本网站的用户协议或隐私条款的内容。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">如果您利用本网站的服务向没有在本网站内注册的电子邮件地址发出电子邮件,本网站除了利用该电子邮件地址发出您的电子邮件之外将不作任何其他用途。本网站不会出租或出售这些电子邮件地址。本网站不会永久储存电子邮件信息或电子邮件地址。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">8、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">密码的安全性</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">您须对使用您的用户名和密码所采取的一切行为负责。因此，本网站建议您不要向任何第三方披露您在本网站的用户名和密码。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:14pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:14pt; font-weight:bold">9、</span><span style="font-family:宋体; font-size:14pt; font-weight:bold">规则修改</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt 21pt; orphans:0; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">本网站可能不时按照您的意见和本网站的需要修改本隐私条款，以准确地反映本网站的资料收集及披露惯例。本条款的所有修改，在本网站公布有关修改内容后自动生效或在该等条款指定的日期生效。</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-indent:21pt; widows:0"><span style="font-family:宋体; font-size:12pt">&#xa0;</span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal"><?php echo (C("COMPANY_NAME")); ?></span></p>
+    <p style="font-size:12pt; line-height:150%; margin:0pt 0pt 10pt; orphans:0; text-align:right; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:normal">201</span><span style="font-family:宋体; font-size:12pt; font-weight:normal">8</span><span style="font-family:宋体; font-size:12pt; font-weight:normal">年5月10日</span></p></div>
+</div>
+<img id="gzhImg" src="<?php echo ($img_url); ?>" alt="" style="display: none">
+<script src="/tecev/start/layui/layui.js"></script>
+<script src="/Public/js/jsencrypt.min.js" type="text/javascript"></script>
+<script>
+    layui.config({
+        base: '/tecev/src/' //指定 layuiAdmin 项目路径，本地开发用 src，线上用 dist
+    }).use('index');
+    setTimeout(function (){
+        layui.use([
+            'form',
+            'setter',
+            'admin',
+            'table',
+            // 'sliderVerify',
+        ], function(){
+            var $ = layui.$,table = layui.table,form = layui.form,setter = layui.setter,admin = layui.admin,router = layui.router(),search = router.search,sliderVerify = layui.sliderVerify;
+            // var slider = sliderVerify.render({
+            //     elem: '#slider'
+            // })
+            var scan_code = "<?php echo ($scan_code); ?>";
+            form.render();
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    // 按下回车，提交表单
+                    document.getElementById('submit_button').click();
+                }
+            });
+
+            //提交
+            form.on('submit(LAY-user-login-submit)', function (obj) {
+                //请求登入接口
+                get_key();
+                var params = {};
+                params.username = obj.field.username;
+                params.remember = obj.field.remember;
+                var pd = obj.field.pd;
+                var encrypt = new JSEncrypt();
+                encrypt.setPublicKey($('#publickey').val());
+                params.pd = encrypt.encrypt(pd);
+
+                if (!obj.field.privacy_agreement) {
+                    layer.msg('请先同意隐私协议', {
+                        skin: '',
+                        icon: 2,
+                    });
+
+                    return;
+                }
+
+                // if(slider.isOk()){
+                //     //用于表单验证是否已经滑动成功
+                //     setTimeout(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: admin_name+'/Login/login.html',
+                            data: params,
+                            //datatype: "html",//"xml", "html", "script", "json", "jsonp", "text".//返回数据的格式
+                            beforeSend: function () {
+                                layer.load(1);
+                            },
+                            //成功返回之后调用的函数
+                            success: function (data) {
+                                layer.closeAll('loading');
+                                if (data.status === 1) {
+                                    layui.data(setter.tableName, {
+                                        key: setter.request.tokenName
+                                        , value: data.data.access_token
+                                    });
+                                    //登入成功的提示与跳转
+                                    layer.msg(data.msg, {
+                                        icon: data.icon
+                                        , time: data.time
+                                    }, function () {
+                                        window.location.href = data.url;
+                                        localStorage.setItem("loginTimes", "first");
+                                        //location.hash = search.redirect ? decodeURIComponent(search.redirect) : '/';
+                                    });
+                                } else if (data.status === 2) {
+                                    layer.msg(data.msg,{icon : 2,time: 3000}, function(){
+                                        if(!$('#gzhImg').attr('src')){
+                                            layer.alert('公众号二维码图片不存在，请在【基础设置--基础参数--微信参数】中上传公众号二维码图片，或者通过其他方式关注公众号并登陆授权后再试', {icon: 2});
+                                        }else{
+                                            layer.open({
+                                                elem: '#gzhImg',
+                                                type: 1,
+                                                title: false,
+                                                closeBtn: 0,
+                                                shadeClose: true,
+                                                skin: '1',
+                                                content: $('#gzhImg'),
+                                                success: function (data) {
+                                                    $('#gzhImg').show();
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    layer.msg(data.msg, {icon: 2});
+                                }
+                            },
+                            //调用出错执行的函数
+                            error: function () {
+                                //请求出错处理
+                                layer.msg('服务器繁忙', {icon: 2});
+                            }
+                        });
+                //     },100);
+                // }else{
+                //     layer.msg("请先通过滑块验证");
+                // }
+                return false;
+            });
+
+            function get_key()
+            {
+                jQuery.ajax({
+                    type: "GET",
+                    url: admin_name+'/Login/getpk',
+                    dataType: "text",
+                    async: false,
+                    success: function (res) {
+                        $('#publickey').val(res);
+                    }
+                });
+            }
+
+            var go = 1;
+            $(document).on('click', '.icon-qrcode', function () {
+                $(".thisInputTypeTitle").html("扫码登录");
+                $(".tipsContent").html("密码登录");
+                $(".passwordDiv").hide();
+                $(".qrcodeDiv").show();
+                $(this).removeClass('icon-qrcode');
+                $(this).addClass('icon-computer');
+                go = 1;
+                setTimeout(a, 100);
+            });
+            $(document).on('click', '.icon-computer', function () {
+                $(".thisInputTypeTitle").html("密码登录");
+                $(".tipsContent").html("扫码登录");
+                $(".qrcodeDiv").hide();
+                $(".passwordDiv").show();
+                $(this).removeClass('icon-computer');
+                $(this).addClass('icon-qrcode');
+                go = 0;
+                clearTimeout(bt);
+            });
+
+            function a(d) {
+                jQuery.ajax({
+                    type: "GET",
+                    url: p + "?type=img",
+                    dataType: "html",
+                    cache: !1,
+                    timeout: 6e4,
+                    success: function (res) {
+                        jQuery('.old-template').show();
+                        jQuery('.lightBorder').attr("src", res);
+                        jQuery('.js_qr_img').attr("src", res);
+                        bt = setTimeout(b, 2e3);
+                    }
+                });
+            }
+            var p = admin_name+'/Login/code';
+            function b(c) {
+                if(go){
+                    var imgurl = jQuery('.lightBorder').attr('src');
+                    imgurl = encodeURIComponent(imgurl);
+                    jQuery.ajax({
+                        type: "GET",
+                        url: p + '?type=result&src=' + imgurl,
+                        dataType: "json",
+                        cache: !1,
+                        timeout: 6e4,
+                        success: function (res) {
+                            switch (res.result) {
+                                case 1:
+                                    //已扫码
+                                    jQuery(".js_status").hide();
+                                    jQuery("#wx_after_scan").show();
+                                    setTimeout(b, 2000);
+                                    break;
+                                case 2:
+                                    //已同意
+                                    setTimeout(get_openid, 100);
+                                    break;
+                                case 3:
+                                    //已拒绝
+                                    jQuery(".js_status").hide();
+                                    jQuery("#wx_after_cancel").show();
+                                    setTimeout(b, 2000);
+                                    break;
+                                default:
+                                    setTimeout(b, 2000);
+                            }
+
+                        }
+                    });
+                }
+            }
+            function get_openid(e) {
+                var imgurl = jQuery('.lightBorder').attr('src');
+                imgurl = encodeURIComponent(imgurl);
+                jQuery.ajax({
+                    type: "GET",
+                    url: p + "?type=get_openid&src=" + imgurl,
+                    dataType: "json",
+                    cache: !1,
+                    timeout: 6e4,
+                    success: function (res) {
+                        if (res.nums > 1) {
+                            //有多个账户绑定该微信
+                            var flag = 1;
+                            top.layer.open({
+                                type: 2,
+                                title: '请选择你要登录的账户',
+                                offset: 'auto',
+                                area: ['500px', '200px'],
+                                content: admin_name+'/Login/code.html?type=get_users&id=' + res.openid,
+                                end: function () {
+                                    if (flag) {
+                                        window.location.href = '/';
+                                    }
+                                },
+                                cancel: function () {
+                                    //如果是直接关闭窗口的，则不刷新表格
+                                    flag = 0;
+                                }
+                            });
+                        } else {
+                            //只有一个账号，设置session
+                            $.ajax({
+                                type: "POST",
+                                data: {"userid": res.userid},
+                                url: "/A/Login/setSession.html",
+                                //返回数据的格式
+                                dataType: "json",
+                                async: true,
+                                success: function (data) {
+                                    if (data.status == 1) {
+                                        window.location.href = '/';
+                                    }
+                                },
+                                //调用出错执行的函数
+                                error: function () {
+                                    //请求出错处理
+                                    layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+
+
+            //监听隐私协议
+            form.on('checkbox(login-control)', function(data){
+                const submitButton = document.getElementById('submit_button');
+                var checked = data.elem.checked;
+                if (checked){
+                    submitButton.classList.remove('layui-btn-disabled')
+                }else {
+                    submitButton.classList.add('layui-btn-disabled')
+                }
+            });
+            //隐私协议
+            $("#tecev-ysxy").click(function (){
+                layer.open({
+                    type: 1
+                    ,content: $("#tecev-ysxy-text")
+                    ,btn: '关闭'
+                    ,btnAlign: 'c' //按钮居中
+                    ,shade: 0 //不显示遮罩
+                    ,area:'50%'
+                    ,yes: function(){
+                        layer.closeAll();
+                    }
+                });
+            });
+        });
+    },500)
+
+</script>
+<script>
+    $(function(){
+        particlesJS('particles', {
+            particles: {
+                color: '#ccc',//球的颜色
+                shape: 'circle', // "circle"圆, "edge" 正方形 or "triangle" 三角形
+                opacity: 0.6,//球的透明度
+                size: 3,//尺寸
+                size_random: true,
+                nb: 200,//数量
+                //线配置
+                line_linked: {
+                    enable_auto: true,
+                    distance: 100,//距离
+                    color: '#dedede',//线的颜色
+                    opacity: 0.8,//透明度
+                    width: 1,//宽度
+                    condensed_mode: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 600
+                    }
+                },
+                //动画设置
+                anim: {
+                    enable: true,
+                    speed: 1//速度
+                }
+            },
+            interactivity: {
+                enable: true,
+                mouse: {
+                    distance: 300
+                },
+                detect_on: 'canvas', // "canvas" or "window"
+                mode: 'grab',
+                line_linked: {
+                    opacity: .5
+                },
+                events: {
+                    //点击事件 增加球数量
+                    onclick: {
+                        enable: true,
+                        mode: 'push', // "push"加 or "remove"减
+                        nb: 4
+                    }
+                }
+            },
+            /* Retina Display Support */
+            retina_detect: true
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

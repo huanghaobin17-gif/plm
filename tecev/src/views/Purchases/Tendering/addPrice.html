@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增招标明细</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 90px;
+        }
+        #addPriceFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+        .layui-form-item .layui-inline{margin-right: 0;}
+        .layui-form-item .layui-input-inline{margin-right: 0;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <form class="layui-form" action="">
+            <input type="hidden" name="record_id" value="{$recordInfo.record_id}"/>
+            <input type="hidden" name="assets_id" value="{$recordInfo.assets_id}"/>
+            <input type="hidden" name="supplier_id" value=""/>
+            <input type="hidden" name="factory_id" value=""/>
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">基础信息</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 供应商：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="dic_assets_sel">
+                            <input type="text" class="form-control bsSuggest" lay-verify="supplier_name|required" name="supplier_name" id="dic_supplier" placeholder="请选择供应商" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 生产商：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="dic_assets_sel2">
+                            <input type="text" class="form-control bsSuggest" lay-verify="factory_name|required" name="factory_name" id="dic_factory" placeholder="请选择生产商" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 规格/型号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="model" lay-verify="model|required" autocomplete="off" placeholder="请输入设备规格 / 型号" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 品牌：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="brand">
+                            <input type="text" class="form-control bsSuggest" lay-verify="brand|required" name="brand" id="dic_brand" placeholder="请选择品牌" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if($menuData = get_menu('BaseSetting','Dictionary','addBrandDic')):?>
+                    <div class="layui-form-mid layui-word-aux" id="addBrandDic" data-url="{$menuData['actionurl']}" style="cursor: pointer;"><i class="layui-icon layui-icon-tianjia2" style="font-size: 20px;color: #0a8ddf;"></i></div>
+                    <?php endif?>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 市场价：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="market_price" lay-verify="market_price|required" autocomplete="off" placeholder="请输入设备市场价" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 询价单价：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="company_price" lay-verify="company_price|required" autocomplete="off" placeholder="请输入供应商报价" value="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assets_name" value="{$recordInfo.assets_name}" disabled="disabled" lay-verify="assets_name" autocomplete="off" placeholder="请输入设备名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 保修(年)：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="guarantee_year" lay-verify="guarantee_year|required|number" autocomplete="off" placeholder="请输入保修年限" value="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block" style="margin-left: 120px;width: 525px;">
+                    <textarea placeholder="请输入内容" name="desc" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="margin-bottom-15">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+                    附件信息
+                    <span id="addPriceFile"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                </blockquote>
+                <table class="layui-table read-table-l" lay-even lay-size="sm">
+                    <colgroup>
+                        <col width="8%">
+                        <col width="30%">
+                        <col width="15%">
+                        <col width="15%">
+                        <col width="20%">
+                        <col>
+                    </colgroup>
+                    <tr>
+                        <th>序号</th>
+                        <th>文件名</th>
+                        <th>文件大小</th>
+                        <th>上传人</th>
+                        <th>上传时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody class="file_list">
+                    <tr class="no-data">
+                        <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="addPrice">
+                    <i class="layui-icon" >&#xe609;</i> 提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var handleTender = "{$handleTender}";
+</script>
+<script>
+    layui.use('controller/purchases/tendering/addPrice', layui.factory('controller/purchases/tendering/addPrice'));
+</script>

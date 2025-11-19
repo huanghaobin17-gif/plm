@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>审批详情</title>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv" id="LAY-Assets-Borrow-applyBorrow">
+    <blockquote class="layui-elem-quote-sm">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">设备名称：</td>
+            <td>{$assets.assets}</td>
+            <td class="text-right">设备编号：</td>
+            <td>{$assets.assnum}</td>
+        </tr>
+        <tr>
+            <td class="text-right">规格/型号：</td>
+            <td>{$assets.model}</td>
+            <td class="text-right">品牌：</td>
+            <td>{$assets.brand}</td>
+        </tr>
+        <tr>
+            <td class="text-right">产品序列号：</td>
+            <td>{$assets.serialnum}</td>
+            <td class="text-right">生产厂家：</td>
+            <td>{$assets.factory}</td>
+        </tr>
+        <tr>
+            <td class="text-right">所属科室：</td>
+            <td>{$assets.department}</td>
+            <td class="text-right">设备管理员：</td>
+            <td>{$assets.assetsrespon}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备原值：</td>
+            <td>{$assets.buy_price}</td>
+            <td class="text-right">启用日期：</td>
+            <td>{$assets.opendate}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备状态：</td>
+            <td>{$assets.statusName}</td>
+            <td class="text-right">维保状态：</td>
+            <td>{$assets.guarantee_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">巡查保养状态：</td>
+            <td>{$assets.patrol_status}</td>
+            <td class="text-right">计量状态：</td>
+            <td>{$assets.meterin_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">维修次数：</td>
+            <td>{$assets.repairNum}</td>
+            <td class="text-right">维保次数：</td>
+            <td>{$assets.insuredsum}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <blockquote class="layui-elem-quote-sm">
+        分配申请单信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">主设备名称：</td>
+            <td>{$allot.main_assets}</td>
+            <td class="text-right">分配至科室：</td>
+            <td>{$allot.main_department}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请人：</td>
+            <td>{$allot.apply_user}</td>
+            <td class="text-right">申请日期：</td>
+            <td>{$allot.apply_date}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请备注：</td>
+            <td colspan="3">{$allot.remark}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <notempty name="approve">
+        <blockquote class="layui-elem-quote-sm">审批信息</blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <td style="text-align: center;">序号</td>
+                <td style="text-align: center;">审批人</td>
+                <td style="text-align: center;">审批时间</td>
+                <td style="text-align: center;">审批状态</td>
+                <td>审批意见</td>
+            </tr>
+            <volist name="approve" id="vo">
+                <tr>
+                    <td style="text-align: center;">{$key+1}</td>
+                    <td style="text-align: center;">{$vo.approver}</td>
+                    <td style="text-align: center;">{$vo.approve_time}</td>
+                    <td style="text-align: center;">{$vo.is_adoptName}</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+</div>
+</body>
+</html>
+
+

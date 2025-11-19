@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+    .layui-table{ margin-top: 0px;}
+    .layui-table img {
+        cursor: pointer;
+        max-width: 95% !important;
+    }
+    .media{
+        margin: 0 auto;
+    }
+    #addAssetsFile{
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        color: #0a8ddf;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    #paizhao{
+        float: right;
+        font-size: 12px;
+        font-weight: normal;
+        color: #0a8ddf;
+        cursor: pointer;
+        vertical-align:middle;
+    }
+    .qrcode {
+        display: none;
+        width: 190px;
+        height: 255px;
+        padding: 20px 14px;
+        box-sizing: border-box;
+        position: absolute;
+        background: url('/Public/images/qrcode.png') no-repeat;
+        background-size:188px 220px;
+        right:20px;
+        top: 50px;
+        z-index: 30;
+    }
+    .qrcode img{
+        width: 100%;
+    }
+    .qrcode .tip {
+        width: 170px;
+        text-align: center;
+        vertical-align: top;
+        display: block;
+        font-size: 14px;
+        color: #333;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-elem-quote">
+        相关文件
+        <span id="addAssetsFile"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传 </span>
+    </div>
+    <table class="layui-table" lay-even>
+        <tbody>
+        <volist name="uploadinfo" id="vo">
+            <tr>
+                <th style="width: 50px;">
+                    文件{$key+1}
+                    <div class="del_pic" style="color: #0a8ddf;cursor: pointer;" data-id="{$vo.file_id}">删除</div>
+                </th>
+                <td class="td-align-center">
+                <switch name="vo.type">
+                    <case value="1">
+                        <img src="{$vo.file_url}" class="bigImg">
+                    </case>
+                    <case value="2">
+                        <a class="media" href="{$vo.file_url}"></a>
+                    </case>
+                    <case value="3">
+                        <button class="layui-btn layui-btn-normal downFile" data-path="{$vo.file_url}">word文档下载</button>
+                    </case>
+                </switch>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <input type="hidden" name="atid" value="{$atid}"/>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use(['form','upload'], function(){
+        var form = layui.form,upload = layui.upload;
+        $('a.media').media({width:800, height:600});
+        var atid = $('input[name="atid"]').val();
+        //上传附件
+        uploadFile = upload.render({
+            elem: '#addAssetsFile'  //绑定元素
+            , url: admin_name+'/patrol/doTask' //接口
+            , accept: 'file'
+            , exts: 'jpg|png|bmp|jpeg|doc|docx|pdf' //格式 用|分隔
+            , method: 'POST'
+            , data: {action: 'upload',cycid:'{$cycid}',assnum:'{$assnum}'}
+            , done: function (res) {
+                layer.closeAll('loading');
+                if (res.status === 1) {
+                    layer.msg(res.msg, {icon: 1,time:1000}, function () {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 2}, 1000);
+                }
+            }
+            , error: function (index, upload) {
+                //失败
+                layer.msg('上传失败', {icon: 2}, 1000);
+            }
+        });
+        $('#paizhao').on('mouseover',function () {
+            $('.qrcode').show();
+        });
+        $('#paizhao').on('mouseout',function () {
+            $('.qrcode').hide();
+        });
+        $('.del_pic').on('click',function () {
+            var target = $(this);
+            var params = {};
+            params.action = 'del_file';
+            params.file_id = target.attr('data-id');
+            $.ajax({
+                timeout: 5000,
+                type: "POST",
+                url: admin_name+'/Patrol/scanPic',
+                data: params,
+                dataType: "json",
+                async: true,
+                beforeSend:beforeSend,
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.msg,{icon : 1,time:1000},function () {
+                            target.parent().parent().remove();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon : 2},1000);
+                    }
+                },
+                error: function () {
+                    layer.msg("网络访问失败",{icon : 2},1000);
+                },
+                complete:complete
+            });
+        });
+    });
+
+    $(".bigImg").click(function(){
+        var imgUrl = $(this).attr('src');
+        window.img_width = 355;
+        var html  = "<center>";
+        html += "<div style='position:fixed; left:50%; margin-left:-40px; bottom:5px;'>";
+        html += "  <button style='width:40px; height:40px; border-radius:20px;'";
+        html += "        onclick='window.img_width < 1000 ? window.img_width += 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width});'>";
+        html += "  放大";
+        html += "  </button>&nbsp; &nbsp; ";
+        html += "  <button style='width:40px;  height:40px;border-radius:20px;'";
+        html += "  onclick='window.img_width > 100 ? window.img_width -= 100 : 0;";
+        html += "  $(\".img_url_class\").css({width: window.img_width})' >";
+        html += "  缩小";
+        html += "  </button>";
+        html += "</div>";
+        html += "</center>";
+        html += "<br/>";
+        html += "<center>";
+        html += "<img class='img_url_class' style='width:100%;' src='"+imgUrl+"' />";
+        html += "</center>";
+        //页面层
+        layer.open({
+            title:'原始图缩放浏览',
+            type: 1,
+            anim: 2,
+            shadeClose: true,
+            area: ['75%', '100%'], //宽高
+            content: html
+        });
+    });
+
+//    下载word文档
+    $(".downFile").click(function(){
+        var path = $(this).attr('data-path');
+        window.location.href=admin_name+'/Scrap/showFile?path='+path+'&type=downFile';
+        return false;
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<include file="Public:head"/>
+<style>
+    .layui-card {
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .writeInput {
+        border: none;
+        border-bottom: 1px solid #e5e5e5;
+        width: 99%
+    }
+
+    .inconformityInput {
+        margin-left: 5px;
+        min-height: 0;
+        padding-bottom: 10px;
+    }
+
+    .layui-card-header {
+        border-bottom-color: #e5e5e5
+    }
+
+    .enter {
+        height: 60px;
+        line-height: 60px;
+        font-size: 30px;
+        margin-top: 20px;
+    }
+    .divpic{
+        display: none;
+    }
+
+    .faceDiv p {
+        padding: 0 1rem;
+        font-size: 1rem;
+    }
+
+    .faceDiv span {
+        color: red;
+    }
+
+    .miniTitle {
+        font-size: 0.85rem;
+    }
+
+    .layui-card-body {
+        padding: 5px 10px !important
+    }
+
+    .special {
+        display: inline-block;
+        text-align: right;
+        width: 5.5rem;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+            <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">质控计划详情信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table">
+                    <tbody>
+                    <tr>
+                        <th>检测报告编号</th>
+                        <td><span class="stroageNumber">{$qsInfo.plan_num}</span></td>
+                    </tr>
+                    <tr>
+                        <th>质控计划名称</th>
+                        <td>{$qsInfo.plan_name}</td>
+                    </tr>
+                    <tr>
+                        <th>检测依据</th>
+                        <td>{$qsInfo.basis}</td>
+                    </tr>
+                    <tr>
+                        <th>检测仪器(标准器、模拟器)</th>
+                        <td>{$qsInfo.instrument}</td>
+                    </tr>
+                    <tr>
+                        <th>检测人</th>
+                        <td>{$detailInfo.adduser}</td>
+                    </tr>
+                    <tr>
+                        <th>检测时间</th>
+                        <td>{$detailInfo.addtime}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">检测设备基础信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table">
+                    <tbody>
+                    <tr>
+                        <th>设备编号</th>
+                        <td>{$asInfo.assnum}</td>
+                    </tr>
+                    <tr>
+                        <th>设备名称</th>
+                        <td>{$asInfo.assets}</td>
+                    </tr>
+                    <tr>
+                        <th>规格/型号</th>
+                        <td>{$asInfo.model}</td>
+                    </tr>
+                    <tr>
+                        <th>使用科室</th>
+                        <td>{$asInfo.department}</td>
+                    </tr>
+                    <tr>
+                        <th>产品系列号</th>
+                        <td>{$asInfo.serialnum}</td>
+                    </tr>
+                    <tr>
+                        <th>品牌</th>
+                        <td>{$asInfo.brand}</td>
+                    </tr>
+                    <tr>
+                        <th>启用日期</th>
+                        <td>{$asInfo.opendate}</td>
+                    </tr>
+                    <tr>
+                        <th>上次质控时间</th>
+                        <td>{$asInfo.lasttesttime}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">质控检测明细（模板：呼吸机）</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card faceDiv">
+                    <p>
+                        外观功能：
+                        <span>
+                        <if condition="$detailInfo.exterior eq 1">
+                            符合
+                        </if>
+                        <if condition="$detailInfo.exterior eq 2">
+                            不符合
+                        </if>
+                        </span>
+                    </p>
+                    <if condition="$detailInfo.exterior eq 2">
+                        <p>
+                            不符合情况说明：
+                            <span>{$detailInfo.exterior_explain}</span>
+                        </p>
+                    </if>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">潮气量（vcv模式）最大允差：{$tolerance.humidity}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="detailInfo['preset_detection']['humidity']" id="vo">
+                                <tr>
+                                    <th style="width: 50%;">设定值（ml）：{$vo}</th>
+                                    <td>
+                                        <span class="special">输出实测值：</span>{$detailInfo['preset_detection']['humidity'][$key]}
+                                        <br>
+                                        <span class="special">误差：</span>{$detailInfo['preset_detection']['humidity_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">示值：</span>{$detailInfo['preset_detection']['humidity_value'][$key]}
+                                        <br>
+                                        <span class="special">示值误差：</span>{$detailInfo['preset_detection']['humidity_value_tolerance'][$key]}
+                                    </td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <th>最大输出误差</th>
+                                <td>{$detailInfo['preset_detection']['humidity_max_output']}</td>
+                            </tr>
+                            <tr>
+                                <th>最大示值误差</th>
+                                <td>{$detailInfo['preset_detection']['humidity_max_value']}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">强制通气频率与呼吸比（vcv模式）最大允差：{$tolerance.aeration}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="detailInfo['preset_detection']['aeration']" id="vo">
+                                <tr>
+                                    <th style="width: 50%;">设定值（BPM）：{$vo}</th>
+                                    <td>
+                                        <span class="special">输出实测值：</span>{$detailInfo['preset_detection']['aeration'][$key]}
+                                        <br>
+                                        <span class="special">误差：</span>{$detailInfo['preset_detection']['aeration_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">示值：</span>{$detailInfo['preset_detection']['aeration_value'][$key]}
+                                        <br>
+                                        <span class="special">示值误差：</span>{$detailInfo['preset_detection']['aeration_value_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">设定值：</span>{$detailInfo['preset_detection']['aeration_setIE'][$key]}
+                                    </td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <th>最大输出误差</th>
+                                <td>{$detailInfo['preset_detection']['aeration_max_output']}</td>
+                            </tr>
+                            <tr>
+                                <th>最大示值误差</th>
+                                <td>{$detailInfo['preset_detection']['aeration_max_value']}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">吸入氧浓度FiO₂最大允差：{$tolerance.IOI}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="detailInfo['preset_detection']['IOI']" id="vo">
+                                <tr>
+                                    <th style="width: 50%;">设定值（%）：{$vo}%</th>
+                                    <td>
+                                        <span class="special">输出实测值：</span>{$detailInfo['preset_detection']['IOI'][$key]}
+                                        <br>
+                                        <span class="special">误差：</span>{$detailInfo['preset_detection']['IOI_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">示值：</span>{$detailInfo['preset_detection']['IOI_value'][$key]}
+                                        <br>
+                                        <span class="special">示值误差：</span>{$detailInfo['preset_detection']['IOI_value_tolerance'][$key]}
+                                    </td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <th>最大输出误差</th>
+                                <td>{$detailInfo['preset_detection']['IOI_max_output']}</td>
+                            </tr>
+                            <tr>
+                                <th>最大示值误差</th>
+                                <td>{$detailInfo['preset_detection']['IOI_max_value']}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">
+                                    吸气压力水平PCV或新生儿呼吸的PLV模式f=20最大允差：{$tolerance.IPAP}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="detailInfo['preset_detection']['IPAP']" id="vo">
+                                <tr>
+                                    <th style="width: 50%;">设定值/cmH₂O：{$vo}</th>
+                                    <td>
+                                        <span class="special">输出实测值：</span>{$detailInfo['preset_detection']['IPAP'][$key]}
+                                        <br>
+                                        <span class="special">误差：</span>{$detailInfo['preset_detection']['IPAP_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">示值：</span>{$detailInfo['preset_detection']['IPAP_value'][$key]}
+                                        <br>
+                                        <span class="special">示值误差：</span>{$detailInfo['preset_detection']['IPAP_value_tolerance'][$key]}
+                                    </td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <th>最大输出误差</th>
+                                <td>{$detailInfo['preset_detection']['IPAP_max_output']}</td>
+                            </tr>
+                            <tr>
+                                <th>最大示值误差</th>
+                                <td>{$detailInfo['preset_detection']['IPAP_max_value']}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">
+                                    呼气末正压PEEPVCV模式Vt=400mlf=20最大允差：{$tolerance.PEEP}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="detailInfo['preset_detection']['PEEP']" id="vo">
+                                <tr>
+                                    <th style="width: 50%;">设定值/cmH₂O：{$vo}</th>
+                                    <td>
+                                        <span class="special">输出实测值：</span>{$detailInfo['preset_detection']['PEEP'][$key]}
+                                        <br>
+                                        <span class="special">误差：</span>{$detailInfo['preset_detection']['PEEP_tolerance'][$key]}
+                                        <br>
+                                        <span class="special">示值：</span>{$detailInfo['preset_detection']['PEEP_value'][$key]}
+                                        <br>
+                                        <span class="special">示值误差：</span>{$detailInfo['preset_detection']['PEEP_value_tolerance'][$key]}
+                                    </td>
+                                </tr>
+                            </volist>
+                            <tr>
+                                <th>最大输出误差</th>
+                                <td>{$detailInfo['preset_detection']['PEEP_max_output']}</td>
+                            </tr>
+                            <tr>
+                                <th>最大示值误差</th>
+                                <td>{$detailInfo['preset_detection']['PEEP_max_value']}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">机械通气模式评价</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th style="width: 50%">容量预制模式</th>
+                                <td>
+                                    <switch name="detail_result.capacity_precut_mode">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>流量触发功能</th>
+                                <td>
+                                    <switch name="detail_result.traffic_trigger">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>压力预制模式</th>
+                                <td>
+                                    <switch name="detail_result.pressure_precut_mode">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>压力触发功能</th>
+                                <td>
+                                    <switch name="detail_result.pressure_tigger">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table class="layui-table">
+                            <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: left;">安全报警功能等检查</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th style="width: 62%">电源报警</th>
+                                <td>
+                                    <switch name="detail_result.power_supply_alarm">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>氧浓度上/下限报警</th>
+                                <td>
+                                    <switch name="detail_result.oxygen_concentration_bound">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>气源报警</th>
+                                <td>
+                                    <switch name="detail_result.gas_supply_alarm">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>窒息报警</th>
+                                <td>
+                                    <switch name="detail_result.apnea_alarm">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>气道压力上/下限报警</th>
+                                <td>
+                                    <switch name="detail_result.AWP_alarm">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>病人回路过压保护功能</th>
+                                <td>
+                                    <switch name="detail_result.loop_overvoltage_pretection">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>分钟通气量上/下限报警</th>
+                                <td>
+                                    <switch name="detail_result.minute_ventilation_bound">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>按键功能检查（含键盘锁）</th>
+                                <td>
+                                    <switch name="detail_result.press_key">
+                                        <case value="1">符合</case>
+                                        <case value="2">不符合</case>
+                                        <case value="3">不适用</case>
+                                        <default/>
+                                        未知
+                                    </switch>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card faceDiv">
+                        <p>
+                            检测结果：
+                        <span>
+                        <if condition="$detailInfo.result eq 1">
+                            合格
+                            <else/>
+                            不合格
+                        </if>
+                        </span>
+                        </p>
+                        <notempty name="detailInfo['remark']">
+                            <p>
+                                检测备注：
+                                <span>{$detailInfo.remark}</span>
+                            </p>
+                        </notempty>
+                    </div>
+                </div>
+            </div>
+            <notempty name="file_data['nameplate']">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span style="float: left">设备铭牌照片</span>
+                </div>
+                <div class="layui-card-body">
+                    <dl>
+                        <dd>
+                            <div class="swiper-container" id="uploadPhotoCarousel">
+                                <div class="swiper-wrapper nameplate_pic">
+                                    <if condition="$file_data['nameplate']">
+                                        <volist name="file_data['nameplate']" id="vo" key="k">
+                                            <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                                <img src="{$vo.file_url}" class="photo">
+                                            </div>
+                                        </volist>
+                                        <else/>
+                                        <div class="swiper-slide">
+                                            <div class="emptyPhoto">暂无铭牌照片</div>
+                                        </div>
+                                    </if>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </notempty>
+            <notempty name="file_data['instrument_view']">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span style="float: left">检测仪器视图照片</span>
+                </div>
+                <div class="layui-card-body">
+                    <dl>
+                        <dd>
+                            <div class="swiper-container" id="checkPhotoCarousel">
+                                <div class="swiper-wrapper instrument_view_pic">
+                                    <if condition="$file_data['instrument_view']">
+                                        <volist name="file_data['instrument_view']" id="vo" key="k">
+                                            <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                                <img src="{$vo.file_url}" class="photo">
+                                            </div>
+                                        </volist>
+                                        <else/>
+                                        <div class="swiper-slide">
+                                            <div class="emptyPhoto">暂无视图照片</div>
+                                        </div>
+                                    </if>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </notempty>
+            <div class="layui-card moveAnimatedDiv">
+
+                <div id="divpic" <if condition="empty($detailInfo['report']) eq true">class="divpic"<else /></if>>  
+               <div class="layui-card-header">
+                    <span style="float: left">质控报告</span>
+                </div>
+                <div class="layui-card-body">
+                    <dl>
+                        <dd>
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper instrument_view_pic">
+                                    <div class="swiper-slide" >
+                                                <img src="{$detailInfo.report}" id="img" class="photo">
+                                        </div>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-body">
+                    <input type="hidden" name="qsid" value="{$qsInfo.qsid}">
+                    <div class="layui-btn" id="uploadFile" capture="camera" style="width: 100%;">上传质控报告</div>
+                </div>
+                
+                <div class="layui-card-body">
+                    <button class="layui-btn layui-btn-warm backButton " style="width: 100%;">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <canvas id="myCanvas" width="" height="" style="border:1px solid #d3d3d3;background:#ffffff;display:none;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+</div>
+</body>
+</html>
+<script>
+    //    定义全局变量
+    var resultData = {};
+    layui.use(['form', 'element','upload'], function () {
+        var form = layui.form, element = layui.element, upload = layui.upload, numberType = $("input[type='number']"),
+            radioType = $("input[type='radio']");
+            qsid  = $("input[name='qsid']").val();
+
+        numberType.each(function (k, v) {
+            $(v).attr('readonly', true);
+        });
+        radioType.each(function (k, v) {
+            $(v).attr('disabled', true);
+        });
+        $("input[type='radio']:checked").each(function (k, v) {
+            $(v).attr('disabled', false)
+        });
+        $(".layui-colla-content").each(function (k, v) {
+            $(v).addClass('layui-show')
+        });
+        form.render();
+        var images = {};
+        $('#uploadFile').on('click', function () {
+            wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                images.localId = res.localIds;//把图片的路径保存在images[localId]中--图片本地的id信息，用于上传图片到微信浏览器时使用
+                ulLoadToWechat(); //把这些图片上传到微信服务器  一张一张的上传
+            }
+        });
+        });
+
+    //上传图片到微信]
+    function ulLoadToWechat() {
+        length = images.localId.length; //本次要上传所有图片的数量
+        for (var i = 0; i < length; i++) {
+            (function(i) {
+                setTimeout(function() {
+                    wx.uploadImage({
+                        localId: images.localId[i], //图片在本地的id
+                        success: function (res) {
+                            images.serverId = res.serverId;
+                            wxImgDown(res.serverId);
+                        },
+                        fail: function (res) {
+                            layer.msg('服务器繁忙', {icon: 2});
+                        }
+                    });
+                }, i*2000);
+            })(i)
+        }
+    }
+    function upimg(id) {
+
+    }
+
+    //下载上传到微信上的图片
+    function wxImgDown(mid) {
+        var params = {};
+        params.mid = mid;
+        params.action = 'upload';
+        params.qsid = $("input[name='qsid']").val();
+        $.ajax({   //后台下载
+            type: "POST",
+            url: "setQualityDetail",
+            data: params,
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                if (data.status == 1) {
+                    var path = data.path;
+                    $('#divpic').show();
+                    $('#img').attr('src',path);
+                    
+                    layer.msg(data.msg,{icon : 1},1000);
+                }else{
+                    layer.msg(data.msg,{icon : 2},1000);
+                }
+            },
+            erro: function () {
+                layer.msg('服务繁忙，请稍后再试！', {icon: 2});
+            }
+        });
+    }
+    });
+    $(document).on('click', '.backButton', function () {
+        window.history.go(-1);
+        return false;
+    });
+</script>

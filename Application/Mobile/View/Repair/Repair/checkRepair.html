@@ -1,0 +1,201 @@
+<include file="Public:head"/>
+<title>维修验收</title>
+<style>
+    .layui-table tr th{width: 28%;}
+    .red{color: #FF5722}
+    .green{color: #85AB70}
+    .assetsHideDetail{display: none;}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+    .layui-card-body .layui-table{margin: 0;}
+    .layui-form{margin-top: 1.25rem;}
+    .layui-form .layui-form-item{margin: 1rem 0;}
+    #media,#showImages{
+        color:#76ABDF;
+    }
+    .layui-form-radio{
+        margin-right: 0 !important;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <div class="layui-card">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">维修单详情</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body" style="padding: 0;">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>维修单号</th>
+                    <td>{$repArr.repnum}</td>
+                </tr>
+                <tr>
+                    <th>报修科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>报修人</th>
+                    <td>{$repArr.applicant}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>报修时间</th>
+                    <td>{$repArr.applicant_time}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>接单时间</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>维修工程师</th>
+                    <td>{$repArr.response}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>故障问题</th>
+                    <td><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>故障描述</th>
+                    <td>{$repArr.breakdown}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>语音描述</th>
+                    <td>
+                        <if condition="$repArr['wxTapeAmr']">
+                            <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                            <span id="media">点击播放</span>
+                            <else/>
+                            无
+                        </if>
+                    </td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>故障照片</th>
+                    <td>
+                        <empty name="repArr['pic_url']">
+                            无
+                            <else/>
+                            <a class="green" id="showImages">查看(共{$repArr.imgCount}张)</a>
+                        </empty>
+                    </td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>检修备注</th>
+                    <td>{$repArr.repair_remark}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>维修性质</th>
+                    <td>{$repArr.repTypeName}</td>
+                </tr>
+                <!--<tr class="assetsHideDetail">-->
+                    <!--<th>维修结果</th>-->
+                    <!--<td class="green">已修复  /  <span class="red">未修复已转单待确认</span></td>-->
+                <!--</tr>-->
+                <tr class="assetsHideDetail">
+                    <th>维修工时</th>
+                    <td>{$repArr.working_hours}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>维修费用</th>
+                    <td>{$repArr.actual_price}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>处理详情</th>
+                    <td>{$repArr.dispose_detail}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="layui-card" style="margin-top: 0;">
+        <div class="moreButton">
+            <a class="moreDetailButton" data-detailClass="assetsHideDetail">加载更多</a>
+        </div>
+        <div class="moreButton" style="display: none;">
+            <a class="hideDetailButton" data-detailClass="assetsHideDetail">收起</a>
+        </div>
+    </div>
+    <form class="layui-form">
+        <input type="hidden" name="repid" value="{$repArr.repid}"/>
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">设备修复验收表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否修复：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="repaired" value="1" title="已修复" checked>
+                        <input type="radio" name="repaired" value="0" title="未修复">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">服务态度：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="attitude" value="0" title="好" checked>
+                        <input type="radio" name="attitude" value="1" title="一般">
+                        <input type="radio" name="attitude" value="2" title="差">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">技术水平：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="technical" value="0" title="好" checked>
+                        <input type="radio" name="technical" value="1" title="一般">
+                        <input type="radio" name="technical" value="2" title="差">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">响应时效：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="efficiency" value="0" title="好" checked>
+                        <input type="radio" name="efficiency" value="1" title="一般">
+                        <input type="radio" name="efficiency" value="2" title="差">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">意见/建议：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="checkRemark" placeholder="请输入意见/建议" autocomplete="off" class="layui-input" style="width: 95%;">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn enterButton" style="width: 100%;" lay-submit lay-filter="save">确认验收并提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/mobile/js/weui/showImages.js"></script>
+<script>
+    var url = "{$url}";
+    <notempty name="repArr['pic_url']">
+    var pic_url = {$repArr.pic_url};
+    var photos = $.photoBrowser({
+        items: pic_url
+    });
+    </notempty>
+
+    $("#showImages").click(function(){
+        photos.open();
+    });
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+
+<script src="__PUBLIC__/mobile/js/repair/repair/checkRepair.js?v={:mt_rand(1,54561)}"></script>

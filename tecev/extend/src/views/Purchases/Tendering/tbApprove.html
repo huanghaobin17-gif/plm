@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 18%;
+        }
+        #addTenderingBook{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>项目名称：</th>
+                <td>{$recordInfo.project_name}</td>
+                <th>购置类型：</th>
+                <td>{$recordInfo.buy_type_name}</td>
+            </tr>
+            <tr>
+                <th>申请科室：</th>
+                <td>{$recordInfo.department}</td>
+                <th>申请人：</th>
+                <td>{$recordInfo.apply_user}</td>
+            </tr>
+            <tr>
+                <th>申请理由：</th>
+                <td colspan="3">{$recordInfo.apply_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            设备明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <tbody>
+            <colgroup>
+                <col width="8%">
+                <col width="40%">
+                <col width="12%">
+                <col width="12%">
+                <col width="12%">
+                <col width="12%">
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">设备名称</th>
+                <th style="text-align: left !important;">单位</th>
+                <th style="text-align: left !important;">数量</th>
+                <th style="text-align: left !important;">单价</th>
+                <th style="text-align: left !important;">是否进口</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>{$recordInfo.assets_name}</td>
+                <td>{$recordInfo.unit}</td>
+                <td>{$recordInfo.nums}</td>
+                <td>{$recordInfo.market_price}</td>
+                <td>{$recordInfo.is_import_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            历史标书记录
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="28%">
+                <col width="14%">
+                <col width="12%">
+                <col width="30%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">标书状态</th>
+                <th style="text-align: left !important;">退回意见</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$files_1">
+                <volist name="files_1" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>退回</td>
+                        <td>{$vo.desc}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs downFile" lay-submit lay-filter="downFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">下载</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+            <else/>
+                <tr>
+                    <td colspan="6" style="text-align: center !important;">暂无相关记录</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            标书记录
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="28%">
+                <col width="14%">
+                <col width="12%">
+                <col width="30%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$files_2">
+                <volist name="files_2" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs downFile" lay-submit lay-filter="downFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">下载</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr>
+                    <td colspan="6" style="text-align: center !important;">暂无相关记录</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote" style="margin-bottom: 20px;">
+            评审信息
+        </div>
+        <form class="layui-form">
+            <input type="hidden" name="rev_id" value="{$rev_id}"/>
+            <input type="hidden" name="record_id" value="{$record_id}"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">评审人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$username}" class="layui-input" readonly>
+                </div>
+                <label class="layui-form-label">评审日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$nowday}" readonly class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 评审结果：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="review_status" value="1" title="通过"checked>
+                    <input type="radio" name="review_status" value="2" title="退回">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 评审意见：</label>
+                <div class="layui-input-block">
+                    <textarea name="desc" placeholder="请输入内容" lay-verify="desc|required" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveReviewApp">
+                    <i class="layui-icon" >&#xe609;</i> 提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/tendering/tbApprove', layui.factory('controller/purchases/tendering/tbApprove'));
+</script>

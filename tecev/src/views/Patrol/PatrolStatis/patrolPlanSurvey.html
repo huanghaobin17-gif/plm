@@ -1,0 +1,107 @@
+<link rel="stylesheet" href="__PUBLIC__/css/sumoselect.css?v={:mt_rand(1,54561)}">
+<link rel="stylesheet" href="__PUBLIC__/css/sumoselect.min.css?v={:mt_rand(1,54561)}">
+<script src="__PUBLIC__/js/jquery.sumoselect.min.js?v={:mt_rand(1,54561)}"></script>
+<script src="__PUBLIC__/js/jquery.sumoselect.js?v={:mt_rand(1,54561)}"></script>
+<style>
+    #LAY-Patrol-Statistics-patrolPlanSurvey .table thead th{text-align: center}
+    #LAY-Patrol-Statistics-patrolPlanSurvey .layui-table thead tr th,#LAY-Patrol-Statistics-patrolPlanSurvey .layui-table tbody tr td{
+        text-align: center;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .offer_tbody textarea {
+        border: none;
+        resize: none;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .SumoSelect>#LAY-Patrol-Statistics-patrolPlanSurvey .CaptionCont>#LAY-Patrol-Statistics-patrolPlanSurvey span.placeholder {
+        text-align: left;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .SumoSelect>#LAY-Patrol-Statistics-patrolPlanSurvey .CaptionCont{
+        height: 26px;
+        width: 220px;
+        margin-left: 0px;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .SumoSelect .select-all{
+        width: 190px;
+        height: 26px;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .SumoSelect.open>#LAY-Patrol-Statistics-patrolPlanSurvey .optWrapper{
+        width: 220px;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .CaptionCont{
+        width: 190px;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .optWrapper{
+        width: 210px;
+    }
+    #LAY-Patrol-Statistics-patrolPlanSurvey .placeholder{
+        margin-top: 0;
+        text-align: left;
+    }
+</style>
+<?php if($menuData = get_menu_name('Patrol','PatrolStatis','patrolPlanSurvey')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Patrol-PatrolStatis-patrolPlanSurvey" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">统计年限</label>
+                                <div class="layui-input-inline">
+                                    <input readonly class="layui-input" id="year" value="{$year}" name="year" placeholder="请选择年限">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="patrolPlanSurveySearch"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 年度计划完成总进度
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                        <div class="layui-progress-bar" id="year_procress" lay-percent="0 / 0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">每月计划完成情况</div>
+                <div class="hidden-contant">暂无相关数据</div>
+                <div class="layui-card-body" style="height: 400px;" id="year_plans">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/echarts.min.js"></script>
+<script>
+    var current_year = "{$year}";
+    layui.use('patrol/statistics/patrolPlanSurvey', layui.factory('patrol/statistics/patrolPlanSurvey'));
+</script>
+

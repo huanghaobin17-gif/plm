@@ -1,0 +1,96 @@
+<include file="Public:head"/>
+<link rel="stylesheet" href="__PUBLIC__/mobile/css/weui.css" media="all">
+<link rel="stylesheet" href="__PUBLIC__/mobile/css/jquery-weui.css" media="all">
+<title>检修列表</title>
+<style>
+    .line {
+        border-right: 1px solid #c9c9c9;
+        position: absolute;
+        right: 0;
+        width: 1px;
+        height: 80%;
+        top: 0;
+    }
+    .sum {
+        color: #FF5722;
+    }
+    .using {
+        color: #009688
+    }
+    #overhaulLists li {
+        margin-bottom: 0.5rem;
+    }
+    .swiper-container {
+        height: 12.5rem;
+    }
+    .weui-popup__modal .weui-icon-cancel {
+        position: absolute;
+        right: 0.2rem;
+        top: 0.8rem;
+        color: #888;
+        font-size: 1.5rem;
+    }
+    .jumpButton{
+        bottom: 2.1rem;
+    }
+    .detail{
+        padding-top: 0.4rem;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <button class="layui-btn layui-btn-fluid enterButton mgt1rem" id="scanQRcode_jianxiu">扫码检修</button>
+            <div class="mgt1rem">
+                <div class="weui-search-bar" id="searchBar">
+                    <form class="weui-search-bar__form" action="#" id="searchForm">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input" id="searchInput">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索（设备名称、编号、科室）</span>
+                        </label>
+                    </form>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                    <div class="stopCancelSearch"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/list.png">
+            <h2 class="list_title">待检修设备</h2>
+            <span class="sum"></span>台
+            <a class="order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="DESC" orderSort="applicant_time">按照报修时间</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="ASC" orderSort="applicant_time">按照报修时间</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body">
+            <ul id="overhaulLists"></ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var overhaulListsUrl='{$overhaulListsUrl}';
+</script>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/mobile/js/repair/repair/overhaulLists.js?v={:mt_rand(1,54561)}"></script>

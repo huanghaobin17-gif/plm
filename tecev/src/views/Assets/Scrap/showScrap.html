@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <input name="scrid" value="{$scrid}" type="hidden">
+    <div class="margin-bottom-15">
+    <div class="layui-elem-quote-sm">设备基本信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$assetsinfo.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$assetsinfo.assets}</td>
+
+            </tr>
+            <tr>
+                <th>规格型号：</th>
+                <td>{$assetsinfo.model}</td>
+                <th>生产厂家：</th>
+                <td>{$assetsinfo.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$assetsinfo.category}</td>
+                <th>使用科室：</th>
+                <td>{$assetsinfo.department}</td>
+            </tr>
+            <tr>
+                <th>入库日期：</th>
+                <td>{$assetsinfo.storage_date}</td>
+                <th>启用日期：</th>
+                <td>{$assetsinfo.opendate}</td>
+
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$assetsinfo.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$assetsinfo.guaranteeStatus}</td>
+            </tr>
+            <tr>
+                <th>设备原值（元）：</th>
+                <td>{$assetsinfo.buy_price}</td>
+                <th>残净值率（%）：</th>
+                <td>{$assetsinfo.residual_value}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <notempty name="subsidiary">
+        <blockquote class="layui-elem-quote-sm">
+            附属设备报废明细
+        </blockquote>
+        <table class="layui-table" lay-even="" lay-size="sm">
+            <thead>
+            <tr>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="subsidiary" id="vo">
+                <tr>
+                    <td>{$vo.assets}</td>
+                    <td>{$vo.assnum}</td>
+                    <td>{$vo.model}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.buy_price}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </notempty>
+
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote-sm">报废申请信息</div>
+        <table class="layui-table read-table" lay-size="sm" lay-even>
+            <tbody>
+            <tr>
+                <th>报废单号：</th>
+                <td>{$scrapinfo.scrapnum}</td>
+                <th>报废日期：</th>
+                <td>{$scrapinfo.scrapdate}</td>
+                <th>申请人：</th>
+                <td>{$scrapinfo.apply_user}</td>
+            </tr>
+            <tr>
+                <th>报废原因：</th>
+                <td colspan="5">{$scrapinfo.scrap_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$isOpenApprove eq 1">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote-sm">审批进程记录</div>
+            <table class="layui-table mgt0" lay-size="sm">
+                <colgroup>
+                    <col width="100">
+                    <col width="120">
+                    <col width="120">
+                    <col width="120">
+                    <col width="160">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th style="text-align: center;">序号</th>
+                    <th style="text-align: center;">进程名称</th>
+                    <th style="text-align: center;">审批人</th>
+                    <th style="text-align: center;">审批结果</th>
+                    <th style="text-align: center;">审批时间</th>
+                    <th>审批意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="examine">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">暂无记录</td>
+                    </tr>
+                    <else />
+                    <volist name="examine" key="k" id="vo">
+                        <tr>
+                            <td style="text-align: center;">{$k}</td>
+                            <td style="text-align: center;">{$vo.approve_name}</td>
+                            <td style="text-align: center;">{$vo.approver}</td>
+                            <td style="text-align: center;">
+                                <if condition="$vo.is_adopt eq 1">
+                                    <span style="color:green;">通过</span>
+                                    <else/>
+                                    <span style="color:red;">不通过</span>
+                                </if>
+                            </td>
+                            <td style="text-align: center;">{$vo.approve_time}</td>
+                            <td>{$vo.remark}</td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <notempty name="scrapinfo.clear_cross_user">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote-sm">处置明细</div>
+            <table class="layui-table read-table" lay-size="sm" lay-even>
+                <tbody>
+                <tr>
+                    <th>处置日期：</th>
+                    <td>{$scrapinfo.cleardate}</td>
+                    <th>处置经手人：</th>
+                    <td>{$scrapinfo.clear_cross_user}</td>
+                    <th>相关文件上传：</th>
+                    <td>
+                        <if condition="$empty eq 1">
+                            无相关文件
+                            <else />
+                            <button class="layui-btn layui-btn-xs layui-btn-normal" id="showFile">点击查看</button>
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>清理公司：</th>
+                    <td>{$scrapinfo.clear_company}</td>
+                    <th>联系人：</th>
+                    <td>{$scrapinfo.clear_contacter}</td>
+                    <th>联系电话：</th>
+                    <td>{$scrapinfo.clear_telephone}</td>
+                </tr>
+                <tr>
+                    <th>备注：</th>
+                    <td colspan="5">{$scrapinfo.clear_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/assets/scrap/showScrap', layui.factory('controller/assets/scrap/showScrap'));
+</script>

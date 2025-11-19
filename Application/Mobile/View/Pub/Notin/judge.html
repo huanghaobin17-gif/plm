@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>操作失败</title>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/sm.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/sm-extend.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/msui/css/mysui.css">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/css/mobile.css">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="page-public-fail">
+        <div class="content" style="background-color:#fff">
+            <div class="msgcontent">
+                <div class="tipstop">
+                    <img src="__PUBLIC__/mobile/images/fail.png">
+                </div>
+                <div class="tipstitle">
+                    <p class="msg-desc">{$tips}</p>
+                </div>
+                <div class="msg-area-btn">
+                    <if condition="$url1">
+                        <p><a href="{$url1}" class="button button-fill button-success msuc" data-no-cache="true">{$btn1}</a></p>
+                    </if>
+                    <if condition="$url2">
+                        <p><a href="{$url2}" class="button button-fill button-success mfail" data-no-cache="true">{$btn2}</a></p>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/zepto.min.js' charset='utf-8'></script>
+<script type="text/javascript">
+    $.config = {router: false}
+</script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/sm-extend.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='__PUBLIC__/mobile/msui/js/mysui.js' charset='utf-8'></script>
+</body>
+</html>

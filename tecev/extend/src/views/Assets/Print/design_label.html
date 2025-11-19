@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .user_1,.user_2{
+            margin: 0;
+            padding: 0;
+            width: 390px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #e6e6e6;
+            margin-bottom: 10px;
+        }
+        .show_table td{
+            padding: 0 !important;
+        }
+        .line_height{
+            padding: 0 !important;
+            height: 25px !important;
+            line-height: 25px !important;
+        }
+        .img_line_height{
+            padding: 0 !important;
+            height: 75px !important;
+        }
+        .hospital_name{
+            text-align: center;
+            font-size: 22px;
+            height: 25px;
+            line-height: 25px;
+            margin: 5px auto 5px auto;
+        }
+
+        .user_1 .show_table{
+            color:#000000;
+            font-size: {$font_size[user_1]}px;
+            width: 97% !important;
+            margin-left: 5px;
+        }
+        .user_2 .show_table{
+            color:#000000;
+            font-size: {$font_size[user_2]}px;
+            width: 97% !important;
+            margin-left: 5px;
+        }
+        .row_td{
+            width: 79%;
+        }
+        .td_img{
+            max-width: 80px;
+            max-height: 80px;
+            text-align: left;
+        }
+        .td_img img{
+            width:70px;
+        }
+
+        .user_2 .row_td{
+            width: 72%;
+        }
+        .user_2 .td_img{
+            padding: 0 !important;
+            max-width: 100px !important;
+            max-height: 100px !important;
+            text-align: left;
+        }
+        .user_2 .td_img img{
+            width:100px;
+            padding: 0 !important;
+        }
+
+        .cus_sel{
+            float: left;
+            width: 300px;
+            margin-top: 20px;
+        }
+        .cus_sel .layui-select-title{
+            height: 25px;
+        }
+        .cus_sel .layui-input{
+            height: 25px;
+        }
+        .cus_sel .layui-input-inline{
+            margin-bottom: 5px;
+            width: 240px;
+            margin-left: 30px;
+        }
+
+
+        .user_3{
+            font-family: 华文中宋;
+            margin: 0;
+            padding: 0;
+            width: 300px;
+            height: 163px;
+            overflow: hidden;
+            border: 1px solid #e6e6e6;
+        }
+        .user_3 .czsy_table{
+            color:#000000;
+            border: 1px solid #000000;
+            width: 98%;
+            margin-left: 6px;
+        }
+        .user_3 .czsy_table td{
+            font-size: {$font_size[user_3]}px;
+            text-align: center;
+            border: 1px solid #000000;
+            -webkit-text-size-adjust:none;
+            height: 20px !important;
+            line-height: 20px !important;
+        }
+        .user_3 .czsy_table .czsy_title{
+            width: 58px;
+        }
+        .user_3 .czsy_table .czsy_con{
+            font-size: 12px;
+            width: 120px;
+            height: 16px;
+            overflow: hidden;
+        }
+        .user_3 .czsy_table td{
+            font-size: 12px;
+            text-align: center;
+            border: 1px solid #000000;
+            -webkit-text-size-adjust:none;
+            height: 20px !important;
+            line-height: 20px !important;
+        }
+        .user_3 .hospital_info{
+            float: left;
+            width: 190px;
+        }
+        .user_3 .czsy_barcode{
+            float: left;
+            width: 108px;
+            text-align: center;
+            margin-left: 2px;
+        }
+        .user_3 .czsy_barcode img{
+            width: 95px;
+        }
+
+
+        /*user4*/
+        .user_4{
+            font-family: 华文中宋;
+            margin: 0;
+            padding: 10px 0 0 0;
+            width: 295px;
+            height: 135px;
+            overflow: hidden;
+            border: 1px solid #e6e6e6;
+            margin-bottom: 10px;
+        }
+        .user_4 .czsy_table,.user_4 .czsy_table{
+            color:#000000;
+            border: 1px solid #000000;
+            width: 287px;
+            margin-left: 4px;
+        }
+        .user_4 .czsy_table td{
+            font-size: 12px;
+            text-align: center;
+            border: 1px solid #000000;
+            -webkit-text-size-adjust:none;
+            height: 18px !important;
+            line-height: 18px !important;
+        }
+        .user_4 .czsy_table .czsy_title{
+            width: 58px;
+        }
+        .user_4 .czsy_table .czsy_con{
+            width: 120px;
+            height: 16px;
+            overflow: hidden;
+        }
+        .user_4 .czsy_table .bot_assnum{
+            width: 98px;
+            overflow: hidden;
+            font-size: 10px;
+        }
+        .user_4 .czsy_barcode{
+            width: 95px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">斑马打印机</li>
+            <li>兄弟打印机</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">样式1</li>
+                        <li>样式2</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <!--user_1-->
+                        <div class="layui-tab-item layui-show">
+                            <form class="layui-form layui-form-pane user_1_form" lay-filter="user_1_form">
+                                <input type="hidden" name="printer_type" value="zebra">
+                                <div class="user_1" style="float: left">
+                                    <div class="hospital_name">{$hospital_name}</div>
+                                    <div class="hospital_info">
+                                        <table class="show_table" border="1px" bordercolor="#E7E7E7">
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2" class="line_height">{$data[user_1][0]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="line_height">{$data[user_1][1]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="line_height">{$data[user_1][2]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_1][3]}</td>
+                                                <td class="td_img img_line_height" rowspan="3">
+                                                    <img src="/Public/images/show_qrcode_1.png" style="width:{$fields[user_1][pic_width]}px;"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_1][4]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_1][5]}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="cus_sel">
+                                    <div class="layui-input-inline">
+                                        <select name="fields_1" lay-filter="fields_1" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_2" lay-filter="fields_2" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_3" lay-filter="fields_3" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_4" lay-filter="fields_4" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_5" lay-filter="fields_5" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_6" lay-filter="fields_6" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">二维码大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="pic_width" lay-filter="pic_width" lay-search="">
+                                            <option value="70">70px*70px</option>
+                                            <option value="60">60px*60px</option>
+                                            <option value="50">50px*50px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">字体大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="font_size" lay-filter="font_size" lay-search="">
+                                            <option value="18">18px</option>
+                                            <option value="16" selected>16px</option>
+                                            <option value="14">14px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-top: 20px;">
+                                    <div style="text-align: center">
+                                        <button class="layui-btn" lay-submit lay-filter="user_1_save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--user_2-->
+                        <div class="layui-tab-item">
+                            <form class="layui-form layui-form-pane user_2_form" lay-filter="user_2_form">
+                                <input type="hidden" name="printer_type" value="zebra">
+                                <div class="user_2" style="float: left">
+                                    <div class="hospital_name">{$hospital_name}</div>
+                                    <div class="hospital_info">
+                                        <table class="show_table" border="1px" bordercolor="#E7E7E7">
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2" class="line_height">{$data[user_2][0]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="line_height">{$data[user_2][1]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_2][2]}</td>
+                                                <td class="td_img img_line_height" rowspan="4">
+                                                    <img src="/Public/images/show_qrcode_1.png" style="width:{$fields[user_2][pic_width]}px;"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_2][3]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_2][4]}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="row_td line_height">{$data[user_2][5]}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="cus_sel">
+                                    <div class="layui-input-inline">
+                                        <select name="fields_1" lay-filter="fields_1" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_2" lay-filter="fields_2" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_3" lay-filter="fields_3" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_4" lay-filter="fields_4" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_5" lay-filter="fields_5" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_6" lay-filter="fields_6" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">二维码大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="pic_width" lay-filter="pic_width" lay-search="">
+                                            <option value="100">100px*100px</option>
+                                            <option value="90">90px*90px</option>
+                                            <option value="80">80px*80px</option>
+                                            <option value="70">70px*70px</option>
+                                            <option value="60">60px*60px</option>
+                                            <option value="50">50px*50px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">字体大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="font_size" lay-filter="font_size" lay-search="">
+                                            <option value="18">18px</option>
+                                            <option value="16" selected>16px</option>
+                                            <option value="14">14px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-top: 20px;">
+                                    <div style="text-align: center">
+                                        <button class="layui-btn" lay-submit lay-filter="user_2_save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">样式1</li>
+                        <li>样式2</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <!--user_3-->
+                        <div class="layui-tab-item layui-show">
+                            <form class="layui-form layui-form-pane user_3_form" lay-filter="user_3_form">
+                                <input type="hidden" name="printer_type" value="brother">
+                                <div class="user_3" style="float: left">
+                                    <div class="hospital_name">{$hospital_name}</div>
+                                    <div class="hospital_info">
+                                        <table class="czsy_table">
+                                            <tbody>
+                                            <tr>
+                                                <?php $filed_1 = explode('：',$data[user_3][0]);?>
+                                                <td class="czsy_title">{$filed_1[0]}</td>
+                                                <td><div class="czsy_con">{$filed_1[1]}</div></td>
+                                            </tr>
+                                            <tr>
+                                                <?php $filed_2 = explode('：',$data[user_3][1]);?>
+                                                <td class="czsy_title">{$filed_2[0]}</td>
+                                                <td><div class="czsy_con">{$filed_2[1]}</div></td>
+                                            </tr>
+                                            <tr>
+                                                <?php $filed_3 = explode('：',$data[user_3][2]);?>
+                                                <td class="czsy_title">{$filed_3[0]}</td>
+                                                <td><div class="czsy_con">{$filed_3[1]}</div></td>
+                                            </tr>
+                                            <tr>
+                                                <?php $filed_4 = explode('：',$data[user_3][3]);?>
+                                                <td class="czsy_title">{$filed_4[0]}</td>
+                                                <td><div class="czsy_con">{$filed_4[1]}</div></td>
+                                            </tr>
+                                            <tr>
+                                                <?php $filed_5 = explode('：',$data[user_3][4]);?>
+                                                <td class="czsy_title">{$filed_5[0]}</td>
+                                                <td><div class="czsy_con">{$filed_5[1]}</div></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="czsy_barcode">
+                                        <img src="/Public/images/show_qrcode_1.png"/>
+                                        <div style="color: #000000;font-size: 12px;width: 105px;overflow: hidden;">6858011371866</div>
+                                    </div>
+                                </div>
+                                <div class="cus_sel" style="margin-top: 0">
+                                    <div class="layui-input-inline">
+                                        <select name="fields_1" lay-filter="fields_1" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_2" lay-filter="fields_2" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_3" lay-filter="fields_3" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_4" lay-filter="fields_4" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_5" lay-filter="fields_5" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div class="layui-inline" style="margin-top: 10px;">
+                                    <label class="layui-form-label">二维码大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="pic_width" lay-filter="pic_width" lay-search="">
+                                            <option value="95">95px*95px</option>
+                                            <option value="90">90px*90px</option>
+                                            <option value="85">85px*85px</option>
+                                            <option value="82">82px*82px</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">字体大小</label>
+                                        <div class="layui-input-inline" style="width: 120px;">
+                                            <select name="font_size" lay-filter="font_size" lay-search="">
+                                                <option value="12" selected>12px</option>
+                                                <option value="10">10px</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item" style="margin-top: 20px;">
+                                        <div style="text-align: center">
+                                            <button class="layui-btn" lay-submit lay-filter="user_3_save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--user_4-->
+                        <div class="layui-tab-item">
+                            <form class="layui-form layui-form-pane user_4_form" lay-filter="user_4_form">
+                                <input type="hidden" name="printer_type" value="brother">
+                                <input type="hidden" name="zidingyi_value" value="{$data[user_4][0]}">
+                                <div class="user_4" style="float: left">
+                                    <table class="czsy_table">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2">{$data[user_4][0]}</td>
+                                            <td rowspan="6">
+                                                <img class="czsy_barcode" src="/Public/images/show_qrcode_1.png"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">{$data[user_4][1]}</td>
+                                        </tr>
+                                        <tr>
+                                            <?php $filed_3 = explode('：',$data[user_4][2]);?>
+                                            <td class="czsy_title">{$filed_3[0]}</td>
+                                            <td><div class="czsy_con">{$filed_3[1]}</div></td>
+                                        </tr>
+                                        <tr>
+                                            <?php $filed_4 = explode('：',$data[user_4][3]);?>
+                                            <td class="czsy_title">{$filed_4[0]}</td>
+                                            <td><div class="czsy_con">{$filed_4[1]}</div></td>
+                                        </tr>
+                                        <tr>
+                                            <?php $filed_5 = explode('：',$data[user_4][4]);?>
+                                            <td class="czsy_title">{$filed_5[0]}</td>
+                                            <td><div class="czsy_con">{$filed_5[1]}</div></td>
+                                        </tr>
+                                        <tr>
+                                            <?php $filed_6 = explode('：',$data[user_4][5]);?>
+                                            <td class="czsy_title">{$filed_6[0]}</td>
+                                            <td><div class="czsy_con">{$filed_6[1]}</div></td>
+                                        </tr>
+                                        <tr>
+                                            <?php $filed_7 = explode('：',$data[user_4][6]);?>
+                                            <td class="czsy_title">{$filed_7[0]}</td>
+                                            <td><div class="czsy_con">{$filed_7[1]}</div></td>
+                                            <td><div class="bot_assnum">68560211933</div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="cus_sel" style="margin-top: 0">
+                                    <div class="layui-input-inline">
+                                        <select name="fields_1" lay-filter="fields_1" lay-search="">
+                                            <option value="">请选择</option>
+                                                <option value="zidingyi">自定义</option>
+                                                <option value="hos_name">医院名称</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_2" lay-filter="fields_2" lay-search="">
+                                            <option value="">请选择</option>
+                                                <option value="zidingyi">自定义</option>
+                                                <option value="hos_name">医院名称</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_3" lay-filter="fields_3" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_4" lay-filter="fields_4" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_5" lay-filter="fields_5" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_6" lay-filter="fields_6" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select name="fields_7" lay-filter="fields_7" lay-search="">
+                                            <option value="">请选择</option>
+                                            <foreach name="option" item="vo">
+                                                <option value="{$key}">{$vo}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">二维码大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="pic_width" lay-filter="pic_width" lay-search="">
+                                            <option value="95">95px*95px</option>
+                                            <option value="90">90px*90px</option>
+                                            <option value="85">85px*850px</option>
+                                            <option value="80">80px*80px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">字体大小</label>
+                                    <div class="layui-input-inline" style="width: 120px;">
+                                        <select name="font_size" lay-filter="font_size" lay-search="">
+                                            <option value="12" selected>12px</option>
+                                            <option value="10">10px</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-top: 20px;">
+                                    <div style="text-align: center">
+                                        <button class="layui-btn" lay-submit lay-filter="user_4_save"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+$user_1_data = json_encode($fields[user_1]);
+$user_2_data = json_encode($fields[user_2]);
+$user_3_data = json_encode($fields[user_3]);
+$user_4_data = json_encode($fields[user_4]);
+?>
+</body>
+</html>
+<script>
+var hospital_name = "{$hospital_name}";
+var user_1_data = {$user_1_data};
+var user_2_data = {$user_2_data};
+var user_3_data = {$user_3_data};
+var user_4_data = {$user_4_data};
+</script>
+<script>
+    layui.use('controller/assets/print/design_label', layui.factory('controller/assets/print/design_label'));
+</script>

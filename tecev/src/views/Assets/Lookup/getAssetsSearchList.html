@@ -1,0 +1,284 @@
+<style>
+    #LAY-Assets-Lookup-getAssetsSearchList .layui-input{width: 190px;}
+    .layui-form-label{width: 85px;}
+</style>
+<?php if($menuData = get_menu_name('Assets','Lookup','getAssetsSearchList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<div class="layui-fluid" id="LAY-Assets-Lookup-getAssetsSearchList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsSearchListAssets" placeholder="请输入设备名称" name="getAssetsSearchListAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsSearchListAssetsNum"  placeholder="请输入设备编号" name="getAssetsSearchListAssetsNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >原编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListAssetsOrnum"  value="" autocomplete="off" class="layui-input" placeholder="请输入资产原编码" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsSearchListCategory"  placeholder="请输入设备分类" name="getAssetsSearchListCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">规格/型号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListModel"  value="" autocomplete="off" class="layui-input" placeholder="请输入规格/型号" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >品牌：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListBrand"  value="" autocomplete="off" class="layui-input" placeholder="请输入品牌" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >单位：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListUnit"  value="" autocomplete="off" class="layui-input" placeholder="请输入单位" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">使用科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsSearchListDepartment"  placeholder="请输入科室名称" name="getAssetsSearchListDepartment">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">管理科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsSearchListManagedepartment" placeholder="请输入管理科室" name="getAssetsSearchListManagedepartment">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">资产负责人：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListAssetsrespon" lay-search="" >
+                                        <option value="">请选择资产负责人</option>
+                                        <volist name="users" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">财务分类：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListFinanceid" lay-search="" >
+                                        <option value="">请选择财务分类</option>
+                                        <volist name="finance" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">资金来源：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListCapitalfrom" lay-search="" >
+                                        <option value="">请选择资金来源</option>
+                                        <volist name="capitalfrom" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">资产来源：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListAssfromid" lay-search="" >
+                                        <option value="">请选择资产来源</option>
+                                        <volist name="assfrom" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">资产状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListStatus" lay-search="" >
+                                        <option value="">请选择资产状态</option>
+                                        <volist name="status" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">折旧状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListDepreciation_method" lay-search="" >
+                                        <option value="">请选择折旧状态</option>
+                                        <option value="1">平均折旧法</option>
+                                        <option value="2">工作量法</option>
+                                        <option value="3">加速折旧法</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >发票编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListInvoicenum"  value="" autocomplete="off" class="layui-input" placeholder="请输入发票编号" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">入库日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="getAssetsSearchListAssetsDate" id="getAssetsSearchListAssetsDate" value=""  placeholder="请选择入库日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">出厂日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="getAssetsSearchListFactorydate" id="getAssetsSearchListFactorydate" value=""  placeholder="请选择出厂日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">启用日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="getAssetsSearchListOpendate" id="getAssetsSearchListOpendate" value=""  placeholder="请选择启用日期" autocomplete="off" style="cursor: pointer;" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label ">录入人员：</label>
+                                <div class="layui-input-inline">
+                                    <select name="getAssetsSearchListAssetsUser" lay-search="" >
+                                        <option value="">请选择录入人员</option>
+                                        <volist name="users" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >供应商：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListSupplier"  value="" autocomplete="off" class="layui-input" placeholder="请输入供应商" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >生产厂家：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListFactory"  value="" autocomplete="off" class="layui-input" placeholder="请输入生产厂家" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >维修公司：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListRepair"  value="" autocomplete="off" class="layui-input" placeholder="请输入维修公司" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >残净值率：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListResidual_value"  value="" autocomplete="off" class="layui-input" placeholder="请输入残净值率" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >出厂编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListFactorynum"  value="" autocomplete="off" class="layui-input" placeholder="请输入出厂编号" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >预计年限：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListExpected_life"  value="" autocomplete="off" class="layui-input" placeholder="请输入预计使用年限" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label " >折旧年限：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text"  name="getAssetsSearchListDepreciable_lives"  value="" autocomplete="off" class="layui-input" placeholder="请输入折旧年限" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备类型：</label>
+                                <input type="hidden" name="checkFirstaid" value="" />
+                                <input type="hidden" name="checkSpecial" value="" />
+                                <input type="hidden" name="checkAssets" value="" />
+                                <input type="hidden" name="checkMetering" value="" />
+                                <input type="checkbox"  title="急救资产" lay-filter="isfirstaid"  lay-skin="primary">
+                                <input type="checkbox"  title="特种资产" lay-filter="isspecial" lay-skin="primary">
+                                <input type="checkbox"  title="计量资产" lay-filter="ismetering"  lay-skin="primary">
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline">
+                                        <button class="layui-btn" type="button" lay-submit="" lay-filter="AssetsSearchListSearch" id="eventquery"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon">&#xe62d;</i> 列表
+                </div>
+                <div class="layui-card-body">
+                    <div id="AssetsSearchList" lay-filter="AssetsSearchList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('assets/lookup/getAssetsSearchList', layui.factory('assets/lookup/getAssetsSearchList'));
+</script>
+<script src="__PUBLIC__/js.js?v={:mt_rand(1,54561)}"></script>
+

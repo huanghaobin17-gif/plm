@@ -1,0 +1,567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<style>
+    .layui-elem-quote {
+        margin: 0px;
+        padding: 10px;
+        font-weight: bold
+    }
+
+    .th_center th, .th_center {
+        text-align: center !important;
+    }
+
+    .layui-inline {
+        margin-bottom: 10px !important;
+        margin-right: 0 !important;
+    }
+
+    .th-inner {
+        text-align: center;
+    }
+
+
+    .layui-table {
+        margin: 0;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 0;
+    }
+
+    .bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+        padding: 0;
+    }
+
+    .layui-table tr td {
+        text-align: center;
+    }
+
+    .offer_tbody textarea {
+        min-height: 50px;
+        border: none!important;
+        resize: none!important;
+    }
+
+    .no-padding-td {
+        padding: 0 !important;
+    }
+
+    .no-padding-td .layui-input {
+        border: none;
+        height: 48px;
+        line-height: 48px;
+    }
+
+    .layui-form-radio {
+        margin: 0;
+        padding-right: 5px;
+    }
+
+    .layui-textarea {
+        min-height: 90px;
+    }
+    .green{color: #85AB70;cursor: pointer;}
+    #media{
+        color:#76ABDF;
+        cursor: pointer;
+    }
+</style>
+<body>
+<input type="hidden" value="{$repArr.repid}" name="repid">
+<input type="hidden" value="{$url}" name="action">
+<div class="containDiv" id="LAY-Repair-Repair-doOffer">
+    <!--设备基础信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">设备基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>资产编号：</th>
+                <td>{$asArr.assnum}</td>
+                <th>规格型号：</th>
+                <td>{$asArr.model}</td>
+            </tr>
+            <tr>
+                <th>资产名称：</th>
+                <td>{$asArr.assets}</td>
+                <th>资产厂家：</th>
+                <td>{$asArr.factory}</td>
+            </tr>
+            <tr>
+                <th>分类名称：</th>
+                <td>{$asArr.category}</td>
+                <th>使用科室：</th>
+                <td>{$asArr.department}</td>
+            </tr>
+            <tr>
+                <th>保修截止日期：</th>
+                <td>{$asArr.guarantee_date}</td>
+                <th>保修状态：</th>
+                <td>{$asArr.guaranteeStatus}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--报修申报信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">报修申请信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>报修人：</th>
+                <td>{$repArr.applicant}</td>
+                <th>报修日期：</th>
+                <td>{$repArr.applicant_time}</td>
+                <th>报修电话：</th>
+                <td>{$repArr.applicant_tel}</td>
+            </tr>
+            <tr>
+                <th>故障描述：</th>
+                <td colspan="5">{$repArr.breakdown}</td>
+            </tr>
+            <tr>
+                <th>语音描述：</th>
+                <td colspan="5">
+                    <if condition="$repArr['wxTapeAmr']">
+                        <i class="layui-icon layui-icon-voice"><audio src="{$repArr.wxTapeAmr}" id="audio"></audio><span class="voiceTime">{$repArr.seconds}〞</span></i>
+                        <span id="media">点击播放</span>
+                        <else/>
+                        无
+                    </if>
+                </td>
+            </tr>
+            <tr>
+                <th>故障照片：</th>
+                <td colspan="5">
+                    <empty name="repArr['pic_url']">
+                        无
+                        <else/>
+                        <a class="green" id="showImages">
+                            查看(共{$repArr.imgCount}张)
+                            <volist name="repArr['addRepair_pic_url']" id="v">
+                                <input type="hidden" class="imageUrl" value="{$v}">
+                            </volist>
+                        </a>
+                    </empty>
+                </td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$repArr.applicant_remark}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--维修检修信息-->
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">维修接单与检修信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tr>
+                <th>响应人：</th>
+                <td>{$repArr.response}</td>
+                <th>响应时间：</th>
+                <td>{$repArr.response_date}</td>
+                <th>预计修复日期：</th>
+                <td>{$repArr.expect_time}</td>
+            </tr>
+            <tr>
+                <th>故障问题：</th>
+                <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+            </tr>
+            <tr>
+                <th>解决方式：</th>
+                <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                    <td colspan="5">现场解决</td>
+                    <else/>
+                    <td colspan="5">非现场解决</td>
+                </if>
+            </tr>
+            <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                <tr>
+                    <th>维修性质：</th>
+                    <td colspan="5">{$repArr.repTypeName}</td>
+                </tr>
+            </if>
+            <if condition="$repArr['repair_type'] eq C('REPAIR_TYPE_IS_GUARANTEE_NAME')">
+                <tr>
+                    <th>维修厂家：</th>
+                    <td>{$repArr.repair}</td>
+                    <th>维修公司联系人：</th>
+                    <td>{$repArr.repa_user}</td>
+                    <th>维修公司联系电话：</th>
+                    <td>{$repArr.repa_tel}</td>
+                </tr>
+            </if>
+            <tr>
+                <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                    <th>处理详情：</th>
+                    <td colspan="5">{$repArr.dispose_detail}</td>
+                    <else/>
+                    <th>检修备注：</th>
+                    <td colspan="5">{$repArr.repair_remark}</td>
+                </if>
+            </tr>
+        </table>
+    </div>
+    <!--上传文件-->
+    <notempty name="files">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">相关文件查看</div>
+            <table class="layui-table read-table-l" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+                <colgroup>
+                    <col width="15%">
+                    <col width="40%">
+                    <col width="30%">
+                    <col width="15%">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>序号：</th>
+                    <th>文件名称：</th>
+                    <td>上传时间</td>
+                    <th>操作：</th>
+                </tr>
+                <volist name="files" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>{$vo.operation}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--审批-->
+    <notempty name="approves">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审核信息</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="90">
+                    <col width="140">
+                    <col width="70">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>审核人</th>
+                    <th>审核时间</th>
+                    <th>审核状态</th>
+                    <th>审核意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="approves" id="app">
+                    <tr>
+                        <td>{$app.approver}</td>
+                        <td>{$app.approve_time}</td>
+                        <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                            <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                            <else/>
+                            <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                        </if>
+                        <td>{$app.remark}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <!--第三方-->
+    <if condition="$repArr['status'] EQ C('REPAIR_QUOTATION')">
+        <fieldset class="layui-elem-field layui-field-title offer" style="display: none;">
+            <legend>维修报价记录表单</legend>
+        </fieldset>
+        <div class="margin-bottom-15 offer" style="display: none;">
+            <form class="layui-form">
+                <div class="layui-inline">
+                    <span style="color: red;font-weight: bold">注：请设置一个最终厂家后再提交</span>
+                </div>
+                <input type="hidden" value="{$repArr.repid}" name="repid">
+                <table class="layui-table offerTbody" lay-even lay-size="sm">
+                    <thead>
+                    <tr>
+                        <th class="th-align-center" ><span class="rquireCoin">*</span>公司名称</th>
+                        <th style="width: 60px;" class="th-align-center" ><span class="rquireCoin">*</span>联系人
+                        </th>
+                        <th style="width: 80px;" class="th-align-center" ><span class="rquireCoin">*</span>联系方式
+                        </th>
+                        <th style="width: 80px;" class="th-align-center" ><span class="rquireCoin">*</span>服务金额</th>
+                        <th style="width: 100px;" class="th-align-center" ><span class="rquireCoin">*</span>发票
+                        </th>
+                        <th style="width: 80px;" class="th-align-center" ><span class="rquireCoin">*</span>到货/服务周期
+                        </th>
+                        <th class="th-align-center" >建议渠道</th>
+                        <th class="th-align-center" >建议说明</th>
+                        <th class="th-align-center" >备注</th>
+                        <th style="width: 50px;" class="th-align-center" >最终选择</th>
+                        <th style="width: 80px;" class="th-align-center" >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="offer_tbody">
+                        <empty name="companyOld">
+                            <!--新增厂家的TR块-->
+                            <tr class="add">
+                                <!--公司名称-->
+                                <td class="no-padding-td" style="text-align: left;">
+                                    <select name="offer_company" lay-filter="companyInfo" lay-search="">
+                                        <option value="">请选择公司</option>
+                                        <volist name="company" id="v">
+                                            <option value="{$v.olsid}">{$v.sup_name}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                                <!--联系人-->
+                                <td class="no-padding-td">
+                                    <input type="text"  name="offer_contacts" class="layui-input" placeholder="联系人">
+                                </td>
+                                <!--联系方式-->
+                                <td class="no-padding-td">
+                                    <input type="text"  name="telphone" class="layui-input" placeholder="联系方式">
+                                </td>
+                                <!--服务金额-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="total_price" class="layui-input" placeholder="服务金额">
+                                </td>
+                                <!--发票-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="invoice" class="layui-input" placeholder="发票">
+                                </td>
+                                <!--到货/服务周期-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="cycle" class="layui-input" placeholder="到货/服务周期">
+                                </td>
+                                <!--建议渠道-->
+                                <td class="no-padding-td"></td>
+                                <!--建议说明-->
+                                <td class="no-padding-td"></td>
+                                <!--备注-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="remark" class="layui-input" placeholder="备注">
+                                </td>
+                                <!--最终选择-->
+                                <td class="no-padding-td"></td>
+                                <!--操作-->
+                                <td>
+                                    <div class="layui-btn-group">
+                                        <button class="layui-btn layui-btn-xs addCompany" lay-submit lay-filter="addCompany">
+                                            添加
+                                        </button>
+                                        <button class="layui-btn layui-btn-xs layui-btn-primary offerReset"  style="margin-left:5px">
+                                            重置
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--新增厂家的TR块  END-->
+                        <else/>
+                            <!--已入库厂家数据-->
+                            <volist name="companyOld" id="v">
+                                <tr class="offid_tr" data-offid="{$v.offid}" data-olsid="{$v.offer_company_id}">
+                                    <td class="company_td" style="text-align: center; vertical-align: middle; ">{$v.offer_company}</td>
+                                    <td class="contacts_td" style="text-align: center; padding: 0;">{$v.offer_contacts}</td>
+                                    <td class="telphone_td" style="text-align: center; padding: 0;">{$v.telphone}</td>
+                                    <td class="total_price no-padding-td"  style="text-align: center; vertical-align: middle;">
+                                        <input type="text" class="layui-input" name="price" value="{$v.total_price}">
+                                    </td>
+                                    <td class="invoice_td" style="text-align: center; padding: 0;">
+                                        {$v.invoice}
+                                    </td>
+                                    <td class="cycle_td" style="text-align: center; padding: 0;">
+                                        {$v.cycle}
+                                    </td>
+                                    <td>
+                                        <if condition="$v[proposal] eq 1">
+                                            建议选用
+                                            <else/>
+                                            /
+                                        </if>
+                                    </td>
+                                    <td style="text-align: center; padding: 0;">
+                                        {$v.proposal_info}
+                                    </td>
+                                    <td class="remark_td" style="text-align: center; padding: 0;">
+                                        {$v.remark}
+                                    </td>
+                                    <td>
+                                        <input name="last_decisioin" type="radio" value="{$v.offer_company}">
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle; ">-</td>
+                                </tr>
+                            </volist>
+                            <!--已入库厂家数据 END-->
+
+                            <!--新增厂家的TR-->
+                            <tr class="add">
+                                <!--公司名称-->
+                                <td class="no-padding-td" style="text-align: left;">
+                                    <select name="offer_company" lay-filter="companyInfo" lay-search="">
+                                        <option value="">请选择公司</option>
+                                        <volist name="company" id="v">
+                                            <option value="{$v.olsid}">{$v.sup_name}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                                <!--联系人-->
+                                <td class="no-padding-td">
+                                    <input type="hidden"  name="olsid" class="layui-input">
+                                    <input type="text"  name="offer_contacts" class="layui-input" placeholder="联系人">
+                                </td>
+                                <!--联系方式-->
+                                <td class="no-padding-td">
+                                    <input type="text"  name="telphone" class="layui-input" placeholder="联系方式">
+                                </td>
+                                <!--服务金额-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="total_price" class="layui-input" placeholder="服务金额">
+                                </td>
+                                <!--发票-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="invoice" class="layui-input" placeholder="发票">
+                                </td>
+                                <!--到货/服务周期-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="cycle" class="layui-input" placeholder="到货/服务周期">
+                                </td>
+                                <!--建议渠道-->
+                                <td class="no-padding-td"></td>
+                                <!--建议说明-->
+                                <td class="no-padding-td"></td>
+                                <!--备注-->
+                                <td class="no-padding-td">
+                                    <input type="text" name="remark" class="layui-input" placeholder="备注">
+                                </td>
+                                <!--最终选择-->
+                                <td class="no-padding-td"></td>
+                                <!--操作-->
+                                <td>
+                                    <div class="layui-btn-group">
+                                        <button class="layui-btn layui-btn-xs addCompany" lay-submit lay-filter="addCompany">
+                                            添加
+                                        </button>
+                                        <button class="layui-btn layui-btn-xs layui-btn-primary offerReset"  style="margin-left:5px">
+                                            重置
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--新增厂家的TR  END-->
+                        </empty>
+                    </tbody>
+                </table>
+                <div class="layui-form-item" style="margin-top: 30px;">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">原因说明：</label>
+                        <div class="layui-input-block">
+                            <textarea class="layui-textarea" name="decision_reasion">{$reason}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 30px;">
+                    <div style="text-align: center">
+                        <button class="layui-btn" lay-submit lay-filter="saveOffer"><i class="layui-icon">&#xe609;</i> 确认并结束报价</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <else />
+        <div class="margin-bottom-15 offer">
+            <div class="layui-elem-quote">维修报价记录</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center">公司名称</th>
+                    <th style="text-align: center">联系人</th>
+                    <th style="text-align: center">联系方式</th>
+                    <th style="text-align: center">总价</th>
+                    <th style="text-align: center;">发票</th>
+                    <th style="text-align: center;">到货/服务周期</th>
+                    <th style="text-align: center;">建议渠道</th>
+                    <th style="text-align: center;">建议说明</th>
+                    <th style="text-align: center;">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="company">
+                    <tr>
+                        <td colspan="10">无记录</td>
+                    </tr>
+                    <else/>
+                    <volist name="companyOld" id="v">
+                        <tr class="offid_tr">
+                            <td>{$v.offer_company}</td>
+                            <td>{$v.offer_contacts}</td>
+                            <td>{$v.telphone}</td>
+                            <td>{$v.total_price}</td>
+                            <td>{$v.invoice}</td>
+                            <td>{$v.cycle}</td>
+                            <td>
+                                <if condition="$v[proposal] eq 1">
+                                    建议选用
+                                    <else/>
+                                    /
+                                </if>
+                            </td>
+                            <td>{$v.proposal_info}</td>
+                            <td>{$v.remark}</td>
+                        </tr>
+                    </volist>
+                </empty>
+                <notempty name="companyLast">
+                    <!-- <tr>
+                        <th style="border-top: none;text-align: right">最终决定者：</th>
+                        <td style="border-top: none;text-align: left" colspan="8">{$companyLast.decision_user}</td>
+                    </tr> -->
+                    <tr>
+                        <th style="text-align: right">最终决定时间：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.decision_adddate}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">最终选择：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.offer_company}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right">原因说明：</th>
+                        <td style="text-align: left" colspan="8">{$companyLast.decision_reasion}</td>
+                    </tr>
+                </notempty>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <!--第三方END-->
+</div>
+</body>
+</html>
+<script>
+    var is_scene = '<?php echo($repArr[is_scene]); ?>';
+    var repair_type = '<?php echo($repArr[repair_type]); ?>';
+    var username = '<?php echo(session("username")); ?>';
+    var companyInfo = {$companyInfo};
+    $(document).ready(function () {
+        if (is_scene == 1) {
+            $('.is_scene').show();
+            $('.not_scene').hide();
+            $('.offer').hide();
+        } else {
+            $('.is_scene').hide();
+            $('.not_scene').show();
+            switch (repair_type){
+                case  2:
+                case '2':
+                    $('.offer').show();
+                    break;
+                default:
+                    $('.offer').hide();
+                    break;
+            }
+        }
+    });
+</script>
+<script>
+    layui.use('controller/repair/repair/doOffer', layui.factory('controller/repair/repair/doOffer'));
+</script>

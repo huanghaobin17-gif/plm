@@ -1,0 +1,268 @@
+<?php if($menuData = get_menu_name('BaseSetting','IntegratedSetting','system')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    #LAY-BaseSetting-IntegratedSetting-system .layui-table{margin: 0}
+    #LAY-BaseSetting-IntegratedSetting-system .layui-table th{font-weight: normal; text-align: right;}
+    #LAY-BaseSetting-IntegratedSetting-system .layui-table td{text-align: left;width: 70%;}
+    #LAY-BaseSetting-IntegratedSetting-system .layui-form-item{margin: 0;}
+    #LAY-BaseSetting-IntegratedSetting-system .layui-form-pane .layui-input-block{margin-left: 0; width: 780px;}
+    #LAY-BaseSetting-IntegratedSetting-system .inputwidth{width:700px;}
+    #LAY-BaseSetting-IntegratedSetting-system .cuslabel{
+        width: 160px !important;
+        text-align: right !important;
+    }
+</style>
+<div class="layui-fluid" id="LAY-BaseSetting-IntegratedSetting-system">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <div class="" style="padding-top: 10px;">
+                    <blockquote class="layui-elem-quote cusquote">
+                        注意：微信参数配置请参照本院所属微信公众号的设置进行。微信参数设置错误会导致微信版本无法使用或无法收取各种系统发送的消息，请慎重设置！！！
+                    </blockquote>
+                </div>
+            </div>
+            <div class="layui-card-body">
+                <form class="layui-form layui-form-pane" id="form" method="post" action="{:U('Admin/BaseSetting/IntegratedSetting/system')}">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="220">
+                            <col><col>
+                        </colgroup>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>AppID：</th>
+                            <td >
+                                <div class="layui-input-block">
+                                    <input type="text" name="appId" value="<?php echo $system['APPID']; ?>" class="layui-input inputwidth" >
+                                </div>
+                                <!--<span>当前的APPID：wx21b1dd38c6b083f3</span>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>AppSecret：</th>
+                            <td>
+                                <div class="layui-input-block">
+                                    <input type="text" name="secret"  value="<?php echo $system['SECRET']; ?>" class="layui-input inputwidth">
+                                </div>
+                                <!--<span>当前的SECRET：4e194716a3de2d38efd46f4d62a4cb98</span>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>微信公众号二维码:</th>
+                            <td>
+                                <div class="layui-input-block">
+                                    <img id="img" src="{$system['WX_LOGO']}" width="100px" height="100px" >
+                                    <button type="button" class="layui-btn" id="img_file">
+                                         <i class="layui-icon">&#xe67c;</i>上传图片
+                                    </button>
+                                    <input type="hidden" id="img_url" name="img_url" value="{$system['WX_LOGO']}">
+                                </div>
+                                <!--<span>当前的SECRET：4e194716a3de2d38efd46f4d62a4cb98</span>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>微信通知信息模板ID :</th>
+                            <?php foreach($system as $v):
+                    $system['TEMPLATEIDS'][value] = $v[value] ; ?>
+                            <?php endforeach; ?>
+                            <td>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">验收通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="ystz"  value="<?php echo $v['YSTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">验收结果通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="ysjgtz"  value="<?php echo $v['YSJGTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">计划已执行提醒：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="tzzxr"  value="<?php echo $v['TZZXR']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">报障通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="bztz" value="<?php echo $v['BZTZ']; ?>"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">业务受理提醒：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="ywsltx"  value="<?php echo $v['YWSLTX']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">维修处理通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="wxcltz"  value="<?php echo $v['WXCLTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">问题处理进展通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="wtjztz"  value="<?php echo $v['WTJZTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">审批申请提醒：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="spsqtz"  value="<?php echo $v['SPSQTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">审批结果通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="spjgtz"  value="<?php echo $v['SPJGTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">派单成功通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="pdtz"  value="<?php echo $v['PDTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">设备归还通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="yqtz"  value="<?php echo $v['YQTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">设备使用超时通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="cstz"  value="<?php echo $v['CSTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">事件上报成功通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="cgsbtz"  value="<?php echo $v['CGSBTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">计划进展提醒：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="jhjztx"  value="<?php echo $v['JHJZTX']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">工作进度通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="gzjdtz"  value="<?php echo $v['GZJDTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">系统运行简报：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="xtyxjb"  value="<?php echo $v['XTYXJB']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label cuslabel">工单处理通知：</label>
+                                        <div class="layui-input-inline" style="width: 570px;">
+                                            <input type="text" name="gdcltz"  value="<?php echo $v['GDCLTZ']; ?>" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align: center;margin-top: 15px;margin-bottom: 30px;">
+                        <button class="layui-btn" id="input_btn" type="button" style=""><i class="layui-icon" >&#xe609;</i> 保存</button>
+                        <button type="reset" class="layui-btn layui-btn-primary" ><i class="layui-icon">ဂ</i> 重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // ajax 提交表单
+    $(document).ready(function(){
+        $("#input_btn").click(function(){
+            var tourl = $("#form").attr("action");
+
+            $.post(tourl,$("form").serialize(),function(data){
+                if(data['status'] == 0){
+                    layer.msg(data['info'],{icon:2})
+                }
+                if(data['status'] == 1){
+                    layer.msg(data['info'],{icon:1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }
+                if (data['status'] == -1) {
+                    layer.msg(data['msg'],{icon:2,time:3000});
+                }
+            });
+        });
+    });
+
+   layui.use('upload', function(){
+  var upload = layui.upload;
+
+  //执行实例
+  var uploadInst = upload.render({
+    elem: '#img_file' //绑定元素
+    ,data:{"action":"code_pic"}
+    ,url: admin_name+'/IntegratedSetting/system.html' //上传接口
+    ,done: function(res){
+      //上传完毕回调
+      if (res.status==1) {
+      document.getElementById('img_url').value=res.data.src;
+      $('#img').attr('src',res.data.src);}
+      else{
+        layer.msg(res.msg);
+        window.location.reload();
+      }
+    }
+    ,error: function(){
+      //请求异常回调
+    }
+  });
+});
+</script>

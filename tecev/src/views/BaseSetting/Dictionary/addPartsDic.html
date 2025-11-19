@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加配件字典</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-BaseSetting-Dictionary-addPartsDic .bsSuggest{
+            height:24px;
+        }
+
+
+        #LAY-BaseSetting-Dictionary-addPartsDic .addIcon {
+            position: absolute;
+            right: -8px;
+            top: 9px;
+            cursor: pointer;
+            color: #0a8ddf;
+        }
+        #addSuppliersDiv .layui-form-label {
+            width: 115px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-BaseSetting-Dictionary-addPartsDic">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加配件字典</legend>
+    </fieldset>
+
+    <div class="layer-to-top">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 配件名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="parts" placeholder="请输入配件名称" required lay-verify="required|Parts" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">配件型号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="parts_model" placeholder="请输入配件型号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">配件单价：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="price" lay-verify="price" placeholder="请输入配件单价" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">配件单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" placeholder="请输入配件单位" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">字典类别：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group" id="bdepart">
+                            <input type="text" class="form-control bsSuggest" name="dic_category" id="addPartsDicCategory" placeholder="选择或填写新类别" />
+                            <div class="input-group-btn">
+                                <ul id="showhos" class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">配件品牌：</label>
+                    <div class="layui-input-inline">
+                        <div class="input-group">
+                            <input type="text" class="form-control bsSuggest" name="brand" id="addPartsDicBrand" placeholder="选择或填写新品牌" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">生产厂商：</label>
+                    <div class="layui-input-inline">
+                        <select name="supplier_id" lay-filter="supplier_id" lay-search>
+                            <option value="">请选择生产厂商</option>
+                            <volist name="supplierList" id="vo">
+                                <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                    <div class="addIcon" id="addSupplier" data-url="{$menuData['actionurl']}">
+                        <i class="layui-icon"> &#xe654;</i>
+                    </div>
+                    <?php endif?>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="add"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var addPartsDicUrl = "{$addPartsDicUrl}";
+    layui.use('controller/basesetting/dictionary/addPartsDic', layui.factory('controller/basesetting/dictionary/addPartsDic'));
+</script>

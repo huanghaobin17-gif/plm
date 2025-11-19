@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关闭</title>
+    <link rel="stylesheet" href="__PUBLIC__/mobile/css/weui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/mobile/css/jquery-weui.css" media="all">
+    <style>
+        .appinfo{
+            font-size: 40px;
+        }
+        .apptitle{
+            height: 80px;
+            line-height: 80px;
+            margin-left: 20px;
+        }
+        .appimg,.apptitle{
+            float: left;
+        }
+        .appzh{
+            font-size: 60px;
+            color: black;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+        .appti{
+            margin-top: 40px;
+            font-size: 40px;
+            color: #C3C3C3;
+            height: 120px;
+            line-height: 120px;
+            border-bottom: 1px solid #E6E6E6;
+        }
+        .userinfo{
+            height: 210px;
+        }
+        .userinfo ul{
+            margin: 0;
+            padding: 0;
+        }
+        .userinfo ul li{
+            float: left;
+            list-style-type:none;
+            height: 80px;
+            margin-right: 20px;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin: 100px 50px 40px 50px;">
+    <div class="appinfo">
+        <div class="appimg"><img style="height: 80px;" src="/Public/images/logo-new.png"/></div>
+        <div class="apptitle">医疗设备管理系统 &nbsp;&nbsp;申请使用</div>
+    </div>
+    <div style="clear: both"></div>
+    <div class="appzh">你的账号信息（昵称、头像、地区及性别）</div>
+    <div class="appti">你可以选择个人信息登录</div>
+    <div class="userinfo">
+        <ul>
+            <li>
+                <img style="height: 120px;border-radius: 10px;" src="{$userinfo.headimgurl}"/>
+            </li>
+            <li>
+                <div style="height: 60px;line-height: 60px;font-size: 45px;color: black;">{$userinfo.nickname}</div>
+                <div style="height: 60px;color: #CFCFCF;font-size: 40px;">微信个人信息</div>
+            </li>
+        </ul>
+    </div>
+    <div style="clear: both"></div>
+    <div class="button-sp-area" style="margin: 30px auto;width: 360px;">
+        <input type="hidden" name="openid" value="{$openid}"/>
+        <input type="hidden" name="state" value="{$state}"/>
+        <a href="javascript:;" class="weui-btn weui-btn_primary submit" data-id="1" style="height: 90px;line-height: 90px;font-size: 40px;">同意</a>
+        <a href="javascript:;" class="weui-btn weui-btn_default submit" data-id="0" style="margin-top:40px;color:green;font-weight:bold;height: 90px;line-height: 90px;font-size: 40px;">拒绝</a>
+    </div>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/jquery-3.7.0.min.js"></script>
+<script src="/tecev/start/layui/layui.js"></script>
+<script src="__PUBLIC__/mobile/js/mobileCommon.js" type="text/javascript"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, layer = layui.layer;
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        $('.submit').on('click', function () {
+            var params = {};
+            params.openid = $('input[name="openid"]').val();
+            params.state = $('input[name="state"]').val();
+            params.is_agree = $(this).attr('data-id');
+            $.ajax({
+                type: "POST",
+                data:params,
+                url: mobile_name+'/Notin/code.html',
+                //返回数据的格式
+                dataType: "json",
+                async: true,
+                beforeSend:beforeSend,
+                success: function (data) {
+                    //关闭窗口
+                    window.WeixinJSBridge.call('closeWindow')
+                },
+                //调用出错执行的函数
+                error: function () {
+                    //请求出错处理
+                    layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                },
+                complete:complete
+            });
+        });
+        function beforeSend(){
+            layer.load(2);
+        }
+        function complete(){
+            layer.closeAll('loading');
+        }
+    });
+</script>

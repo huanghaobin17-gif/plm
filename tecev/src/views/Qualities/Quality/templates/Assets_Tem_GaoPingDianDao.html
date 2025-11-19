@@ -1,0 +1,316 @@
+<div style="min-height: 1158px;">
+    <div class="layui-row">
+        <!--监护仪-->
+        <h2 style="text-align: center; margin-bottom: 25px;"><!--中山大学附属第一医院东院-->高频电刀质量控制检测原始记录表</h2>
+        <div>
+            <span class="fl">检测报告编号：<em>{$qsInfo.plan_num}</em></span>
+            <span class="fr">制表日期：<em>{$date}</em></span>
+        </div>
+        <br/>
+        <form class="layui-form">
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="150">
+                    <col width="550">
+                    <col width="200">
+                    <col width="550">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="4" class="text-left" style="text-align: left;">一、设备基本信息</th>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td><em>{$asInfo.department}</em></td>
+                    <th>质控计划名称</th>
+                    <td><em>{$qsInfo.plan_name}</em></td>
+                </tr>
+                <tr>
+                    <th>检测依据</th>
+                    <td colspan="3"><em>{$qsInfo.basis}</em></td>
+                </tr>
+                <tr>
+                    <th>项目类型</th>
+                    <th>被检设备</th>
+                    <th colspan="2">检测仪器（标准器、模拟器）</th>
+                </tr>
+                <tr>
+                    <th>设备名称</th>
+                    <td><em>{$asInfo.assets}</em></td>
+                    <td colspan="2"><em>{$qsInfo.instrument}</em></td>
+                </tr>
+                <tr>
+                    <th>品牌</th>
+                    <td><em>{$asInfo.brand}</em></td>
+                    <th>规格 / 型号</th>
+                    <td><em>{$asInfo.model}</em></td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td><em>{$asInfo.assnum}</em></td>
+                    <th>产品序列号</th>
+                    <td><em>{$asInfo.serialnum}</em></td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td><em>{$asInfo.opendate}</em></td>
+                    <th>上次质控日期</th>
+                    <td><em>{$asInfo.test_date}</em></td>
+                </tr>
+                <tr>
+                    <th colspan="4" style="text-align: left !important;">二、性能检测、校准、记录</th>
+                </tr>
+                <tr>
+                    <th>外观功能</th>
+                    <td class="no-padding-td" colspan="3" style="text-align: left!important;">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col width="100">
+            <col width="80">
+            <col width="90">
+            <col width="90">
+            <col width="90">
+            <col width="90">
+            <col width="90">
+            <col width="250">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td colspan="3">最大允许误差</td>
+            <td  colspan="5">输出功率±20%、高频漏电流≤150 mA（单极）、高频漏电流≤60 mA（双极）</td>
+        </tr>
+        <tr>
+            <th rowspan="8">输出功率(W)</th>
+            <th rowspan="2">单极电切</th>
+            <td>设定值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+        </tr>
+        <tr>
+            <td>测量值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th rowspan="2">
+                单极电凝
+            </th>
+            <td>设定值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+        </tr>
+        <tr>
+            <td>测量值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th rowspan="2">双极电切</th>
+            <td>设定值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+        </tr>
+        <tr>
+            <td>测量值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th rowspan="2">双极电凝</th>
+            <td>设定值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+        </tr>
+        <tr>
+            <td>测量值</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col width="100">
+            <col width="150">
+            <col width="45">
+            <col width="45">
+            <col width="150">
+            <col width="150">
+            <col width="45">
+            <col width="45">
+            <col width="150">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th rowspan="3">高频漏电(mA)</th>
+            <td>单极模式（≤150 mA）</td>
+            <td>单极电切</td>
+            <td>单极电凝</td>
+            <td>单极模式测试结果</td>
+            <td>双极模式（≤60 mA）</td>
+            <td>双极电切</td>
+            <td>双极电凝</td>
+            <td>双极模式测试结果</td>
+        </tr>
+        <tr>
+            <td>电极高频漏电</td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+            <td>电极1</td>
+            <td></td>
+            <td></td>
+            <td rowspan="2"><div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不适用
+                </div></td>
+        </tr>
+        <tr>
+            <td>中性电极高频漏电</td>
+            <td></td>
+            <td></td>
+            <td>电极2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col width="200">
+            <col>
+            <col width="200">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>接触电阻监测</th>
+            <td>
+                <div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                </div>
+            </td>
+            <th>声光报警功能</th>
+            <td>
+                <div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>检测结论</th>
+            <td>
+                <div class="layui-inline">
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 合格
+                    <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不合格
+                </div>
+            </td>
+            <th>情况说明</th>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+            <!--签字表-->
+            <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="3" style="text-align: left !important;">三、经办工程师及验收人员意见及签字</th>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-left">
+                        评分：
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>1分、
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>2分、
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>3分、
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>4分、
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>5分
+                    </td>
+                </tr>
+                <tr>
+                    <th>设备使用部门负责人意见及签字 </th>
+                    <th>经办工程师意见及签字</th>
+                    <th>设备科意见及签字</th>
+                </tr>
+                <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$asInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$asInfoautograph}">
+                        <span>日期：{$asInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$qsInfoautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$qsInfoautograph}">
+                        <span>日期：{$qsInfoautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$departautograph}">
+                        <span>日期：{$departautograph_time}</span>
+                    </p>
+                </td>
+            </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+[ 2025-05-27T10:49:00+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000008s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000067s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T10:49:11+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000096s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T10:55:26+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000211s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000391s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T10:55:32+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000045s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000213s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T14:58:22+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000694s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T14:58:39+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000862s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T16:18:38+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000732s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T16:55:33+08:00 ] 172.18.0.1 /Aadmin/Benefit/Benefit/assetsBenefitData?assid=undefined&sdate=2025-04&edate=2025-04
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000709s ]
+ERR: 无法加载模块:Aadmin
+
+[ 2025-05-27T17:25:16+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001045s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T17:42:56+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000808s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T17:43:25+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000756s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T17:44:18+08:00 ] 172.18.0.1 /.well-known/appspecific/com.chrome.devtools.json
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000687s ]
+ERR: 无法加载模块:.well-known
+
+[ 2025-05-27T17:52:05+08:00 ] 172.18.0.1 /tecev/src/closeThisTabs.js?v=0.0138
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000738s ]
+ERR: 无法加载模块:Tecev
+

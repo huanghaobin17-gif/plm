@@ -1,0 +1,125 @@
+<?php if($menuData = get_menu_name('OfflineSuppliers','OfflineSuppliers','payOLSContractList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+
+<style>
+    #LAY-OfflineSuppliers-OfflineSuppliers-payOLSContractList .not-show{
+        display: none;
+    }
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-OfflineSuppliers-OfflineSuppliers-payOLSContractList">
+    <div class="layui-card">
+        <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+        <div class="layui-card-body">
+            <form action="" class="layui-form">
+                <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合同名称：</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control bsSuggest" id="payOLSContractListContractName" placeholder="请输入合同名称" name="contract_name">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合同编号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" autocomplete="off" class="layui-input" placeholder="请输入合同编号" name="contract_num" />
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">合同类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="contract_type" lay-search>
+                                <option value="">全部</option>
+                                <option value="{$a=C('CONTRACT_TYPE_SUPPLIER')}">{$a=C('CONTRACT_TYPE_SUPPLIER_NAME')}</option>
+                                <option value="{$a=C('CONTRACT_TYPE_REPAIR')}">{$a=C('CONTRACT_TYPE_REPAIR_NAME')}</option>
+                                <option value="{$a=C('CONTRACT_TYPE_INSURANCE')}">{$a=C('CONTRACT_TYPE_INSURANCE_NAME')}</option>
+                                <option value="{$a=C('CONTRACT_TYPE_RECORD_ASSETS')}">{$a=C('CONTRACT_TYPE_RECORD_ASSETS_NAME')}</option>
+                                <option value="{$a=C('CONTRACT_TYPE_PARTS')}">{$a=C('CONTRACT_TYPE_PARTS_NAME')}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">乙方单位：</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control bsSuggest" id="payOLSContractListSuppliersName" placeholder="请输入合同名称" name="supplier_name">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">付款状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="pay_status" lay-search>
+                                <option value="">全部</option>
+                                <option value="0">未付款</option>
+                                <option value="1">已付款</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline" style="margin-left: 10px;">
+                        <div class="fl">
+                            <button class="layui-btn" lay-submit="payOLSContractListSearch" lay-filter="payOLSContractListSearch">
+                                <i class="layui-icon">&#xe615;</i> 搜 索
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon layui-icon-zzcheck-circle"></i> 合同付款确认</div>
+                <div class="layui-card-body">
+                    <table id="payOLSContractList" lay-filter="payOLSContractData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--确认实际付款日期-->
+    <div id="real_pay_date" class="layui-fluid not-show">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width:144px;"><span class="rquireCoin">*</span>实际付款日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="real_pay_date" readonly id="payContractRealPayDate" placeholder="请补充实际付款日期" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="setPayOLSContractListPayDate">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var payOLSContractListUrl='{$payOLSContractListUrl}';
+    layui.use('offlineSuppliers/offlineSuppliers/payOLSContractList', layui.factory('offlineSuppliers/offlineSuppliers/payOLSContractList'));
+</script>

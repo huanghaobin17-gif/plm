@@ -1,0 +1,103 @@
+<?php if($menuData = get_menu_name('Purchases','Tendering','tbApproveList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Purchases-Tendering-tbApproveList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="tbApproveListDepartment" xm-select-search="">
+                                        <option value="">请选择申请科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="tpAssetsName" placeholder="请输入设备名称" name="assets_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">购置类型：</label>
+                                <div class="layui-input-inline">
+                                    <select name="buy_type" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="1">报废新增</option>
+                                        <option value="2">添置</option>
+                                        <option value="3">新增</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">审批状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="review_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未评审</option>
+                                        <option value="1">已通过</option>
+                                        <option value="2">已退回</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" readonly placeholder="开始时间" style="cursor: pointer;" name="apply_date_start" id="tpStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" readonly placeholder="结束时间" style="cursor: pointer;" name="apply_date_end" id="tpEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="tpSearch" id="tpSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 标书审批列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="tbApproveList" lay-filter="tbApproveData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var tbApproveList = "{$tbApproveList}";
+</script>
+<script>
+    layui.use('purchases/tendering/tbApproveList', layui.factory('purchases/tendering/tbApproveList'));
+</script>

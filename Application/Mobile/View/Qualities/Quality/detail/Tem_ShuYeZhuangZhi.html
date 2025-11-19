@@ -1,0 +1,360 @@
+<include file="Public:head"/>
+<style>
+    .layui-card {
+        box-shadow: none;
+        margin: 0;
+    }
+    .writeInput{border: none;border-bottom: 1px solid #e5e5e5;width: 99%}
+    .inconformityInput{margin-left: 5px;min-height: 0;padding-bottom: 10px;}
+    .layui-card-header{border-bottom-color: #e5e5e5}
+    .layui-form-radio{margin:6px 6px 0 0;}
+    .enter{height: 60px;line-height: 60px;font-size: 30px;margin-top: 20px;}
+    .contentLabel{display: inline-block;text-align: right;width: 58%;max-width:160px;}
+    .measured{width: 40%;}
+    .wucha{margin-left:3%;width: 15%;}
+    .marl{margin-left: 2%;}
+    .gdfz{font-weight: bold;}
+    .layui-form-radio>i {
+        margin-right: 4px;
+    }
+    .layui-colla-icon {
+        left: 10px;
+    }
+    .layui-colla-title {
+        padding: 0 10px 0 28px;
+    }
+    .hide_abnormal_remark{
+        display: none;
+    }
+    .fix_con{
+        height: 40px;
+    }
+    .fixtitle{
+        width: 90px;
+        height: 40px;
+        line-height: 45px;
+        float: left;
+        text-align: right;
+        font-weight: bold;
+    }
+    .fixradio{
+        width: auto;
+        height: 40px;
+        line-height: 40px;
+        float: left;
+        text-align: left;
+    }
+    .dtblod{
+        font-weight: bold;
+    }
+    .photoDiv img{
+        width: 100%;
+    }
+    .no_template{
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+    }
+    .fix_con > .layui-show{
+        padding: 0;
+    }
+</style>
+<script>
+    var url = "{$url}";
+    var plans = "{$qsInfo.plans}";
+</script>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form" lay-filter="qualityForm">
+            <input type="hidden" name="qsid" value="{$qsInfo.qsid}"/>
+            <input type="hidden" name="report" value=""/>
+            <if condition="$detail_data">
+                <input type="hidden" name="save_edit" value="{$save_edit}"/>
+            </if>
+            <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">质控计划详情信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table">
+                        <tbody>
+                        <tr>
+                            <th>检测报告编号</th>
+                            <td><span class="stroageNumber">{$qsInfo.plan_num}</span></td>
+                        </tr>
+                        <tr>
+                            <th>质控计划名称</th>
+                            <td>{$qsInfo.plan_name}</td>
+                        </tr>
+                        <tr>
+                            <th>制定人</th>
+                            <td>{$qsInfo.adduser}</td>
+                        </tr>
+                        <tr>
+                            <th>制定时间</th>
+                            <td>{$qsInfo.addtime}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">检测设备基础信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table">
+                    <tbody>
+                    <tr>
+                        <th>设备编号</th>
+                        <td>{$asInfo.assnum}</td>
+                    </tr>
+                    <tr>
+                        <th>设备名称</th>
+                        <td>{$asInfo.assets}</td>
+                    </tr>
+                    <tr>
+                        <th>规格/型号</th>
+                        <td>{$asInfo.model}</td>
+                    </tr>
+                    <tr>
+                        <th>使用科室</th>
+                        <td>{$asInfo.department}</td>
+                    </tr>
+                    <tr>
+                        <th>产品系列号</th>
+                        <td>{$asInfo.serialnum}</td>
+                    </tr>
+                    <tr>
+                        <th>品牌</th>
+                        <td>{$asInfo.brand}</td>
+                    </tr>
+                    <tr>
+                        <th>启用日期</th>
+                        <td>{$asInfo.opendate}</td>
+                    </tr>
+                    <tr>
+                        <th>上次质控时间</th>
+                        <td>{$asInfo.lasttesttime}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">质控检测明细表单（模板：输液装置）</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-form-item" style="margin-bottom: -10px;margin-top: 0;">
+                        <label class="layui-form-label" style="width: auto">外观功能：</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="lookslike" value="1" title="符合" lay-filter="lookslike" <if condition="$detail_data['exterior'] eq 1">checked</if> />
+                            <input type="radio" name="lookslike" value="2" title="不符合" lay-filter="lookslike" <if condition="$detail_data['exterior'] eq 2">checked</if> />
+                        </div>
+                        <div class="layui-input-block inconformityInput">
+                            <if condition="$detail_data['exterior'] eq 2">
+                                <input oninput="saveStorageData(this)" type="text" name="lookslike_desc" value="{$detail_data['exterior_explain']}" placeholder="外观不符合的请说明情况" autocomplete="off" class="layui-input writeInput" style="border: 1px solid #e6e6e6;width: 93%;margin: 0 auto;display: block;">
+                            <else/>
+                                <input oninput="saveStorageData(this)" type="text" name="lookslike_desc" value="{$detail_data['exterior_explain']}" placeholder="外观不符合的请说明情况" autocomplete="off" class="layui-input writeInput" style="border: 1px solid #e6e6e6;width: 93%;margin: 0 auto;display: none;">
+                            </if>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-collapse">
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title" style="height: auto;">流量检测：
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '流量检测'">
+                                            最大允差：{$vo.tolerance}
+                                        </if>
+                                    </volist>
+                                </h2>
+                                <div class="layui-colla-content layui-show">
+                                    <ul>
+                                        <volist name="values" id="vo">
+                                            <if condition="$vo.detection_name eq '流量检测'">
+                                                <volist name="vo.set" id="ho" offset="0" length='2'>
+                                                    <li>
+                                                        <div class="contentLabel">流量测试点 {$ho}：</div>
+                                                        <div class="layui-input-inline measured" style="width: 35%">
+                                                            <input oninput="saveStorageData(this)" type="number" name="flow[]" value="{$detail_data['preset_detection']['flow'][$key]}" placeholder="平均流量" autocomplete="off" class="layui-input writeInput">
+                                                        </div>
+                                                    </li>
+                                                </volist>
+                                            </if>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">阻塞报警检测：
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '阻塞报警检测'">
+                                            最大允差：{$vo.tolerance}
+                                        </if>
+                                    </volist>
+                                </h2>
+                                <div class="layui-colla-content layui-show">
+                                    <ul>
+                                        <volist name="values" id="vo">
+                                            <if condition="$vo.detection_name eq '阻塞报警检测'">
+                                                <volist name="vo.set" id="ho" offset="0" length='2'>
+                                                    <li>
+                                                        <div class="contentLabel">阻塞报警设置值 {$ho}：</div>
+                                                        <div class="layui-input-inline measured">
+                                                            <input oninput="saveStorageData(this)" type="number" name="block[]" value="{$detail_data['preset_detection']['block'][$key]}" placeholder="测量值" autocomplete="off" class="layui-input writeInput">
+                                                        </div>
+                                                    </li>
+                                                </volist>
+                                            </if>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">报警系统检测</h2>
+                                <div class="layui-colla-content layui-show" style="padding-left: 20px;">
+                                    <dl>
+                                        <dt>堵塞：</dt>
+                                        <dd>
+                                            <input type="radio" name="blocking" value="1" title="符合" <if condition="$detail_data['fixed_detection']['blocking'] eq 1">checked</if> />
+                                            <input type="radio" name="blocking" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['blocking'] eq 2">checked</if> />
+                                            <input type="radio" name="blocking" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['blocking'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>即将空瓶：</dt>
+                                        <dd>
+                                            <input type="radio" name="forthcoming_empty_bottle" value="1" title="符合" <if condition="$detail_data['fixed_detection']['forthcoming_empty_bottle'] eq 1">checked</if> />
+                                            <input type="radio" name="forthcoming_empty_bottle" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['forthcoming_empty_bottle'] eq 2">checked</if> />
+                                            <input type="radio" name="forthcoming_empty_bottle" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['forthcoming_empty_bottle'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>电池电量不足：</dt>
+                                        <dd>
+                                            <input type="radio" name="battery_low" value="1" title="符合"   <if condition="$detail_data['fixed_detection']['battery_low'] eq 1">checked</if> />
+                                            <input type="radio" name="battery_low" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['battery_low'] eq 2">checked</if> />
+                                            <input type="radio" name="battery_low" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['battery_low'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>流速错误：</dt>
+                                        <dd>
+                                            <input type="radio" name="flow_error" value="1" title="符合" <if condition="$detail_data['fixed_detection']['flow_error'] eq 1">checked</if> />
+                                            <input type="radio" name="flow_error" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['flow_error'] eq 2">checked</if> />
+                                            <input type="radio" name="flow_error" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['flow_error'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>输液管路安装不妥：</dt>
+                                        <dd>
+                                            <input type="radio" name="improper_installation" value="1" title="符合" <if condition="$detail_data['fixed_detection']['improper_installation'] eq 1">checked</if> />
+                                            <input type="radio" name="improper_installation" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['improper_installation'] eq 2">checked</if> />
+                                            <input type="radio" name="improper_installation" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['improper_installation'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>气泡报警：</dt>
+                                        <dd>
+                                            <input type="radio" name="bubble_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['bubble_alarm'] eq 1">checked</if> />
+                                            <input type="radio" name="bubble_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['bubble_alarm'] eq 2">checked</if> />
+                                            <input type="radio" name="bubble_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['bubble_alarm'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>电源线脱开：</dt>
+                                        <dd>
+                                            <input type="radio" name="power_line_disconnect" value="1" title="符合" <if condition="$detail_data['fixed_detection']['power_line_disconnect'] eq 1">checked</if> />
+                                            <input type="radio" name="power_line_disconnect" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['power_line_disconnect'] eq 2">checked</if> />
+                                            <input type="radio" name="power_line_disconnect" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['power_line_disconnect'] eq 3">checked</if> />
+                                        </dd>
+                                        <dt>开门报警：</dt>
+                                        <dd>
+                                            <input type="radio" name="open_door_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['open_door_alarm'] eq 1">checked</if> />
+                                            <input type="radio" name="open_door_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['open_door_alarm'] eq 2">checked</if> />
+                                            <input type="radio" name="open_door_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['open_door_alarm'] eq 3">checked</if> />
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card no_margin">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">检测备注：</label>
+                        <div class="layui-input-block" style="padding-bottom: 10px;">
+                            <input type="text" oninput="saveStorageData(this)" name="total_desc" value="{$detail_data['remark']}" autocomplete="off" placeholder="请输入备注（偏离情况说明）" class="layui-input writeInput" style="width: 95%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span style="float: left">设备铭牌照片</span><button type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="nameplate">拍照上传</button>
+                </div>
+                <div class="layui-card-body">
+                    <dl>
+                        <dd>
+                            <div class="swiper-container" id="uploadPhotoCarousel">
+                                <div class="swiper-wrapper nameplate_pic">
+                                    <if condition="$file_data['nameplate']">
+                                        <volist name="file_data['nameplate']" id="vo" key="k">
+                                            <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                                <i class="layui-icon layui-icon-close-fill photoDelete" data-id="{$vo.file_id}"></i>
+                                                <img src="{$vo.file_url}" class="photo">
+                                            </div>
+                                        </volist>
+                                    <else/>
+                                        <div class="swiper-slide">
+                                            <div class="emptyPhoto">暂无预览图</div>
+                                        </div>
+                                    </if>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span style="float: left">检测仪器视图照片</span><button type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="instrument_view">拍照上传</button>
+                </div>
+                <div class="layui-card-body">
+                    <dl>
+                        <dd>
+                            <div class="swiper-container" id="checkPhotoCarousel">
+                                <div class="swiper-wrapper instrument_view_pic">
+                                    <if condition="$file_data['instrument_view']">
+                                        <volist name="file_data['instrument_view']" id="vo" key="k">
+                                            <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                                <i class="layui-icon layui-icon-close-fill photoDelete" data-id="{$vo.file_id}"></i>
+                                                <img src="{$vo.file_url}" class="photo">
+                                            </div>
+                                        </volist>
+                                        <else/>
+                                        <div class="swiper-slide">
+                                            <div class="emptyPhoto">暂无预览图</div>
+                                        </div>
+                                    </if>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="layui-card moveAnimatedDiv">
+                <div class="layui-card-body">
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn layui-btn-warm enterButton" id="keepStartRepair" style="width: 100%;" lay-submit lay-filter="keepStartRepair">暂存不提交</button>
+                    </div>
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn enterButton" id="endRepair" style="width: 100%;" lay-submit lay-filter="endStartRepair">确认检测并提交</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/mobile/js/qualities/quality/setQualityDetail.js?v={:mt_rand(1,54561)}"></script>

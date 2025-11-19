@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Assets-Lookup-editAssets .layui-elem-quote {
+            margin-top: 15px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .layui-form-item .layui-inline {
+            margin-top: 5px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .subsidiaryAssets {
+            display: none;
+        }
+
+        #LAY-Assets-Lookup-editAssets .layui-form-item {
+            margin-bottom: 5px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .form-control {
+            padding: 5px 3px 6px 5px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .layui-select-disabled .layui-disabled {
+            background-color: #fbfbfb;
+        }
+
+        #LAY-Assets-Lookup-editAssets .addIcon {
+            z-index: 99;
+            position: absolute;
+            right: -25px;
+            top: 11px;
+            cursor: pointer;
+            color: #0a8ddf;
+        }
+
+        #LAY-Assets-Lookup-editAssets .txt {
+            position: absolute;
+            right: -15px;
+            top: 11px;
+            color: #999 !important;
+            font-size: 12px !important;
+            line-height: 20px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .layui-form-label {
+            width: 115px;
+        }
+
+        #LAY-Assets-Lookup-editAssets .layui-form-radio {
+            margin: 6px 10px 0 5px;
+        }
+
+        #date4 {
+            cursor: pointer;
+        }
+
+        .formatDate {
+            cursor: pointer;
+        }
+
+        .suggest {
+            color: #5fb878
+        }
+
+        body .demo-class .layui-layer-btn .layui-layer-btn0 {
+            background-color: #c2c2c2;
+            border: 1px solid #c2c2c2;
+            color: #FFF;
+        }
+
+        body .demo-class .layui-layer-btn .layui-layer-btn1 {
+            background-color: #1E9FFF;
+            border: 1px solid #1E9FFF;
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid" id="LAY-Assets-Lookup-editAssets">
+    <div class="layui-row">
+        <form class="layui-form" action="">
+            <input type="hidden" name="assid" value="{$asInfo.assid}"/>
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">设备基础信息
+            </blockquote>
+            <div class="layui-form-item">
+                <div class="layui-form-item">
+                    <if condition="$showHospital eq C('YES_STATUS')">
+                        <div class="layui-inline">
+                            <label class="layui-form-label"><span class="rquireCoin"> * </span> 所属医院：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" readonly autocomplete="off" placeholder="请输入设备名称"
+                                       value="{$hosInfo.hospital_name}" class="layui-input">
+                            </div>
+                        </div>
+                    </if>
+                    <div class="layui-inline" style="margin-right: 10px;">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 附属设备：</label>
+                        <div class="layui-input-block" style="width: 188px;position:static;margin-left:145px">
+                            <input type="radio" lay-filter="is_subsidiary" name="is_subsidiary" value="1" disabled
+                                   title="是"
+                            <if condition="$asInfo['is_subsidiary'] EQ C('YES_STATUS')">checked</if>
+                            >
+                            <input type="radio" lay-filter="is_subsidiary" name="is_subsidiary" value="0" disabled
+                                   title="否"
+                            <if condition="$asInfo['is_subsidiary'] EQ C('NO_STATUS')">checked</if>
+                            >
+                        </div>
+                    </div>
+
+                    <div class="layui-inline subsidiaryAssets">
+                        <label class="layui-form-label"><span class="rquireCoin">*</span> 所属设备：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="main_assets" readonly autocomplete="off"
+                                   value="{$asInfo.main_assets}" class="layui-input">
+                        </div>
+                    </div>
+                    <div style="display:none;" id="main_assets_div"></div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="assets" value="{$asInfo.assets}">
+                        <select name="dic_assets_sel" lay-verify="dic_assets_sel" lay-filter="dic_assets_sel">
+                            <volist name="dic_assets" id="vo">
+                                <if condition="$asInfo['assets'] EQ $vo['assets']">
+                                    <option value="{$vo.assets}" selected>{$vo.assets}</option>
+                                    <else/>
+                                    <option value="{$vo.assets}">{$vo.assets}</option>
+                                </if>
+                            </volist>
+                        </select>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('BaseSetting','Dictionary','addAssetsDic')):?>
+                            <i class="layui-icon" id="addAssetsDic"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备常用名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="common_name" autocomplete="off" placeholder="请输入设备常用名"
+                               value="{$asInfo.common_name}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 规格/型号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="model" lay-verify="model" autocomplete="off"
+                               placeholder="请输入设备规格 / 型号" value="{$asInfo.model}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 产品序列号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="serialnum" lay-verify="serialnum" autocomplete="off"
+                               placeholder="请输入产品序列号" value="{$asInfo.serialnum}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">注册证编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="registration" placeholder="请输入注册证编号" autocomplete="off"
+                               value="{$asInfo.registration}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" disabled autocomplete="off" placeholder="此编号由系统自动生成"
+                               value="{$asInfo.assnum}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="catid" lay-verify="catid" lay-search id="childCategory" disabled>
+                            <option value="">请选择设备分类</option>
+                            <volist name="category" id="vo">
+                                <if condition="$vo['catid'] eq $asInfo['catid']">
+                                    <option value="{$vo.catid}" selected>{$vo.html}{$vo.category}</option>
+                                    <else/>
+                                    <option value="{$vo.catid}">{$vo.html}{$vo.category}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">管理类别：</label>
+                    <div class="layui-input-inline">
+                        <select name="assets_level" lay-search>
+                            <option value="">请选择管理类别</option>
+                            <volist name="assetsLevel" id="v">
+                                <if condition="$v['value'] eq $asInfo['assets_level']">
+                                    <option value="{$v.value}" selected>{$v.name}</option>
+                                    <else/>
+                                    <option value="{$v.value}">{$v.name}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline mainAssets">
+                    <label class="layui-form-label">辅助分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="helpcatid" class="layui-input" lay-search="">
+                            <option value="">请选择辅助分类</option>
+                            <volist name="assets_helpcat" id="vo">
+                                <if condition="$key eq $asInfo['helpcatid']">
+                                    <option value="{$key}" selected>{$vo}</option>
+                                    <else/>
+                                    <option value="{$key}">{$vo}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline subsidiaryAssets">
+                    <label class="layui-form-label">辅助分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="subsidiary_helpcatid" class="layui-input" lay-search>
+                            <option value="">请选择辅助分类</option>
+                            <volist name="acin_category" id="vo">
+                                <if condition="$key eq $asInfo['subsidiary_helpcatid']">
+                                    <option value="{$key}" selected>{$vo}</option>
+                                    <else/>
+                                    <option value="{$key}">{$vo}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 设备原值：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="buy_price" name='<if condition="$showPrice neq 1">no_</if>buy_price'
+                               lay-verify="buy_price" placeholder="请输入设备购买价格（元）" autocomplete="off"
+                               value="{$asInfo.buy_price}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit"> 预计使用年限：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="expected_life" lay-verify="expected_life"
+                               placeholder="请输入预计使用年限" autocomplete="off" value="{$asInfo.expected_life}"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit"><span class="suggest">*</span> 保修到期日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="guarantee_date" lay-verify="guarantee_date"
+                               placeholder="请选择保修截止日期" autocomplete="off" value="{$asInfo.guarantee_date}"
+                               class="layui-input formatDate">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest is_subsidiarySpan">*</span> 生产厂商：</label>
+                    <div class="layui-input-inline">
+                        <select name="ols_facid" class="layui-input" lay-search="" lay-verify="ols_facid">
+                            <option value="">请选择生产厂商</option>
+                            <volist name="factory" id="v">
+                                <if condition="$facInfo['ols_facid'] eq $v['olsid']">
+                                    <option value="{$v.olsid}" selected>{$v.sup_name}</option>
+                                    <else/>
+                                    <option value="{$v.olsid}">{$v.sup_name}</option>
+                                </if>
+                            </volist>
+                        </select>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                            <span class="factoryClick"></span>
+                            <i class="layui-icon addSuppliers"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest is_subsidiarySpan">*</span> 供应商：</label>
+                    <div class="layui-input-inline">
+                        <select name="ols_supid" class="layui-input" lay-search="" lay-verify="ols_supid">
+                            <option value="">请选择供应厂商</option>
+                            <volist name="supplier" id="v">
+                                <if condition="$facInfo['ols_supid'] eq $v['olsid']">
+                                    <option value="{$v.olsid}" selected>{$v.sup_name}</option>
+                                    <else/>
+                                    <option value="{$v.olsid}">{$v.sup_name}</option>
+                                </if>
+                            </volist>
+                        </select>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                            <span class="supplierClick"></span>
+                            <i class="layui-icon addSuppliers"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest is_subsidiarySpan">*</span> 维修商：</label>
+                    <div class="layui-input-inline">
+                        <select name="ols_repid" class="layui-input" lay-search="" lay-verify="ols_repid">
+                            <option value="">请选择维修厂商</option>
+                            <volist name="repair" id="v">
+                                <if condition="$facInfo['ols_repid'] eq $v['olsid']">
+                                    <option value="{$v.olsid}" selected>{$v.sup_name}</option>
+                                    <else/>
+                                    <option value="{$v.olsid}">{$v.sup_name}</option>
+                                </if>
+                            </volist>
+                        </select>
+                        <div class="addIcon">
+                            <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+                            <span class="repairClick"></span>
+                            <i class="layui-icon addSuppliers"> &#xe654;</i>
+                            <?php endif?>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">品牌：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="brand" placeholder="请输入设备品牌" autocomplete="off"
+                               value="{$asInfo.brand}" class="layui-input">
+                        <?php if($menuData = get_menu('BaseSetting','Dictionary','addBrandDic')):?>
+                        <div class="addIcon" id="addBrandDic" data-url="{$menuData['actionurl']}">
+                            <span class="factoryClick"></span>
+                            <i class="layui-icon"> &#xe654;</i>
+                        </div>
+                        <?php endif?>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span>出厂日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="factorydate" placeholder="请选择出厂日期" autocomplete="off"
+                               value="{$asInfo.factorydate}" class="layui-input formatDate">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">出厂编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="factorynum" placeholder="请输入出厂编号" autocomplete="off"
+                               value="{$asInfo.factorynum}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" placeholder="请输入单位" autocomplete="off"
+                               value="{$asInfo.unit}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">付款日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="paytime" placeholder="请选择付款日期" value="{$asInfo.paytime}"
+                               autocomplete="off" class="layui-input formatDate">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">发票编号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="invoicenum" placeholder="请输入发票编号" autocomplete="off"
+                               value="{$asInfo.invoicenum}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest is_subsidiarySpan">*</span> 设备原编码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assorignum" id="assorignum" lay-verify="assorignum" autocomplete="off"
+                               placeholder="请输入设备原编码" value="{$asInfo.assorignum}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"> 设备原码(备注)：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assorignum_spare" id="assorignum_spare" lay-verify="assorignum_spare"
+                               autocomplete="off" placeholder="请输入设备原编码" value="{$asInfo.assorignum_spare}"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit"> 残净值率(%)：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="residual_value" name="residual_value" lay-verify="residual_value"
+                               placeholder="请输入残净值率" autocomplete="off" value="{$asInfo.residual_value}"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">设备类型：</label>
+                <div class="layui-input-block">
+                    <if condition="$asInfo.is_firstaid eq 1">
+                        <input type="checkbox" name="is_firstaid" value="1" checked="checked" title="急救设备"
+                               lay-skin="primary">
+                        <else/>
+                        <input type="checkbox" name="is_firstaid" value="1" title="急救设备" lay-skin="primary">
+                    </if>
+                    <if condition="$asInfo.is_special eq 1">
+                        <input type="checkbox" name="is_special" value="1" checked="checked" title="特种设备"
+                               lay-skin="primary">
+                        <else/>
+                        <input type="checkbox" name="is_special" value="1" title="特种设备" lay-skin="primary">
+                    </if>
+                    <if condition="$asInfo.is_metering eq 1">
+                        <input type="checkbox" name="is_metering" value="1" checked="checked" title="计量设备"
+                               lay-skin="primary">
+                        <else/>
+                        <input type="checkbox" name="is_metering" value="1" title="计量设备" lay-skin="primary">
+                    </if>
+                    <if condition="$asInfo.is_qualityAssets eq 1">
+                        <input type="checkbox" name="is_qualityAssets" value="1" checked="checked" title="质控设备"
+                               lay-skin="primary">
+                        <else/>
+                        <input type="checkbox" name="is_qualityAssets" value="1" title="质控设备" lay-skin="primary">
+                    </if>
+                    <if condition="$asInfo.is_patrol eq 1">
+                        <input type="checkbox" name="is_patrol" value="1" title="保养设备" lay-skin="primary" checked>
+                        <else/>
+                        <input type="checkbox" name="is_patrol" value="1" title="保养设备" lay-skin="primary">
+                    </if>
+                    <if condition="$asInfo.is_benefit eq 1">
+                        <input type="checkbox" name="is_benefit" value="1" title="效益分析" lay-skin="primary" checked>
+                        <else/>
+                        <input type="checkbox" name="is_benefit" value="1" title="效益分析" lay-skin="primary">
+                    </if>
+
+                    <if condition="$asInfo.is_lifesupport eq 1">
+                        <input type="checkbox" name="is_lifesupport" value="1" title="生命支持类设备" lay-skin="primary"
+                               checked>
+                        <else/>
+                        <input type="checkbox" name="is_lifesupport" value="1" title="生命支持类设备"
+                               lay-skin="primary">
+                    </if>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">国产&进口：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <switch name="asInfo.is_domestic">
+                            <case value="1">
+                                <input type="radio" name="is_domestic" value="1" title="国产" checked>
+                                <input type="radio" name="is_domestic" value="2" title="进口">
+                            </case>
+                            <case value="2">
+                                <input type="radio" name="is_domestic" value="1" title="国产">
+                                <input type="radio" name="is_domestic" value="2" title="进口" checked>
+                            </case>
+                            <case value="3">
+                                <input type="radio" name="is_domestic" value="1" title="国产">
+                                <input type="radio" name="is_domestic" value="2" title="进口">
+                            </case>
+                        </switch>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">是否付清：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <switch name="asInfo.pay_status">
+                            <case value="0">
+                                <input type="radio" name="pay_status" value="1" title="已付清">
+                                <input type="radio" name="pay_status" value="0" title="未付清" checked>
+                            </case>
+                            <case value="1">
+                                <input type="radio" name="pay_status" value="1" title="已付清" checked>
+                                <input type="radio" name="pay_status" value="0" title="未付清">
+                            </case>
+                            <case value="3">
+                                <input type="radio" name="pay_status" value="1" title="已付清">
+                                <input type="radio" name="pay_status" value="0" title="未付清">
+                            </case>
+                        </switch>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit">标签ID</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="inventory_label_id" lay-verify="inventory_label_id"
+                               placeholder="请输入标签ID" value="{$asInfo.inventory_label_id}" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span>巡查周期：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <input type="text" name="patrol_xc_cycle" class="layui-input" lay-verify="num"
+                               style="width: 5em;" value="{$asInfo.patrol_xc_cycle}">
+                        <div class="txt">天</div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span>保养周期：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <input type="text" name="patrol_pm_cycle" class="layui-input" lay-verify="num"
+                               style="width: 5em;" value="{$asInfo.patrol_pm_cycle}">
+                        <div class="txt">天</div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span>质控周期：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <input type="text" name="quality_cycle" class="layui-input" lay-verify="num" style="width: 5em;"
+                               value="{$asInfo.quality_cycle}">
+                        <div class="txt">天</div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span>计量周期：</label>
+                    <div class="layui-input-inline" style="width: auto">
+                        <input type="text" name="metering_cycle" class="layui-input" lay-verify="num"
+                               style="width: 5em;" value="{$asInfo.metering_cycle}">
+                        <div class="txt">天</div>
+                    </div>
+                </div>
+            </div>
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px; /*margin-top: 35px;*/">设备入院信息
+                <if condition="$editdepartment['is_dispaly'] eq 1"><font color="red">正在申请修改科室到
+                    {$editdepartment.managedepart}</font></if>
+            </blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 所属科室：</label>
+                    <div class="layui-input-inline">
+                        <select name="departid" lay-search lay-verify="departid" lay-filter="departid">
+                            <volist name="department" id="vo">
+                                <option value="{$vo.departid}"
+                                <if condition="$vo.departid eq $asInfo['departid']"> selected="selected"</if>
+                                >{$vo.department}</option>
+                            </volist>
+                            </empty>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"> 管理科室：</label>
+                    <div class="layui-input-inline">
+                        <select name="managedepart" lay-search>
+                            <volist name="department" id="vo">
+                                <option value="{$vo.department}"
+                                <if condition="$vo.department eq $asInfo['managedepart']"> selected="selected"</if>
+                                >{$vo.department}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备使用位置：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" autocomplete="off" value="{$asInfo.address}"
+                               class="layui-input" placeholder="请填写设备使用位置">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"> 资产负责人：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assetsrespon" lay-verify="assetsrespon" placeholder="请填写资产负债人"
+                               autocomplete="off" value="{$asInfo.assetsrespon}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 财务分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="financeid" lay-verify="financeid" class="layui-input" lay-search="">
+                            <option value="">请选择财务分类</option>
+                            <volist name="assets_finance" id="vo">
+                                <if condition="(string)$key heq (string)$asInfo['financeid']">
+                                    <option value="{$key}" selected>{$vo}</option>
+                                    <else/>
+                                    <option value="{$key}">{$vo}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 设备来源：</label>
+                    <div class="layui-input-inline">
+                        <select name="assfromid" lay-verify="assfromid" class="layui-input" lay-search="">
+                            <option value="">请选择设备来源</option>
+                            <volist name="assets_assfrom" id="vo">
+                                <if condition="(string)$key heq (string)$asInfo['assfromid']">
+                                    <option value="{$key}" selected>{$vo}</option>
+                                    <else/>
+                                    <option value="{$key}">{$vo}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 资金来源：</label>
+                    <div class="layui-input-inline">
+                        <select name="capitalfrom" lay-verify="capitalfrom" class="layui-input" lay-search="">
+                            <option value="">请选择资金来源</option>
+                            <volist name="assets_capitalfrom" id="vo">
+                                <if condition="(string)$key heq (string)$asInfo['capitalfrom']">
+                                    <option value="{$key}" selected>{$vo}</option>
+                                    <else/>
+                                    <option value="{$key}">{$vo}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 入库日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="storage_date" lay-verify="storage_date" id="date4"
+                               placeholder="请选择入库日期" autocomplete="off" value="{$asInfo.storage_date}"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="suggest">*</span> 启用日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="opendate" lay-verify="opendate" placeholder="请选择启用日期"
+                               autocomplete="off" value="{$asInfo.opendate}" class="layui-input formatDate">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label"> 折旧方式：</label>
+                    <div class="layui-input-inline">
+                        <select name="depreciation_method" class="layui-input" lay-search=""
+                                lay-verify="depreciation_method" lay-filter="depreciation_method">
+                            <option value="">请选择折旧方式</option>
+                            <if condition="$asInfo['depreciation_method'] eq 1">
+                                <option value="1" selected>平均折旧法</option>
+                                <else/>
+                                <option value="1">平均折旧法</option>
+                            </if>
+                            <!-- <if condition="$asInfo['depreciation_method'] eq 2">
+                                <option value="2" selected>工作量法</option>
+                                <else/>
+                                <option value="2">工作量法</option>
+                            </if> -->
+                            <if condition="$asInfo['depreciation_method'] eq 3">
+                                <option value="3" selected>加速折旧法(双倍余额递减法)</option>
+                                <else/>
+                                <option value="3">加速折旧法(双倍余额递减法)</option>
+                            </if>
+                            <if condition="$asInfo['depreciation_method'] eq 4">
+                                <option value="4" selected>加速折旧法(年数总额法)</option>
+                                <else/>
+                                <option value="4">加速折旧法(年数总额法)</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">折旧年限：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="depreciable_lives" name="depreciable_lives" placeholder="请填写折旧年限"
+                               autocomplete="off" value="{$asInfo.depreciable_lives}" class="layui-input"
+                               lay-verify="depreciable_lives">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">月折旧额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="depreciable_quota_m" autocomplete="off" disabled="true"
+                               value="{$asInfo.depreciable_quota_m}" class="layui-input"
+                               lay-verify="depreciable_quota_m">
+                    </div>
+                </div>
+                <!-- <div class="layui-inline">
+                    <label class="layui-form-label">年折旧额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="depreciable_quota_y"  autocomplete="off" disabled="true" value="{$asInfo.depreciable_quota_y}" class="layui-input" lay-verify="depreciable_quota_y">
+                    </div>
+                </div> -->
+                <div class="layui-inline">
+                    <label class="layui-form-label">累计折旧额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="depreciable_quota_count" autocomplete="off" disabled="true"
+                               value="{$asInfo.depreciable_quota_count}" class="layui-input"
+                               lay-verify="depreciable_quota_count">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产净值：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="net_asset_value" autocomplete="off" disabled="true"
+                               value="{$asInfo.net_asset_value}" class="layui-input" lay-verify="net_asset_value">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">减值准备：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="impairment_provision" name="impairment_provision" autocomplete="off"
+                               value="{$asInfo.impairment_provision}" class="layui-input"
+                               lay-verify="impairment_provision">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产净额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="net_assets" autocomplete="off" disabled="true"
+                               value="{$asInfo.net_assets}" class="layui-input" lay-verify="net_assets">
+                    </div>
+                </div>
+                <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">登记日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" autocomplete="off" value="{$asInfo.assets}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">登记人员：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" autocomplete="off" value="{$asInfo.assets}" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="remark" placeholder="请输入设备相关备注" autocomplete="off"
+                           class="layui-input" value="{$asInfo.remark}" style="width: 92%;">
+                </div>
+            </div>
+            <style>
+                #multifile2 {
+                    float: right;
+                    font-size: 12px;
+                    font-weight: normal;
+                    color: #0a8ddf;
+                    cursor: pointer;
+                }
+
+                .layui-layer-tips {
+                    word-break: break-all;
+                }
+            </style>
+            <div class="layui-form-item">
+                <div class="margin-bottom-15">
+                    <div class="layui-elem-quote">
+                        设备物理档案
+                        <span id="multifile2"
+                              lay-tips="可一次选择多个文件上传，上传文件后缀名只能为.jpg/.jpeg/.png/.pdf/.xls/.xlsx/.doc/.docx/.ppt/.pptx"><i
+                                class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">档案盒编号：</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control bsSuggest" id="box_num" value="{$asInfo.box_num}"
+                                       placeholder="请选择档案编号" name="box_num">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="layui-table mgt0" lay-size="sm">
+                        <colgroup>
+                            <col width="6%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="14%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <td class="td-align-center">序号</td>
+                            <td class="td-align-center">文件名称</td>
+                            <td class="td-align-center">上传时间</td>
+                            <td class="td-align-center">档案日期</td>
+                            <td class="td-align-center">过期日期</td>
+                            <td class="td-align-center">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody id="arcfileList">
+                        <empty name="archives_files">
+                            <tr class="arc-empty">
+                                <td colspan="6" style="text-align: center;">暂无相关数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="archives_files" id="vo">
+                                <tr>
+                                    <td class="td-align-center xuhao">{$key+1}</td>
+                                    <td class="td-align-center">{$vo.file_name}</td>
+                                    <td class="td-align-center">{$vo.add_time}</td>
+                                    <td class="td-align-center" style="padding: 0">{$vo.archive_time}</td>
+                                    <td class="td-align-center" style="padding: 0">{$vo.expire_time}</td>
+                                    <td class="td-align-center">{$vo.html}</td>
+                                    <input type="hidden" name="arc_id[]" value="{$vo.arc_id}"/>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+                    <button style="display: none" type="button" id="testUpload"></button>
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="editAssets" id="uploadFileArc">
+                    <i class="layui-icon">&#xe609;</i> 确认无误并提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="addAssetsDicDiv" style="display: none">
+    <div class="containDiv">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 设备名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="dic_assets" placeholder="请输入设备名称" required
+                               lay-verify="required|assets" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin">*</span> 设备分类：</label>
+                    <div class="layui-input-inline">
+                        <select name="dic_catid" lay-search lay-verify="required|catid" lay-filter="dic_catid">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 设备类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="dic_assets_category" xm-select="dic_assets_category" xm-select-search=""
+                                lay-verify="dic_assets_category">
+                            <option value="">请选择设备类型</option>
+                            <option value="is_firstaid">急救设备</option>
+                            <option value="is_special">特种设备</option>
+                            <option value="is_metering">计量设备</option>
+                            <option value="is_qualityAssets">质控设备</option>
+                            <option value="is_benefit">效益分析</option>
+                            <option value="is_lifesupport">生命支持</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">字典类别：</label>
+                    <div class="layui-input-inline" id="dic_category_div">
+                        <div class="input-group" id="bdepart">
+                            <input type="text" class="form-control bsSuggest" name="dic_category" id="dic_category_add"
+                                   placeholder="选择或填写新类别"/>
+                            <div class="input-group-btn">
+                                <ul id="showhos" class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="dic_unit" placeholder="请输入设备单位" required lay-verify="unit"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="addDic"><i class="layui-icon">&#xe609;</i> 保存
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var old_is_subsidiary = parseInt('{$asInfo.is_subsidiary}');
+    var main_assid = parseInt('{$asInfo.main_assid}');
+    var main_assets = '{$asInfo.main_assets}';
+    var this_catid = '{$asInfo.catid}';
+    var this_assets = '{$asInfo.assets}';
+    var old_dic_assets = '{$asInfo.assets}';
+    var this_unit = '{$asInfo.unit}';
+    var this_assets_category = '{$asInfo.assets_category}';
+    var editAssetsUrl = '{$editAssetsUrl}';
+    var now = "{$now}";
+</script>
+
+<script>
+    layui.use('controller/assets/lookup/editassets', layui.factory('controller/assets/lookup/editassets'));
+</script>

@@ -1,0 +1,51 @@
+<a name="patrol"></a>
+<blockquote class="layui-elem-quote module-blockquote">巡查保养管理模块配置</blockquote>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2" style="width: 190px !important;">模块状态：</label>
+    <div class="layui-input-block radio-margin-left" style="margin-left: 190px!important;">
+        <input type="radio" name="patrol[patrol_open][is_open]" lay-filter="patrol_open"  value="1" title="开启" <if condition="$settings['patrol']['patrol_open'][is_open] eq 1">checked</if> >
+        <input type="radio" name="patrol[patrol_open][is_open]" lay-filter="patrol_open"  value="0" title="关闭" <if condition="$settings['patrol']['patrol_open'][is_open] neq 1">checked</if> >
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+    <label class="layui-form-label modulelabel-2">扫码签到保养设备：</label>
+    <div class="layui-input-block repair radio-margin-left">
+        <input type="radio" name="patrol[patrol_wx_set_situation]"  value="1" title="开启" <if condition="$settings['patrol']['patrol_wx_set_situation'] eq 1">checked</if> >
+        <input type="radio" name="patrol[patrol_wx_set_situation]"  value="0" title="关闭" <if condition="$settings['patrol']['patrol_wx_set_situation'] neq 1">checked</if> >
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">保养报告标题：</label>
+        <div class="layui-input-inline patrol" style="width: auto" >
+            <input type="text" name="patrol[patrol_template][title]" value="{$settings['patrol']['patrol_template'][title]}" class="layui-input" style="width: 200px;">
+        </div>
+        <div class="layui-form-mid layui-word-aux">保养报告</div>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">任务将到期提醒范围：</label>
+        <div class="layui-input-inline patrol" style="width: auto" >
+            <input type="text" name="patrol[patrol_soon_expire_day]" value="{$settings['patrol']['patrol_soon_expire_day']}" class="layui-input" style="width: 70px;" lay-verify="number">
+        </div>
+        <div class="layui-form-mid layui-word-aux">天</div>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label modulelabel-2" style="width: 190px !important;">任务发布提醒范围：</label>
+        <div class="layui-input-inline patrol" style="width: auto" >
+            <input type="text" name="patrol[patrol_reminding_day]" value="{$settings['patrol']['patrol_reminding_day']}" class="layui-input" style="width: 70px;" lay-verify="number">
+        </div>
+        <div class="layui-form-mid layui-word-aux">天</div>
+    </div>
+</div>
+<div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;float:left;">
+    <label class="layui-form-label modulelabel-2" style="width: 190px !important;">价格区间：</label>
+    <div class="layui-input-block patrol" style="margin-left: 190px;">
+        <textarea class="layui-textarea" name="patrol[priceRange]" style="border: none;border-left: 1px solid #e6e6e6;">{$priceRange}</textarea>
+    </div>
+</div>
+<div class="layui-form-mid layui-word-aux" style="float: left;margin-left: 15px;">填写规则“区间值 最小值|最大值”，一行一个！例：0|50000</div>
+<div class="clear"></div>

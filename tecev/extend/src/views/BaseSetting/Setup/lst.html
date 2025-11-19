@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户管理</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<script src="__PUBLIC__/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/js/lhgdialog.js?skin=iblue" type="text/javascript"></script>
+<script src="__PUBLIC__/js/jsfunction.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div class="fl search">
+    <a href="javascript:msgbox('archives','添加用户','{:U('add');}')" class="add_btn f16 fl ml10">添加用户</a>
+</div>
+<form>
+<div class="fl listitle bc1"><p class="fl fcfff">&nbsp;&nbsp;用户列表▼</p><p class="fr fcfff">共<?php echo count($data); ?>个用户&nbsp;&nbsp;</p></div>
+<div class="assets_list fl">
+    <table width="100%" cellpadding="2" cellspacing="1" class="table-striped">
+       <tbody>
+          <thead class="f16">
+             <td align="center" width="2%"><input type="checkbox" onclick="checkall(this.form);"/></td>
+             <td align="center" width="5%">工号</td>
+             <td align="center" width="5%">姓名</td>
+             <td align="center" width="5%">性别</td>
+             <td align="center" width="8%">角色</td>
+             <td align="center" width="10%">联系方式</td>
+             <td align="center" width="7%">人员状态</td>
+             <td align="center" width="8%">上次登录时间</td>
+             <td align="center" width="30%">工作科室</td>
+             <td align="center" width="15%">备注</td>
+             <td align="center" width="5%">操作</td>
+           </thead>
+           <?php for($i=0;$i<count($data);$i++){ ?>
+           <tr>
+             <td align="center"><input type="checkbox"  name="<?php echo $data[$i]['userid']; ?>" /></td>
+             <td align="center"><?php echo $data[$i]['usernum']; ?></td>
+             <td align="center"><?php echo $data[$i]['username']; ?></td>
+             <td align="center"><?php $gender = $data[$i]['gender']==0 ? '男' : '女'; echo $gender; ?></td>
+             <td align="center"><?php echo $data[$i]['roleid']; ?></td>
+             <td align="center"><?php echo $data[$i]['telephone']; ?></td>
+
+             <td align="center"><?php $status = $data[$i]['status']==1 ?  '离职' : '在职'; echo $status;?></td>
+
+             <td align="center"><?php $logintime = $data[$i]['logintime']==0 ? 0 : date('Y-m-d',$data[$i]['logintime']); echo $logintime; ?></td>
+             <td align="center"><?php foreach($arr_departid[$i] as $k => $v){
+               echo $v.'、';
+               } ?>
+             </td>
+             <td align="center"><?php echo $data[$i]['remark']; ?></td>
+             <td align="center" class="f12">
+                 <a onclick="clearOpenid({$data[$i]['userid']})" class="f12 link" title="清除openid"><img src="__PUBLIC__/images/clear2.png" width="16" height="16" /></a>
+                 <a href="javascript:msgbox('archives','修改信息','{:U('edit?adminid='.$data[$i]['userid']);}')" class="f12 link" title="编辑"><img src="__PUBLIC__/images/edit.png" width="16" height="16" /></a>
+                 <a href="{:U('del?id='.$data[$i]['userid']);}" onclick="return confirm('是否删除？');" class="f12 link" title="删除"><img src="__PUBLIC__/images/delete.png" width="16" height="16"/></a>
+             </td>
+            </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+</body>
+</form>
+<script>
+    function clearOpenid(userid){
+        var data = {
+            userid:userid
+        };
+        var url = admin_name+'/Setup/clearOpenid.html';
+        $.ajax({
+            type:"POST",
+            url:url,
+            data:data,
+            //返回数据的格式
+            //成功返回之后调用的函数
+            success:function(data){
+                if(data == 1){
+                    $.dialog({
+                        icon: 'success_l.gif',
+                        title:false,
+                        heght: '5em',
+                        time: 1,
+                        content: '清除成功',
+                        close:function(){
+                            window.location.reload();
+                        }
+                    });
+                }
+            },
+            //调用出错执行的函数
+            error: function(){
+                //请求出错处理
+                $.dialog({
+                    icon: 'error_24.gif',
+                    title:false,
+                    heght: '5em',
+                    time: 1,
+                    content: '服务器繁忙'
+                });
+            }
+        });
+    }
+</script>
+</html>

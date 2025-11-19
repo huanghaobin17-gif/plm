@@ -1,0 +1,85 @@
+<?php if($menuData = get_menu_name('BaseSetting','Dictionary','assetsDic')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var assetsDic = "{$assetsDic}";
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-Dictionary-assetsDic">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="dicAssetsName" placeholder="请输入设备名称" name="assets_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">字典类型：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="dic_category" placeholder="请输入设备分类" name="dic_category">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="searchAssetsDic" id="searchAssetsDic"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="assetsDicLists" lay-filter="assetsDicData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-BaseSetting-Dictionary-assetsDicToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('BaseSetting','Dictionary','addAssetsDic')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addAssetsDic" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('BaseSetting','Dictionary','batchAddAssetsDic')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchAddAssetsDic" data-url="{$menuData['actionurl']}">
+            <i class="iconfont icon-piliangtianjia3"></i> {$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/dictionary/assetsDic', layui.factory('basesetting/dictionary/assetsDic'));
+</script>

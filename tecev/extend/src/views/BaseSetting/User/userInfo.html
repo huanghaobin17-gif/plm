@@ -1,0 +1,251 @@
+<title>基本资料</title>
+<style>
+    .fly-panel-border {
+        border: 1px solid #e6e6e6;
+        box-shadow: none;
+    }
+    .fly-panel {
+        margin-bottom: 15px;
+        border-radius: 2px;
+        background-color: #fff;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    }
+
+    .fly-panel-border .fly-panel-title {
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .fly-panel-title {
+        position: relative;
+        height: 35px;
+        line-height: 35px;
+        padding: 0 15px;
+        border-bottom: 1px dotted #E9E9E9;
+        color: #333;
+        border-radius: 2px 2px 0 0;
+        font-size: 14px;
+    }
+    .fly-panel-main {
+        padding: 10px 15px;
+    }
+    .fly-shortcut {
+        margin: 5px 0;
+    }
+    .layui-col-space10 {
+        margin: -5px;
+    }
+    .fly-shortcut li {
+        text-align: center;
+    }
+    .layui-col-space10>* {
+        padding: 5px;
+    }
+    .layui-col-sm2 {
+        width: 16.66666667% !important;
+    }
+    .layui-col-sm1, .layui-col-sm10, .layui-col-sm11, .layui-col-sm12, .layui-col-sm2, .layui-col-sm3, .layui-col-sm4, .layui-col-sm5, .layui-col-sm6, .layui-col-sm7, .layui-col-sm8, .layui-col-sm9 {
+        float: left;
+    }
+    .layui-col-xs4 {
+        width: 33.33333333%;
+    }
+    .my-menu-li{
+        width: 24% !important;
+        text-align: center;
+    }
+    .table_title{
+        height: 40px;
+        background: #F9F9F9;
+        line-height: 40px;
+        text-align: left;
+        padding-left: 20px;
+        font-weight: bold;
+    }
+</style>
+<script>
+    var userInfoUrl = "{$userInfoUrl}";
+    var password = "{$password}";
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-User-getUserList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">账户资料</li>
+                        <li>科室</li>
+                        <li>角色</li>
+                        <li>权限</li>
+                        <li lay-id="password">密码</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <form class="layui-form layui-form-pane" action="">
+                                <input type="hidden" name="saveType" value="userinfo"/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">用户名：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="" value="{$userInfo.username}" readonly placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux" style="font-size: 14px !important;"> <span style="color: #5FB878;"></span> 修改用户名请联系超级管理员。 </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 手机号码：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="telephone" value="{$userInfo.telephone}" lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux" style="font-size: 14px !important;"> <span style="color: #5FB878;">需要更换手机号码的，请填写新的手机号。</span> 手机号不能与系统存在的重复。 </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">邮箱：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="email" value="{$userInfo.email}" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" pane="" style="width: 300px;">
+                                    <label class="layui-form-label">性别：</label>
+                                    <div class="layui-input-block">
+                                        <if condition="$userInfo.gender eq 0">
+                                            <input type="radio" name="gender" value="0" title="男" checked="">
+                                            <input type="radio" name="gender" value="1" title="女">
+                                            <else/>
+                                            <input type="radio" name="gender" value="0" title="男">
+                                            <input type="radio" name="gender" value="1" title="女" checked="">
+                                        </if>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="remark" placeholder="请输入备注内容" class="layui-textarea">{$userInfo.remark}</textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div style="text-align: center">
+                                        <button class="layui-btn" lay-submit lay-filter="saveInfo"><i class="layui-icon">&#xe609;</i> 保存
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary"><i
+                                                class="layui-icon">ဂ</i> 重置
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-tab-item">
+                            <form class="layui-form layui-form-pane">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">工作科室：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="" value="{$userInfo.job_department}" readonly class="layui-input">
+                                    </div>
+                                </div>
+                                <volist name="alldeparts" id="vo">
+                                <div class="fly-panel fly-panel-border">
+                                    <div class="fly-panel-title" style="background: #F9F9F9;font-weight: bold;"> 管理科室 -- {$hospitalname[$key]['hospital_name']}</div>
+                                    <div class="fly-panel-main">
+                                        <ul class="layui-row layui-col-space10 fly-shortcut">
+                                            <volist name="vo" id="d">
+                                                <li class="layui-col-sm2 layui-col-xs4">
+                                                    {$d}
+                                                </li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </volist>
+                            </form>
+                        </div>
+                        <div class="layui-tab-item">
+                            <volist name="allroles" id="vo">
+                            <div class="fly-panel fly-panel-border">
+                                <div class="fly-panel-title" style="background: #F9F9F9;font-weight: bold;"> 所属角色 -- {$hospitalname[$key]['hospital_name']}</div>
+                                <div class="fly-panel-main">
+                                    <ul class="layui-row layui-col-space10 fly-shortcut">
+                                        <volist name="vo" id="r">
+                                            <li class="layui-col-sm2 layui-col-xs4">
+                                                {$r}
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </div>
+                            </volist>
+                        </div>
+                        <div class="layui-tab-item">
+                            <volist name="res" id="pri">
+                            <table class="layui-table">
+                                <caption class="table_title">{$hospitalname[$key]['hospital_name']}</caption>
+                                <colgroup>
+                                    <col width="120">
+                                    <col width="175">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="tbheader">模块</th>
+                                    <th class="tbheader">类别</th>
+                                    <th class="tbheader">权限</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="pri" id="vo">
+                                    <tr>
+                                        <if condition="$vo[hasRowSpan]">
+                                            <td class="tbcenter" rowspan="{$vo.rowSpan}">{$vo.modulename}</td>
+                                        </if>
+                                        <td class="tbcenter">
+                                            {$vo.title}
+                                        </td>
+                                        <td>
+                                            <ul class="privi">
+                                                <volist name="vo[menus]" id="menu">
+                                                    <li class="my-menu-li">{$menu[title]}</li>
+                                                </volist>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                            </volist>
+                        </div>
+                        <div class="layui-tab-item" id="password"> 
+                            <form class="layui-form layui-form-pane" action="">
+                                <input type="hidden" name="saveType" value="password"/>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">原密码：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="oldpassword" value="" lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">新密码：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="newpassword" value="" lay-verify="required|password" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">确认密码：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="newpassword2" value="" lay-verify="required|password|passwordconfirm" placeholder="请再次输入新密码" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div style="text-align: center">
+                                        <button class="layui-btn" lay-submit lay-filter="savePassword"><i class="layui-icon">&#xe609;</i> 保存
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary"><i
+                                                class="layui-icon">ဂ</i> 重置
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('basesetting/user/userInfo', layui.factory('basesetting/user/userInfo'));
+</script>

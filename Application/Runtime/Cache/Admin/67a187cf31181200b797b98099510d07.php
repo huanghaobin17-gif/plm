@@ -1,0 +1,110 @@
+<?php if (!defined('THINK_PATH')) exit();?><title>器械不良事件报告</title>
+<script>
+    //解决ie placeholder兼容性
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+    var getAdverseList = "<?php echo ($getAdverseList); ?>";
+</script>
+<style>
+    #LAY-Adverse-Adverse-getAdverseList .layui-table-view .layui-table {
+        width: 100%
+    }
+
+    #LAY-Adverse-Adverse-getAdverseList .layui-form-item .layui-input-inline {
+        margin-right: 0;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Adverse-Adverse-getAdverseList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAdverseListsAssets"
+                                               placeholder="请输入设备名称" name="getAdverseListsAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <select name="department" xm-select="department" xm-select-search=""
+                                                lay-verify="department">
+                                            <option value="">请选择管理科室</option>
+                                            <?php if(is_array($department)): $i = 0; $__LIST__ = $department;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["departid"]); ?>"><?php echo ($vo["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报告日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" readonly name="getAdverseListStartDate" id="getAdverseListStartDate">
+                                </div>
+                                <div class="layui-form-mid" style="margin-left: 10px;">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" readonly name="getAdverseListEndDate" id="getAdverseListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报告来源：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="getAdverseListReport_from" value="生产企业" title="生产企业">
+                                    <input type="radio" name="getAdverseListReport_from" value="经营企业" title="经营企业">
+                                    <input type="radio" name="getAdverseListReport_from" value="使用单位" title="使用单位">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="" lay-filter="getAdverseListsSearch"><i
+                                            class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary" id="reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="getAdverseLists" lay-filter="getAdverseLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('adverse/adverse/getAdverseList', layui.factory('adverse/adverse/getAdverseList'));
+</script>
+<script type="text/html" id="LAY-Adverse-Adverse-getAdverseListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Adverse','Adverse','addAdverse')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addAdverse" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon">&#xe654;</i><?php echo ($menuData['actionname']); ?>
+        </button>
+        <?php endif?>
+    </div>
+</script>

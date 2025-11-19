@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .cusquote1 {
+            padding: 5px !important;
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+        <blockquote class="layui-elem-quote cusquote1">
+            组内成员取消选中状态后可退出组，组外成员选中后可加入组
+        </blockquote>
+        <form class="layui-form layui-form-pane" action="__CONTROLLER__/editRoleUser">
+            <input type="hidden" name="roleid" value="{$roleid}">
+            <fieldset class="layui-elem-field">
+                <legend>组内成员</legend>
+                <div class="layui-field-box">
+                    <ul class="privi">
+                        <if condition="$list">
+                            <volist name="list" id="v">
+                                <if condition="$v.roleid gt 0">
+                                    <li style="width: 170px;"><input type="checkbox" value="{$v.userid}" name="roleid_edit" title="{$v.username}" lay-skin="primary" checked></li>
+                                </if>
+                            </volist>
+                        <else/>
+                            暂无用户
+                        </if>
+                    </ul>
+                </div>
+            </fieldset>
+            <br/>
+            <fieldset class="layui-elem-field">
+                <legend>组外成员</legend>
+                <div class="layui-field-box">
+                    <ul class="privi">
+                        <if condition="$list">
+                            <volist name="list" id="v">
+                                <if condition="$v.roleid eq 0">
+                                    <li style="width: 170px;"><input type="checkbox" value="{$v.userid}" name="roleid_add" title="{$v.username}" lay-skin="primary"></li>
+                                </if>
+                            </volist>
+                        <else/>
+                            暂无用户
+                        </if>
+                    </ul>
+                </div>
+            </fieldset>
+            <br/>
+            <br/>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon" >&#xe609;</i> 修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                </div>
+            </div>
+        </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/privilege/editRoleUser', layui.factory('controller/basesetting/privilege/editRoleUser'));
+</script>

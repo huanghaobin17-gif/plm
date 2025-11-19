@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>启用质控计划</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        th {
+            text-align: right !important;
+            font-weight: bold !important;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Qualities-Quality-startQualityPlan">
+    <blockquote class="layui-elem-quote">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-size="sm" lay-even="" style="margin-top: 0px;">
+        <colgroup>
+            <col width="100">
+            <col>
+            <col width="100">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th>设备编号：</th>
+            <td>{$res['assetsInfo']['assnum']}</td>
+            <input type="hidden" name="assid" value="{$res['assetsInfo']['assid']}">
+            <input type="hidden" name="assnum" value="{$res['assetsInfo']['assnum']}">
+            <th>设备名称：</th>
+            <td class="assetsName">{$res['assetsInfo']['assets']}</td>
+        </tr>
+        <tr>
+            <th>规格 / 型号：</th>
+            <td>{$res['assetsInfo']['model']}</td>
+            <th>使用科室：</th>
+            <td>{$res['assetsInfo']['department']}</td>
+        </tr>
+        <tr>
+            <th>本次检测人：</th>
+            <td>{$res['qsInfo']['username']}</td>
+            <th>上次检测人：</th>
+            <td>{$res['assetsInfo']['test_user']}</td>
+        </tr>
+        </tbody>
+    </table>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>启用表单</legend>
+    </fieldset>
+    <form action="" class="layui-form">
+        <input type="hidden" name="qsid" value="{$qsid}"/>
+        <input type="hidden" name="planName" value="{$res['qsInfo']['plan_name']}"/>
+        <div class="layui-form-item" style="margin-top: 15px;">
+            <div class="layui-inline">
+                <label for="date" class="layui-form-label" style="width: 110px;"><span class="rquireCoin"> * </span>预计执行日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="do_date" readonly style="cursor: pointer;" lay-verify="required|date" placeholder="请选择预计执行日期" id="date" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 110px;">是否周期执行：</label>
+                <div class="layui-input-inline" style="width: 54px;">
+                    <if condition="$res['qsInfo']['is_cycle'] eq 1">
+                        <input type="checkbox" name="is_cycle" value="1" checked disabled lay-skin="switch" lay-filter="switchTest" lay-text="是|否">
+                        <!--是时“周期”为必填，否时“周期”不显示-->
+                        <else/>
+                        <input type="checkbox" name="is_cycle" value="1" lay-skin="switch" lay-filter="switchTest" lay-text="是|否">
+                        <!--是时“周期”为必填，否时“周期”不显示-->
+                    </if>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">周期：</label>
+                <div class="layui-input-inline" style="width: 50px;">
+                    <if condition="$res['qsInfo']['is_cycle'] eq 1">
+                        <input type="text" name="cycle" id="cycle" value="{$res['qsInfo']['cycle']}" readonly placeholder="周期" autocomplete="off" class="layui-input">
+                        <else/>
+                        <input type="text" name="cycle" id="cycle" readonly placeholder="周期" autocomplete="off" class="layui-input">
+                    </if>
+                </div>
+                <div class="layui-form-mid">月</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 110px;"><span class="rquireCoin"> * </span>设备质控模板：</label>
+            <div class="layui-input-inline">
+                <select name="templates" lay-filter="templates" lay-verify="required">
+                    <option value="">请选择模板</option>
+                    <volist name="res['templates']" id="vo">
+                        <option value="{$vo.qtemid}">{$vo.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label" style="width: 110px;"><span class="rquireCoin"> * </span>检测依据：</label>
+            <!--多选-->
+            <div class="layui-input-block" style="margin-left: 140px;">
+                <volist name="res['basis']" id="vo">
+                    <input type="checkbox" name="basis[]" value="{$vo.qdbid}" title="{$vo.basis}">
+                </volist>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px;"><span class="rquireCoin"> * </span>检测仪器：</label>
+            <!--单选-->
+            <div class="layui-input-block" style="margin-left: 140px;">
+                <select name="instrument" lay-filter="instrument" lay-verify="required">
+                    <option value="">请选择检测仪器（标准器、模拟器）</option>
+                    <volist name="res['incres']" id="vo">
+                        <option value="{$vo.qiid}">{$vo.instrument}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 110px;">仪器规格 / 型号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="model" placeholder="请填写仪器规格 / 型号" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 110px;">仪器注册证号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="serialnum" placeholder="请填写仪器注册证(序列)号" class="layui-input"/>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: 110px;">仪器计量编号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="num" placeholder="请填写仪器计量编号" class="layui-input"/>
+                </div>
+            </div>
+        </div>
+        <div id="setDetail"></div>
+        <div class="ilayui-form-item tbcenter" style=" margin-top: 50px;">
+            
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="scan">
+                    <i class="layui-icon layui-icon-zeye-l l-icon-in-btn"></i>预览设备质控模板
+                </button>
+                <button class="layui-btn" lay-submit lay-filter="start"><i class="layui-icon">&#xe609;</i>确定启用</button>
+            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+        </div>
+        <br/>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var startdate = "{$date}";
+</script>
+<script>
+    layui.use('controller/qualities/quality/startQualityPlan', layui.factory('controller/qualities/quality/startQualityPlan'));
+</script>

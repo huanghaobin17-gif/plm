@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .parts_table {  padding: 0 !important;  }
+    .layui-table th{
+        text-align: center;
+    }
+    .layui-table tr td {
+        text-align: center;
+    }
+    .offer_tbody textarea {
+        border: none;
+        resize: none;
+    }
+    .layui-table {
+        margin: 0;
+    }
+    /*进度条样式*/
+    .margin-bottom-10{margin-bottom: 10px;}
+    .progressNav {
+        width:960px;
+    }
+    .progressNav li{
+        padding:0 30px;
+        line-height: 30px;
+        background-color: #50abe4;
+        display: inline-block;
+        color:#fff;
+        position: relative;
+        margin-right: 4px;
+        margin-bottom: 10px;
+    }
+    .progressNav li:after{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        position: absolute;
+        right:-20px;
+        top:0;
+        z-index: 10;
+    }
+    .progressNav li:before{
+        content:"";
+        display: block;
+        border-top:15px solid transparent;
+        border-bottom:15px solid transparent;
+        border-left:20px solid #fff;
+        position: absolute;
+        left:0;
+        top:0;
+    }
+
+    .progressNav li:first-child{
+        border-radius: 4px 0 0 4px;
+        padding-left:25px;
+    }
+    .progressNav li:last-child{
+        border-radius: 0 4px 4px 0;
+        padding-right: 25px;
+    }
+    .progressNav li:first-child:before{
+        display: none;
+    }
+    .progressNav li:last-child:after{
+        display: none;
+    }
+    /*正在进行*/
+    .doingProgress:after{border-left:20px solid #50abe4;}
+    /*完成*/
+    .completeProgress{background-color: rgba(80,171,228,0.5)!important;}
+    .completeProgress:after{opacity: 0.5!important;border-left:20px solid #50abe4;}
+    /*未完成*/
+    .nocompleteProgress{background-color: #CFCFCF!important;}
+    .nocompleteProgress:after{border-left:20px solid #CFCFCF;!important;}
+    /*定位小数字*/
+    .number{position: absolute;top: -1px;}
+    /*定位文字*/
+    .numberText{margin-left: 20px;}
+    /*时间线左移出*/
+    /*时间线最新tips*/
+    .newTips{
+        width: 34px;
+        height: 18px;
+        border: 1px solid #ebebeb;
+        border-radius: 4px;
+        position: absolute;
+        color: #fff;
+        font-size: 12px;
+        display: inline-block;
+        top: -1px;
+        left: -48px;
+        background-color: #0af;
+        line-height: 18px;
+        text-align: center;
+    }
+    .newTips:before{
+        box-sizing: content-box;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 4px;
+        left: 31px;
+        padding: 0;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        border-left: 10px solid #0af;
+        border-right: 4px solid transparent;
+        display: block;
+        content: "";
+        z-index: 12;
+    }
+    /*时间线日期大小*/
+    .date{font-size: 18px;}
+    .read-table th{
+        width: 12%;
+    }
+    .newcolor{
+        color: #0af;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-10">
+        <ul class="progressNav">
+            <volist name="progress" id="vo">
+                <li class="{$vo.class}" ><span class="number">{$key+1}</span><span class="numberText">{$vo.type_name}</span></li>
+            </volist>
+        </ul>
+    </div>
+    <div class="margin-bottom-15 m-left">
+        <ul class="layui-timeline">
+            <volist name="tips" id="vo">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <if condition="$vo['new']">
+                            <div class="layui-timeline-title newcolor">{$vo.text}</div>
+                            <else/>
+                            <div class="layui-timeline-title">{$vo.text}</div>
+                        </if>
+                    </div>
+                    {$vo.new}
+                </li>
+            </volist>
+        </ul>
+    </div>
+
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+            基本信息
+        </blockquote>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>申请单号：</th>
+                <td>{$applyInfo.apply_num}</td>
+                <th>项目名称：</th>
+                <td>{$applyInfo.project_name}</td>
+                <th>申请科室：</th>
+                <td>{$assInfo.department}</td>
+            </tr>
+            <tr>
+                <th>申请时间：</th>
+                <td>{$applyInfo.apply_time}</td>
+                <th>设备名称：</th>
+                <td>{$assInfo.assets_name}</td>
+                <th>申请数量：</th>
+                <td>{$assInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>申请人：</th>
+                <td>{$applyInfo.apply_user}</td>
+                <th>申请单价：</th>
+                <td>{$assInfo.market_price}</td>
+                <th>是否进口：</th>
+                <td>{$assInfo.is_import_name}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+            附件信息
+        </blockquote>
+        <table class="layui-table read-table-l" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="25%">
+                <col width="15%">
+                <col width="15%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$files">
+                <volist name="files" id="vo">
+                    <tr>
+                        <td>
+                            {$key+1}
+                        </td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr>
+                    <td colspan="6" style="text-align: center !important;">暂无相关数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+            招标明细
+        </blockquote>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="9%">
+                <col width="13%">
+                <col width="9%">
+                <col width="9%">
+                <col width="7%">
+                <col width="7%">
+                <col>
+            </colgroup>
+            <tr>
+                <th>供应商名称</th>
+                <th>生产厂商</th>
+                <th>设备型号</th>
+                <th>品牌</th>
+                <th>市场价</th>
+                <th>最终报价</th>
+                <th>保修年限</th>
+                <th>最终选择</th>
+                <th>操作</th>
+            </tr>
+            <tbody>
+            <if condition="$suppliers">
+                <volist name="suppliers" id="vo">
+                    <tr>
+                        <td>{$vo.supplier_name}</td>
+                        <td>{$vo.factory_name}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.brand}</td>
+                        <td>{$vo.market_price}</td>
+                        <td>{$vo.company_price}</td>
+                        <td>{$vo.guarantee_year}</td>
+                        <td>
+                            <if condition="$vo['final_select'] eq 1">
+                                <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                <else/>
+                                <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                            </if>
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showDetail" lay-submit lay-filter="showDetail" data-id="{$vo.detail_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr>
+                    <td style="text-align: center !important;" colspan="9">暂无相关数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var purchaseLifeList = "{$purchaseLifeList}";
+    layui.use('controller/purchases/purchaseLife/showLife', layui.factory('controller/purchases/purchaseLife/showLife'));
+</script>

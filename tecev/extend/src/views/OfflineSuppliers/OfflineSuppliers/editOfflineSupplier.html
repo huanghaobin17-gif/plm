@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑厂商信息</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-offlineSuppliers-editOfflineSupplier .layui-form-label{
+            width: 130px;
+            padding-left: 0;
+        }
+        #LAY-offlineSuppliers-editOfflineSupplier .no-padding-td {
+            padding: 0 !important;
+        }
+        #LAY-offlineSuppliers-editOfflineSupplier .no-padding-td .layui-input {
+            border: none;
+            height: 33px;
+            line-height: 33px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-offlineSuppliers-editOfflineSupplier">
+    <form action="" class="layui-form">
+        <input type="hidden" name="olsid" value="{$suppliers.olsid}">
+        <blockquote class="layui-elem-quote" style="margin-bottom: 10px;">
+            基本信息
+        </blockquote>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span>厂商编号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" readonly value="{$suppliers.sup_num}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">统一社会信用代码：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="ECC_code" value="{$suppliers.ECC_code}" placeholder="请输入统一社会信用代码">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="sup_name" value="{$suppliers.sup_name}" placeholder="请输入厂商名称" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">厂商简称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="sup_abbr" value="{$suppliers.sup_abbr}" placeholder="请输入厂商简称">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 厂商类型：</label>
+                <div class="layui-input-inline">
+                    <empty name="otherPage">
+                        <select name="suppliers_type" xm-select="suppliers_type" xm-select-search="" lay-verify="required">
+                            <option value="1" <if condition="$suppliers['is_supplier'] EQ C('YES_STATUS')">selected</if> >供应商</option>
+                            <option value="2" <if condition="$suppliers['is_manufacturer'] EQ C('YES_STATUS')">selected</if> >生产商</option>
+                            <option value="3" <if condition="$suppliers['is_repair'] EQ C('YES_STATUS')">selected</if> >维修商</option>
+                            <option value="4" <if condition="$suppliers['is_insurance'] EQ C('YES_STATUS')">selected</if> >维保商</option>
+                        </select>
+                        <else />
+                        <input type="text" class="layui-input" readonly value="{$suppliers.suppliers_type}" lay-tips="修改类型请移步到厂商管理-厂商列表修改相应的类型" >
+                        <input type="hidden" name="suppliers_type" class="layui-input" value="{$typeValue}" >
+                    </empty>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">业务联系人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="salesman_name" value="{$suppliers.salesman_name}" placeholder="请输入业务联系人">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">业务联系人电话：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="salesman_phone" value="{$suppliers.salesman_phone}" placeholder="请输入业务联系人电话" lay-verify="tel">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">技术联系人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="artisan_name" value="{$suppliers.artisan_name}" placeholder="请输入技术联系人">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">技术联系人电话：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="artisan_phone" value="{$suppliers.artisan_phone}" placeholder="请输入技术联系人电话" lay-verify="tel">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">传真号码：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="fax_number" value="{$suppliers.fax_number}" placeholder="请输入传真号码" lay-verify="tel">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">电子邮箱：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="email" value="{$suppliers.email}" placeholder="请输入电子邮箱" lay-verify="checkEmail">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">省份：</label>
+                <div class="layui-input-inline">
+                    <select name="provinces" lay-filter="provinces" lay-search>
+                        <option value="">请选择</option>
+                        <volist name="provinces" id="vo">
+                            <option value="{$vo.provinceid}" <if condition="$suppliers['provinces'] EQ $vo['provinceid']">selected</if> >{$vo.province}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">城市：</label>
+                <div class="layui-input-inline">
+                    <select name="city" lay-filter="city" lay-search>
+                        <notempty name="city">
+                            <option value="">请选择城市</option>
+                            <volist name="city" id="vo">
+                                <option value="{$vo.cityid}" <if condition="$suppliers['city'] EQ $vo['cityid']">selected</if> >{$vo.city}</option>
+                            </volist>
+                            <else/>
+                            <option value="">请选择省份</option>
+                        </notempty>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">区/城镇：</label>
+                <div class="layui-input-inline">
+                    <select name="areas" lay-search lay-filter="areas">
+                        <notempty name="area">
+                            <option value="">请选择区/城镇</option>
+                            <volist name="area" id="vo">
+                                <option value="{$vo.areaid}" <if condition="$suppliers['areas'] EQ $vo['areaid']">selected</if> >{$vo.area}</option>
+                            </volist>
+                            <else/>
+                            <option value="">请选择城市</option>
+                        </notempty>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通讯地址：</label>
+            <div class="layui-input-block" style="width: 539px; margin-left: 145px;">
+                <input type="text" class="layui-input" name="address" value="{$suppliers.address}" placeholder="请输入通讯地址">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-inline" style="width: 539px">
+                <textarea class="layui-textarea" name="break">{$suppliers.break}</textarea>
+            </div>
+        </div>
+
+        <div class="layui-tab layui-tab-brief" lay-filter="change">
+            <ul class="layui-tab-title">
+                <li class="layui-this">证照信息</li>
+                <li lay-id="2">授权信息</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <blockquote class="layui-elem-quote" style="margin-bottom: -10px;">
+                        证照信息
+                    </blockquote>
+                    <table class="layui-table read-table-l fileTable" lay-size="sm">
+                        <colgroup>
+                            <col width="8%">
+                            <col width="33%">
+                            <col width="23%">
+                            <col width="23%">
+                            <col width="">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center">证件名称</th>
+                            <th class="th-align-center">发证(备案)日期</th>
+                            <th class="th-align-center">有效期限</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="th-align-center">1</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('BUSINESS_LICENSE_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                营业执照
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="BusinessLicenseStartDate" value="{$fileData[C('BUSINESS_LICENSE_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="BusinessLicenseEndDate" value="{$fileData[C('BUSINESS_LICENSE_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('BUSINESS_LICENSE_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="营业执照">
+                                    <input type="hidden" name="fileType" value="{$type=C('BUSINESS_LICENSE_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('BUSINESS_LICENSE_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('BUSINESS_LICENSE_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('BUSINESS_LICENSE_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th-align-center">2</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('MANAGEMENT_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                医疗器械经营许可证
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="ManagementStartDate" value="{$fileData[C('MANAGEMENT_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="ManagementEndDate" value="{$fileData[C('MANAGEMENT_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('MANAGEMENT_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="医疗器械经营许可证">
+                                    <input type="hidden" name="fileType" value="{$type=C('MANAGEMENT_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('MANAGEMENT_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('MANAGEMENT_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('MANAGEMENT_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th-align-center">3</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('KEEP_ON_RECORD_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                第二类医疗器械经营备案凭证
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="KeepOnRecordStartDate" value="{$fileData[C('KEEP_ON_RECORD_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="KeepOnRecordEndDate" value="{$fileData[C('KEEP_ON_RECORD_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('KEEP_ON_RECORD_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="第二类医疗器械经营备案凭证">
+                                    <input type="hidden" name="fileType" value="{$type=C('KEEP_ON_RECORD_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('KEEP_ON_RECORD_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('KEEP_ON_RECORD_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('KEEP_ON_RECORD_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th-align-center">4</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('GENERATE_LICENSE_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                医疗器械生产许可证
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="GenerateLicenseStartDate" value="{$fileData[C('GENERATE_LICENSE_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="GenerateLicenseEndDate" value="{$fileData[C('GENERATE_LICENSE_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('GENERATE_LICENSE_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="医疗器械生产许可证">
+                                    <input type="hidden" name="fileType" value="{$type=C('GENERATE_LICENSE_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('GENERATE_LICENSE_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('GENERATE_LICENSE_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('GENERATE_LICENSE_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th-align-center">5</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('PRODUCTION_RECORD_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                第一类医疗器械生产备案凭证
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="ProductionRecordStartDate" value="{$fileData[C('PRODUCTION_RECORD_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="ProductionRecordEndDate" value="{$fileData[C('PRODUCTION_RECORD_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('PRODUCTION_RECORD_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="第一类医疗器械生产备案凭证">
+                                    <input type="hidden" name="fileType" value="{$type=C('PRODUCTION_RECORD_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('PRODUCTION_RECORD_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('PRODUCTION_RECORD_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('PRODUCTION_RECORD_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="th-align-center">6</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                中华人民共和国医疗器械注册证
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="registrationStartDate" value="{$fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="registrationEndDate" value="{$fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="中华人民共和国医疗器械注册证">
+                                    <input type="hidden" name="fileType" value="{$type=C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('MEDICAL_INSTRUMENT_REGISTRATION_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="th-align-center">7</td>
+                            <td class="fileTitle">
+                                <notempty name="fileData[C('OTHERS_FILE_TYPE')][fileid]">
+                                    <i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i>
+                                    <else/>
+                                    <i class="layui-icon layui-icon-zzban" style="color: #FF5722"></i>
+                                </notempty>
+                                其他
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="startDate" readonly id="othersStartDate" value="{$fileData[C('OTHERS_FILE_TYPE')][record_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="no-padding-td">
+                                <input type="text" name="endDate" readonly id="othersEndDate" value="{$fileData[C('OTHERS_FILE_TYPE')][term_date]}" placeholder="请选择" class="layui-input">
+                            </td>
+                            <td class="th-align-center">
+                                <div class="layui-btn-group">
+                                    <input type="hidden" name="fileid" value="{$fileData[C('OTHERS_FILE_TYPE')][fileid]}">
+                                    <input type="hidden" name="name" value="其他">
+                                    <input type="hidden" name="fileType" value="{$type=C('OTHERS_FILE_TYPE')}">
+                                    <input type="hidden" name="ext" value="{$fileData[C('OTHERS_FILE_TYPE')][ext]}">
+                                    <input type="hidden" name="path" value="{$fileData[C('OTHERS_FILE_TYPE')][url]}">
+                                    <notempty name="fileData[C('OTHERS_FILE_TYPE')][fileid]">
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">更新</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-primary showFile">查看</div>
+                                        <else/>
+                                        <div class="layui-btn layui-btn-xs file_url" lay-tips="提示 : 上传文件后缀名只能为PDF文件、扫描图片上传">上传</div>
+                                        <div class="layui-btn layui-btn-xs layui-btn-disabled showFile">查看</div>
+                                    </notempty>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <blockquote class="layui-elem-quote" style="margin-bottom: -10px;">
+                        授权信息
+                        <span style="float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;"
+                              id="authUpload"
+                              lay-tips="可一次选择多个文件上传，上传文件后缀名只能为.jpg/.jpeg/.png/.pdf/.xls/.xlsx/.doc/.docx/.ppt/.pptx"><i
+                                class="iconfont icon-shangchuan"></i> 本地上传</span>
+                    </blockquote>
+                    <table class="layui-table read-table-l fileTable" lay-size="sm">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="20%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">授权文件名称</th>
+                            <th class="th-align-center">上传时间</th>
+                            <th class="th-align-center">授权时间</th>
+                            <th class="th-align-center">过期时间</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="fileListView">
+                        <empty name="auth_file">
+                            <tr>
+                                <td colspan="5" id="authFileEmpty" style="text-align: center !important;">暂无相关数据</td>
+                            </tr>
+                            <else />
+                            <volist name="auth_file" id="vo">
+                                <tr>
+                                    <td class="td-align-center">{$vo.name}</td>
+                                    <td class="td-align-center">{$vo.adddate}</td>
+                                    <td class="td-align-center" style="padding: 0"><input type="text" name="auth_record_date[]" value="{$vo.record_date}" placeholder="点击选择时间" class="layui-input record-date" style="cursor: pointer;border: none;height: 33px;"></td>
+                                    <td class="td-align-center" style="padding: 0"><input type="text" name="auth_term_date[]" value="{$vo.term_date}" placeholder="点击选择时间" class="layui-input term-date" style="cursor: pointer;border: none;height: 33px;"></td>
+                                    <td class="td-align-center">
+                                        {$vo.operation}
+                                        <input type="hidden" name="fileid[]" value="{$vo.fileid}">
+                                        <input type="hidden" name="auth_file_name[]" value="{$vo.name}">
+                                        <input type="hidden" name="auth_ext[]" value="{$vo.ext}">
+                                        <input type="hidden" name="auth_type[]" value="5">
+                                        <input type="hidden" name="auth_path[]" value="{$vo.url}">
+                                    </td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                        <button style="display: none" type="button" id="testUpload"></button>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ilayui-form-item" style="text-align:center;margin-top: 50px;margin-bottom: 20px;">
+            <button class="layui-btn" lay-submit="submit" lay-filter="submit"><i class="layui-icon">&#xe609;</i>提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+ </div>
+</body>
+</html>
+<script>var editOfflineSupplierUrl = '{$editOfflineSupplierUrl}';</script>
+<script>
+    layui.use('controller/offlineSuppliers/offlineSuppliers/editOfflineSupplier', layui.factory('controller/offlineSuppliers/offlineSuppliers/editOfflineSupplier'));
+</script>

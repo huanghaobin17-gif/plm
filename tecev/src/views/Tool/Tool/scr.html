@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/login.css"/>
+    <link rel="stylesheet" href="/tecev/start/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/css/tecev.css" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1345701_8yz9acgeev.css" media="all">
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}" type="text/javascript"></script>
+    <script src="/tecev/start/layui/layui.js"></script>
+    <script src="/Public/js/echarts.min.js"></script>
+    <style>
+        .layui-table{background: #081832;color: #fff;}
+        .layui-table td{border:1px #2F5677 solid;}
+        .layui-table th{border:1px #2F5677 solid;}
+        .layui-table thead tr{background: none;}
+        .layui-table tr:hover{background: #081832 !important;}
+        th{text-align: center !important;color: #2AD3BE;font-size: 16px !important;}
+        .layui-table td, .layui-table th{padding: 9px 5px;font-size: 16px;}
+        .ccsl{width:170px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .ggxh{width:120px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .bm{width:220px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .gcs{width:85px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .ksmc{width:200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .cus-scr{width: 1920px;height: auto;background: #0C0024;margin: 0;padding: 0;}
+        .top{width: 100%;height: 80px;}
+        .title{font-size: 36px;color: #DAE9FF;line-height: 80px;text-align: center;font-weight: bold;}
+        .show-time{text-align: left;width: 340px;position: relative;top: -55px;left: 1580px;}
+        .show-time-date{color: #DAE9FF;font-size: 20px;}
+        .show-time-img{color: #DAE9FF;font-size: 16px;}
+        .mid-left{float: left;width: 26%;}
+        .mid-mid{float: left;width: 48%;}
+        .mid-right{float: left;width: 26%;}
+        .ty-title{height: 30px;}
+        .ty-line{border-left: 4px solid #00a6c8;height: 16px;float: left;margin-right: 5px;margin-left: 16px;margin-top: 12px;}
+        .ty-h{line-height: 40px;font-size: 20px;color:#2AD3BE;}
+        .ty-content{width: 95%;margin: 0 auto;}
+        .fg{height: 160px;}
+        .fg-d{float: left;margin-left: 30px;padding-top: 20px;margin-right: 5px;}
+        .fg-d-num{margin:0 auto;width: 75px;height: 82px;background: #24B5F8;font-size: 45px;font-weight: bold;text-align: center;line-height: 82px;color: #fff;}
+        .fg-d-tips{font-size: 16px;color: #F2F2F2;text-align: center;margin-top: 10px;}
+        .repair_tips{height: 30px;line-height: 30px;font-size: 16px;color:#fff;margin-top: 10px;}
+        .repair_tips span{margin-right: 40px;}
+        #yfbx{width:100%;height: 220px;}
+        #sbyxzt{width:100%;height: 420px;}
+        #top_repair{width:100%;height: 450px;margin-bottom: 40px;}
+        #assets_gk{width:100%;height: 380px;margin-bottom: 40px;}
+        .bot{width:100%;height:20px;text-align: center;font-size: 14px;line-height: 20px;color: #7F7F7F;}
+        .hide_this {
+            display: none;
+        }
+        .tr-height{height: 39px !important;;}
+    </style>
+</head>
+<body>
+<if condition="$pw eq 1">
+    <div class="cus-scr">
+        <div class="top">
+            <div class="title">{$hospital_name}</div>
+            <div class="show-time">
+                <div class="show-time-date">{$today}&nbsp;<span id="timebox">{$now}</span></div>
+                <div class="show-time-img"><img src="/Public/images/tongzhi.png" style="width: 18px;padding-right: 10px;"/><span class="notice_title">最新公告</span></div>
+            </div>
+        </div>
+        <div class="mid">
+            <div class="mid-left">
+                <!--维修工单汇总-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h"><span class="month_repair_order_month">{$month}</span> 月份维修工单汇总</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div class="fg">
+                            <div class="fg-d">
+                                <div class="fg-d-num djd" style="color: #DAFF0D;">0</div>
+                                <div class="fg-d-tips">待接单</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num ljbx">0</div>
+                                <div class="fg-d-tips">累计报修量</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num ljwc">0</div>
+                                <div class="fg-d-tips">累计完成量</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num ljwwc" style="color: #FF3F8E;">0</div>
+                                <div class="fg-d-tips">累计未完成量</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <!--科室设备故障率-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h"><span class="month_repair_depart_month">{$month}</span> 月份科室设备故障率</h2>
+                    </div>
+                    <div class="ty-content">
+                        <table style="margin: 16px 0;" class="layui-table con_rate">
+                            <colgroup>
+                                <col width="">
+                                <col width="90">
+                                <col width="90">
+                                <col width="80">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>科室</th>
+                                <th>设备台账</th>
+                                <th>报修台次</th>
+                                <th>故障率</th>
+                            </tr>
+                            </thead>
+                            <tbody class="month_repair_depart">
+                            <tr>
+                                <td colspan="4" style="text-align: center;">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <!--月份报修量-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h">全院每月设备报修量</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div id="yfbx"></div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <!--保养计划情况-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h"><span class="assets_patrol_month">{$month}</span> 月份保养计划情况</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div class="fg">
+                            <div class="fg-d">
+                                <div class="fg-d-num plans_num">0</div>
+                                <div class="fg-d-tips">计划台账</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num implement_sum">0</div>
+                                <div class="fg-d-tips">累计完成量</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num departs_num">0</div>
+                                <div class="fg-d-tips">覆盖科室</div>
+                            </div>
+                            <div class="fg-d">
+                                <div class="fg-d-num not_complete" style="color: #FF3E8D;">0</div>
+                                <div class="fg-d-tips">累计未完成量</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mid-mid">
+                <!--维修实时动态-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h">维修实时动态</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div class="repair_tips">
+                            <span style="color: #DAFF0D;">待接单 <i class="r_djd">0</i></span>
+                            <span style="color: #FF3300;">检修中 <i class="r_jxz">0</i></span>
+                            <span style="color: #0099FF;">维修处理中 <i class="r_wxclz">0</i></span>
+                            <span style="color: #00FF00;">待验收 <i class="r_dys">0</i></span>
+                            <span style="color: #FDCE0C;">今日修复 <i class="r_jrxf">0</i></span>
+                        </div>
+                        <table style="margin: 10px 0;" class="layui-table contable">
+                            <colgroup>
+                                <col width="">
+                                <col width="140">
+                                <col width="180">
+                                <col width="130">
+                                <col width="95">
+                                <col width="95">
+                            </colgroup>
+                            <thead><tr>
+                                <th>科室</th>
+                                <th>报修时间</th>
+                                <th>设备名称</th>
+                                <th>规格型号</th>
+                                <th>工程师</th>
+                                <th>当前状态</th>
+                            </tr>
+                            </thead>
+                            <tbody class="repair_status">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <!--设备运行状态-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h">设备运行状态</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div id="sbyxzt"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mid-right">
+                <!--TOP10 科室报修量-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h"><span class="top_repair_month">{$month}</span> 月全院 TOP10 科室报修量</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div id="top_repair"></div>
+                    </div>
+                </div>
+                <!--全院资产概况-->
+                <div>
+                    <div class="ty-title">
+                        <div class="ty-line"></div>
+                        <h2 class="ty-h">全院资产概况</h2>
+                    </div>
+                    <div class="ty-content">
+                        <div id="assets_gk"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="bot">
+            <img src="/Public/images/{$Think.config.APP_MIN_LOGO}"/>&nbsp;&nbsp;{$Think.config.COMPANY_NAME} 版权所有 &copy; 2021~2025&nbsp;&nbsp;
+        </div>
+    </div>
+    <script>
+        layui.use(['form','colorpicker','upload'], function () {
+            var $ = layui.$, form = layui.form;
+            form.render();
+
+            var http_host = '{$http_host}';
+            //接收推送信息
+            var ws = new WebSocket('ws://'+http_host+':1234');
+            ws.onopen = function () {
+                var uid = '{$uid}';
+                ws.send(uid);
+            };
+
+            //定时发送心跳检测信息，避免被服务端断开连接
+            setInterval(function () {
+                ws.send('test connection');
+            }, 40000);
+
+            //设备运行状态
+            var days = dates = rep_num = kjl = [];
+            var sbyxzt = echarts.init(document.getElementById('sbyxzt'));
+            sbyxzt.clear();
+            sbyxzt.showLoading();
+            sbyxzt.hideLoading();
+            ws.onmessage = function (e) {
+                var result = JSON.parse(e.data);
+                switch (result.target) {
+                    case 'notice_title':
+                        if(result.data){
+                            $('.notice_title').html(result.data.title);
+                        }else{
+                            $('.notice_title').html('');
+                        }
+                        break;
+                    case 'month_repair_order'://每月维修单汇总
+                        $('.month_repair_order_month').html(result.month);
+                        $.each(result.data,function (index,value) {
+                            $('.'+index).html(value);
+                        });
+                        break;
+                    case 'month_repair_depart'://当月科室设备故障率
+                        $('.month_repair_depart_month').html(result.month);
+                        month_repair_depart(result.data);
+                        break;
+                    case 'month_repair_num'://全院月份报修量
+                        yfbx(result);
+                        break;
+                    case 'assets_patrol':
+                        $('.assets_patrol_month').html(result.month);
+                        $.each(result.data,function (index,value) {
+                            $('.'+index).html(value);
+                        });
+                        break;
+                    case 'repair_status'://维修实时动态
+                        show_tips(result.tips);
+                        repair_status(result.data);
+                        break;
+                    case 'assets_operate'://设备运行状态
+                        days = result.data.days;
+                        dates = result.data.dates;
+                        rep_num = result.data.rep_num;
+                        kjl = result.data.kjl;
+                        var init_days = [];
+                        var init_dates = [];
+                        var int_rep_num = [];
+                        var init_kjl = [];
+                        for(var i=0;i<10;i++){
+                            init_days.push(days[i]);
+                            init_dates.push(dates[i]);
+                            int_rep_num.push(rep_num[i]);
+                            init_kjl.push(kjl[i]);
+                        }
+                        init_sbyxzt(init_days,init_dates,int_rep_num,init_kjl);
+                        break;
+                    case 'top_repair'://科室维修TOP10
+                        $('.top_repair_month').html(result.month);
+                        top_repair(result.data,result.depart_name);
+                        break;
+                    case 'assets_status_nums'://全院资产概况
+                        assets_status_nums(result.data);
+                        break;
+                    default:
+                        break;
+                }
+
+            };
+
+            //月份报修量
+            function yfbx(result) {
+                //console.log(echarts.version);
+                var yfbx = echarts.init(document.getElementById('yfbx'));
+                yfbx.clear();
+                yfbx.showLoading();
+                yfbx.hideLoading();
+                yfbx.setOption({
+                    color: ['#37A2DA'],
+                    xAxis: {
+                        type: 'category',
+                        axisLine: {
+                            lineStyle: {
+                                color: '#fff'//坐标轴及字体颜色
+                            }
+                        },
+                        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        // max: function(value) {
+                        //     return value.max + 20;
+                        // },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    grid: {
+                        left: '1%',
+                        right: '4%',
+                        bottom: '10%',
+                        top: '10%',
+                        containLabel: true
+                    },
+                    series: [
+                    {
+                        data: result.data,
+                        type: 'bar',
+                        itemStyle: {        //上方显示数值
+                            normal: {
+                                label: {
+                                    show: true, //开启显示
+                                    position: 'inside', //在上方显示
+                                    textStyle: { //数值样式
+                                        color: '#fff',
+                                        fontSize: 16
+                                    },
+                                }
+                            }
+                        },
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(178, 176, 183,1)'
+                        }
+                    }]
+                });
+            }
+
+            //月份科室设备故障率
+            var rate_page = 6;
+            function month_repair_depart(data_arr) {
+                var len = data_arr.length;
+                var html = '';
+                var class_name = '';
+                for(i=0;i<len;i++){
+                    if(i%rate_page == 0){
+                        if(i==0){
+                            class_name = 'show_this';
+                        }else{
+                            class_name = 'hide_this';
+                        }
+                        html += '<tbody class="'+class_name+'">\n'+
+                            '<tr>\n' +
+                            '    <td><div class="ksmc">'+data_arr[i]['department']+'</div></td>\n' +
+                            '    <td class="td-align-center">'+data_arr[i]['assetssum']+'</td>\n' +
+                            '    <td class="td-align-center">'+data_arr[i]['repair_num']+'</td>\n' +
+                            '    <td class="td-align-center">'+data_arr[i]['repair_rate']+'</td>\n' +
+                            '</tr>\n';
+                    }else if(i%rate_page == (rate_page-1)){
+                        html += '<tr>\n' +
+                            '    <td><div class="ksmc">' + data_arr[i]['department'] + '</div></td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['assetssum'] + '</td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['repair_num'] + '</td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['repair_rate'] + '</td>\n' +
+                            '</tr>\n';
+                        html += '</tbody>\n';
+                    }else{
+                        html += '<tr>\n' +
+                            '    <td><div class="ksmc">'+data_arr[i]['department']+'</div></td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['assetssum'] + '</td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['repair_num'] + '</td>\n' +
+                            '    <td class="td-align-center">' + data_arr[i]['repair_rate'] + '</td>\n' +
+                            '</tr>\n';
+                    }
+                }
+                var con_rate_obj = $(".con_rate");
+                con_rate_obj.find('tbody').remove();
+                con_rate_obj.find('thead').after(html);
+                setTimeout(function () {
+                    var sec = 10;//10秒轮换
+                    sec = parseInt(sec) * 1000;
+                    var tbody = con_rate_obj.find('tbody');
+                    setInterval(function () {
+                        var len = tbody.length;
+                        if (len >= 2) {
+                            var cur = 0;
+                            $.each(tbody, function (i, e) {
+                                if ($(e).attr('class') === 'show_this') {
+                                    if (i < (len - 1)) {
+                                        $(e).attr('class', 'hide_this');
+                                        cur = i + 1;
+                                    } else {
+                                        $(e).attr('class', 'hide_this');
+                                        cur = 0;
+                                    }
+                                }
+                            });
+                            $(tbody[cur]).attr('class', 'show_this');
+                        }
+                    },sec)
+                }, 500);
+            }
+
+            //维修实时动态
+            var page = 10;
+            function repair_status(data_arr) {
+                var len = data_arr.length;
+                var html = '';
+                var class_name = '';
+                for(i=0;i<len;i++){
+                    if(i%page == 0){
+                        if(i==0){
+                            class_name = 'show_this';
+                        }else{
+                            class_name = 'hide_this';
+                        }
+                        html += '<tbody class="'+class_name+'">\n'+
+                            '<tr class="tr-height">\n' +
+                            '    <td><div class="bm">'+data_arr[i]['department']+'</div></td>\n' +
+                            '    <td>'+data_arr[i]['applicant_date']+'</td>\n' +
+                            '    <td><div class="ccsl">'+data_arr[i]['assets']+'</div></td>\n' +
+                            '    <td><div class="ggxh">'+data_arr[i]['model']+'</div></td>\n' +
+                            '    <td><div class="gcs">'+data_arr[i]['response']+'</div></td>\n' +
+                            '    <td>'+data_arr[i]['status_name']+'</td>\n' +
+                            '</tr>\n';
+                    }else if(i%page == (page-1)){
+                        html += '<tr class="tr-height">\n' +
+                            '    <td><div class="bm">' + data_arr[i]['department'] + '</div></td>\n' +
+                            '    <td>' + data_arr[i]['applicant_date'] + '</td>\n' +
+                            '    <td><div class="ccsl">' + data_arr[i]['assets'] + '</div></td>\n' +
+                            '    <td><div class="ggxh">' + data_arr[i]['model'] + '</div></td>\n' +
+                            '    <td><div class="gcs">' + data_arr[i]['response'] + '</div></td>\n' +
+                            '    <td>' + data_arr[i]['status_name'] + '</td>\n' +
+                            '</tr>\n';
+                        html += '</tbody>\n';
+                    }else{
+                        html += '<tr class="tr-height">\n' +
+                            '    <td><div class="bm">'+data_arr[i]['department']+'</div></td>\n' +
+                            '    <td>' + data_arr[i]['applicant_date'] + '</td>\n' +
+                            '    <td><div class="ccsl">' + data_arr[i]['assets'] + '</div></td>\n' +
+                            '    <td><div class="ggxh">' + data_arr[i]['model'] + '</div></td>\n' +
+                            '    <td><div class="gcs">' + data_arr[i]['response'] + '</div></td>\n' +
+                            '    <td>' + data_arr[i]['status_name'] + '</td>\n' +
+                            '</tr>\n';
+                    }
+                }
+                var contableObj = $(".contable");
+                contableObj.find('tbody').remove();
+                contableObj.find('thead').after(html);
+                setTimeout(function () {
+                    var sec = 10;//10秒轮换
+                    sec = parseInt(sec) * 1000;
+                    var tbody = contableObj.find('tbody');
+                    setInterval(function () {
+                        var len = tbody.length;
+                        if (len >= 2) {
+                            var cur = 0;
+                            $.each(tbody, function (i, e) {
+                                if ($(e).attr('class') === 'show_this') {
+                                    if (i < (len - 1)) {
+                                        $(e).attr('class', 'hide_this');
+                                        cur = i + 1;
+                                    } else {
+                                        $(e).attr('class', 'hide_this');
+                                        cur = 0;
+                                    }
+                                }
+                            });
+                            $(tbody[cur]).attr('class', 'show_this');
+                        }
+                    },sec)
+                }, 500);
+            }
+            function show_tips(data) {
+                $.each(data,function (index,item) {
+                    $('.'+index).html(item);
+                });
+            }
+            function init_sbyxzt(days_tmp,dates_tmp,rep_num_tmp,kjl_tmp) {
+                sbyxzt.setOption({
+                    color:['#DD6C66','#207EB7'],
+                    grid:{
+                        x:40,
+                        y:60,
+                        x2:40,
+                        y2:80
+                    },
+                    legend: {
+                        data:['故障数量','开机率'],
+                        top: 'bottom',
+                        textStyle: {
+                            fontSize: 14,
+                            color: '#fff'
+                        }
+                    },
+                    calculable : true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'//坐标轴及字体颜色
+                                }
+                            },
+                            axisLabel: {
+                                interval: 0,//坐标轴刻度标签的显示间隔(在类目轴中有效哦)，默认会采用标签不重叠的方式显示标签（也就是默认会将部分文字显示不全）可以设置为0强制显示所有标签，如果设置为1，表示隔一个标签显示一个标签，如果为3，表示隔3个标签显示一个标签，以此类推
+                                rotate: 30//标签倾斜的角度
+                            },
+                            boundaryGap: true,
+                            data:dates_tmp
+                        },
+                        {
+                            type: 'category',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'//坐标轴及字体颜色
+                                }
+                            },
+                            boundaryGap: true,
+                            data: days_tmp
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            scale: true,
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'//坐标轴及字体颜色
+                                }
+                            },
+                            name: '故障数量',
+                            min: 0,
+                            boundaryGap: [5,0.1]
+                        },
+                        {
+                            type: 'value',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#fff'//坐标轴及字体颜色
+                                }
+                            },
+                            scale: true,
+                            name: '开机率',
+                            max: 1,
+                            min: 0
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'故障数量',
+                            type:'bar',
+                            itemStyle: {        //上方显示数值
+                                normal: {
+                                    label: {
+                                        show: true, //开启显示
+                                        position: 'inside', //在上方显示
+                                        textStyle: { //数值样式
+                                            color: '#fff',
+                                            fontSize: 16
+                                        }
+                                    }
+                                }
+                            },
+                            data:rep_num_tmp
+                        },
+                        {
+                            name: '开机率',
+                            type: 'line',
+                            yAxisIndex: 1,
+                            itemStyle: {        //上方显示数值
+                                normal: {
+                                    label: {
+                                        show: true, //开启显示
+                                        position: 'inside', //在上方显示
+                                        textStyle: { //数值样式
+                                            color: '#207EB7',
+                                            fontSize: 16
+                                        }
+                                    }
+                                }
+                            },
+                            data:kjl_tmp
+                        }
+                    ]
+                });
+            }
+
+            var count = 0;
+            setInterval(function (){
+                if(count < 21){
+                    var days_tmp = [];
+                    var dates_tmp = [];
+                    var rep_num_tmp = [];
+                    var kjl_tmp = [];
+                    for(i=count;i<30;i++){
+                        if(dates_tmp.length < 10){
+                            days_tmp.push(days[i]);
+                            dates_tmp.push(dates[i]);
+                            rep_num_tmp.push(rep_num[i]);
+                            kjl_tmp.push(kjl[i]);
+                        }else{
+                            break;
+                        }
+                    }
+                    count++;
+                    init_sbyxzt(days_tmp,dates_tmp,rep_num_tmp,kjl_tmp);
+                }else{
+                    count = 0;
+                }
+            }, 2100);
+
+            //top10 报修
+            function top_repair(data,depart_name) {
+                var top_repair = echarts.init(document.getElementById('top_repair'));
+                top_repair.clear();
+                top_repair.showLoading();
+                top_repair.hideLoading();
+                top_repair.setOption({
+                    color:['#37A2DA','#1CEE45','#66E0E3','#A0E8BA','#FEDB5B','#FF9F7F','#FC7293','#E061AE','#E690D1','#E7BCF2'],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        left: 'center',
+                        top: 'bottom',
+                        textStyle: {
+                            fontSize: 14,
+                            color: '#fff'
+                        },
+                        //data: ['呼吸一门诊', '放疗科一病房', '皮肤科病房', '消化内镜科', '药物研发科', '生殖健康管理', '放射科', '门诊皮肤美容科','心脏介入治疗中心','心电图室']
+                        data: depart_name
+                    },
+                    series: [
+                        {
+                            name: '科室报修数量',
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        fontSize: 14
+                                    },
+                                    show: true,
+                                    formatter: '{b} {d}%'
+                                }
+                            },
+                            type: 'pie',
+                            radius: [30, 100],
+                            center: ['50%', '50%'],
+                            roseType: 'area',
+                            data: data
+                        }
+                    ]
+                });
+            }
+
+            //全院资产概况
+            function assets_status_nums(data) {
+                var assets_gk = echarts.init(document.getElementById('assets_gk'));
+                assets_gk.clear();
+                assets_gk.showLoading();
+                assets_gk.hideLoading();
+                assets_gk.setOption({
+                    color:['#FFD85C','#3309F4','#808bc6','#E7BCF2','#9FE7B9','#8278E9','#FC7293','#70F1E8'],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        left: 'center',
+                        top: 'bottom',
+                        textStyle: {
+                            fontSize: 14,
+                            color: '#fff'
+                        },
+                        data: ['维修中','在用设备','生命支持类', '急救设备', '质控设备', '在保设备', '计量设备', '特种设备']
+                    },
+                    series: [
+                        {
+                            name: '资产概况',
+                            type: 'pie',
+                            selectedMode: 'single',
+                            radius: [0, '30%'],
+                            label: {
+                                position: 'inner',
+                                formatter: '{b}\n \n{c}'
+                            },
+                            labelLine: {
+                                show: true
+                            },
+                            data: data[0]
+                        },
+                        {
+                            name: '资产概况',
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        fontSize: 14
+                                    },
+                                    show: true,
+                                    formatter: '{b}：{c} 台'
+                                }
+                            },
+                            type: 'pie',
+                            radius: ['40%', '55%'],
+                            data: data[1]
+                        }
+                    ]
+                });
+            }
+
+            //初始化数据
+            $.ajax({
+                timeout: 30000,
+                type: "POST",
+                url: 'upScr',
+                dataType: "json",
+                async: true,
+                beforeSend: function () {
+                    layer.msg('正在初始化数据，请稍候...', {
+                        icon: 16,
+                        time: 3000,
+                        shade: 0.01
+                    });
+                },
+                success: function (data) {
+
+                }
+            });
+        });
+
+        $(function () {
+            //动态时间
+            var objTime = new Date();
+            function setTime() {
+                var year = objTime.getFullYear();//年
+                var month = objTime.getMonth();//月
+                var day = objTime.getDate();//日期
+                var hour = objTime.getHours() < 10 ? '0' + objTime.getHours() : objTime.getHours();//时
+                var minute = objTime.getMinutes() < 10 ? '0' + objTime.getMinutes() : objTime.getMinutes();//分
+                var second = objTime.getSeconds() < 10 ? '0' + objTime.getSeconds() : objTime.getSeconds();//秒
+                //每天零点刷新一遍
+                if(hour == 23 && minute == 59 && second == 59){
+                    window.location.reload();
+                }else{
+                    $("#timebox").html(hour + ":" + minute + ":" + second);                                                                                    //给span赋值显示时间
+                    objTime = new Date(year, month, day, objTime.getHours(), objTime.getMinutes(), objTime.getSeconds() + 1);   //当前时间加一秒
+                }
+            }
+            window.setInterval(setTime, 1000);
+        });
+    </script>
+    <else />
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>访问密码</legend>
+    </fieldset>
+
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-block">
+                <input type="password" required lay-verify="required|password" name="pw" placeholder="请输入访问密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="passw">立即提交</button>
+            </div>
+        </div>
+    </form>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>扫码输入密码</legend>
+    </fieldset>
+    <input type="hidden" name="publickey" id="publickey" value="<?php echo file_get_contents('Public/key/rsa_1024_pub.pem');?>">
+    <div style="text-align: center;">
+        <img src="{$codeUrl}">
+    </div>
+    <script src="__PUBLIC__/js/jsencrypt.min.js" type="text/javascript"></script>
+    <script>
+        layui.use(['form'], function () {
+            var $ = layui.$, form = layui.form;
+            form.render();
+            form.verify({
+                password: [/^[\S]{6,18}$/, '密码必须6到18位，且不能出现空格']
+            });
+            //监听提交
+            form.on('submit(passw)', function(data){
+                var params = data.field;
+                var encrypt = new JSEncrypt();
+                encrypt.setPublicKey($('#publickey').val());
+                params.pw = encrypt.encrypt(params.pw);
+                $.ajax({
+                    timeout: 5000,
+                    type: "POST",
+                    url: 'scr',
+                    data: params,
+                    dataType: "json",
+                    async: true,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            window.location = admin_name + '/Tool/scr';
+                        } else {
+                            layer.msg(data.msg, {icon: 2}, 1000);
+                        }
+                    },
+                    error: function () {
+                        layer.msg("网络访问失败", {icon: 2}, 1000);
+                    }
+                });
+                return false;
+            });
+
+            var http_host = '{$http_host}';
+            //接收推送信息
+            var ws = new WebSocket('ws://'+http_host+':1234');
+            var uid = '{$uid}';
+            ws.onopen = function () {
+                var uid = '{$uid}';
+                ws.send(uid);
+            };
+
+            //定时发送心跳检测信息，避免被服务端断开连接
+            setInterval(function () {
+                ws.send('test connection');
+            }, 40000);
+
+            ws.onmessage = function (e) {
+                var result = JSON.parse(e.data);
+                if(result.data.uid == uid){
+                    var params = {};
+                    params.pw = result.data.pw;
+                    $.ajax({
+                        timeout: 5000,
+                        type: "POST",
+                        url: 'scr',
+                        data: params,
+                        dataType: "json",
+                        async: true,
+                        success: function (data) {
+                            if (data.status == 1) {
+                                window.location = admin_name + '/Tool/scr';
+                            } else {
+                                layer.msg(data.msg, {icon: 2}, 1000);
+                            }
+                        }
+                    });
+                }
+            };
+
+        });
+    </script>
+</if>
+</body>
+</html>
+

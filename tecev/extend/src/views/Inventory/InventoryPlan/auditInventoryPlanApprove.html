@@ -1,0 +1,106 @@
+<include file="Public:layerHeader"/>
+<style>
+    .tl {
+        text-align: left;
+    }
+
+    .tr {
+        text-align: right;
+    }
+    .layui-table-cell{
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div class="layui-fluid layui-tab-content">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <blockquote class="layui-elem-quote">
+                计划信息
+            </blockquote>
+            <table class="layui-table" lay-size="sm" lay-even>
+                <tbody>
+                <tr>
+                    <td class="tr" style="width: 25%;">盘点单号：</td>
+                    <td class="tl inventory_plan_no" style="width: 25%;"></td>
+                    <td class="tr" style="width: 25%;">盘点名称：</td>
+                    <td class="tl inventory_plan_name" style="width: 25%;"></td>
+                </tr>
+                <tr>
+                    <td class="tr">开始时间：</td>
+                    <td class="tl inventory_plan_start_time"></td>
+                    <td class="tr">结束时间：</td>
+                    <td class="tl inventory_plan_end_time"></td>
+                </tr>
+                <tr>
+                    <td class="tr">状态：</td>
+                    <td class="tl inventory_plan_status_name"></td>
+                    <td class="tr">盘点员：</td>
+                    <td class="tl inventory_users"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-col-md12">
+            <blockquote class="layui-elem-quote">
+                盘点设备列表
+            </blockquote>
+            <table id="tableList" lay-filter="tableList"></table>
+        </div>
+        <div class="layui-col-md12">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>审核表单</legend>
+            </fieldset>
+            <form class="layui-form layui-form" onsubmit="return false;">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">审核人：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" readonly="readonly" value="{$username}" name="approvaluser" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>审核日期：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" readonly="readonly" name="approvaldate" value="{$date}"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">是否通过：</label>
+                    <div class="layui-input-block" id="status">
+                        <input type="radio" name="is_adopt" id="optionsRadios1" value="1" title="是" checked>
+                        <input type="radio" name="is_adopt" id="optionsRadios2" value="2" title="否">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">审批意见：</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入审批意见" class="layui-textarea" name="remark"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div style="text-align: center">
+                        <button class="layui-btn" lay-submit lay-filter="save"><i class="layui-icon">&#xe609;</i> 确认无误并提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var auditInventoryPlanApproveUrl = "{$auditInventoryPlanApproveUrl}";
+    var inventoryPlanData = JSON.parse('{$inventoryPlanData}');
+    var department = JSON.parse('{$department}');
+    var dicAssets = JSON.parse('{$dicAssets}');
+    var assetsFinance = JSON.parse('{$assetsFinance}');
+    // console.log(inventoryPlanData)
+    // console.log(department)
+    // console.log(dicAssets)
+    // console.log(assetsFinance)
+    layui.use('controller/inventory/auditInventoryPlanApprove', layui.factory('controller/inventory/auditInventoryPlanApprove'));
+</script>

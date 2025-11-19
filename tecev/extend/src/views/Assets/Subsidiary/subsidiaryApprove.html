@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <?php if($menuData = get_menu_name('Assets','Subsidiary','subsidiaryApprove')):?>
+    <title>{$menuData['actionname']}</title>
+    <?php endif?>
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv" id="LAY-Assets-Subsidiary-subsidiaryApprove" >
+    <blockquote class="layui-elem-quote-sm">
+        设备基础信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">设备名称：</td>
+            <td>{$assets.assets}</td>
+            <td class="text-right">设备编号：</td>
+            <td>{$assets.assnum}</td>
+        </tr>
+        <tr>
+            <td class="text-right">规格/型号：</td>
+            <td>{$assets.model}</td>
+            <td class="text-right">品牌：</td>
+            <td>{$assets.brand}</td>
+        </tr>
+        <tr>
+            <td class="text-right">产品序列号：</td>
+            <td>{$assets.serialnum}</td>
+            <td class="text-right">生产厂家：</td>
+            <td>{$assets.factory}</td>
+        </tr>
+        <tr>
+            <td class="text-right">所属科室：</td>
+            <td>{$assets.department}</td>
+            <td class="text-right">设备管理员：</td>
+            <td>{$assets.assetsrespon}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备原值：</td>
+            <td>{$assets.buy_price}</td>
+            <td class="text-right">启用日期：</td>
+            <td>{$assets.opendate}</td>
+        </tr>
+        <tr>
+            <td class="text-right">设备状态：</td>
+            <td>{$assets.statusName}</td>
+            <td class="text-right">维保状态：</td>
+            <td>{$assets.guarantee_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">巡查保养状态：</td>
+            <td>{$assets.patrol_status}</td>
+            <td class="text-right">计量状态：</td>
+            <td>{$assets.meterin_status}</td>
+        </tr>
+        <tr>
+            <td class="text-right">维修次数：</td>
+            <td>{$assets.repairNum}</td>
+            <td class="text-right">维保次数：</td>
+            <td>{$assets.insuredsum}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    <blockquote class="layui-elem-quote-sm">
+        分配申请单信息
+    </blockquote>
+    <table class="layui-table" lay-even="" lay-size="sm">
+        <colgroup>
+            <col width="120">
+            <col>
+            <col width="120">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <td class="text-right">主设备名称：</td>
+            <td>{$allot.main_assets}</td>
+            <td class="text-right">主设备科室：</td>
+            <td>{$allot.main_department}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请人：</td>
+            <td>{$allot.apply_user}</td>
+            <td class="text-right">申请日期：</td>
+            <td>{$allot.apply_date}</td>
+        </tr>
+        <tr>
+            <td class="text-right">申请备注：</td>
+            <td colspan="3">{$allot.remark}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <notempty name="approve">
+            <blockquote class="layui-elem-quote-sm">审批信息</blockquote>
+            <table class="layui-table" lay-even="" lay-size="sm">
+                <colgroup>
+                    <col width="120">
+                    <col width="120">
+                    <col width="120">
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td style="text-align: center;">序号</td>
+                    <td style="text-align: center;">审批人</td>
+                    <td style="text-align: center;">审批时间</td>
+                    <td style="text-align: center;">审批状态</td>
+                    <td>审批意见</td>
+                </tr>
+                <volist name="approve" id="vo">
+                <tr>
+                    <td style="text-align: center;">{$key+1}</td>
+                    <td style="text-align: center;">{$vo.approver}</td>
+                    <td style="text-align: center;">{$vo.approve_time}</td>
+                    <td style="text-align: center;">{$vo.is_adoptName}</td>
+                    <td>{$vo.remark}</td>
+                </tr>
+                </volist>
+                </tbody>
+            </table>
+    </notempty>
+
+    <fieldset class="layui-elem-field layui-field-title"><legend>审批表单</legend></fieldset>
+    <form action="" class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <input type="hidden" name="allotid" value="{$allot.allotid}">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">审批人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly class="layui-input" value="{$approver}">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">审批日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" readonly class="layui-input" value="{$approve_time}">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">是否通过：</label>
+            <div class="layui-input-block">
+                <input type="radio" name="is_adopt" value="1" title="通过" checked="">
+                <input type="radio" name="is_adopt" value="2" title="不通过">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">审批意见：</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center">
+                <button class="layui-btn" lay-submit="submit" lay-filter="subsidiaryApprove"><i class="layui-icon">&#xe609;</i>提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var subsidiaryApproveUrl='{$subsidiaryApproveUrl}';
+    layui.use('controller/assets/subsidiary/subsidiaryApprove', layui.factory('controller/assets/subsidiary/subsidiaryApprove'));
+</script>
+

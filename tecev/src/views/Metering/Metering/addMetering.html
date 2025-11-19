@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增计量计划</title>
+    <include file="Public:layerHeader"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/selectpage.css?v={:mt_rand(1,54561)}" type="text/css">
+    <style>
+        #LAY-Metering-Metering-addMetering tr th {
+            width: 15% !important;
+            text-align: right !important;
+            padding-right: 0 !important;
+        }
+
+        #LAY-Metering-Metering-addMetering tr td {
+            width: 320px !important;
+        }
+
+        #LAY-Metering-Metering-addMetering .form-control {
+            width: 98% !important;
+            padding: 0;
+            padding-left: 2%;
+            height: 36px;
+            line-height: 1.3;
+        }
+
+        #LAY-Metering-Metering-addMetering .table-condensed tr:hover {
+            background: #5FB878;
+            color: #fff;
+        }
+
+        #LAY-Metering-Metering-addMetering .table-condensed th {
+            text-align: center !important;
+        }
+
+        #LAY-Metering-Metering-addMetering ul.sp_element_box {
+            padding: 5px 0 0 3px !important;
+            min-height: 31px !important;
+        }
+
+        #LAY-Metering-Metering-addMetering .input-group {
+            width: 100%;
+        }
+
+        #LAY-Metering-Metering-addMetering .sp_container {
+            width: 100% !important;
+        }
+
+        #LAY-Metering-Metering-addMetering div.sp_container_combo {
+            border-radius: 2px !important;
+            border: 1px solid #e6e6e6 !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        #LAY-Metering-Metering-addMetering .bsSuggest {
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Metering-Metering-addMetering">
+    <form action="" class="layui-form">
+        <blockquote class="layui-elem-quote">计划基本信息</blockquote>
+        <table class="layui-table" lay-skin="nob">
+            <tbody>
+            <tr>
+                <th>计划编号：</th>
+                <td>
+                    <input type="text" readonly="" value="系统生成" class="layui-input">
+                </td>
+
+                <th><span class="rquireCoin">* </span>所属科室：</th>
+                <td>
+                    <input type="hidden" name="oldDepartmentid">
+                    <select name="departid" lay-filter="department" lay-search="">
+                        <option value="">请选择</option>
+                        <volist name="department" id="vo">
+                            <option value="{$vo.departid}">{$vo.department}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th><span class="rquireCoin">* </span>设备名称：</th>
+                <td id="getAssetsTd">
+                    <input type="hidden" name="oldAssets">
+                    <select name="assetsName" id="addMeteringAssets" lay-search="" lay-filter="assets">
+                        <option value="">请先选择所属科室</option>
+                    </select>
+                </td>
+
+                <th>产品序列号：</th>
+                <td id="serial">
+                    <div class="layui-input-inline">
+                        <select name="selectPage" xm-select="selectPage" xm-select-search="" id="selectPage">
+                            <!--                            <option value="">请选择产品序列号</option>-->
+                            <!--                            <volist name="departmentInfo" id="v">-->
+                            <!--                                <option value="{$v.departid}">{$v.department}</option>-->
+                            <!--                            </volist>-->
+                        </select>
+                    </div>
+                    <!--                    <input type="text" readonly placeholder="请先选择设备名称" class="layui-input">-->
+                </td>
+            </tr>
+            <tr>
+                <th><span class="rquireCoin">* </span>设备数量：</th>
+                <td>
+                    <input type="text" class="layui-input" placeholder="设备数量" style="width: 100px" name="count">
+                </td>
+
+                <th>规格 / 型号：</th>
+                <td>
+                    <input type="text" placeholder="设备规格型号" class="layui-input" name="model">
+                </td>
+            </tr>
+            <tr>
+                <th>单位：</th>
+                <td>
+                    <input type="text" placeholder="设备单位" class="layui-input" style="width: 100px;" name="unit">
+                </td>
+
+                <th><span class="rquireCoin">* </span>计量分类：</th>
+                <td>
+                    <div class="layui-item">
+                        <div class="layui-inline">
+                            <select name="categorys" lay-verify="categorys">
+                                <empty name="categorys">
+                                    <option value="">请先补充分类</option>
+                                    <else/>
+                                    <option value="">请选择分类</option>
+                                    <volist name="categorys" id="vo">
+                                        <option value="{$vo.mcid}">{$vo.mcategory}</option>
+                                    </volist>
+                                </empty>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <a href="javascript:;" id="addMCategory" style="color: #1E9FFF;"><i class="layui-icon">&#xe654;</i></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>生产厂商：</th>
+                <td>
+                    <input type="text" placeholder="生成厂商名称" class="layui-input" name="factory">
+                </td>
+
+                <th>计量周期：</th>
+                <td>
+                    <div class="layui-input-inline fl" style="width: 100px; padding-right:5px;">
+                        <input type="text" placeholder="计量周期(月)" class="layui-input" name="cycle">
+                    </div>
+                    <div class="layui-form-mid">月</div>
+                </td>
+            </tr>
+            <tr>
+                <th>检定方式：</th>
+                <td>
+                    <div class="layui-item">
+                        <div class="layui-inline">
+                            <input type="radio" name="test_way" lay-skin="primary" title="院内" value="1" checked>
+                            <input type="radio" name="test_way" lay-skin="primary" title="院外" value="0">
+                        </div>
+                    </div>
+                </td>
+
+                <th><span class="rquireCoin">* </span>下次待检日期：</th>
+                <td>
+                    <input class="layui-input" readonly placeholder="下次待检日期" style="cursor: pointer;"
+                           name="next_date"
+                           id="next_date">
+                </td>
+            </tr>
+            <tr>
+                <th>计量负责人：</th>
+                <td>
+                    <input type="text" class="layui-input" name="respo_user" placeholder="请输入负责人姓名">
+                </td>
+
+                <th><span class="rquireCoin">* </span>提前提醒天数：</th>
+                <td>
+                    <div class="layui-input-inline fl" style="width: 100px; padding-right:5px;">
+                        <input type="text" placeholder="提前提醒天数" class="layui-input" name="remind_day">
+                    </div>
+                    <div class="layui-form-mid">天</div>
+                </td>
+            </tr>
+            <tr>
+                <th>计划状态：</th>
+                <td>
+                    <div class="layui-item">
+                        <div class="layui-inline">
+                            <input type="radio" name="status" lay-skin="primary" title="启用" value="1" checked>
+                            <input type="radio" name="status" lay-skin="primary" title="暂停" value="0">
+                        </div>
+                    </div>
+                </td>
+
+                <th></th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="3">
+                    <textarea placeholder="请输入内容备注" class="layui-textarea" name="remark"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="ilayui-form-item tbcenter" style=" margin-top: 50px;">
+            <button type="reset" class="layui-btn layui-btn-primary">清空重置</button>
+            <button class="layui-btn" lay-submit="add" lay-filter="add"><i class="layui-icon">&#xe609;</i>保存</button>
+        </div>
+    </form>
+</div>
+
+<div id="addMCategoryBody" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row" style="margin-top: 20px;">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">分类名称：</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入分类名称,一行一个" class="layui-textarea"
+                                      name="categorysTitle"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="addCategorys">
+                        <i class="layui-icon">&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__PUBLIC__/js/selectpage.min.js"></script>
+<script>
+    layui.use('controller/metering/metering/addMetering', layui.factory('controller/metering/metering/addMetering'));
+</script>

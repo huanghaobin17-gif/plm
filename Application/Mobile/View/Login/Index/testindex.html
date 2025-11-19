@@ -1,0 +1,672 @@
+<include file="Public:head"/>
+<title>首页</title>
+<style>
+    .layui-card-header img {
+        width: 2.5rem;
+    }
+
+    .otherScreen:first-child .layui-col-xs4 {
+        margin-top: 1rem
+    }
+
+    .layui-row .layui-col-xs4 {
+        margin-top: 3rem;
+    }
+
+    .listButton {
+        width: 6rem;
+        text-align: center;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .listButton img {
+        width: 3rem
+    }
+
+    .listButton p {
+        font-size: 0.875rem;
+        line-height: 2.25rem;
+    }
+
+    .listButton .layui-badge {
+        width: 0.8rem;
+        position: absolute;
+        top: -0.5rem;
+        right: 1rem;
+        height: 1rem;
+        line-height: 1rem;
+        padding: 0 4px;
+    }
+
+    .task li {
+        height: 4.5rem;
+        position: relative;
+        border-bottom: 1px solid #eee;
+        padding: 1.5rem 0 2rem 0;
+    }
+
+    .taskLeft {
+        width: 20%;
+        display: inline-block;
+        text-align: center;
+        border-right: 1px solid #e5e5e5;
+    }
+
+    .taskRight {
+        display: inline-block;
+        width: 76%;
+    }
+
+    .taskRight h2 {
+        padding: 0 0 1.5625rem 0.625rem;
+        font-size: 1rem;
+    }
+
+    .taskRight p {
+        padding: 0 0 1.5625rem 0.625rem;
+    }
+
+    .taskRight p span {
+        font-size: 0.875rem;
+        color: #666;
+        display:inline-block;
+    }
+    .taskDepartment{
+        margin-right: 1rem;
+    }
+    .taskTime {
+        color: #777;
+    }
+
+    .taskButtom {
+        position: absolute;
+        right: 0;
+        top: 35%;
+    }
+
+    .taskUp {
+        float: right;
+    }
+
+    .taskNum {
+        color: #FF5722;
+    }
+
+    .examineTitle {
+        color: #FF5722;
+        font-size: 0.875rem;
+    }
+
+    .layui-badge {
+        display: none;
+    }
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <ul>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Assets','Lookup','getAssetsList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/sbcx.png">
+                                        <p>设备查询</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Repair','Repair','addRepair')):?>
+                            <div class="layui-col-xs4">
+                                <a href="javascript:;" id="scanQRcode_baoxiu">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/sys.png">
+                                        <p>扫码报修</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Repair','Repair','ordersLists')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/wxjd.png">
+                                        <p>维修接单</p>
+                                        <span class="layui-badge Repair_Repair_ordersLists"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Repair','Repair','accept')):?>
+                            <div class="layui-col-xs4">
+                                <a href="/M/Repair/ordersLists.html?action=overhaulLists">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/smjx.png">
+                                        <p>扫码检修</p>
+                                        <span class="layui-badge Repair_Repair_overhaul"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Repair','Repair','getRepairLists')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/wxcl.png">
+                                        <p>维修处理</p>
+                                        <span class="layui-badge repair_deal_with"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Repair','Repair','progress')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/wxjc.png">
+                                        <p>维修进程</p>
+                                        <span class="layui-badge layui-bg-green Repair_Repair_progress">1</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <!--<div class="layui-col-xs4">-->
+                            <!--<a>-->
+                            <!--<div class="listButton">-->
+                            <!--<img src="__PUBLIC__/mobile/images/icon/wxzd.png">-->
+                            <!--<p>维修转单</p>-->
+                            <!--</div>-->
+                            <!--</a>-->
+                            <!--</div>-->
+
+                            <?php $app_1 = get_menu('Repair','Repair','repairApproveLists');?>
+                            <?php $app_2 = get_menu('Assets','Transfer','examine');?>
+                            <?php $app_3 = get_menu('Assets','Borrow','approveBorrowList');?>
+                            <?php $app_4 = get_menu('Assets','Scrap','getExamineList')?>
+                            <?php if($app_1 || $app_2 || $app_3 || $app_4):?>
+                            <div class="layui-col-xs4">
+                                <a href="/M/Notin/approve.html">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/sp.png">
+                                        <p>审批</p>
+                                        <span class="layui-badge Pub_Public_approve"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Repair','Repair','examine')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/wxys.png">
+                                        <p>维修验收</p>
+                                        <span class="layui-badge Repair_Repair_examine"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Repair','RepairParts','partsOutWareList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/pjck.png">
+                                        <p>配件出库</p>
+                                        <span class="layui-badge Repair_RepairParts_partsOutWare"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Assets','Transfer','getList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/zksq.png">
+                                        <p>转科申请</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Assets','Transfer','progress')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/zkjc.png">
+                                        <p>转科进程</p>
+                                        <span class="layui-badge layui-bg-green Assets_Transfer_progress">1</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Assets','Transfer','checkLists')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/zkys.png">
+                                        <p>转科验收</p>
+                                        <span class="layui-badge Assets_Transfer_checkLists"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Assets','Borrow','borrowAssetsList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/jdsq.png">
+                                        <p>借调申请</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Assets','Borrow','borrowInCheckList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/qrjr.png">
+                                        <p>确认借入</p>
+                                        <span class="layui-badge Assets_Borrow"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+
+                            <?php if($menuData = get_menu('Assets','Borrow','giveBackCheckList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/ghys.png">
+                                        <p>归还验收</p>
+                                        <span class="layui-badge Assets_restoration"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Assets','Borrow','giveBackCheckList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}?action=showReminderList">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/jdyq.png">
+                                        <p>借调逾期</p>
+                                        <span class="layui-badge Assets_Expired"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Assets','Scrap','getApplyList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/bfsq.png">
+                                        <p>报废申请</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Assets','Scrap','getScrapList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/bfcx.png">
+                                        <p>报废查询</p>
+                                        <!--<span class="layui-badge Assets_Expired"></span>-->
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <!--<li>-->
+                    <!--<div class="otherScreen">-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/jdyq.png">-->
+                    <!--<p>借调逾期</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/byss.png">-->
+                    <!--<p>保养实施</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/byjc.png">-->
+                    <!--<p>保养进程</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</li>-->
+
+                    <li>
+                        <div class="otherScreen">
+                            <!--<div class="layui-col-xs4">-->
+                            <!--<a>-->
+                            <!--<div class="listButton">-->
+                            <!--<img src="__PUBLIC__/mobile/images/icon/byys.png">-->
+                            <!--<p>保养验收</p>-->
+                            <!--<span class="layui-badge">8</span>-->
+                            <!--</div>-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <?php if($menuData = get_menu('Archives','Emergency','emergencyPlanList')):?>
+                            <div class="layui-col-xs4">
+                                <!--<a href="{$menuData['actionurl']}">-->
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/yj.png">
+                                        <p>应急预案</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Archives','Box','boxList')):?>
+                            <div class="layui-col-xs4">
+                                <!--<a href="{$menuData['actionurl']}">-->
+                                <a href="javascript:;" id="scanQRcode_checkBox">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/smda.png">
+                                        <p>查阅档案</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Qualities','Quality','qualityDetailList')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/zkjc1.png">
+                                        <p>质控检测</p>
+                                        <span class="layui-badge Qualities"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="otherScreen">
+                            <?php if($menuData = get_menu('Qualities','Quality','qualityResult')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/zkjg.png">
+                                        <p>质控结果</p>
+                                        <span class="layui-badge">6</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('Assets','Print','verify')):?>
+                            <div class="layui-col-xs4">
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/byys.png">
+                                        <p>标签核实</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                            <?php if($menuData = get_menu('BaseSetting','Notice','getNoticeList')):?>
+                            <div class="layui-col-xs4">
+                                <!--<a href="{$menuData['actionurl']}">-->
+                                <a href="{$menuData['actionurl']}">
+                                    <div class="listButton">
+                                        <img src="__PUBLIC__/mobile/images/icon/gg.png">
+                                        <p>系统公告</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </li>
+                    <!--<li>-->
+                    <!--<div class="otherScreen">-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/sp.png">-->
+                    <!--<p>审批</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/dqtx.png">-->
+                    <!--<p>到期提醒</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/tjfx.png">-->
+                    <!--<p>统计分析</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--<div class="otherScreen">-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/gg.png">-->
+                    <!--<p>公告</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="layui-col-xs4">-->
+                    <!--<a>-->
+                    <!--<div class="listButton">-->
+                    <!--<img src="__PUBLIC__/mobile/images/icon/pjkc.png">-->
+                    <!--<p>配件库存</p>-->
+                    <!--</div>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img src="__PUBLIC__/mobile/images/icon/dcl.png" style="width: 1.2rem;">
+            <span>待处理事件</span>
+            <p class="taskUp"><span class="taskNum"></span> 项</p>
+        </div>
+        <div class="layui-card-body">
+            <ul class="task">
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+</html>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, layer = layui.layer;
+        //初始化下方导航栏菜单
+        menuListSpread();
+        if (screen.width >= 768) {
+            $(".otherScreen").addClass('layui-col-sm4');
+            $(".otherScreen:first-child .layui-col-xs4").css('margin-top', '3rem');
+        }
+
+        //扫码报修
+        $(document).on('click', '#scanQRcode_baoxiu', function () {
+            wx.scanQRCode({
+                needResult: 1,
+                scanType: ["qrCode", "barCode"],
+                desc: 'scanQRCode desc',
+                success: function (res) {
+                    var assnum = res.resultStr;
+                    if (assnum.indexOf("ODE_") > 0) {
+                        assnum = res.resultStr.substr(9);
+                    }
+                    var params = {};
+                    params.assnum = assnum;
+                    params.action = 'scanQRcode_baoxiu';
+                    var url = mobile_name+'/Repair/addRepair.html';
+                    $.ajax({
+                        type: "POST",
+                        data: params,
+                        url: url,
+                        //返回数据的格式
+                        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                        success: function (data) {
+                            window.location.href = mobile_name+'/'+data.url;
+                        },
+                        //调用出错执行的函数
+                        error: function () {
+                            //请求出错处理
+                            layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                        }
+                    });
+                }
+            });
+        });
+        //查阅档案
+        $(document).on('click', '#scanQRcode_checkBox', function () {
+            wx.scanQRCode({
+                needResult: 1,
+                scanType: ["qrCode", "barCode"],
+                desc: 'scanQRCode desc',
+                success: function (res) {
+                    var box_num = res.resultStr;
+                    if (box_num.indexOf("ODE_") > 0) {
+                        box_num = res.resultStr.substr(9);
+                    }
+                    window.location.href = mobile_name+'/Box/boxList.html?action=show_box&num='+box_num;
+                }
+            });
+        });
+
+        get_data();
+        get_process();
+        function get_process(){
+            //获取进程数量
+            var url = mobile_name+"/Tasks/getMyProcesss.html";
+            $.ajax({
+                type: "POST",
+                url: url,
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                success: function (data) {
+                        $.each(data.lists, function (index, item) {
+                            if (item.nums > 99) {
+                                $('.' + index).html('...');
+                                $('.' + index).show();
+                            } else {
+                                if (item.nums > 0) {console.log(item);
+                                    $('.' + index).html(item.nums);
+                                    $('.' + index).show();
+                                }
+                            }
+                        });
+                },
+                //调用出错执行的函数
+                error: function () {
+                    //请求出错处理
+                    layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                }
+            });
+        }
+        function get_data() {
+            //获取待处理事件列表
+            var url = mobile_name+'/Tasks/getMyTasks.html';
+            $.ajax({
+                type: "POST",
+                url: url,
+                //返回数据的格式
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                success: function (data) {
+                    if (data.total_nums > 0) {
+                        $.each(data.nums, function (index, item) {
+                            if (item > 99) {
+                                $('.' + index).html('...');
+                                $('.' + index).show();
+                            } else {
+                                if (item > 0) {
+                                    $('.' + index).html(item);
+                                    $('.' + index).show();
+                                }
+                            }
+                        });
+                        $('.taskNum').html(data.total_nums);
+                        $.each(data.lists, function (index, item) {
+                            var html = '<li>\n' +
+                                    '<div class="taskLeft">\n' +
+                                    '<img class="headerImage" src="' + item.pic + '">\n' +
+                                    '<p>' + item.applicant + '</p>\n' +
+                                    '</div>\n' +
+                                    '<div class="taskRight">\n' +
+                                    '<h2>' + item.assets +'<span style="padding-left: 10px;color: red;font-size: 12px;">'+ item.tips_name+'</span></h2>\n' +
+                                    '<p>\n' +
+                                    '<span class="taskDepartment">' + item.department + '</span>\n' +
+                                    '<span class="taskTime">' + item.show_time + '</span>\n' +
+                                    '</p>\n' +
+                                    '</div>\n' +
+                                    '' + item.url + '\n' +
+                                    '</li>';
+                            $('.task').append(html);
+                        });
+                    } else {
+                        $('.taskNum').html(0);
+                    }
+                },
+                //调用出错执行的函数
+                error: function () {
+                    //请求出错处理
+                    layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                }
+            });
+        }
+    });
+
+</script>
+

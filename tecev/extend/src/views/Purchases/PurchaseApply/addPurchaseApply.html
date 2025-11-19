@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>科室新增采购申请</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Purchases-PurchaseApply-addPurchaseApply .detailed .no-padding-td {
+            padding: 0 !important;
+        }
+        #LAY-Purchases-PurchaseApply-addPurchaseApply .detailed .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Purchases-PurchaseApply-addPurchaseApply .xm-select-parent .xm-input{
+            border:none;
+        }
+        #addAssetsFile,#dwFile{
+            display:none;float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+        .addAssets{
+            display:none;
+        }
+        .jhover{
+            background: #5FB878 !important;
+        }
+        .layui-form-item .layui-inline{margin-bottom: 10px;}
+        .layui-form-item{margin-bottom: 5px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form action="" class="layui-form">
+        <input type="hidden" name="hospital_id" value="{$hospital_id}">
+        <input type="hidden" name="plans_id" value="0">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+            基本信息
+        </blockquote>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 申请方式：</label>
+                <div class="layui-input-inline">
+                    <select name="apply_type" lay-filter="apply_type">
+                        <option value="1">正常申请（计划内）</option><!--这里得判断是否有该科室的采购计划才能默认选择计划内，如果没有的话，该计划内为disabled-->
+                        <option value="2">特殊申请（计划外）</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 申请科室：</label>
+                <input type="hidden" name="departid" value=""/>
+                <div class="layui-input-inline" id="apply_department_sel">
+                    <div class="input-group">
+                        <input type="text" class="form-control bsSuggest" id="apply_department" lay-verify="departid|required" placeholder="请选择申请科室" />
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-mid layui-word-aux">计划内申请的，此处只能选择采购计划已通过审批的科室</div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin">*</span> 项目名称：</label>
+                <!--当申请方式选择计划内时，该框为建议搜索，搜索采购计划项目名称-->
+                <div class="layui-input-inline">
+                    <input type="text" name="project_name" lay-verify="project_name|required" readonly value="" placeholder="计划内的，选科室后自动填写" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">申请日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$add_date}" readonly class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">申请人：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="{$add_user}" readonly class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><span class="rquireCoin">*</span> 申请理由：</label>
+            <div class="layui-input-block">
+                <textarea name="apply_reason" lay-verify="apply_reason|required" placeholder="请输入申请理由" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="plans_id" value="{$plansInfo.plans_id}" />
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">
+                上报设备明细
+            </div>
+            <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+                <colgroup>
+                    <col width="5%">
+                    <col width="14%">
+                    <col width="8%">
+                    <col width="11%">
+                    <col width="8%">
+                    <col width="9%">
+                    <col width="10%">
+                    <col width="21%">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th class="th-align-center">序号</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 设备名称</th>
+                    <th class="th-align-center">单位</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 预计单价(元)</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 数量</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 是否进口</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 上报类别</th>
+                    <th class="th-align-center"><span class="rquireCoin">*</span> 参考品牌</th>
+                    <th class="th-align-center">操作</th>
+                </tr>
+                </thead>
+                <tbody class="assets-list">
+                    <tr class="no-data">
+                        <td colspan="10" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                    <tr class="addAssets">
+                        <td>新增</td>
+                        <td>
+                            <div class="layui-input-inline">
+                                <div class="input-group" id="dic_assets_sel">
+                                    <input type="text" style="width: 140px !important;" class="form-control bsSuggest" id="dist_assets_name" name="assets_name" placeholder="请输入设备名称" />
+                                    <div class="input-group-btn">
+                                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" readonly class="layui-input" value="" name="unit" placeholder="单位"/>
+                        </td>
+                        <td>
+                            <input type="text" class="layui-input" value="" name="market_price" placeholder="单价"/>
+                        </td>
+                        <td>
+                            <input type="text" class="layui-input" value="" name="nums" placeholder="数量"/>
+                        </td>
+                        <td>
+                            <div class="layui-input-inline">
+                                <select name="is_import">
+                                    <option value="">请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="layui-input-inline">
+                                <select name="buy_type">
+                                    <option value="">请选择</option>
+                                    <option value="1">报废更新</option>
+                                    <option value="2">添置</option>
+                                    <option value="3">新增</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="layui-input-inline">
+                                <select name="brand" xm-select="brand" xm-select-search="" lay-verify="brand">
+                                    <volist name="brands" id="vo">
+                                        <option value="{$vo.brand_name}">{$vo.brand_name}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button type="button" class="layui-btn layui-btn-xs addPartsInfo" lay-submit lay-filter="addOneAssets">
+                                    添加
+                                </button>
+                                <button class="layui-btn layui-btn-xs layui-btn-primary" id="partReset" style="margin-left:5px">
+                                    重置
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">
+                附件信息
+                <span id="addAssetsFile"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+                <span id="dwFile" style="margin-right: 10px;"><i class="iconfont icon-daochu6" style="font-size: 12px;"></i> 下载模板</span>
+            </div>
+            <table class="layui-table read-table-l" style="margin-top: 0;" lay-size="sm">
+                <colgroup>
+                    <col width="5%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>文件名称</th>
+                    <th>文件大小</th>
+                    <th>提交人</th>
+                    <th>提交时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="file_list">
+                    <tr class="no-data">
+                        <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ilayui-form-item tbcenter" style=" margin-top: 50px;">
+            <button class="layui-btn" lay-submit="addDepartApply" lay-filter="addDepartApply"><i class="layui-icon">&#xe609;</i>提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    var addPurchaseApply = "{$addPurchaseApply}";
+    layui.use('controller/purchases/purchaseApply/addPurchaseApply', layui.factory('controller/purchases/purchaseApply/addPurchaseApply'));
+</script>

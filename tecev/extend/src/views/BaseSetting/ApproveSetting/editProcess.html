@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .cusquote1 {
+            padding: 5px !important;
+            width: 100%;
+            margin: 10px auto 10px;
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="typeid" value="{$typeInfo.typeid}"/>
+        <input type="hidden" name="hospital_id" value="{$typeInfo.hospital_id}"/>
+        <input type="hidden" name="processid" value="{$processInfo.processid}"/>
+        <input type="hidden" name="action" value="{$url}"/>
+        <input type="hidden" name="min" value="{$max}"/>
+        <blockquote class="layui-elem-quote cusquote1">
+            同一审批类型下，不同流程之间的审批金额不允许重叠。每个审批类型下的第一审批金额默认设置为0
+        </blockquote>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>审批类型</label>
+                <div class="layui-input-block" >
+                    <input type="text" name="" value="{$typeInfo.type_name}" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>审批名称</label>
+                <div class="layui-input-block" >
+                    <input type="text" name="app_name" value="{$processInfo.approve_name}" placeholder="请输入审批名称" lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>审核权属</label>
+                <div class="layui-input-inline">
+                    <select name="app_option" lay-verify="required" lay-search="" lay-filter="pri">
+                        <option value="">直接选择或搜索选择</option>
+                        <volist name="pri" id="vo">
+                            <if condition="$vo eq $processInfo['approve_option']">
+                                <option value="{$vo}" selected="selected">{$vo}</option>
+                                <else/>
+                                <option value="{$vo}">{$vo}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <if condition="$processInfo.approve_option eq '关联部门'">
+            <div class="changeOption">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>审核人</label>
+                        <div class="layui-input-inline" >
+                            <input type="text" name="app_user" value="部门负责人" readonly placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">审核权属为关联部门的，审核人默认为关联部门的负责人</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>审核金额</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="s_price" value="0" readonly placeholder="￥" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">审核权属为关联部门的，审核金额默认设置为0（即大于等于该金额的业务需走流程审批）</div>
+                    </div>
+                </div>
+            </div>
+        <else/>
+            <div class="changeOption">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>审核人</label>
+                        <div class="layui-input-inline">
+                            <select name="app_user" class="users" lay-verify="required" lay-search="">
+                                <option value="">直接选择或搜索选择</option>
+                                <volist name="users" id="vo">
+                                    <if condition="$vo.username eq $processInfo['approve_user']">
+                                        <option value="{$vo.username}" selected="selected">{$vo.username}</option>
+                                        <else/>
+                                        <option value="{$vo.username}">{$vo.username}</option>
+                                    </if>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='请确保审批人有所审批设备的科室管理权限'>&#xe702;</i>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span class="rquireCoin"> * </span>审核金额</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="s_price" value="{$processInfo.start_price}" lay-verify="required|s_price" placeholder="￥" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='（即大于等于该金额的业务需走流程审批）审核金额应大于或等于上一级审核中已设置的金额。前值：{$max}'>&#xe702;</i>
+
+                </div>
+            </div>
+        </if>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="editProcess"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/approveSetting/editProcess', layui.factory('controller/basesetting/approveSetting/editProcess'));
+</script>

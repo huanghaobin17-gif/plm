@@ -1,0 +1,586 @@
+<include file="Public:head"/>
+<style>
+    .layui-card {
+        box-shadow: none;
+        margin: 0;
+    }
+    .writeInput{border: none;border-bottom: 1px solid #e5e5e5;width: 99%}
+    .inconformityInput{margin-left: 5px;min-height: 0;padding-bottom: 10px;}
+    .layui-card-header{border-bottom-color: #e5e5e5}
+    .layui-form-radio{margin:6px 6px 0 0;}
+    .enter{height: 60px;line-height: 60px;font-size: 30px;margin-top: 20px;}
+    .contentLabel{display: inline-block;text-align: right;width: 30%;min-width:91px;}
+    .measured{width: 30%;}
+    .wucha{margin-left:3%;width: 15%;}
+    .marl{margin-left: 2%;}
+    .gdfz{font-weight: bold;}
+    .layui-form-radio>i {
+        margin-right: 4px;
+    }
+    .layui-colla-icon {
+        left: 10px;
+    }
+    .layui-colla-title {
+        padding: 0 10px 0 28px;
+    }
+
+    .hide_abnormal_remark{
+        display: none;
+    }
+    .layui-table tr th{
+        font-weight: normal!important;
+    }
+    .no_template{
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+    }
+    .fix_con > .layui-show{
+        padding: 0;
+    }
+</style>
+<script>
+    var url = "{$url}";
+    var plans = "{$qsInfo.plans}";
+</script>
+<body>
+<div class="layui-fluid setForm">
+    <div class="emptyDiv">
+    </div>
+    <form class="layui-form" lay-filter="qualityForm">
+        <input type="hidden" name="qsid" value="{$qsInfo.qsid}"/>
+        <input type="hidden" name="report" value=""/>
+        <if condition="$detail_data">
+            <input type="hidden" name="save_edit" value="{$save_edit}"/>
+        </if>
+        <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">质控计划详情信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table">
+                <tbody>
+                <tr>
+                    <th>检测报告编号</th>
+                    <td><span class="stroageNumber">{$qsInfo.plan_num}</span></td>
+                </tr>
+                <tr>
+                    <th>质控计划名称</th>
+                    <td>{$qsInfo.plan_name}</td>
+                </tr>
+                <tr>
+                    <th>制定人</th>
+                    <td>{$qsInfo.adduser}</td>
+                </tr>
+                <tr>
+                    <th>制定时间</th>
+                    <td>{$qsInfo.addtime}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-card moveAnimatedDiv">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">检测设备基础信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table">
+                <tbody>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asInfo.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asInfo.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asInfo.model}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$asInfo.department}</td>
+                </tr>
+                <tr>
+                    <th>产品系列号</th>
+                    <td>{$asInfo.serialnum}</td>
+                </tr>
+                <tr>
+                    <th>品牌</th>
+                    <td>{$asInfo.brand}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asInfo.opendate}</td>
+                </tr>
+                <tr>
+                    <th>上次质控时间</th>
+                    <td>{$asInfo.lasttesttime}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-card moveAnimatedDiv">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">质控检测明细表单（模板：呼吸机）</h2>
+                <div class="bl1px"></div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-form-item" style="margin-bottom: -10px;margin-top: 0;">
+                    <label class="layui-form-label" style="width: auto">外观功能：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="lookslike" value="1" title="符合" lay-filter="lookslike" <if condition="$detail_data['exterior'] eq 1">checked</if> />
+                        <input type="radio" name="lookslike" value="2" title="不符合" lay-filter="lookslike" <if condition="$detail_data['exterior'] eq 2">checked</if> />
+                    </div>
+                    <div class="layui-input-block inconformityInput">
+                        <if condition="$detail_data['exterior'] eq 2">
+                            <input oninput="saveStorageData(this)" type="text" name="lookslike_desc" value="{$detail_data['exterior_explain']}" placeholder="外观不符合的请说明情况" autocomplete="off" class="layui-input writeInput" style="border: 1px solid #e6e6e6;width: 93%;margin: 0 auto;display: block;">
+                            <else/>
+                            <input oninput="saveStorageData(this)" type="text" name="lookslike_desc" value="{$detail_data['exterior_explain']}" placeholder="外观不符合的请说明情况" autocomplete="off" class="layui-input writeInput" style="border: 1px solid #e6e6e6;width: 93%;margin: 0 auto;display: none;">
+                        </if>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-collapse">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="height: auto;">潮气量(ml) (vcv模式)
+                                <volist name="values" id="vo">
+                                    <if condition="$vo.detection_name eq '潮气量'">
+                                        最大允差：{$vo.tolerance}
+                                    </if>
+                                </volist>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <ul>
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '潮气量'">
+                                            <volist name="vo.set" id="ho" offset="0" length='3'>
+                                                <li>
+                                                    <div class="contentLabel hxj">设定值：<span class="range">{$ho}</span></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="wucha(this)" name="humidity[]" value="{$detail_data['preset_detection']['humidity'][$key]}" placeholder="输出实测值" lay-verify="measured_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="shizhiwucha(this)" name="humidity_value[]" value="{$detail_data['preset_detection']['humidity_value'][$key]}" placeholder="示值" lay-verify="indication_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="contentLabel hxj"></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" name="humidity_tolerance[]" value="{$detail_data['preset_detection']['humidity_tolerance'][$key]}" readonly  placeholder="误差" autocomplete="off" class="layui-input writeInput wc">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" name="humidity_value_tolerance[]" value="{$detail_data['preset_detection']['humidity_value_tolerance'][$key]}" readonly  placeholder="示值误差" autocomplete="off" class="layui-input writeInput szwc">
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </if>
+                                    </volist>
+                                    <li>
+                                        <div class="contentLabel hxj">最大输出误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="humidity_max_output" value="{$detail_data['preset_detection']['humidity_max_output']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contentLabel hxj">最大示值误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="humidity_max_value" value="{$detail_data['preset_detection']['humidity_max_value']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="height: auto;">强制通气频率与呼吸比(vcv模式)最大允差:
+                                <volist name="values" id="vo">
+                                    <if condition="$vo.detection_name eq '强制通气频率'">
+                                        {$vo.tolerance}
+                                    </if>
+                                </volist>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <ul>
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '强制通气频率'">
+                                            <volist name="vo.set" id="ho"  offset="0" length='3'>
+                                                <li>
+                                                    <div class="contentLabel hxj">设定值：<span class="range">{$ho}</span></div>
+                                                    <div class="layui-input-inline measured" style="width: 20%;">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="wucha(this)" name="aeration[]" value="{$detail_data['preset_detection']['aeration'][$key]}" placeholder="实测值" lay-verify="measured_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl" style="width: 20%;">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="shizhiwucha(this)" name="aeration_value[]" value="{$detail_data['preset_detection']['aeration_value'][$key]}" placeholder="示值" lay-verify="indication_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl" style="width: 16%;">
+                                                        <input type="text" oninput="saveStorageData(this)" name="aeration_setIE[]" value="{$detail_data['preset_detection']['aeration_setIE'][$key]}" placeholder="I:E值" lay-verify="setIE_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="contentLabel hxj"></div>
+                                                    <div class="layui-input-inline measured" style="width: 20%;">
+                                                        <input type="number" oninput="saveStorageData(this)" name="aeration_tolerance[]" value="{$detail_data['preset_detection']['aeration_tolerance'][$key]}" readonly  placeholder="误差" autocomplete="off" class="layui-input writeInput wc">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl" style="width: 20%;">
+                                                        <input type="number" oninput="saveStorageData(this)" name="aeration_value_tolerance[]" value="{$detail_data['preset_detection']['aeration_value_tolerance'][$key]}" readonly  placeholder="示值误差" autocomplete="off" class="layui-input writeInput szwc">
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </if>
+                                    </volist>
+                                    <li>
+                                        <div class="contentLabel hxj">最大输出误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="aeration_max_output" value="{$detail_data['preset_detection']['aeration_max_output']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contentLabel hxj">最大示值误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="aeration_max_value" value="{$detail_data['preset_detection']['aeration_max_value']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="height: auto;">吸入氧浓度FiO₂ 最大允差：
+                                <volist name="values" id="vo">
+                                    <if condition="$vo.detection_name eq '吸入氧浓度'">
+                                        {$vo.tolerance}
+                                    </if>
+                                </volist>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <ul>
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '吸入氧浓度'">
+                                            <volist name="vo.set" id="ho" offset="0" length='3'>
+                                                <li>
+                                                    <div class="contentLabel hxj">设定值：<span class="range">{$ho}</span></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="wucha(this)" name="IOI[]" value="{$detail_data['preset_detection']['IOI'][$key]}" placeholder="输出实测值" lay-verify="measured_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="shizhiwucha(this)" name="IOI_value[]" value="{$detail_data['preset_detection']['IOI_value'][$key]}" placeholder="示值" lay-verify="indication_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="contentLabel hxj"></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" name="IOI_tolerance[]" value="{$detail_data['preset_detection']['IOI_tolerance'][$key]}" readonly  placeholder="误差" autocomplete="off" class="layui-input writeInput wc">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" name="IOI_value_tolerance[]" value="{$detail_data['preset_detection']['IOI_value_tolerance'][$key]}" readonly  placeholder="示值误差" autocomplete="off" class="layui-input writeInput szwc">
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </if>
+                                    </volist>
+                                    <li>
+                                        <div class="contentLabel hxj">最大输出误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="IOI_max_output" value="{$detail_data['preset_detection']['IOI_max_output']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contentLabel hxj">最大示值误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="IOI_max_value" value="{$detail_data['preset_detection']['IOI_max_value']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="height: auto;">吸气压力水平 PCV或新生儿呼吸的PLV模式 f=20 最大允差：
+                                <volist name="values" id="vo">
+                                    <if condition="$vo.detection_name eq '吸气压力水平'">
+                                        {$vo.tolerance}
+                                    </if>
+                                </volist>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <ul>
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '吸气压力水平'">
+                                            <volist name="vo.set" id="ho" offset="0" length='3'>
+                                                <li>
+                                                    <div class="contentLabel hxj">设定值：<span class="range">{$ho}</span></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="wucha(this)" name="IPAP[]" value="{$detail_data['preset_detection']['IPAP'][$key]}" placeholder="输出实测值" lay-verify="measured_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="shizhiwucha(this)" name="IPAP_value[]" value="{$detail_data['preset_detection']['IPAP_value'][$key]}" placeholder="示值" lay-verify="indication_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="contentLabel hxj"></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" name="IPAP_tolerance[]" value="{$detail_data['preset_detection']['IPAP_tolerance'][$key]}" readonly  placeholder="误差" autocomplete="off" class="layui-input writeInput wc">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" name="IPAP_value_tolerance[]" value="{$detail_data['preset_detection']['IPAP_value_tolerance'][$key]}" readonly  placeholder="示值误差" autocomplete="off" class="layui-input writeInput szwc">
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </if>
+                                    </volist>
+                                    <li>
+                                        <div class="contentLabel hxj">最大输出误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="IPAP_max_output" value="{$detail_data['preset_detection']['IPAP_max_output']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contentLabel hxj">最大示值误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="IPAP_max_value" value="{$detail_data['preset_detection']['IPAP_max_value']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title" style="height: auto;">呼气末正压PEEP VCV模式 Vt=400ml f=20 最大允差：
+                                <volist name="values" id="vo">
+                                    <if condition="$vo.detection_name eq '呼气末正压'">
+                                        {$vo.tolerance}
+                                    </if>
+                                </volist>
+                            </h2>
+                            <div class="layui-colla-content layui-show">
+                                <ul>
+                                    <volist name="values" id="vo">
+                                        <if condition="$vo.detection_name eq '呼气末正压'">
+                                            <volist name="vo.set" id="ho" offset="0" length='3'>
+                                                <li>
+                                                    <div class="contentLabel hxj">设定值：<span class="range">{$ho}</span></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="wucha(this)" name="PEEP[]" value="{$detail_data['preset_detection']['PEEP'][$key]}" placeholder="输出实测值" lay-verify="measured_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" onblur="shizhiwucha(this)" name="PEEP_value[]" value="{$detail_data['preset_detection']['PEEP_value'][$key]}" placeholder="示值" lay-verify="indication_value" autocomplete="off" class="layui-input writeInput">
+                                                    </div>
+                                                    <div class="contentLabel hxj"></div>
+                                                    <div class="layui-input-inline measured">
+                                                        <input type="number" oninput="saveStorageData(this)" name="PEEP_tolerance[]" value="{$detail_data['preset_detection']['PEEP_tolerance'][$key]}" readonly  placeholder="误差" autocomplete="off" class="layui-input writeInput wc">
+                                                    </div>
+                                                    <div class="layui-input-inline measured marl">
+                                                        <input type="number" oninput="saveStorageData(this)" name="PEEP_value_tolerance[]" value="{$detail_data['preset_detection']['PEEP_value_tolerance'][$key]}" readonly  placeholder="示值误差" autocomplete="off" class="layui-input writeInput szwc">
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </if>
+                                    </volist>
+                                    <li>
+                                        <div class="contentLabel hxj">最大输出误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="PEEP_max_output" value="{$detail_data['preset_detection']['PEEP_max_output']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="contentLabel hxj">最大示值误差</div>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="number" oninput="saveStorageData(this)" name="PEEP_max_value" value="{$detail_data['preset_detection']['PEEP_max_value']}" readonly placeholder="" autocomplete="off" class="layui-input writeInput">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-collapse">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">机械通气模式评价</h2>
+                            <div class="layui-colla-content layui-show">
+                                <dl>
+                                    <dt><span>容量预制模式：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="capacity_precut_mode" value="1" title="符合" <if condition="$detail_data['fixed_detection']['capacity_precut_mode'] eq 1">checked</if> />
+                                        <input type="radio" name="capacity_precut_mode" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['capacity_precut_mode'] eq 2">checked</if> />
+                                        <input type="radio" name="capacity_precut_mode" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['capacity_precut_mode'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>流量触发功能：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="traffic_trigger" value="1" title="符合" <if condition="$detail_data['fixed_detection']['traffic_trigger'] eq 1">checked</if> />
+                                        <input type="radio" name="traffic_trigger" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['traffic_trigger'] eq 2">checked</if> />
+                                        <input type="radio" name="traffic_trigger" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['traffic_trigger'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>压力预制模式：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="pressure_precut_mode" value="1" title="符合" <if condition="$detail_data['fixed_detection']['pressure_precut_mode'] eq 1">checked</if> />
+                                        <input type="radio" name="pressure_precut_mode" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['pressure_precut_mode'] eq 2">checked</if> />
+                                        <input type="radio" name="pressure_precut_mode" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['pressure_precut_mode'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>压力触发功能：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="pressure_tigger" value="1" title="符合" <if condition="$detail_data['fixed_detection']['pressure_tigger'] eq 1">checked</if> />
+                                        <input type="radio" name="pressure_tigger" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['pressure_tigger'] eq 2">checked</if> />
+                                        <input type="radio" name="pressure_tigger" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['pressure_tigger'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-collapse">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">安全报警功能等检查</h2>
+                            <div class="layui-colla-content layui-show">
+                                <dl>
+                                    <dt><span>电源报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="power_supply_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['power_supply_alarm'] eq 1">checked</if> />
+                                        <input type="radio" name="power_supply_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['power_supply_alarm'] eq 2">checked</if> />
+                                        <input type="radio" name="power_supply_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['power_supply_alarm'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>氧浓度上/下限报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="oxygen_concentration_bound" value="1" title="符合" <if condition="$detail_data['fixed_detection']['oxygen_concentration_bound'] eq 1">checked</if> />
+                                        <input type="radio" name="oxygen_concentration_bound" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['oxygen_concentration_bound'] eq 2">checked</if> />
+                                        <input type="radio" name="oxygen_concentration_bound" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['oxygen_concentration_bound'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>气源报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="gas_supply_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['gas_supply_alarm'] eq 1">checked</if> />
+                                        <input type="radio" name="gas_supply_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['gas_supply_alarm'] eq 2">checked</if> />
+                                        <input type="radio" name="gas_supply_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['gas_supply_alarm'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>窒息报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="apnea_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['apnea_alarm'] eq 1">checked</if> />
+                                        <input type="radio" name="apnea_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['apnea_alarm'] eq 2">checked</if> />
+                                        <input type="radio" name="apnea_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['apnea_alarm'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>气道压力上/下限报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="AWP_alarm" value="1" title="符合" <if condition="$detail_data['fixed_detection']['AWP_alarm'] eq 1">checked</if> />
+                                        <input type="radio" name="AWP_alarm" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['AWP_alarm'] eq 2">checked</if> />
+                                        <input type="radio" name="AWP_alarm" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['AWP_alarm'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>病人回路过压保护功能：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="loop_overvoltage_pretection" value="1" title="符合" <if condition="$detail_data['fixed_detection']['loop_overvoltage_pretection'] eq 1">checked</if> />
+                                        <input type="radio" name="loop_overvoltage_pretection" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['loop_overvoltage_pretection'] eq 2">checked</if> />
+                                        <input type="radio" name="loop_overvoltage_pretection" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['loop_overvoltage_pretection'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>分钟通气量上/下限报警：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="minute_ventilation_bound" value="1" title="符合" <if condition="$detail_data['fixed_detection']['minute_ventilation_bound'] eq 1">checked</if> />
+                                        <input type="radio" name="minute_ventilation_bound" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['minute_ventilation_bound'] eq 2">checked</if> />
+                                        <input type="radio" name="minute_ventilation_bound" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['minute_ventilation_bound'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><span>按键功能检查（含键盘锁）：</span></dt>
+                                    <dd>
+                                        <input type="radio" name="press_key" value="1" title="符合" <if condition="$detail_data['fixed_detection']['press_key'] eq 1">checked</if> />
+                                        <input type="radio" name="press_key" value="2" title="不符合" <if condition="$detail_data['fixed_detection']['press_key'] eq 2">checked</if> />
+                                        <input type="radio" name="press_key" value="3" title="不适用" <if condition="$detail_data['fixed_detection']['press_key'] eq 3">checked</if> />
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card no_margin">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">检测备注：</label>
+                    <div class="layui-input-block" style="padding-bottom: 10px;">
+                        <input type="text" oninput="saveStorageData(this)" name="total_desc" value="{$detail_data['remark']}" autocomplete="off" placeholder="请输入备注（偏离情况说明）" class="layui-input writeInput" style="width: 95%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <span style="float: left">设备铭牌照片</span><button type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="nameplate">拍照上传</button>
+            </div>
+            <div class="layui-card-body">
+                <dl>
+                    <dd>
+                        <div class="swiper-container" id="uploadPhotoCarousel">
+                            <div class="swiper-wrapper nameplate_pic">
+                                <if condition="$file_data['nameplate']">
+                                    <volist name="file_data['nameplate']" id="vo" key="k">
+                                        <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                            <i class="layui-icon layui-icon-close-fill photoDelete" data-id="{$vo.file_id}"></i>
+                                            <img src="{$vo.file_url}" class="photo">
+                                        </div>
+                                    </volist>
+                                    <else/>
+                                    <div class="swiper-slide">
+                                        <div class="emptyPhoto">暂无预览图</div>
+                                    </div>
+                                </if>
+                            </div>
+                            <!-- 如果需要分页器 -->
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <span style="float: left">检测仪器视图照片</span><button type="button" class="layui-btn layui-btn-sm layui-btn-fluid" id="instrument_view">拍照上传</button>
+            </div>
+            <div class="layui-card-body">
+                <dl>
+                    <dd>
+                        <div class="swiper-container" id="checkPhotoCarousel">
+                            <div class="swiper-wrapper instrument_view_pic">
+                                <if condition="$file_data['instrument_view']">
+                                    <volist name="file_data['instrument_view']" id="vo" key="k">
+                                        <div class="swiper-slide photoDiv" div-index="{$k-1}">
+                                            <i class="layui-icon layui-icon-close-fill photoDelete" data-id="{$vo.file_id}"></i>
+                                            <img src="{$vo.file_url}" class="photo">
+                                        </div>
+                                    </volist>
+                                    <else/>
+                                    <div class="swiper-slide">
+                                        <div class="emptyPhoto">暂无预览图</div>
+                                    </div>
+                                </if>
+                            </div>
+                            <!-- 如果需要分页器 -->
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="layui-card moveAnimatedDiv">
+            <div class="layui-card-body">
+                <div class="layui-form-item mgt1rem">
+                    <button class="layui-btn layui-btn-warm enterButton" id="keepStartRepair" style="width: 100%;" lay-submit lay-filter="keepStartRepair">暂存不提交</button>
+                </div>
+                <div class="layui-form-item mgt1rem">
+                    <button class="layui-btn enterButton" id="endRepair" style="width: 100%;" lay-submit lay-filter="endStartRepair">确认检测并提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/mobile/js/qualities/quality/setQualityDetail.js?v={:mt_rand(1,54561)}"></script>

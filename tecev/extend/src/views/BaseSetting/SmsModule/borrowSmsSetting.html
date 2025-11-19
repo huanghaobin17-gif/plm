@@ -1,0 +1,89 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-borrow .layui-form-item .layui-form-label{
+        width:184px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-borrow .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-borrow .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-borrow .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-borrow">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>借调设备 {assets}</span>
+            <span>借调单号 {borrow_num}</span>
+            <span>申请借调科室 {apply_department}</span>
+            <span>被申请借调科室 {department}</span>
+            <span>审批结果 {examine_status}</span>
+            <span>预计归还时间 {estimate_back}</span>
+            <span>实际还时间 {giveBack_time}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>借调模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="borrow_sms_open" name="Borrow[status]"  value="1" title="开启" <if condition="$settings[Borrow][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="borrow_sms_open" name="Borrow[status]"  value="0" title="关闭" <if condition="$settings[Borrow][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="borrow_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知处理借调审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Borrow[doApprove][content]" value="{$settings[Borrow][doApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Borrow[doApprove][status]"  value="1" title="开启" <if condition="$settings[Borrow][doApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Borrow[doApprove][status]"  value="0" title="关闭" <if condition="$settings[Borrow][doApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知申请人审批结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Borrow[borrowrApproveOver][content]" value="{$settings[Borrow][borrowrApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Borrow[borrowrApproveOver][status]"  value="1" title="开启" <if condition="$settings[Borrow][borrowrApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Borrow[borrowrApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Borrow][borrowrApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知被借调科室取消借调：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Borrow[borrowNotApply][content]" value="{$settings[Borrow][borrowNotApply][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Borrow[borrowNotApply][status]"  value="1" title="开启" <if condition="$settings[Borrow][borrowNotApply][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Borrow[borrowNotApply][status]"  value="0" title="关闭" <if condition="$settings[Borrow][borrowNotApply][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知被借科室借入验收情况：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Borrow[borrowInCheck][content]" value="{$settings[Borrow][borrowInCheck][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Borrow[borrowInCheck][status]"  value="1" title="开启" <if condition="$settings[Borrow][borrowInCheck][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Borrow[borrowInCheck][status]"  value="0" title="关闭" <if condition="$settings[Borrow][borrowInCheck][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知申请人科室已验收：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Borrow[borrowGiveBack][content]" value="{$settings[Borrow][borrowGiveBack][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Borrow[borrowGiveBack][status]"  value="1" title="开启" <if condition="$settings[Borrow][borrowGiveBack][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Borrow[borrowGiveBack][status]"  value="0" title="关闭" <if condition="$settings[Borrow][borrowGiveBack][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+
+</div>

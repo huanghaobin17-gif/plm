@@ -1,0 +1,3 @@
+<?php 
+$catname=array(); 
+?>

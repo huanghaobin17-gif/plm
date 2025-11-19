@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 13%;
+        }
+        #addReport{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>设备名称：</th>
+                    <td>{$asInfo.assets_name}</td>
+                </tr>
+                <tr>
+                    <th>型号：</th>
+                    <td>{$asInfo.model}</td>
+                </tr>
+                <tr>
+                    <th>单位：</th>
+                    <td>{$asInfo.unit}</td>
+                </tr>
+                <tr>
+                    <th>是否进口：</th>
+                    <td>
+                        <if condition="$asInfo.is_import eq 1">
+                            是
+                            <else/>
+                            否
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>购置类型：</th>
+                    <td>
+                        <if condition="$asInfo.buy_type eq 1">
+                            报废新增
+                        </if>
+                        <if condition="$asInfo.buy_type eq 2">
+                            添置
+                        </if>
+                        <if condition="$asInfo.buy_type eq 3">
+                            新增
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>供应商：</th>
+                    <td>{$asInfo.supplier}</td>
+                </tr>
+                <tr>
+                    <th>生产厂家：</th>
+                    <td>{$asInfo.factory}</td>
+                </tr>
+                <tr>
+                    <th>出厂编号：</th>
+                    <td>{$asInfo.factorynum}</td>
+                </tr>
+                <tr>
+                    <th>申请科室：</th>
+                    <td>{$asInfo.department}</td>
+                </tr>
+                <tr>
+                    <th>设备分类：</th>
+                    <td>{$asInfo.category}</td>
+                </tr>
+                <tr>
+                    <th>设备单价：</th>
+                    <td>{$asInfo.buy_price}</td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">调试信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>调试人：</th>
+                <td>{$debugInfo.debug_user}</td>
+            </tr>
+            <tr>
+                <th>调试地点：</th>
+                <td>{$debugInfo.debug_area}</td>
+            </tr>
+            <tr>
+                <th>调试日期：</th>
+                <td>{$debugInfo.debug_start_date} ~ {$debugInfo.debug_end_date}</td>
+            </tr>
+            <tr>
+                <th>在场人员：</th>
+                <td>{$debugInfo.attendants_user}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td>{$debugInfo.debug_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: -10px;">
+            调试报告明细
+        </blockquote>
+        <table class="layui-table read-table-l" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="38%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody class="file_list">
+            <if condition="$debug_files">
+                <volist name="debug_files" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            培训计划信息
+        </div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>培训人：</th>
+                <td>{$trainInfo.train_user}</td>
+                <th>培训时间：</th>
+                <td>{$trainInfo.train_start_date} ~ {$trainInfo.train_end_date}</td>
+                <th>培训地点：</th>
+                <td>{$trainInfo.train_area}</td>
+            </tr>
+            <tr>
+                <th>参加人员：</th>
+                <td colspan="5">{$trainInfo.attendants_user}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$trainInfo.train_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            培训报告明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="38%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$files">
+                <volist name="files" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            考核报告明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="38%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$assessReports">
+                <volist name="assessReports" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            测试运行报告明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="38%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$testReports">
+                <volist name="testReports" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+            <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            首次计量报告明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="38%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$meteringReports">
+                <volist name="meteringReports" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/testReport', layui.factory('controller/purchases/purchaseCheck/testReport'));
+</script>

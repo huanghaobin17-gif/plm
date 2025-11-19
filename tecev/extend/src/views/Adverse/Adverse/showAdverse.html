@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .infoL{width: 500px;}
+    .infoR{width: 400px;margin-right: 140px;}
+    .meaningL{
+        margin-top: 10px;
+        width: 500px;
+        border: 1px solid #999;
+        height: 1360px;
+    }
+    .meaningR{
+        margin-top: 10px;
+        width: 500px;
+        border: 1px solid #999;
+        height: 1360px;
+    }
+    .adverseForm{
+        width: 1050px;
+        margin: 0 auto;
+    }
+    .layui-form-item{margin-bottom: 0;}
+    .layui-input{
+        width: 310px;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+    .layui-input:hover{
+        border-bottom-color: #2ea8e5 !important;
+    }
+    .layui-textarea:hover{
+        border-color: #2ea8e5 !important;
+    }
+    .layui-input:focus{
+        border-bottom-color: #2ea8e5!important;
+    }
+    .meaningL-title{
+        width: 490px;
+        height: 22px;
+        line-height: 22px;
+        font-size: 14px;
+        font-weight: 700;
+        padding-left: 10px;
+        background-color: #ccc;
+        margin-top: 15px;
+    }
+    .adaptionLabel{
+        width: 120px;
+    }
+    .layui-textarea{
+        width: 95%;
+        margin-left: 15px;
+    }
+    .layui-form-radio * {
+        font-size: 12px;
+    }
+    .radioList{
+        position: relative;
+        margin-left: 15px;
+    }
+    .longTitle{
+        margin: 10px 0 10px 15px;
+    }
+    .sameHeightRadio{
+        width: 410px;
+        height: 30px;
+    }
+    .sameHeightRadio li{
+        float: left;
+    }
+    .text-align-left{
+        text-align: left;
+    }
+    .shortLabel{
+        width: 90px;
+    }
+    .halfFloat{
+        width: 400px;
+        height: 30px;
+    }
+    .halfFloat li {
+        float: left;
+    }
+    html{
+        overflow-x:hidden;
+    }
+    .mgt0{
+        margin-top: 0;
+    }
+    .upload{
+        position: relative;
+        margin: 20px 0 0 20px;
+    }
+    .inputUpload{
+        width: 300px;
+        height: 36px;
+        cursor: not-allowed !important;
+        border: 1px solid #e6e6e6;
+    }
+    .inputUpload:hover{
+        border-color: #2ea8e5 !important;
+    }
+    .upload button{
+        position: absolute;
+        height: 36px;
+        line-height: 36px;
+        margin-left: 15px;
+        top: 0;
+        right: -43px;
+    }
+    .statusList{
+        width: 300px;
+        height: 60px;
+        margin-left: 15px;
+    }
+    .statusList li{
+        float: left;
+    }
+    .productName{
+        border-left: none;
+        border-top: none;
+        border-right: none;
+        height: 20px;
+        margin-top: 5px;
+        outline: none;
+        width: 290px !important;
+        border-radius: 0 !important;
+    }
+    .productName:hover{
+        border-bottom-color: #2ea8e5!important;
+        border-radius: 0;
+    }
+    .form-control{
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        border-radius: 0;
+    }
+    .form-control:focus{
+        box-shadow: none;
+    }
+    .state{
+        background-color: #fff;
+    }
+    .placeReamrk{
+        position: absolute;
+        top: 105px;
+        left: 130px;
+        cursor: not-allowed;
+    }
+    .operatorRemark{
+        position: absolute;
+        top: 0;
+        left: 125px;
+        width: 195px;
+    }
+    #consequence_date{
+        cursor: not-allowed;
+        position: absolute;
+        top: 0 !important;
+        left: 70px !important;
+    }
+    .fileNameInput{
+        display: inline-block;
+        height: 22px;
+        line-height: 22px;
+        margin: 5px 4px 2px 0;
+        padding: 0 8px;
+        border: 1px solid #e9eaec;
+        border-radius: 3px;
+        background: #f7f7f7;
+        font-size: 12px;
+        vertical-align: middle;
+        opacity: 1;
+        overflow: hidden;
+    }
+    .closeFile{
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="adverseForm">
+        <form class="layui-form">
+            <input type="hidden" name="id" value="{$id}">
+            <div class="infoL fl">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报告日期：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="{$info.report_date}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报告来源：</label>
+                        <div class="layui-input-inline" style="width: 330px;" >
+                            <if condition="$info.report_from eq '生产企业'">
+                                <input type="radio" value="生产企业" title="生产企业" checked>
+                                <else />
+                                <input type="radio" value="生产企业" title="生产企业" disabled>
+                            </if>
+                            <if condition="$info.report_from eq '经营企业'">
+                                <input type="radio" value="经营企业" title="经营企业" checked>
+                                <else />
+                                <input type="radio" value="经营企业" title="经营企业" disabled>
+                            </if>
+                            <if condition="$info.report_from eq '使用单位'">
+                                <input type="radio" value="使用单位" title="使用单位" checked>
+                                <else />
+                                <input type="radio" value="使用单位" title="使用单位" disabled>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系地址：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="{$info.address}" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="infoR fr">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">编码：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.code}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">单位名称：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.unit}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">邮编：</label>
+                        <div class="layui-input-inline" style="width: 20px;">
+                            <input class="layui-input" style="width: 60px;" readonly value="{$info.post_code}" >
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系电话：</label>
+                        <div class="layui-input-inline" style="width: 20px;">
+                            <input class="layui-input" style="width: 155px;" readonly  value="{$info.telphone}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="meaningL fl">
+                <p class="meaningL-title mgt0">A.患者资料</p>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label text-align-left" style="width: 86px;">1.患者姓名：</label>
+                        <div class="layui-input-inline" style="width: 0;">
+                            <input class="layui-input" style="width: 100px;" value="{$info.name}" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="margin-left: 40px;">
+                        <label class="layui-form-label">2.年龄：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" style="width: 80px;"  value="{$info.age}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label text-align-left">3.性别：</label>
+                        <div class="layui-input-inline" style="width: 330px;" >
+                            <if condition="$info.sex eq 1">
+                                <input type="radio" title="男" checked>
+                                <else />
+                                <input type="radio" title="男" disabled>
+                            </if>
+                            <if condition="$info.sex eq 0">
+                                <input type="radio" title="女" checked>
+                                <else />
+                                <input type="radio" title="女" disabled>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">4.预期治疗疾病或者作用：</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.expected}</textarea>
+                </div>
+                <p class="meaningL-title">B.不良事件情况</p>
+                <div class="layui-form-item">
+                    <p class="longTitle">5.事件主要表现：</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.express}</textarea>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label adaptionLabel text-align-left">6.事件发生日期：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" value="{$info.express_date}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: auto">7.发现或知悉事件：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.discovery}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: auto">8.医疗器械实际使用场所：</label>
+                        <ul class="radioList">
+                            <li>
+                                <if condition="$info.place eq '医疗机构'">
+                                    <input type="radio" title="医疗机构" checked>
+                                    <else />
+                                    <input type="radio" title="医疗机构" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.place eq '家庭'">
+                                    <input type="radio" title="家庭" checked>
+                                    <else />
+                                    <input type="radio" title="家庭" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.placeStatus eq 1">
+                                    <input type="radio" title="其他（请注明）：" checked>
+                                    <input class="layui-input placeReamrk"  style="cursor: text;" value="{$info.place}" readonly>
+                                    <else />
+                                    <input type="radio" title="其他（请注明）：" disabled>
+                                    <input class="layui-input placeReamrk"  readonly>
+                                </if>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: auto">9.事件后果：</label>
+                        <ul class="radioList" style="margin-top: 40px;">
+                            <li>
+                                <if condition="$info.consequenceStatus eq 1">
+                                    <input type="radio" title="死亡：" checked>
+                                    <input class="layui-input" id="consequence_date" value="{$info.consequence}" readonly >
+                                    <else />
+                                    <input type="radio" title="死亡：" disabled >
+                                    <input class="layui-input" id="consequence_date" readonly >
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.consequence eq '危及生命'">
+                                    <input type="radio" title="危及生命"  checked>
+                                    <else />
+                                    <input type="radio" title="危及生命" disabled >
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.consequence eq '机体功能结构永久性损伤'">
+                                    <input type="radio" title="机体功能结构永久性损伤" checked>
+                                    <else />
+                                    <input type="radio" title="机体功能结构永久性损伤" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.consequence eq '可能导致机体功能结构永久性损伤'">
+                                    <input type="radio" title="可能导致机体功能结构永久性损伤" checked>
+                                    <else />
+                                    <input type="radio" title="可能导致机体功能结构永久性损伤" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.consequence eq '需要内、外科治疗避免上述永久损伤'">
+                                    <input type="radio" title="需要内、外科治疗避免上述永久损伤" checked>
+                                    <else />
+                                    <input type="radio" title="需要内、外科治疗避免上述永久损伤" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.consequenceStatus eq 2">
+                                    <input type="radio" title="其它（在事件陈述中说明）" checked>
+                                    <else />
+                                    <input type="radio" title="其它（在事件陈述中说明）" disabled>
+                                </if>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">10.事件陈述：（至少包括器械使用时间、使用目的、使用依据、使用情况、出现的不良事件情况、对受害者影响、采取的治疗措施、器械联合使用情况）</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <if condition="$info.consequenceStatus eq 2">
+                        <textarea class="layui-textarea state" disabled>{$info.consequence}</textarea>
+                        <else />
+                        <textarea class="layui-textarea state" disabled ></textarea>
+                    </if>
+                </div>
+                <p class="meaningL-title">上传附件</p>
+                <div class="layui-form-item">
+                    <div class="layui-inline upload">
+                        <div class="layui-input inputUpload">
+                            <notempty name="info.report">
+                                <div class="fileNameInput">
+                                    <span class="fileName" data-type="{$info.type}" data-path="{$info.report}" data-name="{$info.Filename}">{$info.Filename}</span>
+                                </div>
+                            </notempty>
+                        </div>
+                        <notempty name="info.report">
+                        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal showUpload" >查看</button>
+                            <else />
+                            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" >查看</button>
+                        </notempty>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label text-align-left" style="width: 84px;">报告人职称：</label>
+                        <ul class="sameHeightRadio">
+                            <li>
+                                <if condition="$info.reporter eq '医师'">
+                                    <input type="radio" title="医师" checked>
+                                    <else />
+                                    <input type="radio" title="医师" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.reporter eq '技师'">
+                                    <input type="radio" title="技师" checked>
+                                    <else />
+                                    <input type="radio" title="技师" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.reporter eq '护士'">
+                                    <input type="radio" title="护士" checked>
+                                    <else />
+                                    <input type="radio" title="护士" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.reporter eq '其他'">
+                                    <input type="radio" title="其他" checked>
+                                    <else />
+                                    <input type="radio" title="其他" disabled>
+                                </if>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: auto;">报告人签字：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.sign}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meaningR fr">
+                <p class="meaningL-title mgt0">C.医疗器械情况</p>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 100px;"><span class="rquireCoin"> * </span>11.产品名称：</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control productName" value="{$info.assets}" readonly  style="background-color: #fff">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">12.商品名称：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.commodity}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">13.注册证号：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.register_num}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label adaptionLabel">14.生产企业名称：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.company}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label adaptionLabel">生产企业地址：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.company_address}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label adaptionLabel">企业联系地址：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.company_contract}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">15.产品型号：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.model}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">产品编号：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.assnum}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">产品批号：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.assets_batch_num}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">16.操作人：</label>
+                        <ul class="halfFloat">
+                            <li>
+                                <if condition="$info.operator eq '专业人员'">
+                                    <input type="radio" title="专业人员"  checked>
+                                    <else />
+                                    <input type="radio" title="专业人员" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.operator eq '非专业人员'">
+                                    <input type="radio" title="非专业人员"  checked>
+                                    <else />
+                                    <input type="radio" title="非专业人员" disabled>
+                                </if>
+                            </li>
+                            <li>
+                                <if condition="$info.operator eq '患者'">
+                                    <input type="radio" title="患者"  checked>
+                                    <else />
+                                    <input type="radio" title="患者" disabled>
+                                </if>
+                            </li>
+                        </ul>
+                        <div class="layui-input-inline" style="position: relative">
+                            <if condition="$info.operatorStatus eq 1">
+                                <input type="radio" title="其他（请注明）:"  checked>
+                                <input class="layui-input operatorRemark" value="{$info.operator}" readonly>
+                                <else />
+                                <input type="radio" title="其他（请注明）:" disabled>
+                                <input class="layui-input operatorRemark" readonly>
+                            </if>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">17.有效期至：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input"  readonly value="{$info.validity_date}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">18.生产日期：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.manufacture_date}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label shortLabel">19.停用日期：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.discontinuation_date}">
+                        </div>
+                    </div>
+                </
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: auto">20.植入日期（若植入）：</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" readonly value="{$info.implantation_date}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">21.事件发生初步原因分析：</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.cause}</textarea>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">22.事件初步处理情况：</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.situation}</textarea>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">23.事件报告状态：</p>
+                </div>
+                <div class="layui-form-item">
+                    <ul class="statusList">
+                        <li>
+                            <if condition="in_array('1',$info['report_status'])">
+                                <input type="checkbox" lay-skin="primary" title="已通知使用单位" checked disabled>
+                                <else />
+                                <input type="checkbox" lay-skin="primary" title="已通知使用单位" disabled>
+                            </if>
+                        </li>
+                        <li>
+                            <if condition="in_array('2',$info['report_status'])">
+                                <input type="checkbox" lay-skin="primary" title="已通知生产企业" checked disabled>
+                                <else />
+                                <input type="checkbox" lay-skin="primary" title="已通知生产企业" disabled>
+                            </if>
+                        </li>
+                        <li>
+                            <if condition="in_array('3',$info['report_status'])">
+                                <input type="checkbox" lay-skin="primary" title="已通知经营企业" checked disabled>
+                                <else />
+                                <input type="checkbox" lay-skin="primary" title="已通知经营企业" disabled>
+                            </if>
+                        </li>
+                        <li>
+                            <if condition="in_array('4',$info['report_status'])">
+                                <input type="checkbox" lay-skin="primary" title="已通知药监部门" checked disabled>
+                                <else />
+                                <input type="checkbox" lay-skin="primary" title="已通知药监部门" disabled>
+                            </if>
+                        </li>
+                    </ul>
+                </div>
+                <p class="meaningL-title">D.不良事件情况</p>
+                <div class="layui-form-item">
+                    <p class="longTitle">24. 省级监测技术机构评价意见（可另附附页）:</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.provincial_monitoring}</textarea>
+                </div>
+                <div class="layui-form-item">
+                    <p class="longTitle">25. 国家监测技术机构评价意见（可另附附页）:</p>
+                </div>
+                <div class="layui-input-block" style="margin-left: 0">
+                    <textarea class="layui-textarea" disabled>{$info.state_monitoring}</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/adverse/adverse/showAdverse', layui.factory('controller/adverse/adverse/showAdverse'));
+</script>

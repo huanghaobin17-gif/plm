@@ -1,0 +1,199 @@
+<title>厂商列表</title>
+<style>
+    #LAY-OfflineSuppliers-offlineSuppliersList .layui-table-cell {
+        padding: 0;
+        height: auto;
+    }
+
+    #LAY-OfflineSuppliers-offlineSuppliersList .layui-table-fixed th{
+        height:59px;
+    }
+
+
+    #LAY-OfflineSuppliers-offlineSuppliersList .table_center_td td{
+        line-height: 20px;
+    }
+
+    /*资质文件Td*/
+    #LAY-OfflineSuppliers-offlineSuppliersList .QualificationsTd {
+        text-align: center;
+        border-right: none;
+    }
+
+    /*证照名称Td*/
+
+
+    #LAY-OfflineSuppliers-offlineSuppliersList .table_center_td{
+        min-height: 40px;
+    }
+
+    #LAY-OfflineSuppliers-offlineSuppliersList .licenceTd {
+        border-bottom: 1px solid #e6e6e6;
+        width: 300px;
+        text-align: center;
+
+    }
+    #LAY-OfflineSuppliers-offlineSuppliersList .certificate_table tbody tr:last-child .licenceTd,
+    #LAY-OfflineSuppliers-offlineSuppliersList .table_center_td tbody tr:last-child .licenceTd{
+        border-bottom: none;
+    }
+
+    /*已提交th*/
+    #LAY-OfflineSuppliers-offlineSuppliersList .situationTd {
+        width: 80px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    #LAY-OfflineSuppliers-offlineSuppliersList .certificate_table tr:last-child .situationTd,
+    #LAY-OfflineSuppliers-offlineSuppliersList .table_center_td tr:last-child .situationTd{
+        border-bottom: none;
+    }
+
+    /*有效期至th*/
+    #LAY-OfflineSuppliers-offlineSuppliersList .termTd {
+        width: 130px;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+        border-right: none;
+    }
+    #LAY-OfflineSuppliers-offlineSuppliersList .certificate_table tr:last-child .termTd,
+    #LAY-OfflineSuppliers-offlineSuppliersList .table_center_td tr:last-child .termTd{
+        border-bottom: none;
+    }
+    #oldtype .layui-form-label{
+        height: auto !important;
+    }
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+</script>
+<div class="layui-fluid" id="LAY-OfflineSuppliers-offlineSuppliersList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">厂商名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="auppliersListSupName" placeholder="请输入厂商名称" name="auppliersListSupName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">厂商类型：</label>
+                                <div class="layui-input-inline">
+                                    <select name="suppliers_type">
+                                        <option value="">全部</option>
+                                        <option value="1">供应商</option>
+                                        <option value="2">生产厂商</option>
+                                        <option value="3">维修商</option>
+                                        <option value="4">维保商</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="offlineSuppliersListSearch" lay-filter="offlineSuppliersListSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 厂商列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="offlineSuppliersList" lay-filter="offlineSuppliersData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-OfflineSuppliers-OfflineSuppliers-offlineSuppliersListbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','addOfflineSupplier')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addSuppliers" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('OfflineSuppliers','OfflineSuppliers','editOfflineSupplier')):?>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="editOfflineSupplier" data-url="{$menuData['actionurl']}">
+            批量修改厂商类型
+        </button>
+        <?php endif?> 
+    </div>
+</script>
+<script>
+    var offlineSuppliersListUrl = '{$offlineSuppliersListUrl}';
+    layui.use('offlineSuppliers/offlineSuppliers/offlineSuppliersList', layui.factory('offlineSuppliers/offlineSuppliers/offlineSuppliersList'));
+</script>
+<div id="oldtype" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择厂商类型</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                <label class="layui-form-label" style="height: auto"><span class="rquireCoin">*</span> 厂商类型：</label>
+                <div class="layui-input-inline">
+                    <empty name="otherPage">
+                        <select name="suppliers_type" xm-select="suppliers_type" xm-select-search="" lay-verify="required">
+                            <option value="1">供应商</option>
+                            <option value="2">生产商</option>
+                            <option value="3">维修商</option>
+                            <option value="4">维保商</option>
+                        </select>
+                        <else />
+                        <switch name="otherPage" >
+                            <case value="factory">
+                                <input type="text" class="layui-input" readonly value="生产商">
+                                <input type="hidden" class="layui-input" name="suppliers_type" value="2">
+                            </case>
+                            <case value="supplier">
+                                <input type="text" class="layui-input" readonly value="供应商">
+                                <input type="hidden" class="layui-input" name="suppliers_type" value="1">
+                            </case>
+                            <case value="repair">
+                                <input type="text" class="layui-input" readonly value="维修商">
+                                <input type="hidden" class="layui-input" name="suppliers_type" value="3">
+                            </case>
+                        </switch>
+                    </empty>
+                </div>
+            </div>
+                </div>
+                <input type="hidden" name="olsids" id="olsids" value="">
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveold">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

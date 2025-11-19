@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:head"/>
+<body>
+<include file="Public:top"/>
+<include file="Public:left"/>
+<style>
+    .layui-form-item{margin-bottom: 10px;!important;}
+    .layui-form-item .layui-inline{margin-right: 0 ;!important;}
+    .layui-form-item .layui-input-inline{margin-right: 0 ;!important;}
+    .layui-form-label{width: 86px;}
+    .toolbar-move{margin: 0 0 10px 0;}
+    .cusquote1 {
+        padding: 5px !important;
+        width: 100%;
+        margin: 0 15px;
+        font-size: 14px;
+        color: red;
+    }
+    .table thead th{text-align: center}
+    #testNoBtn{width:190px;padding-left:10px;}
+    #testNoBtn1{width:190px;padding-left:10px;height: 38px;}
+    #testNoBtn2{width:190px;padding-left:10px;height: 38px;}
+    #testNoBtn3{width:190px;padding-left:10px;height: 38px;}
+</style>
+<div class="right">
+    <div class="content">
+        <div class="sea_bg">
+            <p class="sea_text">&nbsp;&nbsp;资产管理&nbsp;&nbsp;>&nbsp;&nbsp;资产查询&nbsp;&nbsp;>&nbsp;&nbsp;主设备查询&nbsp;&nbsp;>&nbsp;&nbsp;主设备列表&nbsp;&nbsp;主设备搜索▼</p>
+        </div>
+        <form class="layui-form">
+            <div id="toolbar-search">
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备名称</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="testNoBtn" placeholder="请输入设备名称" name="assName">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">科室名称</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="testNoBtn1" placeholder="请输入科室名称" name="assDepart">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备分类</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="testNoBtn2" placeholder="请输入设备分类" name="assCat">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备编号</label>
+                        <div class="layui-input-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="testNoBtn3" placeholder="请输入设备编号" name="assNum">
+                                <div class="input-group-btn">
+                                    <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label cuslabelwidth">录入日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="adddate" id="adddate" value="" placeholder="请选择录入日期"
+                                   autocomplete="off" style="cursor: pointer;" class="layui-input"
+                                   onclick="layui.laydate({elem: this})">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label cuslabelwidth">录入人员</label>
+                        <div class="layui-input-inline">
+                            <select name="adduser" lay-search="" >
+                                <option value="">请选择录入人员</option>
+                                <volist name="users" id="vo">
+                                    <option value="{$vo.username}">{$vo.username}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline" style="margin-top:12px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="eventquery" id="eventquery"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="toolbar" style="margin-top:25px; ">
+                <div class="layui-form-item" style="width: 90%;">
+                    <?php if($menuData = get_menu('Assets','Storage','batchEditAssets')):?>
+                    <div class="layui-btn-group" style="margin-left: 15px;">
+                        <button class="layui-btn" id="upload" data-url="{$menuData['actionurl']}"><i class="layui-icon">&#xe621;</i> 上传文件</button>
+                    </div>
+                    <?php endif?>
+                    <div class="layui-inline" style="margin-left: 15px;">
+                        <select class="form-control" lay-filter="export">
+                            <option value="basic">导出当页数据</option>
+                            <option value="all">导出全部数据</option>
+                            <option value="selected">导出选中数据</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+        <blockquote class="layui-elem-quote cusquote1" style="width: auto;">
+            请选择要修改的字段进行导出excel操作，文件上传前请另存为xlsx格式文件
+        </blockquote>
+        <div class="float_l listTitle">
+            <p class="fl fcfff">&nbsp;&nbsp;设备列表▼</p>
+        </div>
+        <div class="contain">
+            <div></div>
+            <table id="table"></table>
+        </div>
+    </div>
+    <include file="Public:footer"/>
+</div>
+<div class="clear"></div>
+</body>
+</html>
+
+<script src="__PUBLIC__/js/assets/Storage/batchEditAssets.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    $(function () {
+        $('#toolbar').find('.select').change(function () {
+            $('#table').bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+</script>

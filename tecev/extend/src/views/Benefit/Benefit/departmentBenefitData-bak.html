@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Benefit-Benefit-departmentBenefitData .conData td,#LAY-Benefit-Benefit-departmentBenefitData .conData th{
+        text-align: center;
+    }
+</style>
+<body>
+<div class="containDiv" id="LAY-Benefit-Benefit-departmentBenefitData" style="margin-bottom: 40px;">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">科室基础信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tr>
+                <th>科室名称：</th>
+                <td>{$depart.department}</td>
+                <th>科室编号：</th>
+                <td>{$depart.departnum}</td>
+            </tr>
+            <tr>
+                <th>设备台数：</th>
+                <td>{$depart.assetssum}</td>
+                <th>设备总值：</th>
+                <td>{$depart.assetsprice}</td>
+            </tr>
+        </table>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>科室收益状况</legend>
+    </fieldset>
+    <div class="layui-form-item" style="margin-bottom: 0">
+        <input type="hidden" value="{$depart.departid}" name="departid">
+        <div class="layui-inline">
+            <label class="layui-form-label">统计年份：</label>
+            <div class="layui-input-inline" style="width: 83px;">
+                <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" name="yearDate"
+                       id="departmentBenefitDataYearDate">
+            </div>
+        </div>
+        <div class="layui-inline" style="margin-left: 10px;">
+            <button class="layui-btn" type="button" lay-submit="" lay-filter="departmentBenefitDataLineSearch" id="departmentBenefitDataLineSearch">
+                <i class="layui-icon">&#xe615;</i> 搜 索
+            </button>
+        </div>
+    </div>
+    <div id="lineMain" style="min-height:350px;min-width: 1120px;"></div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>科室收支统计</legend>
+    </fieldset>
+    <table class="layui-table conData" lay-size="sm">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>收入</th>
+            <th>折旧费</th>
+            <th>材料费</th>
+            <th>维保费</th>
+            <th>管理费</th>
+            <th>操作人员数量</th>
+            <th>综合费</th>
+            <th>利息支出</th>
+            <th>支出合计</th>
+            <th>诊疗次数</th>
+            <th>维修时长(h)</th>
+            <th>使用率</th>
+            <!--<th>阳性率</th>-->
+            <th>结余</th>
+            <th>结余率</th>
+        </tr>
+        </thead>
+        <tbody id="table_list" style="display: none">
+        </tbody>
+        <tbody id="notData">
+        <td colspan="16">加载中</td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/echarts.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('controller/benefit/benefit/departmentBenefitData', layui.factory('controller/benefit/benefit/departmentBenefitData'));
+</script>

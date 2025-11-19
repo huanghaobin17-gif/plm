@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <script src="__PUBLIC__/js/echarts.js"></script>
+    <style>
+        .layui-table tr th {
+            text-align: center !important;
+        }
+        .conData tr td{
+            text-align: center;
+        }
+        .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+        .layui-table{ margin-top: 0px; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="reportHeader">
+        <div class="reportTitle">{$reportTitle}</div>
+        <div class="reportConditions">{$reportConditions}</div>
+        <input type="hidden" name="assid" value="{$assid}"/>
+    </div>
+    <table class="layui-table">
+        <colgroup>
+            <col width="60">
+            <col >
+            <col width="150">
+            <col width="120">
+            <col width="200">
+            <col width="100">
+            <col width="100">
+            <col width="150">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>计划名称</th>
+            <th>计划编号</th>
+            <th>期次 / 总期次</th>
+            <th>计划执行日期</th>
+            <th>执行人</th>
+            <th>当前状态</th>
+            <th>完成时间</th>
+        </tr>
+        </thead>
+        <tbody class="conData">
+        <volist name="data" id="vo">
+            <tr>
+                <td>{$key+1}</td>
+                <td>{$vo.patrol_name}</td>
+                <td>{$vo.patrol_num}</td>
+                <td>{$vo.period} / {$vo.total_cycle}</td>
+                <td>{$vo.cycle_start_date} 至 {$vo.cycle_end_date}</td>
+                <td>{$vo.execute_user}</td>
+                <if condition="$vo.status eq 0">
+                    <td style="color:green;">{$vo.statusName}</td>
+                    <elseif condition="$vo.status eq 1"/>
+                    <td style="color:#00a6c8;">{$vo.statusName}</td>
+                    <elseif condition="$vo.status eq 2"/>
+                    <td style="color:red;">{$vo.statusName}</td>
+                    <else />
+                    <td>--</td>
+                </if>
+                <td>{$vo.overDate}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

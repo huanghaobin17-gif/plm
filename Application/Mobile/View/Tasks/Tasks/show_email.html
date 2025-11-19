@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件内容</title>
+    <style>
+        .em{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="em">
+    邮件主题：<br/>
+    {$info.subject}
+    <hr/>
+    邮件内容：<br/>
+    <?php echo '<pre>';?>
+    {$info.content}
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<style>
+    #LAY-Assets-Transfer-getList .layui-form-item .layui-input{width: 190px;}
+</style>
+<?php if($menuData = get_menu_name('Assets','Transfer','getList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getList = "{$getList}";
+</script>
+<div class="layui-fluid" id="LAY-Assets-Transfer-getList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getListAssets"  placeholder="请输入设备名称" name="getListAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getListDepartment" placeholder="请输入科室名称" name="getListDepartment">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getListCategory"  placeholder="请输入设备分类" name="getListCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getListAssetsNum" placeholder="请输入设备编号" name="getListAssetsNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">录入人员：</label>-->
+                            <!--<div class="layui-input-inline">-->
+                            <!--<select name="getListAddUser"  lay-search="" >-->
+                            <!--<option value="">请选择录入人员</option>-->
+                            <!--<volist name="users" id="vo">-->
+                            <!--<option value="{$vo.username}">{$vo.username}</option>-->
+                            <!--</volist>-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">录入日期：</label>-->
+                            <!--<div class="layui-input-inline">-->
+                            <!--<input type="text" name="getListAddDate" readonly="" id="getListAddDate" value=""-->
+                            <!--placeholder="请选择录入日期" autocomplete="off" style="cursor: pointer;"-->
+                            <!--class="layui-input">-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="layui-inline">
+                                <label class="layui-form-label">原编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getListAssetsOrnum" placeholder="请输入设备原编号" name="getListAssetsOrnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline" >
+                                    <button class="layui-btn"  lay-submit="" lay-filter="getListSearch" ><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="getList" lay-filter="getList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/transfer/getList', layui.factory('assets/transfer/getList'));
+</script>
+<script type="text/html" id="LAY-Assets-Transfer-getListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Assets','Transfer','batchAdd')):?>
+        <button lay-event="batchTransfer" class="layui-btn layui-btn-sm" data-url="{$menuData['actionurl']}" >
+            <i class="layui-icon">&#xe642;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>
+
+
+

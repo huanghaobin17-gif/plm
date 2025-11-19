@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>设备详情及保养项目点内容表</title>
+<link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+<style>
+.table-striped .thead td{ padding-left:10px;}
+textarea{ width:280px; height:60px;}
+.input_btn{ margin:10px 0px;}
+</style>
+</head>
+<body>
+<div class="assets_list fl">
+	<table width="100%" cellpadding="2" cellspacing="1" class="table-striped">
+    	<thead class="thead">
+        	<tr>
+            	<td align="right" width="16%" class="fb">设备编号：</td>
+                <td width="35%" class="bcf"><?php echo $assets[$count][assnum] ?></td>
+                <td align="right" width="18%" class="fb">设备名称：</td>
+                <td width="35%" class="bcf"><?php echo $assets[$count][assets] ?></td>
+            </tr>
+            <tr>
+            	<td align="right" class="fb">规格/型号：</td>
+                <td class="bcf"><?php echo $assets[$count][model] ?></td>
+                <td align="right" class="fb">安装使用时间：</td>
+                <td class="bcf"><?php if($assets[$count][opendate]) echo date('Y-m-d',$assets[$count][opendate]); ?></td>
+            </tr>
+            <tr>
+            	<td align="right" class="fb">科室编号：</td>
+                <td class="bcf"><?php echo $assets[$count][departnum] ?></td>
+            	<td align="right" class="fb">科室：</td>
+                <td class="bcf"><?php echo $assets[$count][departid] ?></td>
+            </tr>
+            <tr>
+            	<td align="right" class="fb">当前计划保养量：</td>
+                <td class="bcf"><font class="red"><?php echo $count+1 ?></font>\<?php echo count($assets) ?></td>
+                <td align="right" class="fb">上一次保养人\时间：</td>
+                <td class="bcf"><?php $a=$str[$count][0].",".$str[$count][1]; echo $a; ?><font class="f12 pl10"><?php echo $date[$count] ?></font></td>
+            </tr>
+        </thead>
+        </table>
+        </div>
+        <form method="post" action="__SELF__">
+        <div class="assets_list fl">
+        	<table width="100%" cellpadding="2" cellspacing="1" class="table-striped">
+        	<tbody>
+                <tr>
+                    <td align="center" width="40%" class="fb bc3 fcfff">点内容项</td>
+                    <td align="center" width="30%" class="fb bc3 fcfff">状态</td>
+                    <td align="center" width="30%" class="fb bc3 fcfff">异常点描述</td>
+                </tr>
+                <?php foreach($arrpoints[$count] as $k => $v){ ?>
+                <tr>
+                	<td align="center"><?php echo $show[$count][$k][status]; ?><?php echo $v[name] ?><br/><font class="f12"><?php echo $v[parameter] ?></font></td>
+                    <td align="center">
+                        <?php if($show[$count][$k][status]!='1'){ ?>
+                        <label><input type="radio" name="data[<?php echo $k; ?>][status]" value="0" checked="checked" />正常</label>、
+                    	<label><input type="radio" name="data[<?php echo $k; ?>][status]" value="1"   />不正常</label>
+                        <?php }else{ ?>
+                        <label><input type="radio" name="data[<?php echo $k; ?>][status]" value="0" />正常</label>、
+                        <label><input type="radio" name="data[<?php echo $k; ?>][status]" value="1" checked="checked" />不正常</label>
+                        <?php } ?>
+                    </td>
+                    <td align="center">
+                    	<textarea name="data[<?php echo $k; ?>][remark]"><?php echo $show[$count][$k][remark]; ?></textarea>
+                    </td>
+                </tr>
+                <?php } ?>
+                <?php if($flag==1){ ?>
+                <tr>
+                <td style="display:none"><input type="text" name="count" value="<?php echo $count; ?>"/></td>
+                	<td colspan="3" style="display:none" align="center" style="background:#fff"><input type="submit" class="input_btn"  value="确定无误并继续下一台设备" /></td>
+                </tr>
+                <?php }else{ ?>
+                <td style="display:none"><input type="text" name="count" value="<?php echo $count; ?>"/></td>
+                <td colspan="3" align="center" style="background:#fff"><input type="submit" class="input_btn"  value="确定无误并继续下一台设备" /></td>
+                </tr>
+            <?php } ?>
+                </tbody>  
+    </table>
+    </div>
+     </form>
+<div class="assets_list fl">
+<!--当前巡查任务设备列表------------------------------------------start-->
+<table width="100%" cellpadding="2" cellspacing="1" class="table-striped">
+           <tbody>
+             <thead class="f16">
+                  <td align="center" width="1.5%"></td>
+                  <td align="center" width="7.2%">设备编号</td>
+                  <td align="center" width="15.5%">设备名称</td>
+                  <td align="center" width="12.8%">设备分类</td>
+                  <td align="center" width="8.6%">规格/型号</td>
+                  <td align="center" width="8%">使用科室</td>
+                  <td align="center" width="4%">巡查项</td>
+                  <td align="center" width="3%">操作</td>
+              </thead>
+              <?php foreach($assets as $k => $v){ ?>
+              <tr>
+                  <?php if($status[$k]==1){ ?>
+                  <td align="center" ><font style="color: red">√</font></td>
+                  <?php }else{ ?>
+                    <td align="center" ></td>
+                  <?php } ?>
+              	<td align="center"><?php echo $v[assnum] ?></td>
+                <td align="center"><?php echo $v[assets] ?></td>
+                <td align="center"><?php echo $v[catid] ?></td>
+                <td align="center"><?php echo $v[model] ?></td>
+                <td align="center"><?php echo $v[departid] ?></td>
+                <td align="center"><?php echo count($arrpoints[$k]).项  ?></td>
+                <td align="center"><a href="<?PHP $url='__SELF__'; echo substr($url,0,strrpos($url,'.')).'/ass/'.$k.'.html'; ?>" class="link">保养</a></td>
+              </tr>
+              <?php } ?>
+             </tbody> 
+       </table>
+       </div>
+        <div>
+        <form method="get" action="__SELF__">
+        <table width="100%">
+            <?php if($flag==0){ ?>
+               <tr>
+                <td style="display:none" ><input type="text" name="status" value="1"/></td>
+                <td align="center" style="display: none" style="background:#fff"><input type="submit" class="input_btn"  value="确定无误并提交" /></td>
+              </tr>
+            <?php }else{ ?>
+                <tr>
+                    <td style="display:none" ><input type="text" name="status" value="1"/></td>
+                    <td align="center"  style="background:#fff"><input type="submit" class="input_btn"  value="确定无误并提交" /></td>
+                </tr>
+            <?php } ?>
+         </table>
+         </form>
+        </div>
+</body>
+</html>

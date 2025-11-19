@@ -1,0 +1,80 @@
+<?php if (!defined('THINK_PATH')) exit();?><title>设备收支录入</title>
+<div class="layui-fluid" id="LAY-Benefit-Benefit-assetsBenefitList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="assetsBenefitListAssets" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <select name="assetsDep" xm-select="assetsBenefitListDepartment" xm-select-search="">
+                                        <option value="">请选择科室名称</option>
+                                        <?php if(is_array($departmentInfo)): $i = 0; $__LIST__ = $departmentInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">录入月份：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input"  style="cursor: pointer;" readonly name="assetsBenefitListDate" id="assetsBenefitListDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="assetsBenefitListSearch" id="assetsBenefitListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="assetsBenefitListReset">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="assetsBenefitList" lay-filter="assetsBenefitData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('benefit/benefit/assetsBenefitList', layui.factory('benefit/benefit/assetsBenefitList'));
+</script>
+<script type="text/html" id="LAY-Benefit-Benefit-assetsBenefitListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Benefit','Benefit','batchAddBenefit')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchAddBenefit" data-url="<?php echo ($menuData['actionurl']); ?>"><i class="layui-icon">&#xe67c;</i><?php echo ($menuData['actionname']); ?></button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Benefit','Benefit','exportBenefit')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="exportBenefit" data-url="<?php echo ($menuData['actionurl']); ?>"><i class="layui-icon iconfont icon-download"></i><?php echo ($menuData['actionname']); ?></button>
+        <?php endif?>
+    </div>
+</script>

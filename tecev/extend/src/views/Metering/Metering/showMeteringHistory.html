@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设备计量历史记录</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .custable th{ text-align: right!important;}
+        .his th{ text-align: center !important;}
+        .pushPartTbody td{ text-align: center !important;}
+        .layui-unselect, .layui-form-select{ width: 200px!important;}
+    </style>
+</head>
+<body>
+    <div class="containDiv">
+        <blockquote class="layui-elem-quote">计划基本信息</blockquote>
+        <table class="layui-table custable" lay-size="sm" lay-even="" style="margin-top: 0!important;">
+            <colgroup>
+                <col width="15%">
+                <col width="35%">
+                <col width="15%">
+                <col width="35%">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th>计划编号：</th>
+                <td colspan="3">{$data.plan_num}</td>
+            </tr>
+            <tr>
+                <th>设备编号：</th>
+                <td>{$data.assnum}</td>
+                <th>设备名称：</th>
+                <td>{$data.assets}</td>
+            </tr>
+            <tr>
+                <th>规格 / 型号：</th>
+                <td>{$data.model}</td>
+                <th>单位：</th>
+                <td>{$data.unit}</td>
+            </tr>
+            <tr>
+                <th>生产厂商：</th>
+                <td>{$data.factory}</td>
+                <th>产品序列号：</th>
+                <td>{$data.productid}</td>
+            </tr>
+            <tr>
+                <th>所属科室：</th>
+                <td>{$data.department}</td>
+                <th>设备数量：</th>
+                <td>{$data.asset_count}</td>
+            </tr>
+            <tr>
+                <th>计量分类：</th>
+                <td>{$data.mcategory}</td>
+                <th>计量周期(月)：</th>
+                <td>{$data.cycle}</td>
+            </tr>
+            <tr>
+                <th>检定方式：</th>
+                <td>{$data.test_way_name}</td>
+                <th>计量负责人：</th>
+                <td>{$data.respo_user}</td>
+            </tr>
+            <tr>
+                <th>提前提醒天数：</th>
+                <td>{$data.remind_day}</td>
+                <th>制定日期：</th>
+                <td>{$data.adddate}</td>
+            </tr>
+            <tr>
+                <th>计划制定人：</th>
+                <td>{$data.adduser}</td>
+                <th>计划状态：</th>
+                <td>{$data.statusName}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="3">{$data.remark}</td>
+            </tr>
+            </tbody>
+        </table>
+        <blockquote class="layui-elem-quote" style="margin-bottom: 10px;">设备计量历史记录</blockquote>
+        <table class="layui-table his">
+            <colgroup>
+                <col width="60">
+                <col width="110">
+                <col width="160">
+                <col width="100">
+                <col>
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="120">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>检定日期</th>
+                <th>证书编号</th>
+                <th>检定结果</th>
+                <th>检定机构</th>
+                <th>计量费用</th>
+                <th>检定人</th>
+                <th>审核人</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="pushPartTbody">
+            <if condition="$historyData">
+                <volist name="historyData" id="v" key="k">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$v.this_date}</td>
+                        <td>{$v.report_num}</td>
+                        <if condition="$v.result eq 1">
+                            <td>合格</td>
+                            <else />
+                            <td>不合格</td>
+                        </if>
+                        <td>{$v.company}</td>
+                        <td>{$v.money}</td>
+                        <td>{$v.test_person}</td>
+                        <td>{$v.auditor}</td>
+                        <td>
+                            <button class="layui-btn layui-btn-xs layui-btn-normal" data-mrid="{$v.mrid}" data-mpid="{$v.mpid}" onclick="showMeteringResult(this)" style="">详情</button>
+                            <button class="layui-btn layui-btn-xs layui-bg-green" data-mrid="{$v.mrid}" data-mpid="{$v.mpid}" onclick="editMeteringResult(this)" style="">修改</button>
+                        </td>
+                    </tr>
+                </volist>
+                <else />
+                <tr class="emptyJoinPartsTr">
+                    <td colspan="9" style="text-align: center">暂无数据</td>
+                </tr>
+            </if>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    function showMeteringResult(e){
+        var mpid = e.getAttribute("data-mpid");
+        var mrid = e.getAttribute("data-mrid");
+        var assets = "{$data.assets}";
+        top.layer.open({
+            type: 2,
+            anim: 2,
+            title: '【' + assets + '】计量检测',
+            scrollbar: false,
+            offset: 'r',//弹窗位置固定在右边
+            area: ['980px', '100%'],
+            closeBtn: 1,
+            content: [admin_name+'/Metering/setMeteringResult' + '?mpid=' + mpid + '&mrid=' + mrid + '&type=showMeteringResult'],
+        });
+    }
+
+    function editMeteringResult(e){
+        var mpid = e.getAttribute("data-mpid");
+        var mrid = e.getAttribute("data-mrid");
+        var assets = "{$data.assets}";
+        top.layer.open({
+            type: 2,
+            anim: 2,
+            title: '修改【' + assets + '】计量检测',
+            scrollbar: false,
+            offset: 'r',//弹窗位置固定在右边
+            area: ['980px', '100%'],
+            closeBtn: 1,
+            content: [admin_name+'/Metering/setMeteringResult' + '?mpid=' + mpid + '&mrid=' + mrid + '&type=editMeteringResult'],
+            end: function () {
+                location.reload();
+            },
+        });
+    }
+</script>
+<script>
+
+</script>

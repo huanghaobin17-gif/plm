@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <title>Title</title>
+    <style>
+        .delAssets{
+            float: right;
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            档案盒信息
+        </div>
+        <table class="layui-table read-table" lay-size="sm" lay-even="">
+            <colgroup>
+                <col width="100">
+                <col>
+            </colgroup>
+            <tbdoy>
+                <tr>
+                    <th class="text-right">档案盒名称：</th>
+                    <td >{$boxInfo.box_name}</td>
+                    <th class="text-right">档案盒编号：</th>
+                    <td >{$boxInfo.box_num}</td>
+                    <th class="text-right">文件时间段：</th>
+                    <td>{$boxInfo.date_span}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">文件数量：</th>
+                    <td>{$boxInfo.file_nums}</td>
+                    <th class="text-right">即将过期数量({$expire_days}天内)：</th>
+                    <td>{$boxInfo.toexpire_nums}</td>
+                    <th class="text-right">覆盖设备数量：</th>
+                    <td>{$boxInfo.assets_nums}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">覆盖科室数量：</th>
+                    <td>{$boxInfo.depart_nums}</td>
+                    <th class="text-right">创建人：</th>
+                    <td>{$boxInfo.add_user}</td>
+                    <th class="text-right">创建时间：</th>
+                    <td>{$boxInfo.add_time}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">备注：</th>
+                    <td colspan="5">{$boxInfo.remark}</td>
+                </tr>
+            </tbdoy>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+            <legend>档案盒设备&文件信息</legend>
+        </fieldset>
+        <div class="layui-collapse" lay-filter="test">
+            <volist name="filesInfo" id="vo">
+                <div class="layui-colla-item">
+                    <?php if($menuData = get_menu('Archives','Box','editBox')):?>
+                    <input type="hidden" name="id" value="{$vo.assid}"/>
+                    <input type="hidden" name="url" value="{$menuData['actionurl']}"/>
+                    <h2 class="layui-colla-title">{$vo.assets}（{$vo.assnum} | {$vo.department}）<span class="delAssets">移除该设备</span></h2>
+                    <?php else:?>
+                    <h2 class="layui-colla-title">{$vo.assets}（{$vo.assnum} | {$vo.department}）</h2>
+                    <?php endif?>
+
+                    <div class="layui-colla-content">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="6%">
+                                <col width="30%">
+                                <col width="12%">
+                                <col width="12%">
+                                <col width="10%">
+                                <col width="18%">
+                                <col width="13%">
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>文件名称</th>
+                                <th>档案日期</th>
+                                <th>过期日期</th>
+                                <th>上传人</th>
+                                <th>上传时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo.files" id="dd" key="k" empty="$empty">
+                                <tr>
+                                    <td>{$k}</td>
+                                    <td>{$dd.file_name}</td>
+                                    <td>{$dd.archive_time}</td>
+                                    <td>{$dd.expire_time}</td>
+                                    <td>{$dd.add_user}</td>
+                                    <td>{$dd.add_time}</td>
+                                    <td>
+                                        <div class="layui-btn-group">
+                                            <?php $file_url=urlencode($dd['file_url']); ?>
+                                            <button type="button" data-path="{$file_url}" data-name="{$dd['file_name']}" class="layui-btn layui-btn-xs layui-btn-normal showFile">预览</button>
+                                            <button type="button" data-path="{$file_url}" data-name="{$dd['file_name']}" class="layui-btn layui-btn-xs downFile">下载</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/archives/box/showBox', layui.factory('controller/archives/box/showBox'));
+</script>

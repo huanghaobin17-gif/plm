@@ -1,0 +1,228 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Repair','RepairParts','partsOutWare')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .red{color: #FF5722}
+    .green{color: #85AB70}
+    .assetsHideDetail{display: none;}
+    .moreButton{text-align: center;height: 2rem;line-height: 2rem;}
+    .moreButton a{color: #2a7ae2;}
+    .layui-form .layui-form-item{margin: 1rem 0;}
+    input[type=number]{width: 30%;margin-left: 10px;display: inline;}
+    .layui-table thead tr th{text-align: center;}
+    .layui-table tr td{width: auto;}
+    .emptyDiv {
+        display: none;
+        margin-bottom: 1.25rem;
+        position: relative;
+        z-index: 10;
+    }
+    .text_center{
+        text-align: center !important;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <div class="emptyDiv"></div>
+    <div class="layui-card moveAnimatedDiv" style="margin-top: 0;">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">设备基本信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body" style="padding: 0 0 0.625rem 0;">
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>维修单号</th>
+                    <td>{$repArr.repnum}</td>
+                </tr>
+                <tr>
+                    <th>报修科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>报修人</th>
+                    <td>{$repArr.applicant}</td>
+                </tr>
+                <tr>
+                    <th>报修时间</th>
+                    <td>{$repArr.applicant_time}</td>
+                </tr>
+                <tr>
+                    <th>接单时间</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr>
+                    <th>维修工程师</th>
+                    <td>{$repArr.response}</td>
+                </tr>
+                <tr>
+                    <th>故障问题</th>
+                    <td><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr>
+                    <th>故障描述</th>
+                    <td>{$repArr.breakdown}</td>
+                </tr>
+                <tr>
+                    <th>检修备注</th>
+                    <td>{$repArr.repair_remark}</td>
+                </tr>
+                <tr>
+                    <th>维修性质</th>
+                    <td>{$repArr.repTypeName}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="layui-card moveAnimatedDiv" style="margin: 1.25rem 0;">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">申请配件信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <div class="layui-card-body" style="padding: 0 0 0.625rem 0;">
+            <table class="layui-table" lay-even>
+                <thead>
+                <tr>
+                    <th style="width: 34%;">配件名称</th>
+                    <th style="width: 30%;">规格型号</th>
+                    <th style="width: 18%;">数量</th>
+                    <th style="width: 18%;">库存</th>
+                </thead>
+                <tbody>
+                <php>$can_submit = 1</php>
+                <volist name="parts" id="vo">
+                    <tr>
+                        <td class="text_center">{$vo.parts}</td>
+                        <td class="text_center">{$vo.part_model}</td>
+                        <td class="text_center">{$vo.part_num}</td>
+                        <if condition="$vo.stock_not_enough eq 1">
+                            <php>$can_submit = 0</php>
+                            <td class="text_center" style="color: red;">{$vo.stock_num}</td>
+                            <else/>
+                            <td class="text_center">{$vo.stock_num}</td>
+                        </if>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <table class="layui-table" lay-size="sm" style="display: none">
+        <colgroup>
+            <col>
+            <col>
+            <!--<col>-->
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>配件名称</th>
+            <th>配件型号</th>
+            <!--<th>申请出库数量</th>-->
+            <th><span class="rquireCoin"> * </span>出库数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="apply" id="vo">
+            <tr class="parts_tr">
+                <td><input type="hidden" name="parts" value="{$vo.parts}">{$vo.parts}</td>
+                <td><input type="hidden" name="parts_model" value="{$vo.parts_model}">{$vo.parts_model}</td>
+                <td><input class="layui-input" type="hidden" name="apply_sum" value="{$vo.sum}"><input type="hidden" name="sum" value="{$vo.sum}">{$vo.sum}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+
+    <!--审批流程-->
+    <notempty name="repArr.app_user_status">
+        <div class="layui-card partsTable" style="min-height: 120px;height: 175px;">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">审批流程&进度</h2>
+                <div class="bl1px"></div>
+            </div>
+            <div class="layui-card-body" style="padding: 10px 15px;">
+                {$repArr.app_user_status}
+            </div>
+        </div>
+    </notempty>
+
+    <notempty name="is_display">
+    <div class="formDiv">
+        <form class="layui-form">
+            <input type="hidden" name="repid" value="{$repArr.repid}"/>
+            <input type="hidden" name="outwareid" value="{$outware.outwareid}">
+            <div class="layui-card mgt0">
+                <div class="layui-card-header">
+                    <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                    <h2 class="formTitle">配件出库表单</h2>
+                    <a class="upFormButton">表单置顶<i class="layui-icon layui-icon-zarrow-up-l"></i></a>
+                    <a class="downFormButton">表单置底<i class="layui-icon layui-icon-zarrow-down-l"></i></a>
+                </div>
+                <div class="layui-card-body">
+                    <!--<div class="layui-form-item">-->
+                        <!--<label class="layui-form-label">配件数量合计：</label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<input type="number" autocomplete="off" class="layui-input" readonly>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="layui-form-item">-->
+                        <!--<label class="layui-form-label">配件费用合计：</label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<input type="number" autocomplete="off" class="layui-input" readonly>元-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label">出库日期：</label>
+                        <div class="layui-input-block">
+                            <input style="padding-top: 0.55rem;" name="addtime" class="weui-input" id="partsOutWareApplyAddtime" type="text" placeholder="请点击此处选择时间" readonly="">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item mgb2rem">
+                        <label class="layui-form-label">领用人：</label>
+                        <div style="line-height: 38px;">
+                            <input type="hidden" name="leader" value="{$outware.leader}" readonly>
+                            {$outware.leader}
+                        </div>
+                    </div>
+
+                    <if condition="$can_submit eq 1">
+                        <div class="layui-form-item">
+                            <button class="layui-btn enterButton" style="width: 100%;" lay-submit lay-filter="save">确认并出库</button>
+                        </div>
+                        <else/>
+                        <div class="layui-form-item">
+                            <a href="/M/RepairParts/partStockList.html" class="layui-btn layui-btn-warm enterButton" style="width: 100%;">库存不足请先入库</a>
+                        </div>
+                    </if>
+                </div>
+            </div>
+        </form>
+    </div>
+</notempty>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script>
+    var partsOutWareUrl = "{$partsOutWareUrl}";
+</script>
+<script src="__PUBLIC__/mobile/js/repair/repairParts/partsOutWare.js?v={:mt_rand(1,54561)}"></script>

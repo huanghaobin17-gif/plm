@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-form-label{width: 100px;padding-left: 0;}
+    .layui-word-aux{width: 430px;margin-left: 20px;}
+    .layui-input-block{margin-left: 120px;}
+</style>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加科室表单</legend>
+    </fieldset>
+    <form class="layui-form">
+        <input type="hidden" name="parentid" value="{$parentid}">
+        <if condition="$parentid neq 0">
+            <div class="layui-form-item">
+                <div class="layui-block">
+                    <label class="layui-form-label">主科室名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" readonly value="{$parentDepartment.department}" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">主科室编号：{$parentDepartment.departnum}</div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-block">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 科室编号：</label>
+                    <div class="layui-input-block">
+                        <input type="text"  value="{$maxdepartNum}" name="departnum" placeholder="请输入科室编号" lay-verify="required|number" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">已有{$tips}科室编号：<span class="changeDepartNum">{$departNum}</span></div>
+                </div>
+            </div>
+        <else />
+            <div class="layui-form-item">
+                <div class="layui-block">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span> 科室编号：</label>
+                    <div class="layui-input-block">
+                        <input type="text"  value="" name="departnum" placeholder="请输入科室编号" lay-verify="required|number" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">已有{$tips}科室编号：<span class="changeDepartNum">{$departNum}</span></div>
+                </div>
+            </div>
+        </if>
+
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 科室名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="department" value="" lay-verify="required|title" autocomplete="off" placeholder="请输入科室名称" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 所在位置：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" value="" lay-verify="required|title" autocomplete="off" placeholder="请输入科室所在位置" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 科室电话：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="departtel" value="" autocomplete="off" lay-verify="required|tel" placeholder="请输入科室电话" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label">科室负责人：</label>
+                <div class="layui-input-block">
+                    <select name="departrespon">
+                        <option value=""></option>
+                        <volist name="user" id="v">
+                            <option value="{$v.username}">{$v.username}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label">设备负责人：</label>
+                <div class="layui-input-block">
+                    <select name="assetsrespon">
+                        <option value=""></option>
+                        <volist name="user" id="v">
+                            <option value="{$v.username}">{$v.username}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add"><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/integratedSetting/adddepartment', layui.factory('controller/basesetting/integratedSetting/adddepartment'));
+</script>

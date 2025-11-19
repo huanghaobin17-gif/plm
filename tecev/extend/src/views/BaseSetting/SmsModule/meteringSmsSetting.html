@@ -1,0 +1,52 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-metering .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-metering .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-metering .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-metering .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-metering">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>计划编号 {plan_num}</span>
+            <span>科室 {department}</span>
+            <span>设备名称 {assets}</span>
+            <span>待检日期 {next_date}</span>
+            <span>周期 {cycle}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>计量模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="metering_sms_open" name="Metering[status]"  value="1" title="开启" <if condition="$settings[Metering][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="metering_sms_open" name="Metering[status]"  value="0" title="关闭" <if condition="$settings[Metering][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+
+    <div class="metering_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知执行计量计划：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Metering[setMeteringResult][content]" value="{$settings[Metering][setMeteringResult][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Metering[setMeteringResult][status]"  value="1" title="开启" <if condition="$settings[Metering][setMeteringResult][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Metering[setMeteringResult][status]"  value="0" title="关闭" <if condition="$settings[Metering][setMeteringResult][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+
+</div>

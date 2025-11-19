@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{width: 100px;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>设备分类表单</legend>
+    </fieldset>
+    <form class="layui-form">
+        <if condition="$showHospital eq 1">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>所属医院：</label>
+                <div class="layui-input-inline">
+                    <input type="text"  value="{$hosInfo.hospital_name}" name="" placeholder="" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </if>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属父分类：</label>
+            <div class="layui-input-inline">
+                <input type="text"  value="{$fcatename}" readonly name="" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+            <input type="hidden" value="{$parentid}" name="parentid"/>
+            <input type="hidden" value="{$catid}" name="catid"/>
+            <div class="layui-form-mid layui-word-aux">父分类编号：{$fcatenum}</div>
+        </div>
+        <div class="layui-form-item change">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>分类编号：</label>
+                <div class="layui-input-inline">
+                    <input type="text"  value="{$catenum}" name="catenum" placeholder="请输入分类编号" lay-verify="required|number" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-mid layui-word-aux">已有{$tips}类编号：{$exitsCatenum}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-block">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>分类名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="category" value="{$catename}" lay-verify="required|category" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <if condition="$parentid neq 0">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">品名举例：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入分类的品名举例" name="remark" class="layui-textarea" style="width: 90%;">{$remark}</textarea>
+                </div>
+            </div>
+        </if>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','editCategory')):?>
+                <button class="layui-btn" type="button" value="" data-url="{$menuData['actionurl']}" lay-submit lay-filter="edit"><i class="layui-icon" >&#xe609;</i> 提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                <?php endif?>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/integratedSetting/editcategory', layui.factory('controller/basesetting/integratedSetting/editcategory'));
+</script>

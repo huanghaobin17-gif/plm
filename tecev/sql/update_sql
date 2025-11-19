@@ -1,0 +1,8 @@
+
+
+/***以下SQL适合于版本从1.0升级到2.0的系统，2.0以上版本不适用，请复制SQL语句到mysql客户端运行即可，建议一次运行一条SQL***/
+
+
+update sb_assets_info as a set a.storage_date = (select date_format(from_unixtime(con_date),'%Y-%m-%d') as storage_date from sb_assets_contract as b where b.assid = a.assid);
+update sb_assets_info as a set a.guarantee_date = (select date_format(from_unixtime(guarantee_date),'%Y-%m-%d') as guarantee_date from sb_assets_contract as b where b.assid = a.assid);
+update sb_assets_info set factorydate = date_format(from_unixtime(factorytime),'%Y-%m-%d'),opendate = date_format(from_unixtime(opentime),'%Y-%m-%d');

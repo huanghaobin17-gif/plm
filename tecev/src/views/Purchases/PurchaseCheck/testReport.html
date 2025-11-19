@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 13%;
+        }
+        #addReport{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+            margin-right: 10px;
+        }
+        #paizhao{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+            vertical-align:middle;
+        }
+        .qrcode {
+            display: none;
+            width: 190px;
+            height: 255px;
+            padding: 20px 14px;
+            box-sizing: border-box;
+            position: absolute;
+            background: url('/Public/images/qrcode1.png') no-repeat;
+            background-size:188px 220px;
+            right:20px;
+            top: 590px;
+            z-index: 30;
+        }
+        .qrcode img{
+            width: 100%;
+        }
+        .qrcode .tip {
+            width: 170px;
+            text-align: center;
+            vertical-align: top;
+            display: block;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>设备名称：</th>
+                    <td>{$asInfo.assets_name}</td>
+                </tr>
+                <tr>
+                    <th>型号：</th>
+                    <td>{$asInfo.model}</td>
+                </tr>
+                <tr>
+                    <th>单位：</th>
+                    <td>{$asInfo.unit}</td>
+                </tr>
+                <tr>
+                    <th>是否进口：</th>
+                    <td>
+                        <if condition="$asInfo.is_import eq 1">
+                            是
+                            <else/>
+                            否
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>购置类型：</th>
+                    <td>
+                        <if condition="$asInfo.buy_type eq 1">
+                            报废新增
+                        </if>
+                        <if condition="$asInfo.buy_type eq 2">
+                            添置
+                        </if>
+                        <if condition="$asInfo.buy_type eq 3">
+                            新增
+                        </if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>供应商：</th>
+                    <td>{$asInfo.supplier}</td>
+                </tr>
+                <tr>
+                    <th>生产厂家：</th>
+                    <td>{$asInfo.factory}</td>
+                </tr>
+                <tr>
+                    <th>出厂编号：</th>
+                    <td>{$asInfo.factorynum}</td>
+                </tr>
+                <tr>
+                    <th>申请科室：</th>
+                    <td>{$asInfo.department}</td>
+                </tr>
+                <tr>
+                    <th>设备分类：</th>
+                    <td>{$asInfo.category}</td>
+                </tr>
+                <tr>
+                    <th>设备单价：</th>
+                    <td>{$asInfo.buy_price}</td>
+                </tr>
+                </tbody>
+            </table>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            计划信息
+        </div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>培训人：</th>
+                <td>{$trainInfo.train_user}</td>
+                <th>培训时间：</th>
+                <td>{$trainInfo.train_start_date} ~ {$trainInfo.train_end_date}</td>
+                <th>培训地点：</th>
+                <td>{$trainInfo.train_area}</td>
+            </tr>
+            <tr>
+                <th>参加人员：</th>
+                <td colspan="5">{$trainInfo.attendants_user}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td colspan="5">{$trainInfo.train_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            培训报告信息
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="30%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$files">
+                <volist name="files" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            考核报告信息
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="8%">
+                <col width="30%">
+                <col width="15%">
+                <col width="12%">
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">文件名称</th>
+                <th style="text-align: left !important;">文件大小</th>
+                <th style="text-align: left !important;">提交人</th>
+                <th style="text-align: left !important;">上传时间</th>
+                <th style="text-align: left !important;">操作</th>
+            </tr>
+            <tbody>
+            <if condition="$assessReports">
+                <volist name="assessReports" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.file_name}</td>
+                        <td>{$vo.file_size}</td>
+                        <td>{$vo.add_user}</td>
+                        <td>{$vo.add_time}</td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <tr class="no-data">
+                    <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                </tr>
+            </if>
+            </tbody>
+        </table>
+    </div>
+    <form class="layui-form">
+        <input type="hidden" name="wid" value="{$asInfo.ware_assets_id}"/>
+        <input type="hidden" name="oid" value="{$asInfo.out_id}"/>
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">
+                测试运行报告信息
+                <span id="paizhao">
+                    <i class="layui-icon layui-icon-zqrcode-l" style="font-size: 13px;"></i>
+                    扫码上传
+                    <div class="qrcode">
+                        <img src="{$codeUrl}" alt="扫码上传">
+                        <span class="tip">扫一扫，上传文件</span>
+                    </div>
+                </span>
+                <span id="addReport"><i class="iconfont icon-shangchuan" style="font-size: 14px;"></i> 本地上传</span>
+            </div>
+            <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="8%">
+                    <col width="30%">
+                    <col width="15%">
+                    <col width="12%">
+                    <col width="20%">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">序号</th>
+                    <th style="text-align: left !important;">文件名称</th>
+                    <th style="text-align: left !important;">文件大小</th>
+                    <th style="text-align: left !important;">提交人</th>
+                    <th style="text-align: left !important;">上传时间</th>
+                    <th style="text-align: left !important;">操作</th>
+                </tr>
+                <tbody>
+                <if condition="$testReports">
+                    <volist name="testReports" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.file_name}</td>
+                            <td>{$vo.file_size}</td>
+                            <td>{$vo.add_user}</td>
+                            <td>{$vo.add_time}</td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary showFile" lay-submit lay-filter="showFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </volist>
+                <else/>
+                    <tr class="no-data">
+                        <td colspan="6" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+        <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+            <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveTestReport">
+                <i class="layui-icon" >&#xe609;</i> 确认结束上传
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/purchases/purchaseCheck/testReport', layui.factory('controller/purchases/purchaseCheck/testReport'));
+</script>

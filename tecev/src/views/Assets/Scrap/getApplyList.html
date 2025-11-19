@@ -1,0 +1,129 @@
+<?php if($menuData = get_menu_name('Assets','Scrap','getApplyList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getApplyList = "{$getApplyList}";
+</script>
+<style>
+    #LAY-Assets-Scrap-getApplyList .timeStyle{width: 83px !important;}
+</style>
+<div class="layui-fluid" id="LAY-Assets-Scrap-getApplyList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getApplyListAssetsNum" placeholder="请输入设备编号" name="getApplyListAssetsNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getApplyListAssets"  placeholder="请输入设备名称" name="getApplyListAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="scrap_apply_department" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getApplyListCategory" placeholder="请输入设备分类" name="getApplyListCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">报废状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="status"  lay-search="">
+                                        <option value="">请选择</option>
+                                        <option value="1">未报废</option>
+                                        <option value="2">已报废</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备原值：</label>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input" placeholder="区间（小）" name="buy_priceMin">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input" placeholder="区间（大）" name="buy_priceMax">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">元</div>
+                            </div>
+                            <!--<div class="layui-inline">-->
+                                <!--<label class="layui-form-label" style="width: 130px;">设备报废是否到期：</label>-->
+                                <!--<div class="layui-input-inline" style="width: auto">-->
+                                    <!--<input type="radio" name="license" value="0" title="全部" checked>-->
+                                    <!--<input type="radio" name="license" value="1" title="是">-->
+                                    <!--<input type="radio" name="license" value="2" title="否">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="ApplyListSearch" id="eventquery"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="ApplyLists" lay-filter="ApplyLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/scrap/getApplyList', layui.factory('assets/scrap/getApplyList'));
+</script>
+
+

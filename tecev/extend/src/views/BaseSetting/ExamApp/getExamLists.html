@@ -1,0 +1,85 @@
+<?php if($menuData = get_menu_name('BaseSetting','ExamApp','getExamLists')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getExamLists = "{$getExamLists}";
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-ExamApp-getExamLists">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请类型：</label>
+                                <div class="layui-input-inline">
+                                    <select name="type" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="edit">修改</option>
+                                        <option value="delete">删除</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">核准状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="app" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未处理</option>
+                                        <option value="1">已核准</option>
+                                        <option value="2">已驳回</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">回退状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="back" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未回退</option>
+                                        <option value="1">已回退</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请时间：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="exam_time" class="layui-input" id="exam_time" placeholder="yyyy-MM">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" type="button" lay-submit="" lay-filter="search_exam_app" id="search_exam_app"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="examAppLists" lay-filter="examAppData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/examApp/getExamLists', layui.factory('basesetting/examApp/getExamLists'));
+</script>

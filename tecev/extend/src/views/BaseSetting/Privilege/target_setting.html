@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .form_ul{
+            height: 110px;
+        }
+        .form_ul li{
+            float: left;
+            width: 195px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layer-to-top">
+        <form class="layui-form layui-form-pane">
+            <input type="hidden" name="role_id" value="{$role_id}"/>
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>全院设备概况</legend>
+            </fieldset>
+            <ul class="form_ul">
+                <li><input type="checkbox" name="" checked="checked" disabled value="1" title="维修报废设备" lay-skin="primary"></li>
+
+                <if condition="in_array('insurance_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[insurance_assets]" checked="checked" value="1" title="在保买保设备" lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[insurance_assets]" value="1" title="在保买保设备" lay-skin="primary"></li>
+                </if>
+
+                <if condition="in_array('special_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[special_assets]" checked="checked" value="1" title="特种设备" lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[special_assets]" value="1" title="特种设备" lay-skin="primary"></li>
+                </if>
+
+                <if condition="in_array('lifesupport_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[lifesupport_assets]" checked="checked" value="1" title="生命支持设备" lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[lifesupport_assets]" value="1" title="生命支持设备" lay-skin="primary"></li>
+                </if>
+
+                <if condition="in_array('big_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[big_assets]" checked="checked" value="1" title="大型设备" lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[big_assets]" value="1" title="大型设备" lay-skin="primary"></li>
+                </if>
+
+                <if condition="in_array('firstaid_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[firstaid_assets]" checked="checked" value="1" title="急救设备" lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[firstaid_assets]" value="1" title="急救设备" lay-skin="primary"></li>
+                </if>
+
+                <if condition="in_array('quality_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[quality_assets]" checked="checked" value="1" title="质控设备"
+                               lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[quality_assets]" value="1" title="质控设备" lay-skin="primary">
+                    </li>
+                </if>
+                <if condition="in_array('metering_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[metering_assets]" checked="checked" value="1" title="计量设备"
+                               lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[metering_assets]" value="1" title="计量设备" lay-skin="primary">
+                    </li>
+                </if>
+                <if condition="in_array('Inspection_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[Inspection_assets]" checked="checked" value="1" title="巡检设备"
+                               lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[Inspection_assets]" value="1" title="巡检设备" lay-skin="primary">
+                    </li>
+                </if>
+                <if condition="in_array('maintain_assets',$show_survey_ids)">
+                    <li><input type="checkbox" name="survey[maintain_assets]" checked="checked" value="1" title="保养设备"
+                               lay-skin="primary"></li>
+                    <else/>
+                    <li><input type="checkbox" name="survey[maintain_assets]" value="1" title="保养设备" lay-skin="primary">
+                    </li>
+                </if>
+            </ul>
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>分项统计图表</legend>
+            </fieldset>
+            <ul class="form_ul">
+                <li><input type="checkbox" name="" checked="checked" disabled value="1" title="设备维修情况" lay-skin="primary"></li>
+
+                <if condition="in_array('target_chart_depart_repair',$sys_showids)">
+                    <if condition="in_array('target_chart_depart_repair',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_depart_repair]" checked="checked" value="1" title="科室维修费用分析" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_depart_repair]" value="1" title="科室维修费用分析" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_add',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_add',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_add]" checked="checked" value="1" title="设备增加情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_add]" value="1" title="设备增加情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_scrap',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_scrap',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_scrap]" checked="checked" value="1" title="设备报废情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_scrap]" value="1" title="设备报废情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_purchases',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_purchases',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_purchases]" checked="checked" value="1" title="设备采购支出情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_purchases]" value="1" title="设备采购支出情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_benefit',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_benefit',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_benefit]" checked="checked" value="1" title="设备效益分析" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_benefit]" value="1" title="设备效益分析" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_adverse',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_adverse',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_adverse]" checked="checked" value="1" title="不良事件情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_adverse]" value="1" title="不良事件情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+
+                <if condition="in_array('target_chart_assets_move',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_move',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_move]" checked="checked" value="1" title="设备转移情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_move]" value="1" title="设备转移情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+                <if condition="in_array('target_chart_assets_patrol',$sys_showids)">
+                    <if condition="in_array('target_chart_assets_patrol',$show_ids)">
+                        <li><input type="checkbox" name="detail[target_chart_assets_patrol]" checked="checked" value="1" title="设备保养情况" lay-skin="primary"></li>
+                        <else/>
+                        <li><input type="checkbox" name="detail[target_chart_assets_patrol]" value="1" title="设备保养情况" lay-skin="primary"></li>
+                    </if>
+                </if>
+            </ul>
+            <div class="layui-form-item">
+                <div style="text-align: center">
+                    <button class="layui-btn" lay-submit lay-filter="save_setting"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/basesetting/privilege/target_setting', layui.factory('controller/basesetting/privilege/target_setting'));
+</script>

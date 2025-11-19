@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增招标明细</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-form-label{
+            width: 90px;
+        }
+        #addTenderFile{
+            float: right;font-size: 12px;font-weight: normal;color: #0a8ddf;cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">基础信息</blockquote>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>供应商名称：</th>
+                    <td>{$detailInfo.supplier_name}</td>
+                    <th>生产厂商：</th>
+                    <td>{$detailInfo.factory_name}</td>
+                </tr>
+                <tr>
+                    <th>品牌：</th>
+                    <td>{$detailInfo.brand}</td>
+                    <th>规格/型号：</th>
+                    <td>{$detailInfo.model}</td>
+                </tr>
+                <tr>
+                    <th>市场价：</th>
+                    <td>{$detailInfo.market_price}</td>
+                    <th>最终报价：</th>
+                    <td>{$detailInfo.company_price}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                附件信息
+            </blockquote>
+            <table class="layui-table read-table-l" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="40%">
+                    <col width="40%">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">序号</th>
+                    <th style="text-align: left !important;">文件名</th>
+                    <th style="text-align: left !important;">操作</th>
+                </tr>
+                <tbody>
+                <if condition="$files">
+                    <volist name="files" id="vo">
+                        <tr>
+                            <td>{$key+1}</td>
+                            <td>{$vo.file_name}</td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <button class="layui-btn layui-btn-xs downFile" lay-submit lay-filter="downFile" data-path="{$vo.file_url}" data-name="{$vo.file_name}" data-id="{$vo.file_id}">下载</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <tr>
+                        <td colspan="3" style="text-align: center !important;">暂无数据</td>
+                    </tr>
+                </if>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var handleTender = "{$handleTender}";
+</script>
+<script>
+    layui.use('controller/purchases/tenderRecord/handleTender', layui.factory('controller/purchases/tenderRecord/handleTender'));
+</script>

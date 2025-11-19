@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairParts-partsInWareApply">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">出库单信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>出库单号：</th>
+                <td>{$outware.outware_num}</td>
+                <th>领用人：</th>
+                <td>{$outware.leader}</td>
+            </tr>
+            <tr>
+                <th>出库日期：</th>
+                <td>{$outware.outdate}</td>
+                <th>出库备注：</th>
+                <td>{$outware.remark}</td>
+            </tr>
+            <tr>
+                <th>配件数量：</th>
+                <td>{$outware.sum}</td>
+                <th>配件总金额：</th>
+                <td>{$outware.total_price}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-elem-quote">出库配件明细</div>
+    <table class="layui-table" lay-even lay-size="sm" style="margin-top: 0px;">
+        <colgroup>
+            <col>
+            <col>
+            <col>
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col width="70">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>配件名称</th>
+            <th>配件型号</th>
+            <th>供应商厂商</th>
+            <th>出库数量</th>
+            <th>单位</th>
+            <th>单价</th>
+            <th>总价</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="outware_detail" id="vo">
+            <tr>
+                <td>{$vo.parts}</td>
+                <td>{$vo.parts_model}</td>
+                <td>{$vo.supplier_name}</td>
+                <td>{$vo.max_sum}</td>
+                <td>{$vo.unit}</td>
+                <td>{$vo.price}</td>
+                <td>{$vo.total_price}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <notempty name="approves">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">审核信息</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <colgroup>
+                    <col width="90">
+                    <col width="140">
+                    <col width="70">
+                    <col width="">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>审核人</th>
+                    <th>审核时间</th>
+                    <th>审核状态</th>
+                    <th>审核意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="approves" id="app">
+                    <tr>
+                        <td>{$app.approver}</td>
+                        <td>{$app.approve_time}</td>
+                        <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                            <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                            <else/>
+                            <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                        </if>
+                        <td>{$app.remark}</td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </notempty>
+    <div style="margin: 20px auto;width: 162px;">
+        <input type="hidden" name="repid" value="{$outware.repid}"/>
+        <input type="hidden" name="assid" value="{$outware.assid}"/>
+        <button class="layui-btn" lay-submit="showRepairDetail" lay-filter="showRepairDetail">
+            查看对应维修单信息
+        </button>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form, $ = layui.jquery;
+        //监听提交
+        form.on('submit(showRepairDetail)', function (data) {
+            var repid = $('input[name="repid"]').val();
+            var assid = $('input[name="assid"]').val();
+            var url = admin_name+'/RepairSearch/showRepair.html?repid='+repid+'&assid='+assid;
+            top.layer.open({
+                type: 2,
+                title: '维修单详情',
+                area: ['920px', '100%'],
+                anim:2,
+                offset: 'r',//弹窗位置固定在右边
+                scrollbar:false,
+                closeBtn: 1,
+                content: [url]
+            });
+            return false;
+        });
+    });
+</script>

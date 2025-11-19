@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="card-html-bg">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-examine .layui-elem-quote {
+        padding: 5px;
+    }
+    .read-table th {
+        width: 12%;
+        text-align: right!important;
+    }
+</style>
+<body>
+<div class="layui-fluid layui-tab-content">
+    <!--验收单基本信息-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-elem-quote-sm">计划信息</div>
+                    <table class="layui-table read-table" lay-size="sm" lay-even>
+                        <tbody>
+                        <tr>
+                            <th>计划状态：</th>
+                            <td colspan="3" style="color: red;">{$patrol_info.patrol_status_name}</td>
+                        </tr>
+                        <tr>
+                            <th>计划名称：</th>
+                            <td>{$patrol_info.patrol_name}</td>
+                            <th>计划日期：</th>
+                            <td>{$patrol_info.patrol_start_date} — {$patrol_info.patrol_end_date}</td>
+                        </tr>
+                        <tr>
+                            <th>是否周期计划：</th>
+                            <td>{$patrol_info.cycle_name}</td>
+                            <th>周期设置：</th>
+                            <td>{$patrol_info.cycle_setting_name}</td>
+                        </tr>
+                        <tr>
+                            <th>总周期数：</th>
+                            <td>{$patrol_info.total_cycle}</td>
+                            <th>当前期数：</th>
+                            <td>{$patrol_info.current_cycle}</td>
+                        </tr>
+                        <tr>
+                            <th>计划备注：</th>
+                            <td colspan="5">{$patrol_info.remark}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <!--列表-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 本计划设备列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="showPlansLists" lay-filter="showPlansData"></table>
+                    <if condition="$apps">
+                        <div class="layui-elem-quote-sm">审核情况</div>
+                        <table class="layui-table" lay-size="sm" lay-even>
+                            <colgroup>
+                                <col width="90">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                                <col width="">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>审核人</th>
+                                <th>审核时间</th>
+                                <th>审核状态</th>
+                                <th>审核意见</th>
+                            </tr>
+                            <volist name="apps" id="vo">
+                                <tr>
+                                    <td>{$key+1}</td>
+                                    <td>{$vo.approver}</td>
+                                    <td>{$vo.approve_time}</td>
+                                    <td>{$vo.approve_status}</td>
+                                    <td>{$vo.remark}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--底部内容-->
+    <if condition="$canRelease">
+        <div class="layui-row margin-top-15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>发布巡查计划表单</legend>
+                        </fieldset>
+                        <form class="layui-form layui-form" onsubmit="return false;">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">发布人：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" readonly="readonly" value="{$username}" name="rel_user" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label"><span class="rquireCoin"> * </span>发布日期：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" style="cursor: pointer;" readonly id="rel_date" name="rel_date" value="{$min_date}" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">发布备注：</label>
+                                <div class="layui-input-block">
+                                    <textarea  placeholder="请输入备注" class="layui-textarea" name="rel_remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div style="text-align: center">
+                                    <input type="hidden" name="pid" value="{$patrol_info.patrid}"/>
+                                    <input type="hidden" name="releasePatrol_code" value="{$releasePatrol_code}"/>
+                                    <button class="layui-btn" type="button"  id="release"><i class="layui-icon" >&#xe609;</i> 确定发布</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    var min_date = "{$min_date}";
+    var max_date = "{$max_date}";
+    var releasePatrol = "{$releasePatrol}";
+    var assets = {$assets};
+    var pre_date_name = '{$pre_date_name}';
+    var detail_name = '{$detail_name}';
+    var template_name = '{$template_name}';
+    layui.use('controller/patrol/patrol/releasePatrol', layui.factory('controller/patrol/patrol/releasePatrol'));
+</script>

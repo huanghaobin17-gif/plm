@@ -1,0 +1,97 @@
+<title>配件库存列表</title>
+<style>
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+</script>
+<div class="layui-fluid" id="LAY-Repair-RepairParts-partStockList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">配件名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="partStockListParts" placeholder="请输入配件名称" name="parts">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">供应商：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group" id="dic_assets_sel">
+                                        <input type="text" class="form-control bsSuggest" name="supplier_name" id="stock_supplier" placeholder="请输入供应商" />
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">库管员：</label>
+                                <div class="layui-input-inline">
+                                    <select name="leader">
+                                        <option value="">全部</option>
+                                        <volist name="userList" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">入库日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" style="cursor: pointer;" readonly name="startDate" id="partStockListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" style="cursor: pointer;" readonly name="endDate" id="partStockListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="partStockListSearch" lay-filter="partStockListSearch">
+                                        <i class="layui-icon">&#xe615;</i> 搜 索
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 库存列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="partStockList" lay-filter="partStockData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var partStockListUrl = '{$partStockListUrl}';
+</script>
+<script>
+    layui.use('repair/repairParts/partStockList', layui.factory('repair/repairParts/partStockList'));
+</script>

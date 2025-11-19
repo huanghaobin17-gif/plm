@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:head"/>
+    <style>
+        #departData tr td{padding:5px 8px;}
+        .styled-select select {
+            background: transparent;
+            width: 130px;
+            padding: 2px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            height: 25px;
+            -webkit-appearance: none; /*for chrome*/
+        }
+        .cusquote1 {
+            padding: 5px !important;
+            width: 100%;
+            margin: 0 auto;
+            font-size: 12px;
+            color: red;
+        }
+        .tdcenter{
+            text-align: center;
+        }
+    </style>
+    <script>
+        var departments = {$departments};
+        var categorys = {$categorys};
+        var assInfo = {$assInfo};
+        var baseSetting = {$baseSetting};
+    </script>
+</head>
+<body>
+<div class="containDiv">
+    <div>
+        <div class="layui-inline">
+            <?php if($menuData = get_menu('Assets','Storage','batchEditAssets')):?>
+            <div class="toolbar-move">
+                <input type="file" lay-type="file" data-url="{$menuData['actionurl']}" name="file" class="layui-upload-file">
+            </div>
+            <?php endif?>
+        </div>
+    </div>
+    <fieldset>
+        <legend>上传的设备信息</legend>
+        <blockquote class="layui-elem-quote cusquote1" style="width: auto;">
+            设备名称、别名等不能存在逗号作为分割符，分类编号、使用科室、管理科室不能填写系统不存在的分类和科室，当数据出现红色方框提示时，请先修改正确再提交保存。
+            另外，为了方便进行修改编辑，每次最多只显示100条数据，保存成功后会自动返回后100条新数据，以此类推
+        </blockquote>
+        <table class="layui-table" style="max-height: 60px !important;">
+            <thead id="tableTh">
+
+            </thead>
+            <tbody id="departData">
+
+            </tbody>
+        </table>
+    </fieldset>
+    <div class="layui-form-item">
+        <div style="text-align: center">
+            <button class="layui-btn" id="save" lay-submit lay-filter="add"><i class="layui-icon" >&#xe609;</i> 保存当前数据</button>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/assets/storage/batchEditAssets.js?v={:mt_rand(1,54561)}"></script>
+</body>
+</html>
+

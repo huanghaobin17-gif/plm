@@ -1,0 +1,735 @@
+<style>
+    #homePage .layui-input, .layui-select, .layui-textarea {
+        height: 30px !important;
+    }
+</style>
+<div class="layui-fluid" id="homePage">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">待办事项</div>
+                <div class="layui-card-body">
+                    <div id="indexTask" class="layui-carousel layadmin-carousel layadmin-backlog">
+                        <notempty name="indexTask">
+                            <div carousel-item>
+                                <ul class="layui-row layui-col-space10">
+                                    <volist name="indexTask" id="vo" offset="0" length='6'>
+                                        <li class="layui-col-sm4 layui-col-md3 layui-col-lg2">
+                                            <a lay-href="{$vo['aLink']}" class="layadmin-backlog-body">
+                                                <h3>{$vo['name']}</h3>
+                                                <p><cite style="color: {$indexTask[$i]['color']};">{$vo['num']}</cite></p>
+                                            </a>
+                                        </li>
+                                        <?php unset($indexTask[$key]);?>
+                                    </volist>
+                                </ul>
+                                <if condition="$indexTask">
+                                    <ul class="layui-row layui-col-space10">
+                                        <volist name="indexTask" id="vo" offset="0" length='6'>
+                                            <li class="layui-col-sm4 layui-col-md3 layui-col-lg2">
+                                                <a lay-href="{$vo['aLink']}" class="layadmin-backlog-body">
+                                                    <h3>{$vo['name']}</h3>
+                                                    <p><cite style="color: {$indexTask[$i]['color']};">{$vo['num']}</cite></p>
+                                                </a>
+                                            </li>
+                                            <?php unset($indexTask[$key]);?>
+                                        </volist>
+                                    </ul>
+                                </if>
+                                <if condition="$indexTask">
+                                    <ul class="layui-row layui-col-space10">
+                                        <volist name="indexTask" id="vo" offset="0" length='6'>
+                                            <li class="layui-col-sm4 layui-col-md3 layui-col-lg2">
+                                                <a lay-href="{$vo['aLink']}" class="layadmin-backlog-body">
+                                                    <h3>{$vo['name']}</h3>
+                                                    <p><cite style="color: {$indexTask[$i]['color']};">{$vo['num']}</cite></p>
+                                                </a>
+                                            </li>
+                                            <?php unset($indexTask[$key]);?>
+                                        </volist>
+                                    </ul>
+                                </if>
+                            </div>
+                            <else/>
+                            暂无待办事项
+                        </notempty>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-row layui-col-space13">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        全院设备概况
+                        <span id="survey_setting">设置</span>
+                    </div>
+                    <div class="layui-card-body">
+                        <div id="pic-desc">
+                            <div class="pic-desc-card on_use">
+                                <div id="repair_scrap_assets" class="index-pic-width"></div>
+                            </div>
+
+                            <if condition="in_array('insurance_assets',$show_survey_ids)">
+                                <assign name="insurance_assets" value="on_use"/>
+                                <else/>
+                                <assign name="insurance_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$insurance_assets}">
+                                <div id="insurance_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+
+                            <if condition="in_array('special_assets',$show_survey_ids)">
+                                <assign name="special_assets" value="on_use"/>
+                                <else/>
+                                <assign name="special_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$special_assets}">
+                                <div id="special_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+
+                            <if condition="in_array('lifesupport_assets',$show_survey_ids)">
+                                <assign name="lifesupport_assets" value="on_use"/>
+                                <else/>
+                                <assign name="lifesupport_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$lifesupport_assets}">
+                                <div id="lifesupport_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+
+                            <if condition="in_array('big_assets',$show_survey_ids)">
+                                <assign name="big_assets" value="on_use"/>
+                                <else/>
+                                <assign name="big_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$big_assets}">
+                                <div id="big_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+
+                            <if condition="in_array('firstaid_assets',$show_survey_ids)">
+                                <assign name="firstaid_assets" value="on_use"/>
+                                <else/>
+                                <assign name="firstaid_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$firstaid_assets}">
+                                <div id="firstaid_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+                            <if condition="in_array('quality_assets',$show_survey_ids)">
+                                <assign name="quality_assets" value="on_use"/>
+                                <else/>
+                                <assign name="quality_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$quality_assets}">
+                                <div id="quality_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+                            <if condition="in_array('metering_assets',$show_survey_ids)">
+                                <assign name="metering_assets" value="on_use"/>
+                                <else/>
+                                <assign name="metering_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$metering_assets}">
+                                <div id="metering_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+                            <if condition="in_array('Inspection_assets',$show_survey_ids)">
+                                <assign name="Inspection_assets" value="on_use"/>
+                                <else/>
+                                <assign name="Inspection_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$Inspection_assets}">
+                                <div id="Inspection_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+                            <if condition="in_array('maintain_assets',$show_survey_ids)">
+                                <assign name="maintain_assets" value="on_use"/>
+                                <else/>
+                                <assign name="maintain_assets" value="not_use"/>
+                            </if>
+                            <div class="pic-desc-card {$maintain_assets}">
+                                <div id="maintain_assets" class="index-pic-width"></div>
+                                <ul class="data-desc">
+
+                                </ul>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15" id="more_chart">
+        <!--设备维修情况-->
+        <div class="layui-col-xs6 on_use">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    设备维修情况
+                    <span id="target_chart_setting">设置</span>
+                </div>
+                <div class="layui-card-body chart-my-height">
+                    <div class="target-chart-title">
+                        <form class="layui-form" action="">
+                            <div class="layui-btn-group chart-fl target_chart_assets_repair">
+                                <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="target_chart_assets_repair" data-year="3">最近三年</button>
+                                <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="target_chart_assets_repair" data-year="1">最近一年</button>
+                                <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="target_chart_assets_repair" data-year="0.5">最近半年</button>
+                            </div>
+                            <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                <select name="target_count_type" lay-search="" lay-filter="target_chart_assets_repair">
+                                    <option value="free" selected>维修费用</option>
+                                    <option value="times">维修次数</option>
+                                    <option value="hours">费用工时</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="target-chart-pic">
+                        <div id="target_chart_assets_repair" class="div-chart-show-workjob"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--科室维修费用分析-->
+        <if condition="in_array('target_chart_depart_repair',$sys_showids)">
+            <if condition="in_array('target_chart_depart_repair',$show_ids)">
+                <assign name="target_chart_depart_repair" value="on_use"/>
+                <else/>
+                <assign name="target_chart_depart_repair" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_depart_repair {$target_chart_depart_repair}">
+                <div class="layui-card">
+                    <div class="layui-card-header">科室维修费用分析</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-btn-group chart-fl">
+                                    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="target_chart_depart_repair" data-year="3">最近三年</button>
+                                    <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="target_chart_depart_repair" data-year="1">最近一年</button>
+                                    <button class="layui-btn layui-btn-sm layui-btn-primary" lay-submit lay-filter="target_chart_depart_repair" data-year="0.5">最近半年</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_depart_repair" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备采购支出情况-->
+        <if condition="in_array('target_chart_assets_purchases',$sys_showids)">
+            <if condition="in_array('target_chart_assets_purchases',$show_ids)">
+                <assign name="target_chart_assets_purchases" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_purchases" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_purchases {$target_chart_assets_purchases}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备采购支出情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_purchases" lay-search="" lay-filter="target_chart_assets_purchases">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_purchases" lay-search="" lay-filter="target_chart_assets_purchases">
+                                        <option value="trend" selected>支出趋势</option>
+                                        <option value="free">费用分析</option>
+                                        <option value="nums">数量分析</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_purchases" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备效益分析-->
+        <if condition="in_array('target_chart_assets_benefit',$sys_showids)">
+            <if condition="in_array('target_chart_assets_benefit',$show_ids)">
+                <assign name="target_chart_assets_benefit" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_benefit" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_benefit {$target_chart_assets_benefit}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备效益分析</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_benefit" lay-search="" lay-filter="target_chart_assets_benefit">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_benefit" lay-search="" lay-filter="target_chart_assets_benefit">
+                                        <option value="trend" selected>收支趋势</option>
+                                        <option value="income">收入分析</option>
+                                        <option value="expenditure">支出分析</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div class="target_chart_no_data">暂无相关数据</div>
+                            <div id="target_chart_assets_benefit" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备保养情况-->
+        <if condition="in_array('target_chart_assets_patrol',$sys_showids)">
+            <if condition="in_array('target_chart_assets_patrol',$show_ids)">
+                <assign name="target_chart_assets_patrol" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_patrol" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_patrol {$target_chart_assets_patrol}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备保养情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_patrol" lay-search="" lay-filter="target_chart_assets_patrol">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_patrol" lay-search="" lay-filter="target_chart_assets_patrol">
+                                        <option value="trend" selected>保养次数</option>
+                                        <option value="abnormal">保养统计</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_patrol" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备增加情况-->
+        <if condition="in_array('target_chart_assets_add',$sys_showids)">
+            <if condition="in_array('target_chart_assets_add',$show_ids)">
+                <assign name="target_chart_assets_add" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_add" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_add {$target_chart_assets_add}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备增加情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_add" lay-search="" lay-filter="target_chart_assets_add">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_add" lay-search="" lay-filter="target_chart_assets_add">
+                                        <option value="trend" selected>增加趋势</option>
+                                        <option value="depart">增加分析</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_add" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备转移情况-->
+        <if condition="in_array('target_chart_assets_move',$sys_showids)">
+            <if condition="in_array('target_chart_assets_move',$show_ids)">
+                <assign name="target_chart_assets_move" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_move" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_move {$target_chart_assets_move}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备转移情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_move" lay-search="" lay-filter="target_chart_assets_move">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <!--<div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">-->
+                                <!--<select name="target_show_type_move" lay-search="" lay-filter="target_chart_assets_move" >-->
+                                <!--<option value="trend" selected>转移趋势</option>-->
+                                <!--&lt;!&ndash;<option value="depart">转移分析</option>&ndash;&gt;-->
+                                <!--</select>-->
+                                <!--</div>-->
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_move" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--设备报废情况-->
+        <if condition="in_array('target_chart_assets_scrap',$sys_showids)">
+            <if condition="in_array('target_chart_assets_scrap',$show_ids)">
+                <assign name="target_chart_assets_scrap" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_scrap" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_scrap {$target_chart_assets_scrap}">
+                <div class="layui-card">
+                    <div class="layui-card-header">设备报废情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_scrap" lay-search="" lay-filter="target_chart_assets_scrap">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_scrap" lay-search="" lay-filter="target_chart_assets_scrap">
+                                        <option value="trend" selected>报废趋势</option>
+                                        <option value="depart">报废分析</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_scrap" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        <!--不良事件情况-->
+        <if condition="in_array('target_chart_assets_adverse',$sys_showids)">
+            <if condition="in_array('target_chart_assets_adverse',$show_ids)">
+                <assign name="target_chart_assets_adverse" value="on_use"/>
+                <else/>
+                <assign name="target_chart_assets_adverse" value="not_use"/>
+            </if>
+            <div class="layui-col-xs6 target_chart_assets_adverse {$target_chart_assets_adverse}">
+                <div class="layui-card">
+                    <div class="layui-card-header">不良事件情况</div>
+                    <div class="layui-card-body chart-my-height">
+                        <div class="target-chart-title">
+                            <form class="layui-form" action="">
+                                <div class="layui-input-inline chart-fl" style="width: 90px;height: 20px !important;">
+                                    <select name="change_year_adverse" lay-search="" lay-filter="target_chart_assets_adverse">
+                                        <volist name="years" id="vo">
+                                            <if condition="$key eq 0">
+                                                <option value="{$vo}" selected>{$vo}年</option>
+                                                <else/>
+                                                <option value="{$vo}">{$vo}年</option>
+                                            </if>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline chart-fr" style="width: 100px;height: 20px !important;">
+                                    <select name="target_show_type_adverse" lay-search="" lay-filter="target_chart_assets_adverse">
+                                        <option value="trend" selected>不良趋势</option>
+                                        <option value="depart">不良分析</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="target-chart-pic">
+                            <div id="target_chart_assets_adverse" class="div-chart-show-workjob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </if>
+
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">最近一周的数据概览</div>
+                        <div class="layui-card-body">
+                            <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
+                                <div carousel-item id="LAY-index-dataview">
+                                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                                    <div></div>
+                                    <!--<div></div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">公告栏目</div>
+                <div class="layui-card-body layui-text">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="65">
+                            <col width="35%">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td style="text-align: center">最新公告</td>
+                            <td style="text-align: center">发布日期</td>
+                        </tr>
+                        <empty name="noticeinfo">
+                            <tr>
+                                <td colspan="2" class="td-align-center">暂无最新公告</td>
+                            </tr>
+                            <else/>
+                            <volist name="noticeinfo" id="vo">
+                                <tr>
+                                    <td>
+                                        <p class="noticeTitle" style="width: 103%;">
+                                            <a href="javascript:void(0)" title="{$vo.title}" class="showNotice" data-id="{$vo.notid}" data-url="/A/Notice/getNoticeList">{$vo.title}</a>
+                                        </p>
+                                    </td>
+                                    <td style="text-align: center">{$vo.date}</td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        <tr>
+                            <td colspan="2">
+                                <div class="layui-btn-container">
+                                    <?php if($menuData = get_menu('BaseSetting','Notice','addNotice')):?>
+                                    <button class="layui-btn" id="addnoticeIndex" data-url="{$menuData['actionurl']}">
+                                        <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+                                    </button>
+                                    <?php endif?>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">效果报告（当月）</div>
+                <div class="layui-card-body layadmin-takerates">
+                    <div class="layui-progress" lay-showPercent="yes">
+                        <h3>报修设备修复率（上月修复率 {$ratePre}% <span class="layui-edge layui-edge-{$arrow}" lay-tips="提高" lay-offset="-15"></span>）
+                        </h3>
+                        <div class="layui-progress-bar" lay-percent="{$rate}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('login/index/target', layui.factory('login/index/target'));
+</script>
+<script>
+    /*后台不操作15min退出 S*/
+    var oldTime = new Date().getTime();
+    var newTime = new Date().getTime();
+    var outTime = 30 * 120 * 1000; //设置超时时间： 15分钟
+
+    $(function () {
+        /* 鼠标移动事件 */
+        $(document).mouseover(function () {
+            oldTime = new Date().getTime(); //鼠标移入重置停留的时间
+        });
+    });
+    /* 定时器  判断每5秒是否长时间未进行页面操作 */
+    let ab = window.setInterval(checkTime, 5000);
+
+    function checkTime() {
+        newTime = new Date().getTime(); //更新未进行操作的当前时间
+        if (newTime - oldTime > outTime) { //判断是否超时不操作
+            clearInterval(ab)
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: admin_name + '/Login/logout',
+                //成功返回之后调用的函数
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.open({
+                            closeBtn:0
+                            ,btnAlign: 'c'
+                            ,time:0
+                            ,content: '60分钟未操作，已自动退出'
+                            ,end:function (){
+                                window.location.href = admin_name + "/Login/login";
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                //调用出错执行的函数
+                error: function () {
+                    //请求出错处理
+                    layer.msg('服务器繁忙', {icon: 2});
+                }
+            });
+        }
+    }
+
+    /*后台不操作15min退出 E*/
+
+    var xAxisData = {$xAxisData};
+    var seriesDdata = {$seriesDdata};
+    var seriesDdata_patrol = {$seriesDdata_patrol};
+    var current_year = "{$current_year}";
+
+    //定时更新数据
+
+    setInterval(function () {
+        //return false;
+//        $.ajax({
+//            timeout: 5000,
+//            type: "POST",
+//            url: admin_name+'/System/updataTask.html',
+//            dataType: "json",
+//            success: function (data) {
+//
+//
+//
+//
+//
+//            },
+//            error: function () {
+//                layer.msg("网络访问失败",{icon : 2},1000);
+//            },
+//        });
+
+
+    }, 60000);
+
+    function showAssetsDetail(e) {
+        var url = admin_name + '/Lookup/showAssets.html';
+        var assid = $(e).attr('data-id');
+        var assets = $(e).attr('data-name');
+        top.layer.open({
+            type: 2,
+            title: '【' + assets + '】设备详情信息',
+            area: ['1000px', '100%'],
+            offset: 'r',//弹窗位置固定在右边
+            anim: 2, //动画风格
+            scrollbar: false,
+            closeBtn: 1,
+            content: [url + '?assid=' + assid]
+        });
+    }
+
+    var loginTimes = localStorage.getItem('loginTimes');
+
+    if (loginTimes != null) {
+        var buttonObj = $("#LAY_app").find(".layui-layout-right .systemMessage a");
+        buttonObj.click();
+        localStorage.removeItem('loginTimes');
+    }
+
+</script>
+<script>
+    //加载 controller 目录下的对应模块
+    /*
+
+     小贴士：
+     这里 console 模块对应 的 console.js 并不会重复加载，
+     然而该页面的视图则是重新插入到容器，那如何保证能重新来控制视图？有两种方式：
+     1): 借助 layui.factory 方法获取 console 模块的工厂（回调函数）给 layui.use
+     2): 直接在 layui.use 方法的回调中书写业务代码，即:
+     layui.use('console', function(){
+     //同 console.js 中的 layui.define 回调中的代码
+     });
+
+     这里我们采用的是方式1。其它很多视图中采用的其实都是方式2，因为更简单些，也减少了一个请求数。
+
+     */
+    layui.use('console', layui.factory('console'));
+</script>
+

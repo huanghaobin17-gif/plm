@@ -1,0 +1,79 @@
+<?php if($menuData = get_menu_name('Patrol','Patrol','examineList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var examineListUrl='{$examineListUrl}';
+</script>
+<div class="layui-fluid" id="LAY-Patrol-Patrol-examineList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <input type="hidden" name="url" value="{$url}">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计划名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="examineListPatrolname" placeholder="请输入计划名称" name="patrol_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">保养级别：</label>
+                                <div class="layui-input-inline">
+                                    <select name="patrol_level" class="input_select" lay-search="">
+                                        <option value="">全部</option>
+                                        <option value="{$a=C('PATROL_LEVEL_DC')}">{$a=C('PATROL_LEVEL_NAME_DC')}
+                                        </option>
+                                        <option value="{$a=C('PATROL_LEVEL_RC')}">{$a=C('PATROL_LEVEL_NAME_RC')}
+                                        </option>
+                                        <option value="{$a=C('PATROL_LEVEL_PM')}">{$a=C('PATROL_LEVEL_NAME_PM')}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="examineListSearch" id="examineListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                    <div class="fl" style="margin-left: 50px">
+                        <!--业务操作部分-->
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="examineList" lay-filter="examineListData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--内容部分-->
+    <!--内容部分结束-->
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('patrol/patrol/examineList', layui.factory('patrol/patrol/examineList'));
+</script>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<style>
+    .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+    .layui-table{ margin-top: 0px; margin-bottom: 20px;}
+    .layui-form-pane .layui-form-label{width: 110px;!important;}
+    .layui-table th, .layui-table td{text-align: center}
+    .layui-table th, .layui-table td{text-align: center}
+</style>
+<body>
+<div class="containDiv">
+    <if condition="$file_exists eq true">
+        <div class="layui-elem-quote">文件下载 :
+            <input type="hidden" name="path" value="{$src}">
+            <input type="hidden" name="filename" value="{$title}">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" id="downFile">
+                <i class="layui-icon">&#xe601;</i>下载
+            </button>
+        </div>
+    </if>
+    <table class="layui-table" lay-even>
+        <tbody>
+            <tr>
+                <td>
+                    <if condition="$file_exists eq true">
+                        <if condition="$type eq pdf or $type eq PDF">
+                            <a class="media" href="{$src}"></a>
+                            <elseif condition="$type eq jpg or $type eq jpeg or $type eq png"/>
+                            <img src="{$src}" style="max-width: 100%">
+                            <else/>
+                            暂无在线预览方式，请下载该文件后查看。
+                        </if>
+                        <else/>
+                        文件丢失,请联系管理人员
+                    </if>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use(['layer', 'form'], function() {
+        var form = layui.form;
+    });
+    $(function() {
+        $('a.media').media({width:800, height:600});
+    });
+    $('#downFile').click(function () {
+        var params={};
+        params.path=$('input[name="path"]').val();
+        params.filename=$('input[name="filename"]').val();
+        postDownLoadFile({
+            url:admin_name+'/Tool/downFile',
+            data:params,
+            method:'POST'
+        });
+        return false;
+    });
+</script>
+</body>
+</html>

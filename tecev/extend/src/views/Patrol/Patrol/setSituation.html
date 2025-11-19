@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-Patrol-Patrol-setSituation .layui-colla-content {
+        padding: 0;
+    }
+    #LAY-Patrol-Patrol-setSituation .layui-table {
+        margin: 0;
+    }
+    #LAY-Patrol-Patrol-setSituation .layui-form-radio{
+        margin-left: 0;
+    }
+    #LAY-Patrol-Patrol-setSituation .red_border {
+        border: 1px solid #CC0000 !important;
+    }
+    #LAY-Patrol-Patrol-setSituation .user {
+        display: none;
+    }
+    #LAY-Patrol-Patrol-setSituation .layui-form-radio{
+        margin-left: 0 !important;
+    }
+    #LAY-Patrol-Patrol-setSituation .green{
+        color: green;
+    }
+    #LAY-Patrol-Patrol-setSituation .reason{
+        display: none;
+    }
+    #LAY-Patrol-Patrol-setSituation .layui-elem-quote {
+        padding: 5px;
+    }
+    #LAY-Patrol-Patrol-setSituation .user .layui-form-radio{
+        margin: 0!important;
+    }
+    #scanfile{
+            display: none;
+        }
+</style>
+
+<body>
+<div class="layui-tab-content" id="LAY-Patrol-Patrol-setSituation">
+    <div class="layui-elem-quote">{$asArr.assets}-基本信息</div>
+    <table class="layui-table read-table" lay-even lay-size="sm">
+        <tr>
+            <th style="text-align: right;width: 12%;">保养模板名称：</th>
+            <td colspan="0">{$asArr.name}</td>
+            <th style="text-align: right;width: 12%;">保养明细项：</th>
+            <td id="count">{$asArr.count}</td>
+            <th style="text-align: right;width: 12%;">设备序列号：</th>
+            <td>{$asArr.serialnum}</td>
+        </tr>
+        <tr>
+            <th style="text-align: right;width: 12%;">设备编号：</th>
+            <td>{$asArr.assnum}</td>
+            <th style="text-align: right;width: 12%;">设备名称：</th>
+            <td>{$asArr.assets}</td>
+            <th style="text-align: right;width: 12%;">设备类型：</th>
+            <td>{$asArr.type_name}</td>
+        </tr>
+        <tr>
+            <th style="text-align: right;width: 12%;">规格型号：</th>
+            <td>{$asArr.model}</td>
+            <th style="text-align: right;width: 12%;">设备分类：</th>
+            <td>{$asArr.cat_name}</td>
+            <th style="text-align: right;width: 12%;">使用科室：</th>
+            <td>{$asArr.department_name}</td>
+        </tr>
+        <tr>
+            <th style="text-align: right;width: 12%;">当前状态：</th>
+            <td><span style="color: #FF5722">{$asArr.status_name}</span></td>
+            <th style="text-align: right;width: 12%;">资产原编号：</th>
+            <td>{$asArr.assorignum}</td>
+            <th style="text-align: right;width: 12%;">设备品牌：</th>
+            <td>{$asArr.brand}</td>
+        </tr>
+    </table>
+    <form class="layui-form layui-form-pane">
+        <input type="hidden" name="assetnum" value="{$asArr.assnum}">
+        <input type="hidden" name="cycid" value="{$cycid}">
+        <input type="hidden" name="action" value="{$action}">
+        <input type="hidden" name="url" value="{$url}">
+        <div class="layui-collapse">
+            <?php if($executeData['asset_status_num']!=C('ASSETS_STATUS_IN_MAINTENANCE') or $executeData['asset_status_num'] != C('ASSETS_STATUS_SCRAPPED')){ ?>
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">{$vo.name}</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table tablesorter alltable">
+                            <thead>
+                            <tr>
+                                <th style="width: 8%;text-align: center;">编号</th>
+                                <th style="width: 22%;text-align: center;">明细名称</th>
+                                <th style="width: 38%;text-align: center;">保养结果</th>
+                                <th style="text-align: center;">异常处理详情</th>
+                            </tr>
+                            </thead>
+                            <tbody id="parentid_{$vo.ppid}">
+                            <volist name="vo['detail']" id="v">
+                                <tr class="choose">
+                                    <td style="text-align: center;">{$v.num}<input type="hidden" class="ppid" value="{$v.ppid}"></td>
+                                    <td>{$v.name}</td>
+                                    <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                                        <td class="tdRadio">
+                                            <input type="radio" title="{$v.passTitle}" name="result[{$v.ppid}]" class="result" value="合格" lay-filter="result" {$v.passCheck} {$v.pass}>
+                                            <input type="radio" title="{$v.$repairTitle}" name="result[{$v.ppid}]" class="result" value="修复" lay-filter="result" {$v.repairCheck} {$v.repair} >
+                                            <input type="radio" title="{$v.availTitle}" name="result[{$v.ppid}]" class="result" value="可用" lay-filter="result" {$v.availCheck} {$v.avail}>
+                                            <input type="radio" title="{$v.repairedTitle}" name="result[{$v.ppid}]" class="result" value="待修" lay-filter="result" {$v.repairedCheck} {$v.repaired}>
+                                        </td>
+                                        <else/>
+                                        <td class="tdRadio">
+                                            <input {$v.disabled} type="radio" title="合格" name="result[{$v.ppid}]" class="result" value="合格" lay-filter="result"<if condition="$v[result] eq '合格'">checked</if>>
+                                            <input {$v.disabled} type="radio" title="修复" name="result[{$v.ppid}]" class="result" value="修复" lay-filter="result"<if condition="$v[result] eq '修复'">checked</if>>
+                                            <input {$v.disabled} type="radio" title="可用" name="result[{$v.ppid}]" class="result" value="可用" lay-filter="result"<if condition="$v[result] eq '可用'">checked</if>>
+                                            <input {$v.disabled} type="radio" title="待修" name="result[{$v.ppid}]" class="result" value="待修" lay-filter="result"<if condition="$v[result] eq '待修'">checked</if>>
+                                        </td>
+                                    </if>
+                                    <td style="text-align: center;">
+                                        <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                                            <if condition="$v[result] neq '合格'">
+                                                <span class="rquireCoin">{$v.remark}</span>
+                                            </if>
+                                            <else/>
+                                            <if condition="is_null($doTask[actionurl])">
+                                                <span class="rquireCoin">{$v.remark}</span>
+                                                <else/>
+                                                <textarea class="abnormal_remark <if condition=" $v[result] neq '合格' and$v[remark] eq null">red_border</if>" data-ppid="{$v.ppid}" style="width:100%;border: 1px solid #dddddd">{$v.remark}</textarea>
+                                            </if>
+                                        </if>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+            <?php } ?>
+            <table class="layui-table tablesorter alltable">
+                <tbody>
+                <if condition="$executeData[status] neq C('MAINTAIN_COMPLETE') and !is_null($doTask[actionurl])">
+                    <tr>
+                        <!--<td colspan="3" style="text-align: center;">-->
+                            <!--<a id="addPoints" data-tpid="{$asArr.tpid}" style="color: #00b3ee;text-decoration: none;cursor:pointer;"> >>明细项不在列表，补充进去<< </a>-->
+                        <!--</td>-->
+                    </tr>
+                </if>
+
+                <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                    <if condition="$executeData[asset_status_num] eq C('ASSETS_STATUS_NOT_OPERATION')">
+                        <tr>
+                            <td style="width: 12%">不做巡查保养原因：</td>
+                            <td colspan="2">{$executeData.reason}</td>
+                        </tr>
+                        <else/>
+                        <tr>
+                            <td style="width: 12%">设备现状：</td>
+                            <td colspan="2">{$executeData.asset_status}</td>
+                        </tr>
+                    </if>
+                    <tr>
+                        <td style="width: 12%">改善建议：</td>
+                        <td colspan="2">{$executeData.remark}</td>
+                    </tr>
+                    <else/>
+                    <if condition="!is_null($doTask[actionurl])">
+                        <tr>
+                            <td style="width: 12%">
+                                <span class="rquireCoin"> * </span>设备现状
+                            </td>
+                            <td colspan="2">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_NORMAL_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_NORMAL')}" lay-filter="asset_status">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_SMALL_PROBLEM_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_SMALL_PROBLEM')}" lay-filter="asset_status">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_FAULT_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_FAULT')}" lay-filter="asset_status">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_ABNORMAL_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_ABNORMAL')}" lay-filter="asset_status">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_IN_MAINTENANCE_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_IN_MAINTENANCE')}" lay-filter="asset_status">
+                                <input type="radio" title="{$a=C('ASSETS_STATUS_SCRAPPED_NAME')}" name="asset_status" value="{$a=C('ASSETS_STATUS_SCRAPPED')}" lay-filter="asset_status">
+                                <br><span class="rquireCoin">注：如该设备 <B>正在维修</B> / <B>已报废</B> / <B>该设备不做保养</B> ,上面的保养项可不填</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%">
+                                改善建议
+                            </td>
+                            <td colspan="2">
+                                <textarea name="remark" class="layui-textarea" style="width: 100%;border: 1px solid #dddddd"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 12%">
+                                <span class="rquireCoin"> * </span>是否保养
+                            </td>
+                            <td colspan="2">
+                                <input lay-skin="primary" type="checkbox" title="<span style='color:red;' >{$a=C('ASSETS_STATUS_NOT_OPERATION_NAME')}</span>" name="execute_status" value="{$a=C('ASSETS_STATUS_NOT_OPERATION')}" lay-filter="execute_status">
+                            </td>
+                        </tr>
+                        <tr class="reason">
+                            <td style="width: 12%">
+                                <span class="rquireCoin"> * </span>原因
+                            </td>
+                            <td colspan="2">
+                                <textarea name="reason" class="layui-textarea" style="width: 100%;border: 1px solid #dddddd"></textarea>
+                            </td>
+                        </tr>
+                    </if>
+                </if>
+                <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                    <tr>
+                        <td>完成时间：</td>
+                        <td>{$time}</td>
+                    </tr>
+                    <else />
+                    <if condition="$execute_time">
+                        <tr>
+                            <td>完成时间：</td>
+                            <td>
+                                <div class="layui-inline">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="complete_time" value="" placeholder="请点击选择完成时间" style="cursor: pointer;" id="executeData" readonly="readonly" class="layui-input">
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux" style="float: right;margin-left: 10px;">
+                                        {$hint}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </if>
+                </if>
+                <tr>
+                    <td>纸质报告：</td>
+                    <td>
+                        <button type="button" class="layui-btn layui-btn-primary" id="scanfile" data-url="">
+                                     预览报告
+                                    </button>
+                                    <button class="layui-btn layui-btn-warm" lay-submit lay-filter="upload" id="file_url" name="file_url" ><i class="layui-icon">&#xe67c;</i>上传纸质报告</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div style="text-align: center">
+                            <if condition="$executeData[status] eq C('MAINTAIN_COMPLETE')">
+                                {$COMPLETE}
+                                <else/>
+                                <if condition="!is_null($doTask[actionurl])">
+                                <div class="layui-form-item">
+                                    <lable class="user">
+                                        以
+                                        <volist name="user" id="v">
+                                            <input type="radio" title="{$v.username}" name="applicant" value="{$v.userid}" <if condition="$key eq 0"> checked</if>>
+                                        </volist>
+                                        的名义报修
+                                    </lable>
+                                    <button class="layui-btn layui-btn-normal layui-btn-disabled addRepair" disabled lay-submit lay-filter="addRepair">转至报修</button>
+                                    <button class="layui-btn layui-btn-warm layui-btn-disabled addexecute" disabled lay-submit lay-filter="addexecute"><i class="layui-icon">&#xe609;</i> 完成并保存该设备保养</button>
+                                    <button class="layui-btn layui temporary" lay-submit lay-filter="temporary">暂存该设备保养</button>
+                                    <button class="layui-btn layui-btn-danger reason" lay-submit lay-filter="noOperation">不进行保养并结束</button>
+                                </div>
+                                </if>
+                            </if>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+<script>
+    var asArr_Name='<?php echo($asArr[name]); ?>';
+    var assnum='{$asArr.assnum}';
+    var cycid='{$cycid}';
+    var file_path='{$path}';
+    var now = '{$now}';
+    var min = '{$min}';
+    var max = '{$max}';
+    var hint = '{$hint}';
+    layui.use('controller/patrol/patrol/setSituation', layui.factory('controller/patrol/patrol/setSituation'));
+</script>

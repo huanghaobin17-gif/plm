@@ -1,0 +1,142 @@
+<?php if (!defined('THINK_PATH')) exit();?><script>
+    var getMeteringList = "<?php echo ($getMeteringList); ?>";
+</script>
+<?php if($menuData = get_menu_name('Metering','Metering','getMeteringList')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<style>
+    #LAY-Metering-Metering-getMeteringList .downloadConfirmReport{
+        cursor: pointer;
+        color: #01AAED;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Metering-Metering-getMeteringList">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="mer_department" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <?php if(is_array($departmentInfo)): $i = 0; $__LIST__ = $departmentInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getMeteringListAssetsName" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-form-label" style="width: 100px;">产品序列号：</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入产品序列号" name="productid">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">计量分类：</label>
+                                <div class="layui-input-inline">
+                                    <select name="categorys" class="input_select" lay-search="">
+                                        <option value="">全部</option>
+                                        <?php if(is_array($categorys)): $i = 0; $__LIST__ = $categorys;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["mcid"]); ?>"><?php echo ($vo["mcategory"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 100px;">下次待检日期：</label>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly style="cursor: pointer;"
+                                           name="startDate" id="getMeteringListStartDate">
+                                </div>
+                                <div class="layui-form-mid">~</div>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly style="cursor: pointer;"
+                                           name="endDate" id="getMeteringListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width: 100px;">提前提醒天数：</label>
+                                <div class="layui-input-inline" style="width: 50px;">
+                                    <input type="text" name="day_min" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid">~</div>
+                                <div class="layui-input-inline" style="width: 50px;">
+                                    <input type="text" name="day_max" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-input-inline" style="width: 100px;">
+                                <input type="checkbox" name="getMeteringList_is_metering" value="1" lay-filter="metering" lay-skin="primary" title="计量设备" checked>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="getMeteringListSearch" id="getMeteringListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!--layui-card-->
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 计划列表
+                    </div>
+                    <div class="fr">
+                        <a class="downloadConfirmReport">点击下载《强制检定计量器具确认表》</a>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="getMeteringList" lay-filter="getMeteringData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('metering/metering/getMeteringList', layui.factory('metering/metering/getMeteringList'));
+</script>
+<script type="text/html" id="LAY-Metering-Metering-getMeteringListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Metering','Metering','addMetering')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addMetering" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon">&#xe654;</i>新增
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Metering','Metering','batchAddMetering')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchAddMetering" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon">&#xe67c;</i>批量导入
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Metering','Metering','batchSaveMetering')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchSaveMetering" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="iconfont icon-piliangxiugai1"></i> 批量修改
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Metering','Metering','delMetering')):?>
+            <button class="layui-btn layui-btn-sm" lay-event="batchDel"><i class="layui-icon">&#xe640;</i>一键删除</button>
+            <!--如果有已经有计量结果的，及只改sb_metering_plan的status状态2，然后不要在该列表不要显示就好了，不是真的删除-->
+        <?php endif?>
+    </div>
+</script>

@@ -1,0 +1,71 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>未授权页面</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            flex-direction: column;
+        }
+        #overlay {
+            display: none;
+        }
+        .overlay div {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div><img src="/Public/images/payItem.jpg?15634" width="300" style="display: block;" alt="未授权，请购买套餐"></div>
+        <div>未授权，请购买套餐</div>
+        <div>项目合作联系人：黄总 15975503475</div>
+        <div><a href="/manual" target="_blank" class="pay-button">查看操作手册</a></div>
+    </div>
+    <script>
+        function toggleOverlay() {
+            let overlay = document.getElementById('overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                overlay.style.zIndex = '1000';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.color = 'white';
+                overlay.style.fontSize = '24px';
+                overlay.style.flexDirection = 'column';
+                overlay.innerHTML = '未授权，购买后展示';
+                document.body.appendChild(overlay);
+            } else {
+                document.body.removeChild(overlay);
+            }
+        }
+    </script>
+    <!-- <ul id="menu">
+        <li><a href="#" onclick="toggleOverlay()">显示授权遮罩层</a></li>
+    </ul> -->
+</body>
+</html>

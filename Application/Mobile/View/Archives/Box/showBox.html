@@ -1,0 +1,134 @@
+<include file="Public:head"/>
+<?php if($menuData = get_menu_name('Archives','Box','boxList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .fileList li {
+        margin-top: 1rem;
+    }
+
+    .fileList span {
+        width: 15rem;
+        display: inline-block;
+    }
+    .typeIcon {
+        width: 1rem;
+        height: 1rem;
+        margin-bottom: 2px;
+        margin-right: 0;
+    }
+    .layui-colla-content{
+        padding: 10px;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-card-header borderNone">
+            <h2 class="detailTitle">档案盒信息</h2>
+            <div class="bl1px"></div>
+        </div>
+        <table class="layui-table read-table" lay-size="sm" lay-even="">
+            <colgroup>
+                <col width="100">
+                <col>
+            </colgroup>
+            <tbdoy>
+                <tr>
+                    <th class="text-right">档案盒名称：</th>
+                    <td >{$boxInfo.box_name}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">档案盒编号：</th>
+                    <td >{$boxInfo.box_num}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">文件时间段：</th>
+                    <td>{$boxInfo.date_span}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">文件数量：</th>
+                    <td>{$boxInfo.file_nums}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">即将过期数量：</th>
+                    <td>{$boxInfo.toexpire_nums}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">覆盖设备数量：</th>
+                    <td>{$boxInfo.assets_nums}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">覆盖科室数量：</th>
+                    <td>{$boxInfo.depart_nums}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">添加人：</th>
+                    <td>{$boxInfo.add_user}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">添加时间：</th>
+                    <td>{$boxInfo.add_time}</td>
+                </tr>
+                <tr>
+                    <th class="text-right">备注：</th>
+                    <td colspan="5">{$boxInfo.remark}</td>
+                </tr>
+            </tbdoy>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+            <legend>档案盒设备&文件信息</legend>
+        </fieldset>
+        <div class="layui-collapse" lay-filter="test">
+            <volist name="filesInfo" id="vo">
+                <div class="layui-colla-item ">
+                    <h2 class="layui-colla-title">{$vo.assets}（{$vo.assnum} | {$vo.department}）</h2>
+                    <div class="layui-colla-content layui-show">
+                        <ul class="fileList">
+                            <volist name="vo.files" id="dd" empty="$empty">
+                                <li>
+                                    <span>
+                                        <img src="__PUBLIC__/mobile/images/icon/{$dd.file_type}.png" class="typeIcon">
+                                        {$dd.file_name}
+                                    </span>
+                                    <div class="layui-btn-group" style="float: right;">
+                                        <if condition="$dd.file_type eq pdf">
+                                            <a type="button" class="layui-btn layui-btn-xs layui-btn-normal Preview" href="/M/Box/showFile?path={$dd.file_url}&name={$dd.file_name}">预览</a>
+                                        </if>
+                                        <if condition="($dd.file_type eq jpg) OR ($dd.file_type eq jpeg) OR ($dd.file_type eq png)">
+                                            <a type="button" class="layui-btn layui-btn-xs layui-btn-normal Preview showfile" data-url="{$dd.file_url}" href="javascript:;">预览</a>
+                                        </if>
+                                        <?php $file_url=urlencode($dd['file_url']); ?>
+                                        <a href="/M/Notin/download?path={$file_url}&name={$dd['file_name']}" type="button" class="layui-btn layui-btn-xs" data-name="{$dd.file_name}" data-path="{$dd.file_url}">下载</a>
+                                    </div>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<include file="Public:buttom"/>
+<script src="__PUBLIC__/mobile/js/weui/showImages.js"></script>
+<script>
+    $(".showfile").click(function () {
+        var pic_url = [];
+        pic_url[0] = $(this).attr('data-url');
+        if(pic_url){
+            var photos = $.photoBrowser({
+                items: pic_url
+            });
+        }
+        photos.open();
+    });
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+    });
+</script>

@@ -1,0 +1,31 @@
+<style>
+    #print_depart .batch_content{
+        color:#000000;
+        font-size: 12px;
+    }
+    @page{
+        margin:0 0 0 8px;
+        font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+    }
+</style>
+<div class="batch_content">
+    <table class="show_table" style="width: 120px">
+        <tbody>
+        <volist name="departInfo['label']" id="vo">
+            <tr>
+                <td class="line_height" style="text-align: center;">
+                    <img src="{$vo.label_url}" style="width: 85%" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line_height" style="text-align: center;font-size: 12px;color:#000">
+                    {$vo.department}
+                    <br/>
+                    {$vo.label_code}
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+

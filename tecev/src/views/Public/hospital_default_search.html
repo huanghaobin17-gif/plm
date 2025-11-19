@@ -1,0 +1,16 @@
+<?php if(session('hospitals')){ ?>
+<div class="layui-inline">
+    <label class="layui-form-label">所属医院：</label>
+    <div class="layui-input-inline">
+        <select name="hospital_id" lay-search="" lay-filter="hospital_id">
+            <?php foreach(session('hospitals') as $k=>$v){ ?>
+                <?php if(session('job_hospitalid') == $v['hospital_id']){ ?>
+                    <option value="{$v['hospital_id']}" selected>{$v['hospital_name']}</option>
+                <?php }else{ ?>
+                    <option value="{$v['hospital_id']}">{$v['hospital_name']}</option>
+                <?php } ?>
+            <?php } ?>
+        </select>
+    </div>
+</div>
+<?php } ?>

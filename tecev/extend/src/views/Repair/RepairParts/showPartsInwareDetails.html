@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairParts-partsInWareApply">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">入库单信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>入库单号：</th>
+                <td>{$inware.inware_num}</td>
+                <th>供应商：</th>
+                <td>{$inware.supplier_name}</td>
+            </tr>
+            <tr>
+                <th>入库日期：</th>
+                <td>{$inware.buydate}</td>
+                <th>入库备注：</th>
+                <td>{$inware.remark}</td>
+            </tr>
+            <tr>
+                <th>配件数量：</th>
+                <td>{$inware.sum}</td>
+                <th>配件总金额：</th>
+                <td>{$inware.total_price}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <if condition="$inware.repid neq null">
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">关联维修单信息</div>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>维修单号：</th>
+                    <td>{$repArr.repnum}</td>
+                    <th>接单工程师：</th>
+                    <td>{$repArr.response}</td>
+                    <th>接单时间：</th>
+                    <td>{$repArr.response_date}</td>
+                </tr>
+                <tr>
+                    <th>资产编号：</th>
+                    <td>{$asArr.assnum}</td>
+                    <th>规格型号：</th>
+                    <td>{$asArr.model}</td>
+                    <th>资产名称：</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>资产厂家：</th>
+                    <td>{$asArr.factory}</td>
+                    <th>分类名称：</th>
+                    <td>{$asArr.category}</td>
+                    <th>使用科室：</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>保修截止日期：</th>
+                    <td>{$asArr.guarantee_date}</td>
+                    <th>保修状态：</th>
+                    <td>{$asArr.guaranteeStatus}</td>
+                    <th>接单人：</th>
+                    <td>{$repArr.response}</td>
+                </tr>
+                <tr>
+                    <th>故障问题：</th>
+                    <td colspan="5"><?php echo htmlspecialchars_decode($repArr['fault_problem']) ?></td>
+                </tr>
+                <tr>
+                    <th>解决方式：</th>
+                    <if condition="$repArr['is_scene'] eq C('YES_STATUS')">
+                        <td colspan="5">现场解决</td>
+                        <else/>
+                        <td colspan="5">非现场解决</td>
+                    </if>
+                </tr>
+                <if condition="$repArr['is_scene'] neq C('YES_STATUS')">
+                    <tr>
+                        <th>维修性质：</th>
+                        <td colspan="5">{$repArr.repTypeName}</td>
+                    </tr>
+                </if>
+                <tr>
+                    <th>检修备注：</th>
+                    <td colspan="5">{$repArr.repair_remark}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <div class="layui-elem-quote">关联维修单所需配件/服务明细</div>
+            <table class="layui-table" lay-even lay-size="sm">
+                <thead>
+                <tr>
+                    <th style="text-align: center">配件名称</th>
+                    <th style="text-align: center">型号</th>
+                    <th style="text-align: center;width:100px;">数量</th>
+                    <th style="text-align: center;width:100px;">操作人</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="parts">
+                    <tr>
+                        <td colspan="4">无记录</td>
+                    </tr>
+                    <else/>
+                    <volist name="parts" id="v">
+                        <tr>
+                            <td style="text-align: center">{$v.parts}</td>
+                            <td style="text-align: center">{$v.part_model}</td>
+                            <td style="text-align: center">{$v.part_num}</td>
+                            <td style="text-align: center">
+                                <empty name="v[edituser]">
+                                    {$v.adduser}
+                                    <else/>
+                                    {$v.edituser}
+                                </empty>
+                            </td>
+                        </tr>
+                    </volist>
+                </empty>
+                </tbody>
+            </table>
+        </div>
+    </if>
+    <div class="layui-elem-quote">入库配件明细</div>
+    <table class="layui-table" lay-even lay-size="sm" style="margin-top: 0px;">
+        <colgroup>
+            <col>
+            <col>
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>配件名称</th>
+            <th>配件型号</th>
+            <th>数量</th>
+            <th>单价</th>
+            <th>总价</th>
+            <th>单位</th>
+            <th>品牌</th>
+            <th>生产厂商</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="inware_detail" id="vo">
+            <tr>
+                <td>{$vo.parts}</td>
+                <td>{$vo.parts_model}</td>
+                <td>{$vo.max_sum}</td>
+                <td>{$vo.price}</td>
+                <td>{$vo.total_price}</td>
+                <td>{$vo.unit}</td>
+                <td>{$vo.brand}</td>
+                <td>{$vo.manufacturer_name}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+
+    <if condition="$can_edit eq 1">
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn layui-btn-danger" id="backup" data-id="{$inware.inwareid}" href="javascript:void(0);">
+                    退回到入库前状态
+                </button>
+            </div>
+        </div>
+    </if>
+    <if condition="$can_del eq 1">
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn layui-btn-danger" id="delInware" data-id="{$inware.inwareid}" href="javascript:void(0);">
+                    删除该入库单
+                </button>
+            </div>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    var $2 = $.noConflict(true);
+</script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        $2("#backup").on('click',function () {
+            var params = {};
+            params.action = 'backup';
+            params.inwareid = $2(this).attr('data-id');
+            layer.confirm('回退到入库前状态，需要重新进行入库操作才可以出库，确定回退吗？（如需修改入库单的可以进行此操作）', {icon: 3, title: '回退操作'}, function (index) {
+                $2.ajax({
+                    timeout: 5000,
+                    type: "POST",
+                    url: 'partsInWare',
+                    data: params,
+                    dataType: "json",
+                    beforeSend:beforeSend,
+                    async:false,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                                parent.location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon : 2,time:1000});
+                        }
+                    },
+                    error: function () {
+                        layer.msg("网络访问失败",{icon : 2,time:1000});
+                    },
+                    complete:complete
+                });
+                layer.close(index);
+            });
+        });
+        $2("#delInware").on('click',function () {
+            var params = {};
+            params.action = 'delInware';
+            params.inwareid = $2(this).attr('data-id');
+            layer.confirm('删除入库单后，相应配件将会在库存中减少，确定要删除吗', {icon: 3, title: '删除操作'}, function (index) {
+                $2.ajax({
+                    timeout: 5000,
+                    type: "POST",
+                    url: 'partsInWare',
+                    data: params,
+                    dataType: "json",
+                    beforeSend:beforeSend,
+                    async:false,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                                parent.location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon : 2,time:1000});
+                        }
+                    },
+                    error: function () {
+                        layer.msg("网络访问失败",{icon : 2,time:1000});
+                    },
+                    complete:complete
+                });
+                layer.close(index);
+            });
+        });
+    });
+</script>

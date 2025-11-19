@@ -1,0 +1,356 @@
+<?php if($menuData = get_menu_name('BaseSetting','ModuleSetting','module')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .layui-table .layui-input-inline {
+        margin-left: -10px;
+        width: 108%;
+    }
+    .fanwei{
+        width: 450px;
+        float: left;
+        margin-left: 20px;
+    }
+</style>
+
+<div class="layui-fluid" id="LAY-BaseSetting-ModuleSetting-module">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form layui-form-pane"  action="">
+                        <input type="hidden" name="action" value="{$url}"/>
+                        <div class="content">
+                            <blockquote class="layui-elem-quote module-blockquote">医院配置</blockquote>
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="6%">
+                                    <col width="22%">
+                                    <col width="10%">
+                                    <col width="10%">
+                                    <col width="13%">
+                                    <col width="13%">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th style="text-align: center;">院系</th>
+                                    <th style="text-align: center;">医院名称（最长14个字符）</th>
+                                    <th style="text-align: center;">代码</th>
+                                    <th style="text-align: center;">联系人</th>
+                                    <th style="text-align: center;">联系电话</th>
+                                    <th style="text-align: center;">采购年限下限</th>
+                                    <th style="text-align: center;">联系地址</th>
+                                </tr>
+                                </thead>
+                                <tbody id="module_hospitals">
+                                <if condition="$hospitals">
+                                    <volist name="hospitals" id="vo">
+                                        <tr>
+                                            <if condition="$vo.is_general_hospital eq 1">
+                                                <td style="text-align: center">总院</td>
+                                                <else/>
+                                                <td style="text-align: center">分院</td>
+                                            </if>
+                                            <input type="hidden" name="hospital_id[]" value="{$vo.hospital_id}"/>
+                                            <input type="hidden" name="is_general_hospital[]" value="{$vo.is_general_hospital}"/>
+                                            <td>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="hospital_name[]" value="{$vo.hospital_name}" maxlength="14" lay-verify="required|hospital_name" placeholder="医院名称" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="hospital_code[]" <if condition="$canEdit[$vo['hospital_id']] eq 0">readonly</if> value="{$vo.hospital_code}" lay-verify="required|hospital_code" autocomplete="off" placeholder="医院代码" class="layui-input">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="contacts[]" value="{$vo.contacts}" lay-verify="required|contacts" autocomplete="off" placeholder="联系人" class="layui-input">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="phone[]" value="{$vo.phone}" lay-verify="required" autocomplete="off" placeholder="联系电话" class="layui-input">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="amount_limit[]" value="{$vo.amount_limit}" lay-verify="required|amount_limit|number" autocomplete="off" placeholder="采购年限下限" class="layui-input">
+                                            </td>
+                                            <td>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="address[]" value="{$vo.address}" lay-verify="required|address" autocomplete="off" placeholder="详细地址" class="layui-input">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    <else/>
+                                    <tr>
+                                        <td style="text-align: center">总院</td>
+                                        <input type="hidden" name="hospital_id[]" value="1"/>
+                                        <input type="hidden" name="is_general_hospital[]" value="1"/>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="hospital_name[]" value="" lay-verify="required|hospital_name" placeholder="医院名称" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="hospital_code[]" value="" lay-verify="required|hospital_code" autocomplete="off" placeholder="医院代码" class="layui-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="contacts[]" value="" lay-verify="required|contacts" autocomplete="off" placeholder="联系人" class="layui-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="phone[]" value="" lay-verify="required" autocomplete="off" placeholder="联系电话" class="layui-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="amount_limit[]" value="" lay-verify="required" autocomplete="off" placeholder="采购年限下限" class="layui-input">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="address[]" value="" lay-verify="required|address" autocomplete="off" placeholder="详细地址" class="layui-input">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </if>
+                                </tbody>
+                            </table>
+                            <if condition="$canAddHospital eq 1">
+                                <div style="text-align: center">
+                                    <a class="addhospital" >&gt;&gt;新增分院&lt;&lt; </a>
+                                </div>
+                            </if>
+                        </div>
+                        <div class="content">
+                            <blockquote class="layui-elem-quote module-blockquote">首页显示设置</blockquote>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">科室维修费用分析：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_depart_repair][is_open]" lay-filter="target_chart_depart_repair" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_depart_repair'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_depart_repair][is_open]" lay-filter="target_chart_depart_repair" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_depart_repair'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_depart_repair" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_depart_repair][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_depart_repair'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_depart_repair][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_depart_repair'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备增加情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_add][is_open]" lay-filter="target_chart_assets_add" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_add'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_add][is_open]" lay-filter="target_chart_assets_add" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_add'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_add" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_add][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_add'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_add][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_add'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备报废情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_scrap][is_open]" lay-filter="target_chart_assets_scrap" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_scrap'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_scrap][is_open]" lay-filter="target_chart_assets_scrap" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_scrap'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_scrap" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_scrap][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_scrap'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_scrap][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_scrap'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备采购支出情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_purchases][is_open]" lay-filter="target_chart_assets_purchases" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_purchases'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_purchases][is_open]" lay-filter="target_chart_assets_purchases" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_purchases'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_purchases" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_purchases][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_purchases'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_purchases][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_purchases'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left;width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备效益分析：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_benefit][is_open]" lay-filter="target_chart_assets_benefit" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_benefit'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_benefit][is_open]" lay-filter="target_chart_assets_benefit" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_benefit'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_benefit" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_benefit][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_benefit'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_benefit][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_benefit'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">不良事件情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_adverse][is_open]" lay-filter="target_chart_assets_adverse" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_adverse'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_adverse][is_open]" lay-filter="target_chart_assets_adverse" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_adverse'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_adverse" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_adverse][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_adverse'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_adverse][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_adverse'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备转移情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_move][is_open]" lay-filter="target_chart_assets_move" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_move'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_move][is_open]" lay-filter="target_chart_assets_move" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_move'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_adverse" style="display: none;">-->
+                                    <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                    <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_move][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_move'][fanwei] eq 'all'">checked</if> >-->
+                                        <!--<input type="radio" name="target_setting[target_chart_assets_move][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_move'][fanwei] neq 'all'">checked</if> >-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                            <div>
+                                <div class="layui-form-item" pane="" style="float:left; width: 360px;">
+                                    <label class="layui-form-label modulelabel">设备保养情况：</label>
+                                    <div class="layui-input-block radio-margin-left">
+                                        <input type="radio" name="target_setting[target_chart_assets_patrol][is_open]" lay-filter="target_chart_assets_patrol" value="1" title="显示" <if condition="$settings['target_setting']['target_chart_assets_patrol'][is_open] eq 1">checked</if> >
+                                        <input type="radio" name="target_setting[target_chart_assets_patrol][is_open]" lay-filter="target_chart_assets_patrol" value="0" title="不显示" <if condition="$settings['target_setting']['target_chart_assets_patrol'][is_open] neq 1">checked</if> >
+                                    </div>
+                                </div>
+                                <!--<div class="fanwei target_chart_assets_adverse" style="display: none;">-->
+                                <!--<label class="layui-form-label modulelabel">统计范围：</label>-->
+                                <!--<div class="layui-input-block radio-margin-left" style="border: 1px solid #e6e6e6;margin-left: 1px !important;">-->
+                                <!--<input type="radio" name="target_setting[target_chart_assets_adverse][fanwei]" value="all" title="全部科室" <if condition="$settings['target_setting']['target_chart_assets_adverse'][fanwei] eq 'all'">checked</if> >-->
+                                <!--<input type="radio" name="target_setting[target_chart_assets_adverse][fanwei]" value="not_all" title="用户管理科室" <if condition="$settings['target_setting']['target_chart_assets_adverse'][fanwei] neq 'all'">checked</if> >-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <!--采购管理-->
+                        
+                        <if condition="$settings_display.purchaseSetting eq 1 "><include file="BaseSetting:ModuleSetting:purchaseSetting"/>
+                        </if>
+                        <!--设备管理-->
+                        <if condition="$settings_display.assetsSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:assetsSetting"/>
+                        </if>
+                        <!--维修管理-->
+                        <if condition="$settings_display.repairSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:repairSetting"/>
+                        </if>
+                        <!--巡查管理-->
+                        <if condition="$settings_display.patrolSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:patrolSetting"/>
+                        </if>
+                        <!--质控管理-->
+                        <if condition="$settings_display.qualitiesSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:qualitiesSetting"/>
+                        </if>
+                        <!--计量管理-->
+                        <if condition="$settings_display.meteringSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:meteringSetting"/>
+                        </if>
+                        <!--不良事件管理-->
+                        <if condition="$settings_display.adverseSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:adverseSetting"/>
+                        </if>
+                        <!--效益分析管理-->
+                        <if condition="$settings_display.benefitSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:benefitSetting"/>
+                        </if>
+                        <!--统计分析管理-->
+                        <if condition="$settings_display.statisticsSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:statisticsSetting"/>
+                        </if>
+                        <!--决策分析管理-->
+                        <if condition="$settings_display.strategySetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:strategySetting"/>
+                        </if>
+                        <!--监控管理-->
+                        <if condition="$settings_display.monitorSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:monitorSetting"/>
+                        </if>
+                        <!--档案管理-->
+                        <if condition="$settings_display.archivesSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:archivesSetting"/>
+                        </if>
+                        <!--培训管理-->
+                        <if condition="$settings_display.trainSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:trainSetting"/>
+                        </if>
+                        <!--盘点管理-->
+                        <if condition="$settings_display.inventorySetting eq 1 ">
+                            <include file="BaseSetting:ModuleSetting:inventorySetting"/>
+                        </if>
+                        <!--服务商管理-->
+                        <if condition="$settings_display.suppliersSetting eq 1 ">
+                        <include file="BaseSetting:ModuleSetting:suppliersSetting"/>
+                        </if>
+                        <!--微信公众号绑定验证-->
+                        <?php  if(session('isSuper')==C('YES_STATUS')){?>
+                        <blockquote class="layui-elem-quote module-blockquote">微信公众号</blockquote>
+                        <div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+                            <label class="layui-form-label modulelabel-2">微信端启停：</label>
+                            <div class="layui-input-block radio-margin-left">
+                                <input type="radio" name="wx_setting[wx_setting_open][open]" lay-filter="wx_setting_open"  value="1" title="启用" <if condition="$settings['wx_setting']['wx_setting_open'][open] eq 1">checked</if> >
+                                <input type="radio" name="wx_setting[wx_setting_open][open]" lay-filter="wx_setting_open"  value="0" title="停用" <if condition="$settings['wx_setting']['wx_setting_open'][open] neq 1">checked</if> >
+                            </div>
+                        </div>
+                        <div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+                            <label class="layui-form-label modulelabel-2">后台登陆绑定微信：</label>
+                            <div class="layui-input-block wx radio-margin-left">
+                                <input type="radio"  name="wx_setting[open_wx_login_binding][open]"  value="1" title="需要" <if condition="$settings['wx_setting']['open_wx_login_binding'][open] eq 1">checked</if> >
+                                <input type="radio" name="wx_setting[open_wx_login_binding][open]"  value="0" title="不需要" <if condition="$settings['wx_setting']['open_wx_login_binding'][open] neq 1">checked</if> >
+                            </div>
+                        </div>
+                        <?php } ?>
+                        <div style="text-align: center">
+                            <button class="layui-btn" lay-submit lay-filter="saveSetting" type="button" style="margin-top: 15px;"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                            <button type="reset" style="margin-top: 15px;" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置 </button>
+                        </div>
+                        <br/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/ajax.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use('basesetting/modulesetting/module', layui.factory('basesetting/modulesetting/module'));
+</script>

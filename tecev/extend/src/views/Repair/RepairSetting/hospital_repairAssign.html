@@ -1,0 +1,356 @@
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>自动派工设置</legend>
+</fieldset>
+<input type="hidden" name="hos_id" value="{$hospital_id}"/>
+<div lay-filter="repairAssignTab" class="layui-tab" style="margin: 0px;">
+    <ul class="layui-tab-title" style="margin:0 10px; background-color: #ffffff">
+        <li class="layui-this" lay-id="1">按分类划分</li>
+        <li lay-id="2">按科室划分</li>
+        <li lay-id="3">按设备辅助分类划分</li>
+        <li lay-id="4">按设备划分</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--按分类划分-->
+        <div class="layui-tab-item layui-show">
+            <div class="layui-card">
+                <table class="layui-table" lay-size="sm">
+                        <colgroup>
+                            <col width="60">
+                            <col width="150">
+                            <col width="">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 维修工程师</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 分类</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="category-body">
+                        <empty name="assign.category">
+                            <tr class="arc-empty">
+                                <td colspan="4" style="text-align: center;">暂时没数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="assign.category" id="vo" key="k">
+                                <tr class="content">
+                                    <td class="assignid_td" style="text-align: center">
+                                        {$k}<input type="hidden" name="assignid" value="{$vo.assignid}">
+                                    </td>
+                                    <td class="no-padding-td layui-form">
+                                        {$vo.username}
+                                    </td>
+                                    <td class="no-padding-td">
+                                        <select data-val="{$vo.data_val}" lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various change_dataValue" >
+                                            <volist name="vo.categorySelect" id="category">
+                                                <option value="{$category.id}" {$category.selected} >{$category.title}</option>
+                                            </volist>
+                                        </select>
+                                    </td>
+                                    <td class="td-align-center">
+                                        <form action="" class="layui-form">
+                                            <button class="layui-btn layui-btn-xs layui-btn-danger" lay-submit lay-filter="delAssign">
+                                                删除
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        <tr class="add_count">
+                            <td class="layui-bg-gray assignid_td" style="text-align: center">新增<input type="hidden" name="assignid" value=""></td>
+                            <td class="no-padding-td layui-form">
+                                <select name="user" class="layui-input" lay-filter="change_user">
+                                    <empty name="assign.categoryUserSelect">
+                                        <option value="">工程师已全部分配</option>
+                                        <else/>
+                                        <option value="">请选择</option>
+                                        <volist name="assign.categoryUserSelect" id="categoryUser">
+                                            <option value="{$categoryUser.userid}" >{$categoryUser.username}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="no-padding-td">
+                                <select lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various">
+                                    <empty name="assign.categorySelect">
+                                        <option value="">科室已全部分配</option>
+                                        <else/>
+                                        <volist name="assign.categorySelect" id="category">
+                                            <option value="{$category.id}" >{$category.title}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="td-align-center">
+                                <form action="" class="layui-form">
+                                    <button class="layui-btn layui-btn-xs" lay-submit="" lay-filter="addAssign">保存</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary" lay-submit="" lay-filter="resetAssign" style="margin-left:5px">重置</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <!--按科室划分-->
+        <div class="layui-tab-item">
+            <div class="layui-card">
+                <table class="layui-table" lay-size="sm">
+                        <colgroup>
+                            <col width="60">
+                            <col width="150">
+                            <col width="">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 维修工程师</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 科室</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="department-body">
+                        <empty name="assign.department">
+                            <tr class="arc-empty">
+                                <td colspan="4" style="text-align: center;">暂时没数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="assign.department" id="vo" key="k">
+                                <tr class="content">
+                                    <td class="assignid_td" style="text-align: center">
+                                        {$k}<input type="hidden" name="assignid" value="{$vo.assignid}">
+                                    </td>
+                                    <td class="no-padding-td layui-form">
+                                        {$vo.username}
+                                    </td>
+                                    <td class="no-padding-td">
+                                        <select data-val="{$vo.data_val}" lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various change_dataValue" >
+                                            <volist name="vo.departmentSelect" id="department">
+                                                <option value="{$department.id}" {$department.selected} >{$department.title}</option>
+                                            </volist>
+                                        </select>
+                                    </td>
+                                    <td class="td-align-center">
+                                        <form action="" class="layui-form">
+                                            <button class="layui-btn layui-btn-xs layui-btn-danger" lay-submit lay-filter="delAssign">
+                                                删除
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        <tr class="add_count">
+                            <td class="layui-bg-gray assignid_td" style="text-align: center">新增<input type="hidden" name="assignid" value=""></td>
+                            <td class="no-padding-td layui-form">
+                                <select name="user" class="layui-input" lay-filter="change_user">
+                                    <empty name="assign.departmentUserSelect">
+                                        <option value="">工程师已全部分配</option>
+                                        <else/>
+                                        <option value="">请选择</option>
+                                        <volist name="assign.departmentUserSelect" id="departmentUser">
+                                            <option value="{$departmentUser.userid}" >{$departmentUser.username}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="no-padding-td layui-form">
+                                <select lay-ignore placeholder="请先选择维修工程师" name="dataValue" id="departmentSelect" multiple="multiple" class="various">
+                                </select>
+                            </td>
+                            <td class="td-align-center">
+                                <form action="" class="layui-form">
+                                    <button class="layui-btn layui-btn-xs" lay-submit="" lay-filter="addAssign">保存</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary" lay-submit="" lay-filter="resetAssign" style="margin-left:5px">重置</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <!--按设备辅助分类划分-->
+        <div class="layui-tab-item">
+            <div class="layui-card">
+                <table class="layui-table" lay-size="sm">
+                        <colgroup>
+                            <col width="60">
+                            <col width="150">
+                            <col width="">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 维修工程师</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 设备辅助分类</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="auxiliary-body">
+                        <empty name="assign.auxiliary">
+                            <tr class="arc-empty">
+                                <td colspan="4" style="text-align: center;">暂时没数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="assign.auxiliary" id="vo" key="k">
+                                <tr class="content">
+                                    <td class="assignid_td" style="text-align: center">
+                                        {$k}<input type="hidden" name="assignid" value="{$vo.assignid}">
+                                    </td>
+                                    <td class="no-padding-td layui-form">
+                                        {$vo.username}
+                                    </td>
+                                    <td class="no-padding-td">
+                                        <select data-val="{$vo.data_val}" lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various change_dataValue" >
+                                            <volist name="vo.auxiliarySelect" id="auxiliary">
+                                                <option value="{$auxiliary.id}" {$auxiliary.selected} >{$auxiliary.title}</option>
+                                            </volist>
+                                        </select>
+                                    </td>
+                                    <td class="td-align-center">
+                                        <form action="" class="layui-form">
+                                            <button class="layui-btn layui-btn-xs layui-btn-danger" lay-submit lay-filter="delAssign">
+                                                删除
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        <tr class="add_count">
+                            <td class="layui-bg-gray assignid_td" style="text-align: center">新增<input type="hidden" name="assignid" value=""></td>
+                            <td class="no-padding-td layui-form">
+                                <select name="user" class="layui-input" lay-filter="change_user">
+                                    <empty name="assign.auxiliaryUserSelect">
+                                        <option value="">工程师已全部分配</option>
+                                        <else/>
+                                        <option value="">请选择</option>
+                                        <volist name="assign.auxiliaryUserSelect" id="auxiliaryUser">
+                                            <option value="{$auxiliaryUser.userid}" >{$auxiliaryUser.username}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="no-padding-td layui-form">
+                                <select lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various">
+                                    <empty name="assign.auxiliarySelect">
+                                        <option value="">科室已全部分配</option>
+                                        <else/>
+                                        <volist name="assign.auxiliarySelect" id="auxiliary">
+                                            <option value="{$auxiliary.id}" >{$auxiliary.title}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="td-align-center">
+                                <form action="" class="layui-form">
+                                    <button class="layui-btn layui-btn-xs" lay-submit="" lay-filter="addAssign">保存</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary" lay-submit="" lay-filter="resetAssign" style="margin-left:5px">重置</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+        <!--按设备划分-->
+        <div class="layui-tab-item">
+            <div class="layui-card">
+                <table class="layui-table" lay-size="sm">
+                        <colgroup>
+                            <col width="60">
+                            <col width="150">
+                            <col width="">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="th-align-center">序号</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 维修工程师</th>
+                            <th class="th-align-center"><span class="rquireCoin">*</span> 设备</th>
+                            <th class="th-align-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="assets-body">
+                        <empty name="assign.assets">
+                            <tr class="arc-empty">
+                                <td colspan="4" style="text-align: center;">暂时没数据</td>
+                            </tr>
+                            <else/>
+                            <volist name="assign.assets" id="vo" key="k">
+                                <tr class="content">
+                                    <td class="assignid_td" style="text-align: center">
+                                        {$k}<input type="hidden" name="assignid" value="{$vo.assignid}">
+                                    </td>
+                                    <td class="no-padding-td layui-form">
+                                        {$vo.username}
+                                    </td>
+                                    <td class="no-padding-td">
+                                        <select data-val="{$vo.data_val}" lay-ignore placeholder="请选择" name="dataValue" multiple="multiple" class="various change_dataValue" >
+                                            <volist name="vo.assetsSelect" id="assets">
+                                                <option value="{$assets.id}" {$assets.selected} >{$assets.title}</option>
+                                            </volist>
+                                        </select>
+                                    </td>
+                                    <td class="td-align-center">
+                                        <form action="" class="layui-form">
+                                            <button class="layui-btn layui-btn-xs layui-btn-danger" lay-submit lay-filter="delAssign">
+                                                删除
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </empty>
+                        <tr class="add_count">
+                            <td class="layui-bg-gray assignid_td" style="text-align: center">新增<input type="hidden" name="assignid" value=""></td>
+                            <td class="no-padding-td layui-form">
+                                <select name="user" class="layui-input" lay-filter="change_user">
+                                    <empty name="assign.assetsUserSelect">
+                                        <option value="">工程师已全部分配</option>
+                                        <else/>
+                                        <option value="">请选择</option>
+                                        <volist name="assign.assetsUserSelect" id="assetsUser">
+                                            <option value="{$assetsUser.userid}" >{$assetsUser.username}</option>
+                                        </volist>
+                                    </empty>
+                                </select>
+                            </td>
+                            <td class="no-padding-td layui-form">
+                                <select lay-ignore placeholder="请先选择维修工程师" name="dataValue" id="assetsSelect" multiple="multiple" class="various">
+                                </select>
+                            </td>
+                            <td class="td-align-center">
+                                <form action="" class="layui-form">
+                                    <button class="layui-btn layui-btn-xs" lay-submit="" lay-filter="addAssign">保存</button>
+                                    <button class="layui-btn layui-btn-xs layui-btn-primary" lay-submit="" lay-filter="resetAssign" style="margin-left:5px">重置</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //多选插件设置
+    $(document).ready(function () {
+        $('.various').SumoSelect({
+            csvDispCount: 5,
+            selectAll: true,
+            search: true,
+            searchText: '',
+            noMatch: '暂无可分配数据',
+            captionFormatAllSelected: '已选择全部结果',
+            captionFormat: '已选择{0}个结果',
+            locale: ['OK', 'Cancel', '全选']
+        });
+    });
+</script>
+

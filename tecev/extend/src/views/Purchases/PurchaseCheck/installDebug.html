@@ -1,0 +1,96 @@
+<?php if($menuData = get_menu('Purchases','PurchaseCheck','installDebug')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchaseApply-purchaseApplyList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">：</label>
+                                <div class="layui-input-inline">
+                                    <select name="" id="">
+                                        <option value="">--请选择--</option>
+                                        <option value="1">正常申请（计划内）</option>
+                                        <option value="2">特殊申请（计划外）</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">：</label>
+                                <div class="layui-input-inline">
+                                    <select name="" id="">
+                                        <option value="">--请选择--</option>
+                                        <option value="1">报废更新</option>
+                                        <option value="2">添置</option>
+                                        <option value="3">新增</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">：</label>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input type="text" id="stat-data" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid">至</div>
+                                <div class="layui-input-inline" style="width: 100px;">
+                                    <input type="text" id="over-data" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="" id="">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 科室采购申请
+                    </div>
+                    <div class="fl m-left">
+                        <button class="layui-btn layui-btn-xs" id="addPurchaseApply" data-url="/A/PurchaseApply/addPurchaseApply">新增采购申请</button>
+                        <!--以下两个跟随列表具体，不在此头-->
+                        <button class="layui-btn layui-btn-xs" id="purchaseApplyApprove" data-url="/A/PurchaseApply/purchaseApplyApprove">审批</button>
+                        <button class="layui-btn layui-btn-xs" id="showPurchaseApply" data-url="/A/PurchaseApply/showPurchaseApply">查看</button>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="getPurchaseApplyList" lay-filter=""></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('purchases/check/installDebugList', layui.factory('purchases/check/installDebugList'));
+</script>

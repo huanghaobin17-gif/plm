@@ -1,0 +1,139 @@
+<?php if($menuData = get_menu_name('Patrol','PatrolSetting','initialization')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-patrol-patrolsetting-initialization" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >设备名称</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="initializationAssets" placeholder="请输入设备名称" name="initializationAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="initializationAssnum"  placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >设备分类</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="initializationCategory" placeholder="请输入设备分类" name="initializationCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >使用科室</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="initializationDepartment" placeholder="请输入科室名称" name="initializationDepartment">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">价格区间：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search="" name="initializationPrice" >
+                                        <option value="">请选择价格区间</option>
+                                        <volist name="price" id="vo">
+                                            <option value="{$vo}">{$vo}元</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设定与否</label>
+                                <input type="radio" name="initializationIsDefault" value="0" title="全部" checked>
+                                <input type="radio" name="initializationIsDefault" value="1" title="是">
+                                <input type="radio" name="initializationIsDefault" value="2" title="否">
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">维保状态</label>
+                                <input type="radio" name="initializationStatus" value="0" title="全部" checked>
+                                <input type="radio" name="initializationStatus" value="1" title="保内">
+                                <input type="radio" name="initializationStatus" value="2" title="保外">
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备类型</label>
+                                <input type="checkbox" name="type" value="is_firstaid" title="急救设备" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_special" title="特种设备" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_metering" title="计量设备" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_qualityAssets" title="质控设备" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_patrol" title="保养设备" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_benefit" title="效益分析" lay-skin="primary">
+                                <input type="checkbox" name="type" value="is_lifesupport" title="生命支持" lay-skin="primary">
+                            </div>
+                            <div class="layui-inline" style="text-align: center;margin-left: 10px;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="initializationSearch"><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="initialization" lay-filter="initializationData"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('patrol/patrolsetting/initialization', layui.factory('patrol/patrolsetting/initialization'));
+</script>
+<script type="text/html" id="LAY-patrol-patrolsetting-initializationToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Patrol','PatrolSetting','batchSettingTemplate')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchSetttingTemplate" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe614;</i>批量设定模板
+        </button>
+        <?php endif?>
+    </div>
+</script>
+

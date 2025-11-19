@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        #LAY-Repair-RepairParts-partsOutWare .no-padding-td {
+            padding: 0 !important;
+        }
+
+        #LAY-Repair-RepairParts-partsOutWare .no-padding-td .layui-input {
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+        #LAY-Repair-RepairParts-partsOutWare .no-padding-td .layui-input{
+            border: none;
+            height: 48px;
+            line-height: 48px;
+        }
+
+        #LAY-Repair-RepairParts-partsOutWare .rightAddButton{
+            float: right;
+            font-size: 12px;
+            font-weight: normal;
+            color: #0a8ddf;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv" id="LAY-Repair-RepairParts-partsOutWare">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>出库单记录</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item" style="margin-bottom: 5px;">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 出库日期：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="addtime" placeholder="请点击选择出库日期" style="cursor: pointer;" id="partsOutWareAddtime" readonly class="layui-input" lay-verify="addtime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span> 领用人：</label>
+                <div class="layui-input-inline">
+                    <select name="leader" lay-filter="leader" lay-search lay-verify="leader">
+                        <option value="">请选择领用人</option>
+                        <volist name="userList" id="vo">
+                            <option value="{$vo.username}">{$vo.username}</option>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">出库备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="remark"></textarea>
+            </div>
+        </div>
+        <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+            配件出库明细
+            <span class="rightAddButton" id="pushParts"><i class="layui-icon layui-icon-tianjia2" style="font-size: 12px;"></i> 添加明细</span>
+        </blockquote>
+        <table class="layui-table">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col width="80">
+                <col width="90">
+                <col width="120">
+                <col width="90">
+                <col width="80">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>配件名称</th>
+                <th>配件型号</th>
+                <th>供应商</th>
+                <th>单位</th>
+                <th>库存数量</th>
+                <th><span class="rquireCoin"> * </span>出库数量</th>
+                <th>单价</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody class="pushPartTbody">
+                <tr class="emptyJoinPartsTr">
+                    <td colspan="8" style="text-align: center">暂无数据</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="layui-form-item">
+            <div style="text-align: center">
+                <button class="layui-btn" lay-submit lay-filter="addPartsOutWare"><i class="layui-icon">&#xe609;</i>
+                    确认出库
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<div id="addPartsDiv" style="display: none">
+    <div class="containDiv">
+        <div class="layui-row">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <form action="" class="layui-form">
+                            <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">配件名称：</label>
+                                    <div class="layui-input-inline">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bsSuggest" id="partsOutWareBsSuggestParts" placeholder="请输入配件名称" name="parts">
+                                            <div class="input-group-btn">
+                                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">供应商：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="supplier_id"  lay-search>
+                                            <option value="">请选择供应商</option>
+                                            <volist name="supplierList" id="vo">
+                                                <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-left: 10px;">
+                                    <div class="fl">
+                                        <button class="layui-btn" lay-submit="partsOutWareCanJoinPartsSearch" lay-filter="partsOutWareCanJoinPartsSearch">
+                                            <i class="layui-icon">&#xe615;</i> 搜 索
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row table-list">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table id="canJoinPartsList" lay-filter="canJoinPartsData"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="LAY-Repair-RepairParts-partsOutWarePushPartsbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addAllParts" data-url="">
+            <i class="layui-icon">&#xe654;</i>一键纳入
+        </button>
+    </div>
+</script>
+<script>
+    var partsOutWareUrl = '{$partsOutWareUrl}';
+</script>
+<script>
+    layui.use('controller/repair/repairParts/partsOutWare', layui.factory('controller/repair/repairParts/partsOutWare'));
+</script>

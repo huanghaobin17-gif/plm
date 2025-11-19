@@ -1,0 +1,195 @@
+<include file="Public:head"/>
+<title>设备报废申请</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    body .react-cover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .layui-card:first-of-type {
+        margin-top: 0;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <input type="hidden" name="assid" value="{$asArr.assid}">
+        <input type="hidden" name="scrapnum" value="{$asArr.scrapnum}">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">设备基本信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$asArr.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$asArr.model}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$asArr.assnum}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$asArr.department}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$asArr.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$asArr.serialnum}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <if condition="$show_form eq 0">
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">报废申请信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>报废单号</th>
+                    <td>{$zkInfo.scrapnum}</td>
+                </tr>
+                <tr>
+                    <th>报废日期</th>
+                    <td>{$zkInfo.scrapdate}</td>
+                </tr>
+                <tr>
+                    <th>申请人</th>
+                    <td>{$zkInfo.apply_user}</td>
+                </tr>
+                <tr>
+                    <th>申请时间</th>
+                    <td>{$zkInfo.add_time}</td>
+                </tr>
+                <tr>
+                    <th>申请原因</th>
+                    <td>{$zkInfo.scrap_reason}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </if>
+        <!--审批-->
+        <notempty name="approves">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">审批信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <div class="layui-card-body">
+                    <table class="layui-table" lay-even>
+                        <tbody>
+                        <volist name="approves" id="app">
+                            <?php if($i!=1){?>
+                            <?php $approvesDivClass='approvesHideDetail'; ?>
+                            <?php }else{ ?>
+                            <?php $approvesDivClass=''; ?>
+                            <?php }   ?>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批人</th>
+                                <td>{$app.approver}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批时间</th>
+                                <td>{$app.approve_time}</td>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>审批意见</th>
+                                <if condition="$app['is_adopt'] EQ C('HAVE_STATUS')">
+                                    <td><i class="layui-icon layui-icon-zzcheck" style="color: #5FB878"></i></td>
+                                    <else/>
+                                    <td><i class="layui-icon layui-icon-zzclose" style="color: red"></i></td>
+                                </if>
+                            </tr>
+                            <tr class="{$approvesDivClass}">
+                                <th>备注</th>
+                                <td>
+                                    <if condition="$app.remark neq ''">
+                                        {$app.remark}
+                                        <else/>
+                                        无
+                                    </if>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </notempty>
+        <if condition="$show_form eq 1">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                <h2 class="formTitle">报废申请表单</h2>
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报废单号：</label>
+                    <div style="line-height: 38px;">{$asArr.scrapnum}</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">申请人：</label>
+                    <div style="line-height: 38px;">{$username}</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报废日期：</label>
+                    <div style="line-height: 38px;">{$now}</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="rquireCoin"> * </span>报废原因：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="scrap_reason" value="{$scrapinfo.scrap_reason}" placeholder="请输入报废原因" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <input type="hidden" name="scrid" value="{$scrapinfo.scrid}">
+                <input type="hidden" name="type" value="{$scrapinfo.type}">
+                <if condition="$scrapinfo.scrid neq null">
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid layui-btn-warm" lay-submit lay-filter="save">申请重审</button>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-btn layui-btn-fluid layui-btn-danger" lay-submit lay-filter="over">结束进程</div>
+                    </div>
+                    <else/>
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="save">确认并提交</button>
+                </if>
+            </div>
+        </div>
+        </if>
+    </form>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var url = "{$url}";
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/scrap/applyScrap.js?v={:mt_rand(1,54561)}"></script>

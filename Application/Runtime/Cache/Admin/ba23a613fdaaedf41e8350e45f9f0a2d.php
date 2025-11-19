@@ -1,0 +1,67 @@
+<?php if (!defined('THINK_PATH')) exit();?><title>科室效益分析</title>
+<div class="layui-fluid" id="LAY-Benefit-Benefit-departmentBenefitList">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="departmentBenefitListDep" placeholder="请输入科室名称" name="assetsDep">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">统计日期：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="开始日期" readonly style="cursor: pointer;"
+                                           name="departStartDate" id="departmentBenefitListStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input" placeholder="结束日期" readonly style="cursor: pointer;"
+                                           name="departEndDate" id="departmentBenefitListEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="departmentBenefitListSearch" id="departmentBenefitListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                <button type="button" class="layui-btn layui-btn-primary" id="departmentBenefitListReset">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="departmentBenefitList" lay-filter="departmentBenefitData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('benefit/benefit/departmentBenefitList', layui.factory('benefit/benefit/departmentBenefitList'));
+</script>

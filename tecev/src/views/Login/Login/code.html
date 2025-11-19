@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>微信登录</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://res.wx.qq.com/connect/zh_CN/htmledition/style/impowerApp45a337.css">
+    <link href="https://res.wx.qq.com/connect/zh_CN/htmledition/images/favicon.ico" rel="Shortcut Icon">
+    <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/jquery.min.js"></script>
+</head>
+<body style="background-color: rgb(51, 51, 51);padding: 50px;">
+<div class="old-template" style="display: none;">
+    <div class="main impowerBox">
+        <div class="loginPanel normalPanel">
+            <div class="title">微信登录</div>
+            <div class="waiting panelContent">
+                <div class="wrp_code"><img class="qrcode lightBorder" src=""/></div>
+                <div class="info">
+                    <div class="status status_browser js_status js_wx_default_tip" id="wx_default_tip">
+                        <p>请使用微信扫描二维码登录</p>
+                        <p>“{$Think.config.APP_TITLE}”</p>
+                    </div>
+                    <div class="status status_succ js_status js_wx_after_scan" style="display:none" id="wx_after_scan">
+                        <i class="status_icon icon38_msg succ"></i>
+                        <div class="status_txt">
+                            <h4>扫描成功</h4>
+                            <p>请在微信中点击确认即可登录</p>
+                        </div>
+                    </div>
+                    <div class="status status_fail js_status js_wx_after_cancel" style="display:none"
+                         id="wx_after_cancel">
+                        <i class="status_icon icon38_msg warn"></i>
+                        <div class="status_txt">
+                            <h4>您已取消此次登录</h4>
+                            <p>您可再次扫描登录，或关闭窗口</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/js/jquery-3.7.0.min.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="/tecev/start/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, layer = layui.layer;
+        form.render();
+        !function () {
+            function a(d) {
+                jQuery.ajax({
+                    type: "GET",
+                    url: p + "?type=img",
+                    dataType: "html",
+                    cache: !1,
+                    timeout: 6e4,
+                    success: function (res) {
+                        jQuery('.old-template').show();
+                        jQuery('.lightBorder').attr("src",res);
+                        jQuery('.js_qr_img').attr("src",res);
+                        setTimeout(b, 2e3);
+                    }
+                });
+            }
+            var p = admin_name+'/Login/code';
+            setTimeout(a, 100);
+            function b(c) {
+                var imgurl = jQuery('.lightBorder').attr('src');
+                imgurl = encodeURIComponent(imgurl);
+                jQuery.ajax({
+                    type: "GET",
+                    url: p + '?type=result&src='+imgurl,
+                    dataType: "json",
+                    cache: !1,
+                    timeout: 6e4,
+                    success: function (res) {
+                        switch (res.result){
+                            case 1:
+                                //已扫码
+                                jQuery(".js_status").hide();
+                                jQuery("#wx_after_scan").show();
+                                setTimeout(b, 2000);
+                                break;
+                            case 2:
+                                //已同意
+                                setTimeout(get_openid, 100);
+                                break;
+                            case 3:
+                                //已拒绝
+                                jQuery(".js_status").hide();
+                                jQuery("#wx_after_cancel").show();
+                                setTimeout(b, 2000);
+                                break;
+                            default:
+                                setTimeout(b, 2000);
+                        }
+
+                    }
+                });
+            }
+            function get_openid(e) {
+                var imgurl = jQuery('.lightBorder').attr('src');
+                imgurl = encodeURIComponent(imgurl);
+                jQuery.ajax({
+                    type: "GET",
+                    url: p + "?type=get_openid&src="+imgurl,
+                    dataType: "json",
+                    cache: !1,
+                    timeout: 6e4,
+                    success: function (res) {
+                        if(res.nums > 1){
+                            //有多个账户绑定该微信
+                            var flag = 1;
+                            top.layer.open({
+                                type: 2,
+                                title: '请选择你要登录的账户',
+                                offset: 'auto',
+                                area: ['500px', '200px'],
+                                content: admin_name+'/Login/code.html?type=get_users&id='+res.openid,
+                                end: function () {
+                                    if(flag){
+                                        window.location.href = '/';
+                                    }
+                                },
+                                cancel:function(){
+                                    //如果是直接关闭窗口的，则不刷新表格
+                                    flag = 0;
+                                }
+                            });
+                        }else{
+                            //只有一个账号，设置session
+                            $.ajax({
+                                type: "POST",
+                                data:{"userid":res.userid},
+                                url: "/A/Login/setSession.html",
+                                //返回数据的格式
+                                dataType: "json",
+                                async: true,
+                                success: function (data) {
+                                    if(data.status == 1){
+                                        window.location.href = '/';
+                                    }
+                                },
+                                //调用出错执行的函数
+                                error: function () {
+                                    //请求出错处理
+                                    layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                                }
+                            });
+                        }
+                    }
+                })
+            }
+        }();
+    });
+</script>
+</body>
+</html>

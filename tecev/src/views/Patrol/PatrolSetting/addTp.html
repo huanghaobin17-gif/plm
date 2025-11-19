@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.css?v={:mt_rand(1,54561)}">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/style.css?v={:mt_rand(1,54561)}" />
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/common.css?v={:mt_rand(1,54561)}" />
+    <link href="__PUBLIC__/tablesorter/themes/blue/style.css?v={:mt_rand(1,54561)}" rel="stylesheet" type="text/css"/>
+    <script src="__PUBLIC__/js/jquery-3.7.0.min.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/bootstrap-table-zh-CN.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/common.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/js/lang.js?v={:mt_rand(1,54561)}"></script>
+    <link rel="stylesheet" href="__PUBLIC__/layer/layui/css/layui.css?v={:mt_rand(1,54561)}">
+    <script src="__PUBLIC__/layer/layui/layui.js?v={:mt_rand(1,54561)}"></script>
+    <script src="__PUBLIC__/tablesorter/jquery.tablesorter.js?v={:mt_rand(1,54561)}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".alltable").tablesorter({headers:{2:{sorter:false}}});
+        });
+    </script>
+    <style>
+        .layui-form-item .layui-inline{margin-bottom: 0;margin-right: 0;}
+        #testNoBtn{width:190px;padding-left:10px;}
+        label{margin-bottom: 0}
+        td{width: 120px;}
+        .layui-table thead tr{background-color: white;}
+        .layui-table{margin: 0;}
+        .layui-colla-content{padding: 0;}
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <form class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>模板名称 </label>
+                <div class="layui-input-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="testNoBtn" placeholder="可输入搜索并自动检索" name="name" lay-verify="name">
+                        <div class="input-group-btn">
+                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-inline" style="float: right;">
+                <label class="layui-form-label"><span class="rquireCoin"> * </span>保养级别</label>
+                <input type="hidden" name="thislevel" value="">
+                <div class="layui-input-inline">
+                    <select name="level" lay-search="" lay-verify="level"  lay-filter="level" id="select">
+                        <option value="">请选择保养级别</option>
+                        <option value="1">日常保养</option>
+                        <option value="2">一级保养</option>
+                        <option value="3">预防性维护</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-collapse">
+            <volist name="data" id="vo">
+                <div class="layui-colla-item">
+                    <if condition="$vo.sum neq 0">
+                        <h2 class="layui-colla-title">{$vo.type}(共{$vo.sum}项)<span class="many">已选择0项</span></h2>
+                        <else />
+                        <h2 class="layui-colla-title">{$vo.type}(共0项)</h2>
+                    </if>
+                    <div class="layui-colla-content">
+                        <table class="layui-table tablesorter alltable" >
+                            <thead>
+                            <tr class="allchoose">
+                                <th style="width: 8%">编号</th>
+                                <th>明细名称</th>
+                                <th style="width: 8%"><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="vo['detail']" id="v">
+                                <tr class="choose">
+                                    <td>{$v.num}</td>
+                                    <td>{$v.name}</td>
+                                    <td><input type="checkbox" name="num" value="{$v.num}"  lay-skin="primary" lay-filter="Choose"></td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="layui-form-item">
+            <div style="text-align: center;margin-top: 20px;">
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add" ><i class="layui-icon" >&#xe609;</i> 提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/patrol/patrolsetting/addtp', layui.factory('controller/patrol/patrolsetting/addtp'));
+</script>

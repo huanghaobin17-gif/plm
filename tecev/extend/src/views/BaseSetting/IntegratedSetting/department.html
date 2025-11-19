@@ -1,0 +1,95 @@
+<script>
+    var departmentLists = "{$department}";
+</script>
+<?php if($menuData = get_menu_name('BaseSetting','IntegratedSetting','department')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    .dHead {
+        height:35px;
+        line-height: 35px;
+        width:120px;
+        text-align: center;
+        margin-left: 60px;
+        margin-top: 5px;
+        cursor: pointer;
+        border: 1px solid #C9C9C9;
+        background-color: #fff;
+        color: #555;
+    }
+    .dHead:hover{
+        border: 1px solid #009688;
+    }
+    p{height: auto !important;}
+</style>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-IntegratedSetting-department" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">科室名称：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departid" xm-select="departmentList" xm-select-search="">
+                                        <option value="">点击选择科室名称搜索</option>
+                                        <volist name="departmentInfo" id="v">
+                                            <option value="{$v.departid}">{$v.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="departmentListSearch"
+                                        id="departmentListSearch"><i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                    <div class="layui-btn-group cus-group" style="margin-left: 20px;">
+                        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','addDepartment')):?>
+                        <button class="layui-btn layui-btn-sm" id="addDepartment" data-url="{$menuData['actionurl']}" >
+                            添加主科室
+                        </button>
+                        <?php endif;?>
+                        <?php if($menuData = get_menu('BaseSetting','IntegratedSetting','batchAddDepartment')):?>
+                        <button class="layui-btn layui-btn-sm layui-btn-normal" id="batchAddDepartment" data-url="{$menuData['actionurl']}" >
+                            批量添加主科室
+                        </button>
+                        <?php endif;?>
+                    </div>
+                    <!--<div class="dHead">-->
+                    <!--展开或折叠全部-->
+                    <!--</div>-->
+                </div>
+                <blockquote class="layui-elem-quote cusquote1">
+                    注：如科室已有设备存在，则不允许对科室进行删除操作！
+                </blockquote>
+                <div class="layui-card-body">
+                    <table class="layui-hidden" lay-filter="departmentData" id="departmentLists"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use('basesetting/integratedSetting/department', layui.factory('basesetting/integratedSetting/department'));
+</script>

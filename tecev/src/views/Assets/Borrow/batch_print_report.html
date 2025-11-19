@@ -1,0 +1,374 @@
+<style>
+    #borrow_report td, #borrow_report th {
+        text-align: center !important;
+    }
+
+    #borrow_report th {
+        font-weight: bold !important;
+    }
+
+    #borrow_report .no-padding-td .layui-input {
+        border: none;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #borrow_report em {
+        font-size: 12px;
+    }
+
+    #borrow_report .layui-form-checkbox[lay-skin=primary] i {
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+    }
+
+    #borrow_report .layui-form-checkbox span {
+        font-size: 12px;
+    }
+
+    #borrow_report .layui-form-checkbox[lay-skin=primary] span {
+        line-height: 16px;
+        padding-right: 0 !important;
+    }
+
+    #borrow_report .layui-form-checkbox span {
+        padding: 0 3px;
+    }
+
+    #borrow_report .text-align-left {
+        text-align: left !important;
+    }
+
+    #borrow_report .layui-table[lay-size=sm] td,
+    #borrow_report .layui-table[lay-size=sm] th {
+        padding: 5px !important;
+    }
+
+    #borrow_report .layui-table[lay-size=sm] td.text-align-left {
+        padding-left: 15px !important;
+    }
+
+    #borrow_report .logo {
+        height: 60px;
+        position: absolute;
+        top: 35px;
+    }
+</style>
+<div class="layui-fluid" style="min-height: 1120px;">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;">{$title}借调审批单</h2>
+        <notempty name="imageUrl">
+            <img src="{$imageUrl}" class="logo">
+        </notempty>
+        <div class="fr" style="width: 230px;">
+            <span>流水单号:<em>{$borrow.borrow_num}</em></span>
+        </div>
+        <div class="clear"></div>
+        <div class="fr" style="width: 230px;">
+            <span>制表日期:<em>{$date}</em></span>
+        </div>
+        <br/>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col width="260">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-align-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td>{$assets.assets}</td>
+                <th>设备编号</th>
+                <td>{$assets.assnum}</td>
+            </tr>
+            <tr>
+                <th>规格/型号</th>
+                <td>{$assets.model}</td>
+                <th>品牌</th>
+                <td>{$assets.brand}</td>
+            </tr>
+            <tr>
+                <th>产品序列号</th>
+                <td>{$assets.serialnum}</td>
+                <th>生产厂家</th>
+                <td>{$assets.factory}</td>
+            </tr>
+            <tr>
+                <th>所属科室</th>
+                <td>{$assets.department}</td>
+                <th>设备管理员</th>
+                <td>{$assets.assetsrespon}</td>
+            </tr>
+            <tr>
+                <th>设备状态</th>
+                <td>{$assets.statusName}</td>
+                <th>保修截止日期</th>
+                <td>{$assets.guarantee_date}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="150">
+                <col width="140">
+                <col width="">
+                <col width="100">
+                <col width="100">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="7" class="text-align-left">二、附属设备借调明细</th>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            <empty name="subsidiary">
+                <tr>
+                    <td colspan="7">无记录</td>
+                </tr>
+                <else/>
+                <volist name="subsidiary" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.assets}</td>
+                        <td>{$vo.assnum}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.unit}</td>
+                        <td>{$vo.buy_price}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="130">
+                <col width="120">
+                <col width="150">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" class="text-align-left">三、设备借调申请单信息</th>
+            </tr>
+            <tr>
+                <th>流水号</th>
+                <td>{$borrow.borrow_num}</td>
+                <th>申请科室</th>
+                <td>{$borrow.department}</td>
+                <th>申请人</th>
+                <td>{$borrow.apply_username}</td>
+            </tr>
+            <tr>
+                <th>预计归还时间</th>
+                <td>{$borrow.estimate_back}</td>
+                <th>申请时间</th>
+                <td colspan="3" class="text-align-left">{$borrow.apply_time}</td>
+            </tr>
+            <tr>
+                <th>借用原因</th>
+                <td colspan="6" class="text-align-left">{$borrow.borrow_reason}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="130">
+                <col width="120">
+                <col width="70">
+                <col width="">
+            </colgroup>
+            <tr>
+                <th colspan="5" class="text-align-left">四、审核信息</th>
+            </tr>
+            <tr>
+                <th style="text-align: center">序号</th>
+                <th>审核人</th>
+                <th>审核时间</th>
+                <th>审核状态</th>
+                <th>审核意见</th>
+            </tr>
+            <tbody>
+            <empty name="approve">
+                <tr>
+                    <td colspan="5">无审批记录</td>
+                </tr>
+                <else/>
+                <volist name="approve" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.approver}</td>
+                        <td>{$vo.approve_time}</td>
+                        <td>{$vo.is_adoptNameNoColor}</td>
+                        <td class="text-align-left">{$vo.remark}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <notempty name="end_reason">
+            <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+                <colgroup>
+                    <col width="120">
+                    <col width="130">
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="6" class="text-align-left">五、不借入设备信息</th>
+                </tr>
+                <tr>
+                    <th>记录用户</th>
+                    <td>{$borrow.borrow_in_username}</td>
+                    <th>不借入时间</th>
+                    <td class="text-align-left">{$borrow.not_apply_time}</td>
+                </tr>
+                <tr>
+                    <th>不借入原因：</th>
+                    <td colspan="3" class="text-align-left">{$borrow.end_reason}</td>
+                </tr>
+                <tr>
+                </tbody>
+            </table>
+
+            <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="3" class="text-align-left">六、经办人员及验收人员意见及签字</th>
+                </tr>
+                <tr>
+                    <th>申请人员意见及签字 </th>
+                    <th>设备科意见及签字</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="height: 60px"></p>
+                        <p style="text-align: left">
+                            <span style="padding-right: 100px;">签字：</span>
+                            <span>日期：</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p style="height: 60px"></p>
+                        <p style="text-align: left">
+                            <span style="padding-right: 100px;">签字：</span>
+                            <span>日期：</span>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <else/>
+            <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+                <colgroup>
+                    <col width="120">
+                    <col width="130">
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="6" class="text-align-left">五、借入检查确定信息</th>
+                </tr>
+                <tr>
+                    <th>借入检查用户</th>
+                    <td>{$borrow.borrow_in_username}</td>
+                    <th>借入时间</th>
+                    <td class="text-align-left">{$borrow.borrow_in_time}</td>
+                </tr>
+                <tr>
+                    <th>补充清单</th>
+                    <td colspan="3" class="text-align-left">{$borrow.supplement}</td>
+                </tr>
+                <tr>
+                </tbody>
+            </table>
+
+            <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+                <colgroup>
+                    <col width="120">
+                    <col width="130">
+                    <col width="120">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="6" class="text-align-left">六、归还验收信息</th>
+                </tr>
+                <tr>
+                    <th>归还验收用户</th>
+                    <td>{$borrow.give_back_username}</td>
+                    <th>归还时间</th>
+                    <td class="text-align-left">{$borrow.give_back_time}</td>
+                </tr>
+                <tr>
+                </tbody>
+            </table>
+
+            <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th colspan="3" class="text-align-left">七、经办人员及验收人员意见及签字</th>
+                </tr>
+                <tr>
+                    <th>借入验收人员意见及签字</th>
+                    <th>设备科审批人员意见及签字</th>
+                    <th>归还验收人员意见及签字</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="height: 60px"></p>
+                        <p style="text-align: left">
+                            <span <if condition="$borrow_in_autograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$borrow_in_autograph}">
+                            <span>日期：{$borrow_in_autograph_time}</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p style="height: 60px"></p>
+                        <p style="text-align: left">
+                            <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$departautograph}">
+                            <span>日期：{$departautograph_time}</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p style="height: 60px"></p>
+                        <p style="text-align: left">
+                            <span <if condition="$give_back_autograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$give_back_autograph}">
+                            <span>日期：{$give_back_autograph_time}</span>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </notempty>
+    </div>
+</div>

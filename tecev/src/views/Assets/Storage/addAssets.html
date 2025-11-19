@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .layui-elem-quote{ margin-top: 15px;}
+        .layui-form-item .layui-inline{ margin-top: 5px;}
+        .layui-form-item{ margin-bottom: 5px;}
+    </style>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form layui-form-pane" action="">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">设备基础信息</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备名称 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assets" lay-verify="assets" autocomplete="off" placeholder="请输入设备名称" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">规格 / 型号 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="model" lay-verify="model" autocomplete="off" placeholder="请输入设备规格 / 型号" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">产品序列号 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="serialnum" lay-verify="serialnum" autocomplete="off" placeholder="请输入产品序列号" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备原编码 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assorignum" lay-verify="assorignum" autocomplete="off" placeholder="请输入设备原编码" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" disabled autocomplete="off" placeholder="此编号由系统自动生成" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">一级分类 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="" lay-search lay-filter="category">
+                            <option value="">请选择一级分类</option>
+                            <volist name="category" id="vo">
+                                <option value="{$vo.catid}">{$vo.category}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">二级分类 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="catid" lay-verify="catid" lay-search id="childCategory">
+                            <option value="">请先选择一级分类</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">辅助分类</label>
+                    <div class="layui-input-inline">
+                        <select name="helpcatid" class="layui-input" lay-search="">
+                            <option value="">请选择辅助分类</option>
+                            <volist name="assets_helpcat" id="vo">
+                                <option value="{$key}">{$vo}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备原值 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="buy_price" lay-verify="buy_price" placeholder="请输入设备购买价格（元）" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit">预计使用年限 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="expected_life" lay-verify="require|expected_life|number" placeholder="请输入预计使用年限" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit">残净值率(%) <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="residual_value" lay-verify="require|residual_value|number" placeholder="请输入残净值率" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="overflow: inherit">保修到期日期 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="guarantee_date" lay-verify="require|guarantee_date|date" id="date3" placeholder="请选择保修截止日期" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">单位</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unit" placeholder="请输入单位" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">品牌</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="brand" placeholder="请输入设备品牌" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">生产厂商 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="factory" lay-verify="factory" placeholder="请输入生产厂商名称" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">供应商 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="supplier" lay-verify="supplier" placeholder="请输入供应商名称" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">出厂编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="factorynum" placeholder="请输入出厂编号" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">出厂日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="factorydate" id="date1" placeholder="请选择出厂日期" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">发票编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="invoicenum" placeholder="请输入发票编号" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">设备类型</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="is_firstaid" value="1" title="急救设备" lay-skin="primary">
+                    <input type="checkbox" name="is_special" value="1" title="特种设备" lay-skin="primary">
+                    <input type="checkbox" name="is_metering" value="1" title="计量设备" lay-skin="primary">
+                    <input type="checkbox" name="is_qualityAssets" value="1" title="质控设备" lay-skin="primary">
+                </div>
+            </div>
+            <!--<div class="layui-upload">-->
+                <!--<button type="button" class="layui-btn  layui-btn-sm layui-btn-warm" id="test1"><i class="layui-icon">&#xe67c;</i>上传设备图片</button>-->
+            <!--</div>-->
+
+
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px; /*margin-top: 35px;*/">设备入院信息</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属科室 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <div class="input-group">
+                            <input type="hidden" lay-verify="departid" class="form-control" name="departid" />
+                            <input type="text" class="form-control bsSuggest" name="department" id="getDepartmentLists" placeholder="请输入科室名称" />
+                            <div class="input-group-btn">
+                                <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">管理科室 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="managedepart" readonly autocomplete="off" value="" class="layui-input" placeholder="选择所属科室后自动填充">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">使用位置</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" readonly autocomplete="off" value="" class="layui-input" placeholder="选择所属科室后自动填充">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产负责人 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="assetsrespon" lay-verify="assetsrespon" placeholder="请填写资产负债人" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">财务分类 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="financeid" lay-verify="financeid" class="layui-input" lay-search="">
+                            <option value="">请选择财务分类</option>
+                            <volist name="assets_finance" id="vo">
+                                <option value="{$key}">{$vo}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备来源 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="assfromid" lay-verify="assfromid" class="layui-input" lay-search="">
+                            <option value="">请选择设备来源</option>
+                            <volist name="assets_assfrom" id="vo">
+                                <option value="{$key}">{$vo}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">资金来源 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="capitalfrom" lay-verify="capitalfrom" class="layui-input" lay-search="">
+                            <option value="">请选择资金来源</option>
+                            <volist name="assets_capitalfrom" id="vo">
+                                <option value="{$key}">{$vo}</option>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">入库日期 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="storage_date" lay-verify="require|storage_date|date" id="date4" placeholder="请选择入库日期" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">启用日期 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="opendate" lay-verify="require|opendate|date" id="date5" placeholder="请选择启用日期" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">折旧方式 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <select name="depreciation_method" lay-verify="depreciation_method" class="layui-input" lay-search="">
+                            <option value="">请选择折旧方式</option>
+                            <option value="1">平均折旧法</option>
+                            <option value="2">工作量法</option>
+                            <option value="3">加速折旧法</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">折旧年限 <span class="rquireCoin">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="depreciable_lives" lay-verify="require|depreciable_lives|number" placeholder="请填写折旧年限" autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">登记日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" autocomplete="off" value="{$now}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" style="display: none">
+                    <label class="layui-form-label">登记人员</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="" autocomplete="off" value="{$user}" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                <?php if($menuData = get_menu('Assets','Storage','addAssets')):?>
+                <button class="layui-btn" type="button" value="" lay-submit lay-filter="add" data-url="{$menuData['actionurl']}">
+                    <i class="layui-icon" >&#xe609;</i> 确认无误并提交
+                </button>
+                <?php endif?>
+                <button type="reset" class="layui-btn layui-btn-primary">
+                    <i class="layui-icon">ဂ</i> 重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script src="__PUBLIC__/js/assets/storage/addassets.js?v={:mt_rand(1,54561)}"></script>

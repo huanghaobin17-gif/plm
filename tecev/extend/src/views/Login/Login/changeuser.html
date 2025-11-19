@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<body>
+<div class="containDiv">
+    <div class="msg-area-btn" style="text-align: center;">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0">
+                    <volist name="users" id="vo">
+                        <input type="radio" name="userid" value="{$vo.userid}" title="{$vo.username}">
+                    </volist>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0">
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit lay-filter="login">确定登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form, layer = layui.layer;
+        form.render();
+        form.on('submit(login)', function (data) {
+            var params = data.field;
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            if(!params.userid){
+                layer.msg('请选择要登录的账户',{icon : 2,time:2000});
+            }else{
+                $.ajax({
+                    type: "POST",
+                    data:params,
+                    url: "/A/Login/setSession.html",
+                    //返回数据的格式
+                    dataType: "json",
+                    async: true,
+                    beforeSend:beforeSend,
+                    success: function (data) {
+                        if(data.status == 1){
+                            layer.msg('登录成功！', {icon: 1, time: 2000},function () {
+                                parent.layer.close(index);
+                            });
+                        }
+                    },
+                    //调用出错执行的函数
+                    error: function () {
+                        //请求出错处理
+                        layer.msg('服务器繁忙！', {icon: 2, time: 2000});
+                    },
+                    complete:complete
+                });
+            }
+            return false;
+        });
+        function beforeSend(){
+            layer.load(2);
+        }
+        function complete(){
+            layer.closeAll('loading');
+        }
+    });
+
+</script>

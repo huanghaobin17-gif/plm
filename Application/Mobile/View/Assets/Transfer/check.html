@@ -1,0 +1,343 @@
+<include file="Public:head"/>
+<title>转科验收</title>
+<style>
+    .layui-card-header {
+        border-bottom-color: #d2d2d2
+    }
+
+    .layui-table tr th {
+        width: 30%;
+    }
+
+    .voiceButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+    .photoButton img {
+        position: absolute;
+        top: 0.2rem;
+        left: 0.2rem;
+    }
+    .reVoiceButton button {
+        position: relative;
+    }
+
+    .reVoiceButton span {
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .reVoiceButton i {
+        position: absolute;
+        left: 0.3rem;
+        top: 0.25rem;
+        font-size: 1.8rem !important;
+    }
+
+    .confirm {
+        height: 3.75rem;
+        line-height: 3.75rem;
+        font-size: 1.3rem;
+    }
+    body{
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+    }
+
+    body .react-cover {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .layui-card:first-of-type{
+        margin-top: 0;
+    }
+    .fx{
+        width: 19px;
+        padding-left: 10px;
+        margin-bottom: 2px;
+    }
+</style>
+<body>
+<div class="layui-fluid setForm">
+    <form class="layui-form">
+        <div class="emptyDiv"></div>
+        <input type="hidden" name="atid" value="{$zkInfo.atid}">
+        <input type="hidden" name="checkdate" value="{$date}">
+        <div class="layui-card" style="margin-top: 0;">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">设备基本信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>设备名称</th>
+                    <td>{$assets.assets}</td>
+                </tr>
+                <tr>
+                    <th>规格/型号</th>
+                    <td>{$assets.model}</td>
+                </tr>
+                <tr>
+                    <th>设备编号</th>
+                    <td>{$assets.assnum}</td>
+                </tr>
+                <tr>
+                    <th>使用科室</th>
+                    <td>{$assets.department}</td>
+                </tr>
+                <tr>
+                    <th>启用日期</th>
+                    <td>{$assets.opendate}</td>
+                </tr>
+                <tr>
+                    <th>产品序列号</th>
+                    <td>{$assets.serialnum}</td>
+                </tr>
+                <tr>
+                    <th>设备常用名</th>
+                    <td>{$assets.common_name}</td>
+                </tr>
+                <tr>
+                    <th>设备分类</th>
+                    <td>{$assets.cate_name}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>系统辅助分类</th>
+                    <td>{$assets.helpcat}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备原值(元)</th>
+                    <td>{$assets.buy_price}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>预计使用年限</th>
+                    <td>{$assets.expected_life}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>残净值率(%)</th>
+                    <td>{$assets.residual_value}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>生产厂商</th>
+                    <td>{$assets.factory}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>供应商</th>
+                    <td>{$assets.supplier}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>维修商</th>
+                    <td>{$assets.repair}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>出厂日期</th>
+                    <td>{$assets.factorydate}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>保修到期日期</th>
+                    <td>{$assets.guarantee_date}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>保修状态</th>
+                    <td>{$assets.guaranteeStatus}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>单位</th>
+                    <td>{$assets.unit}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>品牌</th>
+                    <td>{$assets.brand}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>出厂编号</th>
+                    <td>{$assets.factorynum}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备类型</th>
+                    <td>{$assets.type}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>发票编号</th>
+                    <td>{$assets.invoicenum}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>管理科室</th>
+                    <td>{$assets.managedepart}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>所在位置</th>
+                    <td>{$assets.address}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>资产负责人</th>
+                    <td>{$assets.assetsrespon}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>财务分类</th>
+                    <td>{$assets.finance}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>设备来源</th>
+                    <td>{$assets.assfrom}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>资金来源</th>
+                    <td>{$assets.capitalfrom}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>入库日期</th>
+                    <td>{$assets.storage_date}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>启用日期</th>
+                    <td>{$assets.opendate}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>折旧方式</th>
+                    <td>{$assets.depreciation_method_name}</td>
+                </tr>
+                <tr class="assetsHideDetail">
+                    <th>折旧年限</th>
+                    <td>{$assets.depreciable_lives}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="layui-card" style="margin-top: 0;">
+                <div class="moreButton">
+                    <a class="moreDetailButton" data-detailClass="assetsHideDetail">加载更多</a>
+                </div>
+                <div class="moreButton" style="display: none;">
+                    <a class="hideDetailButton" data-detailClass="assetsHideDetail">收起</a>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card">
+            <div class="layui-card-header borderNone">
+                <h2 class="detailTitle">转科申请信息</h2>
+                <div class="bl1px"></div>
+            </div>
+            <table class="layui-table" lay-even>
+                <tbody>
+                <tr>
+                    <th>转科单号</th>
+                    <td>{$zkInfo.transfernum}</td>
+                </tr>
+                <tr>
+                    <th>申请科室</th>
+                    <td>{$zkInfo.tranout_depart_name}  <img class="fx" src="/Public/mobile/images/icon/right.png" style="width: 24px;"/></td>
+                </tr>
+                <tr>
+                    <th>申请人</th>
+                    <td>{$zkInfo.applicant_user}</td>
+                </tr>
+                <tr>
+                    <th>申请时间</th>
+                    <td>{$zkInfo.applicant_time}</td>
+                </tr>
+                <tr>
+                    <th>申请原因</th>
+                    <td>{$zkInfo.tran_reason}</td>
+                </tr>
+                <tr>
+                    <th>转入科室</th>
+                    <td>{$zkInfo.tranin_depart_name}  <img class="fx" src="/Public/mobile/images/icon/left.png" style="width: 24px;"/></td>
+                </tr>
+                <tr>
+                    <th>科室负责人</th>
+                    <td>{$zkInfo.tranin_departrespon}</td>
+                </tr>
+                <tr>
+                    <th>联系电话</th>
+                    <td><a href="tel:{$zkInfo.departtel}" style="color:#00CCFF;">{$zkInfo.departtel}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--转科验收信息-->
+        <if condition="$zkInfo.is_check neq 0">
+            <div class="layui-card">
+                <div class="layui-card-header borderNone">
+                    <h2 class="detailTitle">转科验收信息</h2>
+                    <div class="bl1px"></div>
+                </div>
+                <table class="layui-table" lay-even>
+                    <tbody>
+                    <tr>
+                        <th>验收人</th>
+                        <td>{$zkInfo.check_user}</td>
+                    </tr>
+                    <tr>
+                        <th>验收时间</th>
+                        <td>{$zkInfo.check_time}</td>
+                    </tr>
+                    <tr>
+                        <th>验收意见</th>
+                        <td>
+                            <if condition="$zkInfo.is_check eq 1">
+                                通过
+                                <else/>
+                                不通过
+                            </if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td>
+                            <if condition="$zkInfo.check neq null">
+                                {$zkInfo.check}
+                                <else/>
+                                无
+                            </if>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </if>
+        <notempty name="is_display">
+        <div class="formDiv">
+            <div class="layui-card mgt0">
+                <div class="layui-card-header">
+                    <img class="formImage" src="__PUBLIC__/mobile/images/icon/form.png">
+                    <h2 class="formTitle">验收表单</h2>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label">验收人：</label>
+                        <div style="line-height: 38px;">{$username}</div>
+                    </div>
+
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label">验收时间：</label>
+                        <div style="line-height: 38px;">{$time}</div>
+                    </div>
+                    <div class="layui-form-item mgb1rem">
+                        <label class="layui-form-label">验收意见：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="check" placeholder="请输入验收意见" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn" style="width: 100%;" lay-submit lay-filter="yes">确认设备完好无损并通过验收</button>
+                    </div>
+                    <div class="layui-form-item mgt1rem">
+                        <button class="layui-btn layui-btn-danger" style="width: 100%;" lay-submit lay-filter="no">验收不通过</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div></notempty>
+</body>
+<include file="Public:buttom"/>
+<script>
+var url = "{$url}";
+</script>
+<script src="__PUBLIC__/mobile/js/ajax.js"></script>
+<script src="__PUBLIC__/mobile/js/assets/transfer/check.js?v={:mt_rand(1,54561)}"></script>

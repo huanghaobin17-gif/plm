@@ -1,0 +1,104 @@
+<?php if($menuData = get_menu_name('Patrol','Patrol','patrolList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var patrolListUrl='{$patrolListUrl}';
+</script>
+<div class="layui-fluid" id="LAY-Patrol-Patrol-patrolList">
+    <!--搜索部分-->
+    <div class="layui-row">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+            <div class="layui-card-body">
+                <form class="layui-form" lay-filter="component-form-group">
+                    <input type="hidden" name="url" value="{$url}">
+                    <div class="layui-form-item spacingBalance">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">计划名称：</label>
+                            <div class="layui-input-inline">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bsSuggest" id="patrolListPatrolname" placeholder="请输入计划名称" name="patrol_name">
+                                    <div class="input-group-btn">
+                                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">计划状态：</label>
+                            <div class="layui-input-inline">
+                                <select name="patrol_status" lay-search="" >
+                                    <option value="">请选择状态</option>
+                                    <option value="1">待审核</option>
+                                    <option value="2">待发布</option>
+                                    <option value="3">实施中</option>
+                                    <option value="4">已结束</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">保养级别：</label>
+                            <div class="layui-input-inline">
+                                <select name="patrol_level" class="input_select" lay-search="">
+                                    <option value="">请选择</option>
+                                    <option value="1">日常保养</option>
+                                    <option value="2">巡查保养</option>
+                                    <option value="3">预防性维护</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline" style="margin-left: 10px;">
+                            <button class="layui-btn" type="button" lay-submit="" lay-filter="patrolListSearch" id="patrolListSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="patrolList" lay-filter="patrolListData"></table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('patrol/patrol/patrolList', layui.factory('patrol/patrol/patrolList'));
+</script>
+<script type="text/html" id="LAY-Patrol-Patrol-patrolListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('Patrol','Patrol','addPatrol')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="patrolListAddPatrol" data-level="1" data-url="{$menuData['actionurl']}?level=1">
+            <i class="layui-icon">&#xe654;</i>新增日常保养计划(DC)
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Patrol','Patrol','addPatrol')):?>
+        <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="patrolListAddPatrol" data-level="2" data-url="{$menuData['actionurl']}?level=2">
+            <i class="layui-icon">&#xe654;</i>新增巡查保养计划(RC)
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Patrol','Patrol','addPatrol')):?>
+        <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="patrolListAddPatrol" data-level="3" data-url="{$menuData['actionurl']}?level=3">
+            <i class="layui-icon">&#xe654;</i>新增预防性维护(PM)
+        </button>
+        <?php endif?>
+    </div>
+</script>

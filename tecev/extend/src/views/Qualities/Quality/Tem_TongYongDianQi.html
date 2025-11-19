@@ -1,0 +1,297 @@
+<h2 style="text-align: center; margin-bottom: 25px;"><!--北京大学国际医院-->医用设备通用电气安全质量控制原始记录表</h2>
+<div>
+    <span class="fl">检测报告编号：<em>{$qsInfo.plan_num}</em></span>
+    <span class="fr">制表日期：<em>{$date}</em></span>
+</div>
+<br/>
+<form class="layui-form">
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="150">
+            <col width="550">
+            <col width="200">
+            <col width="550">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="4" style="text-align: left !important;">一、设备基本信息</th>
+        </tr>
+        <tr>
+            <th>使用科室</th>
+            <td><em>{$asInfo.department}</em></td>
+            <th>质控计划名称</th>
+            <td><em>{$qsInfo.plan_name}</em></td>
+        </tr>
+        <tr>
+            <th>检测依据</th>
+            <td colspan="3"><em>{$qsInfo.basis}</em></td>
+        </tr>
+        <tr>
+            <th>项目类型</th>
+            <th>被检设备</th>
+            <th colspan="2">检测仪器（标准器、模拟器）</th>
+        </tr>
+        <tr>
+            <th>设备名称</th>
+            <td><em>{$asInfo.assets}</em></td>
+            <td colspan="2"><em>{$qsInfo.instrument}</em></td>
+        </tr>
+        <tr>
+            <th>品牌</th>
+            <td><em>{$asInfo.brand}</em></td>
+            <th>规格 / 型号</th>
+            <td><em>{$asInfo.model}</em></td>
+        </tr>
+        <tr>
+            <th>设备编号</th>
+            <td><em>{$asInfo.assnum}</em></td>
+            <th>产品序列号</th>
+            <td><em>{$asInfo.serialnum}</em></td>
+        </tr>
+        <tr>
+            <th>启用日期</th>
+            <td><em>{$qsInfo.start_date}</em></td>
+            <th>上次质控日期</th>
+            <td><em>{$asInfo.test_date}</em></td>
+        </tr>
+        <tr>
+            <th colspan="4" style="text-align: left !important;">二、性能检测、校准、记录</th>
+        </tr>
+        <tr>
+            <th>外观功能</th>
+            <td class="no-padding-td" colspan="3" style="text-align: left!important;">
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                &nbsp;&nbsp;&nbsp;&nbsp;不符合情况说明：
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col width="46">
+            <col width="250">
+            <col width="150">
+            <col width="300">
+            <col width="200">
+            <col width="200">
+            <col width="300">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="3"></th>
+            <th>测量值</th>
+            <th colspan="2">允许值</th>
+            <th>测量结论</th>
+        </tr>
+        <tr>
+            <td rowspan="6">电<br/>源<br/>部<br/>分</td>
+        </tr>
+        <tr>
+            <td colspan="2">保护接地阻抗(mΩ)</td>
+            <td></td>
+            <td colspan="2">≤200mΩ</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">绝缘阻抗(电源—外壳)(MΩ)</td>
+            <td></td>
+            <td colspan="2">≥10mΩ</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>对地漏电流（μA）</td>
+            <td>正常状态</td>
+            <td></td>
+            <td colspan="2">≤500μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">外壳漏电流（μA）</td>
+            <td>正常状态</td>
+            <td></td>
+            <td colspan="2">≤100μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>地线断开</td>
+            <td></td>
+            <td colspan="2">≤500μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <if condition="$detailInfo['preset_detection']['summary_result'] eq 1">
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        <elseif condition="$detailInfo['preset_detection']['summary_result'] eq 2"/>
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji23" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        <else/>
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                            <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                        </if>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+            <td colspan="4"></td>
+            <td>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> B型BF型
+            </td>
+            <td>
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> CF型
+            </td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="6">应<br/>用<br/>部<br/>分</td>
+        </tr>
+        <tr>
+            <td rowspan="2">患者漏电流（μA）</td>
+            <td>正常状态</td>
+            <td></td>
+            <td>≤100μA</td>
+            <td>≤10μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>地线断开</td>
+            <td></td>
+            <td>≤500μA</td>
+            <td>≤50μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">患者辅助漏电流（μA）</td>
+            <td>正常状态</td>
+            <td></td>
+            <td>≤100μA</td>
+            <td>≤10μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>地线断开</td>
+            <td></td>
+            <td>≤500μA</td>
+            <td>≤50μA</td>
+            <td>
+                <div class="layui-item">
+                    <div class="layui-inline">
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 符合
+                        <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i> 不符合
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="layui-table" lay-size="sm" style="margin-top: -6px;">
+        <colgroup>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th colspan="3" style="text-align: left !important;">三、经办工程师及验收人员意见及签字</th>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-left">
+                评分：
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>1分、
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>2分、
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>3分、
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>4分、
+                <i class="layui-icon layui-icon-gongsisvgtubiaozongji22" style="position: relative;top: 2px; padding-right: 2px;"></i>5分
+            </td>
+        </tr>
+        <tr>
+            <th>设备使用部门负责人意见及签字 </th>
+            <th>经办工程师意见及签字</th>
+            <th>设备科意见及签字</th>
+        </tr>
+        <tr>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span style="padding-right: 100px;">签字：</span>
+                    <span>日期：</span>
+                </p>
+            </td>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span style="padding-right: 100px;">签字：</span>
+                    <span>日期：</span>
+                </p>
+            </td>
+            <td>
+                <p style="height: 60px"></p>
+                <p style="text-align: left">
+                    <span style="padding-right: 100px;">签字：</span>
+                    <span>日期：</span>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

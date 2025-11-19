@@ -1,0 +1,70 @@
+ <?php if($menuData = get_menu_name('BaseSetting','SmsModule','smsSetting')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<style>
+    #LAY-BaseSetting-SmsModule-smsSetting .layui-tab-content{
+        padding: 15px 0 15px 0;
+    }
+    #LAY-BaseSetting-SmsModule-smsSetting .layui-elem-quote-sm span{
+        float: left;
+        width: 250px;
+    }
+    #LAY-BaseSetting-SmsModule-smsSetting .layui-form-label{
+        padding: 9px 0;
+    }
+</style>
+<div class="layui-fluid" id="LAY-BaseSetting-SmsModule-smsSetting" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form"  action="">
+                        <div class="layui-form-item" pane="" style="margin-bottom:25px!important; width: 580px;">
+                            <label class="layui-form-label modulelabel-2"><span class="rquireCoin">*</span>短信总开关状态：</label>
+                            <div class="layui-input-block radio-margin-left">
+                                <input type="radio" name="setting_open[status]" value="1" lay-filter="total_open" title="开启" <if condition="$settings['setting_open'][status] EQ C('OPEN_STATUS')">checked</if> >
+                                <input type="radio" name="setting_open[status]" value="0" lay-filter="total_open" title="关闭" <if condition="$settings['setting_open'][status] EQ C('SHUT_STATUS')">checked</if> >
+                            </div>
+                        </div>
+                        <div class="layui-tab layui-tab-brief" lay-filter="demo">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">维修配置</li>
+                                <li>巡查配置</li>
+                                <li>借调配置</li>
+                                <li>外调配置</li>
+                                <li>转科配置</li>
+                                <li>报废配置</li>
+                                <li>计量配置</li>
+                                <li>质控配置</li>
+                                <li>采购配置</li>
+                                <li>附属设备分配配置</li>
+                            </ul>
+                            <div class="layui-tab-content total_setting">
+                                <div class="layui-tab-item layui-show"><include file="repairSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="patrolSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="borrowSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="outsideSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="transferSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="scrapSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="meteringSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="qualitiesSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="purchasesSmsSetting"/></div>
+                                <div class="layui-tab-item"><include file="subsidiarySmsSetting"/></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;margin-top: 15px;" >
+                            <button class="layui-btn" lay-submit lay-filter="setSmsSetting" type="button"><i class="layui-icon" >&#xe609;</i> 保存</button>
+                            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var smsSettingUrl='{$smsSettingUrl}';
+    layui.use('basesetting/smsModule/smsSetting', layui.factory('basesetting/smsModule/smsSetting'));
+</script>

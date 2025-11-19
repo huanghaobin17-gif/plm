@@ -1,0 +1,540 @@
+<title>模块配置</title>
+<style>
+    #LAY-Remind-Remind-historyRemindList .layadmin-homepage-list-inline .layui-btn{font-size:14px;line-height:1.42857;vertical-align:middle;height:auto;padding:4px 7px;margin:5px 10px 5px 0}
+    #LAY-Remind-Remind-historyRemindList .longLabel{ width: 100px; text-align: right;}
+</style>
+<div class="layui-fluid" id="LAY-Remind-Remind-historyRemindList" style="margin-bottom: 20px;">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon">&#xe635;</i> 动态字段标签
+                    <span class="layui-word-aux">(点击复制标签)</span>
+                </div>
+                <div class="layui-card-body">
+                    <ul class="layadmin-homepage-list-inline">
+                        <button class="layui-btn layui-btn-primary">科室名称</button>
+                        <button class="layui-btn layui-btn-primary">设备名称</button>
+                        <button class="layui-btn layui-btn-primary">设备编号</button>
+                        <button class="layui-btn layui-btn-primary">用户名</button>
+                        <button class="layui-btn layui-btn-primary">时间</button>
+                        <button class="layui-btn layui-btn-primary">计划名称</button>
+                        <button class="layui-btn layui-btn-primary">证照名称</button>
+                        <button class="layui-btn layui-btn-primary">到期时间</button>
+                    </ul>
+
+                    <!--点击按钮提示复制标签成功-->
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 120px;" lay-tips="科室报修的信息通知至维修工程师" lay-direction="2">
+                        <i class="layui-icon ">&#xe631;</i> [维修管理]-报修
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 120px;" lay-tips="派工信息通知至维修工程师" lay-direction="2">
+                        <i class="layui-icon ">&#xe631;</i> [维修管理]-派工
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 140px;" lay-tips="接单信息通知至报修人员（设备管理员）" lay-direction="2">
+                        <i class="layui-icon ">&#xe631;</i> [维修管理]-已接单
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 160px;" lay-tips="验收信息通知至报修人员（设备管理员）" lay-direction="3">
+                        <i class="layui-icon ">&#xe631;</i> [维修管理]-修复请验收
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 180px" lay-tips="通知维修工程师有新的巡查保养任务" lay-direction="2">
+                        <i class="layui-icon layui-icon-zzstreet-view"></i> [巡查保养管理]-任务提醒
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 230px" lay-tips="通知任务执行者、计划制定者有计划任务即将到期" lay-direction="2">
+                        <i class="layui-icon layui-icon-zzstreet-view"></i> [巡查保养管理]-任务即将逾期提醒
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 145px" lay-tips="通知医护人员验收巡查保养结果" lay-direction="2">
+                        <i class="layui-icon layui-icon-zzstreet-view"></i> [巡查保养管理]-验收
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width:220px;" lay-tips="通知科室设备管理员有异常设备报修申请需确认报修" lay-direction="3">
+                        <i class="layui-icon layui-icon-zzstreet-view"></i> [巡查保养管理]-异常转报修确认
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 150px;" lay-tips="通知维修工程师有新的质控任务" lay-direction="2">
+                        <i class="layui-icon">&#xe672;</i> [质控管理]-任务提醒
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 210px;" lay-tips="设备计量待检计划信息通知至设备科计量负责人" lay-direction="2">
+                        <i class="layui-icon layui-icon-zruler-l"></i> [计量管理]-待检计划将到提醒
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="width: 180px;" lay-tips="到期证照信息发送至设备科负责人" lay-direction="2">
+                        <i class="layui-icon layui-icon-zcertificate"></i> [证照管理]-证照到期提醒
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label">短信开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="" class="layui-form-label">内容模板：</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 0; text-align: center">
+                            <button class="layui-btn layui-btn-normal layui-btn-xs">发送示例</button>
+                            <button class="layui-btn layui-btn-xs">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-xs layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--<div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div style="" lay-tips="" lay-direction="2"></div>
+                </div>
+                <div class="layui-card-body">
+
+                </div>
+            </div>
+        </div>-->
+        <div class="layui-col-md12">
+            <blockquote class="layui-elem-quote" style="background-color: #ffffff">
+                <i class="layui-icon layui-icon-zzinfo-circle"></i>
+                上面的短信开关控制着独立的短信通知。 内容模板与邮件通用。
+            </blockquote>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe614;</i> 邮件高级设置
+                    <span class="layui-word-aux">(发送方式：通过SMTP SOCKET 连接 SMTP 服务器发送)</span>
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">邮件通知开关：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                                <!--开启时弹窗提示系统用户有多少没有设置收件邮箱-->
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">SMTP服务器：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" value="smtp.exmail.qq.com" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">SMTP端口：</label>
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">邮箱账号：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">SMTP服务器的用户帐号,一般为邮件地址</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">邮箱密码：</label>
+                            <div class="layui-input-inline">
+                                <input type="password" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">发件人邮箱：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">发送的邮件将以此邮箱名义发送</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">发件人名称：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">发送的邮件将显示此名称，不填则显示系统名</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">测试收件人：</label>
+                            <div class="layui-input-inline" style="margin-right: -1px;">
+                                <input type="text" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline" style="width: 70px;">
+                                <button class="layui-btn layui-btn-sm layui-btn-normal" style="height: 38px; line-height: 38px;">测试发送</button>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">请在左侧输入一个接收测试邮件的邮件地址</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">开启模块：</label>
+                            <div class="layui-input-block" style="margin-left: 130px;">
+                                <input type="checkbox" name="" lay-skin="primary" title="[维修管理]-报修" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[维修管理]-派工" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[维修管理]-已接单" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[维修管理]-修复请验收" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[巡查保养管理]-任务提醒" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[巡查保养管理]-任务即将逾期提醒" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[巡查保养管理]-验收" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[巡查保养管理]-异常转报修确认" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[质控管理]-任务提醒" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[计量管理]-待检计划将到提醒" checked="">
+                                <input type="checkbox" name="" lay-skin="primary" title="[证照管理]-证照到期提醒" checked="">
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 130px;">
+                            <button class="layui-btn layui-btn-sm">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-sm layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe614;</i> 短信高级设置</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">短信剩余：</label>
+                            <div class="layui-form-mid">
+                                12323（条）
+                                <a href="" style="color: #01AAED">充值</a>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">短信总开关：</label>
+                            <div class="layui-input-inline" style="width: 60px">
+                                <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="开|关">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">该开关控制整个短信通知功能！</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">内容开头：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" value="【医疗设备管理系统】" placeholder="短信内容开头" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">短信内容开头，会占短信内容字节，不宜过长！</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">API账号：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">API密码：</label>
+                            <div class="layui-input-inline">
+                                <input type="password" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-input-block" style="margin-left: 130px;">
+                            <button class="layui-btn layui-btn-sm">保存</button>
+                            <button type="reset" class="layui-btn  layui-btn-sm layui-btn-primary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-zcomputer"></i> LED实时信息屏配置
+                </div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">显示最多条数：</label>
+                            <div class="layui-input-inline" style="width: 50px;">
+                                <input type="text" value="5" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">条/屏</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="" class="layui-form-label longLabel">排序：</label>
+                            <div class="layui-input-block">
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    layui.use('remind/remind/remindSetting', layui.factory('remind/remind/remindSetting'));
+</script>

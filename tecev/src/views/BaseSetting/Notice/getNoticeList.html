@@ -1,0 +1,34 @@
+<?php if($menuData = get_menu_name('BaseSetting','Notice','getNoticeList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var getNoticeList = "{$getNoticeList}";
+</script>
+<div class="layui-fluid" id="LAY-BaseSetting-Notice-getNoticeList">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <div class="fl">公告列表</div>
+            </div>
+            <div class="layui-card-body">
+                <div id="noticeLists" lay-filter="noticeLists"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid = "<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('basesetting/notice/notice', layui.factory('basesetting/notice/notice'));
+</script>
+<script type="text/html" id="LAY-BaseSetting-Notice-getNoticeListToolbar">
+    <div class="layui-btn-container">
+        <?php if($menuData = get_menu('BaseSetting','Notice','addNotice')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addnotice" data-url="{$menuData['actionurl']}">
+            <i class="layui-icon">&#xe654;</i>{$menuData['actionname']}
+        </button>
+        <?php endif?>
+    </div>
+</script>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-elem-quote{ margin: 0px; padding: 10px; font-weight: bold}
+    .layui-table{ margin-top: 0px;}
+    .bigImg {
+        cursor: pointer;
+        max-width: 95% !important;
+    }
+    .media{
+        margin: 40px auto;
+    }
+</style>
+<body>
+<div class="containDiv">
+    <div class="layui-elem-quote">相关文件:</div>
+    <div class="layui-carousel media" id="shopwile">
+    <div carousel-item>
+        <volist name="uploadinfo" id="vo">
+            <div>
+                <img src="/Public/uploads/assets/{$vo}" class="bigImg">
+            </div>
+            </tr>
+        </volist>
+         </div>
+</div>
+</div>
+<script src="__PUBLIC__/js/pdf.js?v={:mt_rand(1,54561)}"></script>
+<script>
+    layui.use(['form','carousel'], function(){
+        var carousel = layui.carousel;
+  //建造实例
+  carousel.render({
+    elem: '#shopwile'
+    ,height:'400px'
+    ,width: '300px' //设置容器宽度
+    ,arrow: 'always' //始终显示箭头
+    //,anim: 'updown' //切换动画方式
+  });
+    });
+
+    
+
+</script>
+</body>
+</html>

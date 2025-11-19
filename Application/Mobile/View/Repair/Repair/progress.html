@@ -1,0 +1,127 @@
+<include file="Public:head"/>
+<title>维修进程</title>
+<style>
+    .line {
+        border-right: 1px solid #c9c9c9;
+        position: absolute;
+        right: 0;
+        width: 1px;
+        height: 80%;
+        top: 0;
+    }
+    .detailText{
+        color:#3f3f3f;
+    }
+    .sum {
+        color: #FF5722;
+    }
+    /*.using {*/
+        /*color: #009688*/
+    /*}*/
+    #progress li {
+        margin-bottom: 0.625rem;
+    }
+    .swiper-container {
+        height: 12.5rem;
+    }
+    .weui-popup__modal .weui-icon-cancel {
+        position: absolute;
+        right: 0.2rem;
+        top: 0.8rem;
+        color: #888;
+        font-size: 1.5rem;
+    }
+    .detail{padding-left: 0;}
+    .detailTitle{padding-left: 0;}
+    .detail li{margin-bottom: 0.2rem !important;}
+    .detailText{width: auto; text-align: left;font-size: 1rem;}
+    .repairNum{word-wrap: break-word;width: 9rem;}
+    .repairTime{margin-left: 1rem;}
+    .departmentColor{color: #666666;}
+    .text{color: #999999;padding-left: 10px;}
+    .jumpButton{bottom: 2rem;}
+    .content{border:none;border-bottom: 1px solid #E5E5E5;margin-top: 0;}
+    .content .status{position:absolute;left: 48%;}
+    .content .status .layui-badge{border-radius:40%;font-size: 0.875rem;height: 1.625rem;line-height: 1.55rem;}
+    .weui-search-bar{width: 70%;display: inline-block;}
+    .weui-search-bar__box .weui-icon-clear{right: 20%;}
+    #searchCancel{position: absolute;top: 0.4rem;right: 1rem;z-index: 100;}
+    .searchStatus{display: inline-block;width: 28%;}
+    .fts{font-size: 0.875rem !important;}
+</style>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="mgt1rem">
+                <div class="weui-search-bar" id="searchBar">
+                    <form class="weui-search-bar__form" action="#" id="searchForm">
+                        <div class="weui-search-bar__box">
+                            <i class="weui-icon-search"></i>
+                            <input type="search" class="weui-search-bar__input" id="searchInput">
+                            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                        </div>
+                        <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+                            <i class="weui-icon-search"></i>
+                            <span>搜索(名称、编号、科室)</span>
+                        </label>
+                    </form>
+                    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                    <div class="stopCancelSearch"></div>
+                </div>
+                <div class="layui-form searchStatus">
+                    <select name="status" lay-filter="repair_status">
+                        <option value="">全部</option>
+                        <option value="2">待检修</option>
+                        <option value="7">待验收</option>
+                        <option value="3">待出库</option>
+                        <option value="5">待审批</option>
+                        <option value="1">待接单</option>
+                        <option value="6">继续维修</option>
+                        <option value="8">已结束</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <img class="formImage" src="__PUBLIC__/mobile/images/icon/list.png">
+            <h2 class="list_title">维修进程</h2>
+            <span class="sum"></span> 条
+            <a class="order">排序
+                <img class="formImage" src="__PUBLIC__/mobile/images/icon/order.png">
+                <div class="orderList">
+                    <dl>
+                        <dt>降序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="DESC" orderSort="applicant_time">按照报修时间</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton" orderType="DESC" orderSort="status">按照维修状态</span>
+                        </dd>
+                        <dt>升序</dt>
+                        <dd>
+                            <span class="orderTypeButton" orderType="ASC" orderSort="applicant_time">按照报修时间</span>
+                        </dd>
+                        <dd>
+                            <span class="orderTypeButton" orderType="ASC" orderSort="status">按照维修状态</span>
+                        </dd>
+                    </dl>
+                </div>
+            </a>
+        </div>
+        <div class="layui-card-body">
+            <ul id="progress">
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<include file="Public:buttom"/>
+<script>
+    var progressUrl='{$progressUrl}';
+</script>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script src="__PUBLIC__/mobile/js/repair/repair/progress.js?v={:mt_rand(1,54561)}"></script>

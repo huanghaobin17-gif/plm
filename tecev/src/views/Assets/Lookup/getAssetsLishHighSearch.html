@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <include file="Public:layerHeader"/>
+</head>
+<style>
+    .layui-form-label{width: 85px;}
+    .layui-form-item .layui-input-inline{width: 235px;margin-right: 0;}
+    .layui-form-item .layui-inline{margin-right: 0;}
+    .bsSuggest{width: 225px !important;}
+    .layui-form-item{margin: 10px 0;}
+    .layui-form-select dl{max-height: 220px}
+    .xm-input,.xm-select{height: 39px !important;}
+    .xm-select-parent .xm-form-select dl{max-height: 260px}
+    .layui-form-mid{margin: 0 10px;}
+    .timeStyle{width: 105px !important;}
+    .timeStyle input{cursor: pointer;}
+    .txt{position: absolute;
+        right: -15px;
+        top: 11px;
+        color: #999 !important;
+        font-size: 12px !important;
+        line-height: 20px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #999;
+    }
+</style>
+<body>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">设备名称：</label>
+            <div class="layui-input-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control bsSuggest" id="assets"  placeholder="请输入设备名称" name="assets">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备编号：</label>
+            <div class="layui-input-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control bsSuggest" id="assnum"  placeholder="请输入设备编号" name="assnum">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备状态：</label>
+            <div class="layui-input-inline">
+                <select name="status" xm-select="status" xm-select-search="" >
+                    <option value="">请选择设备状态</option>
+                    <option value="0">在用</option>
+                    <option value="1">维修中</option>
+                    <option value="2">已报废</option>
+                    <option value="5">报废中</option>
+                    <option value="6">转科中</option>
+                    <option value="7">质控中</option>
+                    <option value="8">巡查中</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备分类：</label>
+            <div class="layui-input-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control bsSuggest" id="category" placeholder="请输入设备分类" name="category">
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">注册证编号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="请输入注册证编号" name="registration">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">原编号：</label>
+            <div class="layui-input-inline">
+                <div class="input-group">
+                    <input type="text" autocomplete="off" class="form-control bsSuggest" id="assorignum" placeholder="请输入设备原编码" name="assorignum" />
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">备用原编号：</label>
+            <div class="layui-input-inline">
+                <div class="input-group">
+                    <input type="text"  class="form-control bsSuggest" id="assorignum_spare" placeholder="请输入设备原编码(备用)" name="assorignum_spare" />
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">出厂编号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="请输入出厂编号" name="factorynum">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">管理类别：</label>
+            <div class="layui-input-inline">
+                <select name="assets_level" lay-search>
+                    <option value="">请选择管理类别</option>
+                    <volist name="assetsLevel" id="v">
+                        <option value="{$v.value}">{$v.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">规格型号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="请输入规格型号" name="model">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备序列号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="请输入设备序列号" name="serialnum">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备备注：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" placeholder="请输入设备备注" name="remark">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">品牌：</label>
+            <div class="layui-input-inline">
+                <div class="input-group" id="brand">
+                    <input type="text" class="form-control bsSuggest" lay-verify="brand" name="brand" id="dic_brand"
+                           placeholder="请选择品牌"/>
+                    <div class="input-group-btn">
+                        <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备负责人：</label>
+            <div class="layui-input-inline">
+                <select name="assetsrespon" lay-search="" >
+                    <option value="">请选择设备负责人</option>
+                    <volist name="users" id="vo">
+                        <option value="{$vo.username}">{$vo.username}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">所属科室：</label>
+            <div class="layui-input-inline">
+                <select name="department" xm-select="department" xm-select-search="">
+                    <option value="">请选择科室</option>
+                    <volist name="departmentInfo" id="v">
+                        <option value="{$v.departid}">{$v.department}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">档案盒编号：</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input"  placeholder="请输入档案盒编号" name="file_number">
+            </div>
+        </div>
+        <notempty name="is_showPrice">
+        <div class="layui-inline">
+            <label class="layui-form-label">设备原值：</label>
+            <div class="layui-input-inline" style="width: 105px;">
+                <input class="layui-input" placeholder="区间（小）" name="buy_priceMin">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 105px;">
+                <input class="layui-input" placeholder="区间（大）" name="buy_priceMax">
+            </div>
+        </div>
+        </notempty>
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商：</label>
+            <div class="layui-input-inline">
+                <select name="supplier" xm-select="supplier" xm-select-search="">
+                    <option value="">请选择供应商</option>
+                    <volist name="supplier" id="vo">
+                        <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">生产商：</label>
+            <div class="layui-input-inline">
+                <select name="factory" xm-select="factory" xm-select-search="">
+                    <option value="">请选择生产商</option>
+                    <volist name="factory" id="vo">
+                        <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">维修商：</label>
+            <div class="layui-input-inline">
+                <select name="repair" xm-select="repair" xm-select-search="">
+                    <option value="">请选择维修商</option>
+                    <volist name="repair" id="vo">
+                        <option value="{$vo.olsid}">{$vo.sup_name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">录入人员：</label>
+            <div class="layui-input-inline">
+                <select name="adduser" lay-search="" >
+                    <option value="">请选择录入人员</option>
+                    <volist name="users" id="vo">
+                        <option value="{$vo.username}">{$vo.username}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">录入日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="开始日期" name="addDateStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="结束日期" name="addDateEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">截保日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="开始日期" name="guaranteeDateStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="结束日期" name="guaranteeDateEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">出厂日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="开始日期" name="factoryDateStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="结束日期" name="factoryDateEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="开始日期" name="storageDateStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="结束日期" name="storageDateEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">启用日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="开始日期" name="openDateStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" placeholder="结束日期" name="openDateEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">付款日期：</label>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" style="cursor: pointer;" placeholder="开始日期"
+                       name="paytimeStartDate">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline timeStyle">
+                <input class="layui-input formatDate" style="cursor: pointer;" placeholder="结束日期" name="paytimeEndDate">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">辅助分类：</label>
+            <div class="layui-input-inline">
+                <select name="assets_helpcat" xm-select="assets_helpcat" xm-select-search="" >
+                    <option value="">请选择辅助分类</option>
+                    <volist name="assets_helpcat" id="vo" key="key">
+                        <option value="{$key-1}">{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">财务分类：</label>
+            <div class="layui-input-inline">
+                <select name="assets_finance" xm-select="assets_finance" xm-select-search="" >
+                    <option value="">请选择财务分类</option>
+                    <volist name="assets_finance" id="vo" key="key">
+                        <option value="{$key-1}">{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">资金来源：</label>
+            <div class="layui-input-inline">
+                <select name="assets_capitalfrom" xm-select="assets_capitalfrom" xm-select-search="" >
+                    <option value="">请选择资金来源</option>
+                    <volist name="assets_capitalfrom" id="vo" key="key">
+                        <option value="{$key-1}">{$vo}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <include file="Public:hospital_search"/>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">设备类型：</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="assetsType" value="is_firstaid" title="急救设备" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_special" title="特种设备" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_metering" title="计量设备" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_qualityAssets" title="质控设备" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_patrol" title="保养设备" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_benefit" title="效益分析" lay-skin="primary">
+            <input type="checkbox" name="assetsType" value="is_lifesupport" title="生命支持" lay-skin="primary">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">国产&进口：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="radio" name="is_domestic" value="0" title="全部" checked>
+                <input type="radio" name="is_domestic" value="1" title="国产">
+                <input type="radio" name="is_domestic" value="2" title="进口">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否付清：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="radio" name="pay_status" value="0" title="全部" checked>
+                <input type="radio" name="pay_status" value="1" title="已付清">
+                <input type="radio" name="pay_status" value="2" title="未付清">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">附属设备：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="radio" name="is_subsidiary" value="0" title="否">
+                <input type="radio" name="is_subsidiary" value="1" title="是">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">巡查周期：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="text" name="patrol_xc_cycle" class="layui-input" style="width: 5em;">
+                <div class="txt">天</div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">保养周期：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="text" name="patrol_pm_cycle" class="layui-input" style="width: 5em;">
+                <div class="txt">天</div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">质控周期：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="text" name="quality_cycle" class="layui-input" style="width: 5em;">
+                <div class="txt">天</div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">计量周期：</label>
+            <div class="layui-input-inline" style="width: auto">
+                <input type="text" name="metering_cycle" class="layui-input" style="width: 5em;">
+                <div class="txt">天</div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 40px;">
+        <div style="text-align: center">
+            <button class="layui-btn" lay-submit="" lay-filter="highSearch" ><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+            <button id="cancel" class="layui-btn layui-btn-primary">取消</button>
+            <button type="reset" class="layui-btn layui-btn-primary" style="background-color: #FBFBFB">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
+<script>
+    layui.use('controller/highSearch/highSearch', layui.factory('controller/highSearch/highSearch'));
+</script>

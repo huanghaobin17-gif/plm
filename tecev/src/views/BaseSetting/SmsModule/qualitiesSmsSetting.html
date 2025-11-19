@@ -1,0 +1,84 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-qualities .layui-form-item .layui-form-label{
+        width:163px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-qualities .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-qualities .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-qualities .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-qualities">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>质控计划名称 {plan_name}</span>
+            <span>质控计划编号 {plan_num}</span>
+            <span>预计执行日期 {do_date}</span>
+            <span>计划截止日期 {end_date}</span>
+            <span>设备名称 {assets}</span>
+            <span>启用用户 {start_username}</span>
+            <span>暂停用户 {stop_username}</span>
+            <span>医院名称 {hospital}</span>
+            <span>完成数量 {completeNum}</span>
+            <span>待完成数量 {toBeDoneNum}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>质控模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="qualities_sms_open" name="Qualities[status]"  value="1" title="开启" <if condition="$settings[Qualities][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="qualities_sms_open" name="Qualities[status]"  value="0" title="关闭" <if condition="$settings[Qualities][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+
+    <div class="qualities_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知执行质控：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Qualities[startQualityPlan][content]" value="{$settings[Qualities][startQualityPlan][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Qualities[startQualityPlan][status]"  value="1" title="开启" <if condition="$settings[Qualities][startQualityPlan][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Qualities[startQualityPlan][status]"  value="0" title="关闭" <if condition="$settings[Qualities][startQualityPlan][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知质控计划暂停：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Qualities[stopQualityPlan][content]" value="{$settings[Qualities][stopQualityPlan][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Qualities[stopQualityPlan][status]"  value="1" title="开启" <if condition="$settings[Qualities][stopQualityPlan][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Qualities[stopQualityPlan][status]"  value="0" title="关闭" <if condition="$settings[Qualities][stopQualityPlan][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知计划将要逾期：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Qualities[noticeDoQualityPlan][content]" value="{$settings[Qualities][noticeDoQualityPlan][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Qualities[noticeDoQualityPlan][status]"  value="1" title="开启" <if condition="$settings[Qualities][noticeDoQualityPlan][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Qualities[noticeDoQualityPlan][status]"  value="0" title="关闭" <if condition="$settings[Qualities][noticeDoQualityPlan][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">当日质控信息反馈：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Qualities[feedbackQuality][content]" value="{$settings[Qualities][feedbackQuality][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Qualities[feedbackQuality][status]"  value="1" title="开启" <if condition="$settings[Qualities][feedbackQuality][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Qualities[feedbackQuality][status]"  value="0" title="关闭" <if condition="$settings[Qualities][feedbackQuality][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+    </div>
+</div>

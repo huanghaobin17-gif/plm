@@ -1,0 +1,79 @@
+<?php if (!defined('THINK_PATH')) exit(); if($menuData = get_menu_name('Purchases','PurchasePlans','purPlansAppLists')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var purPlansAppLists = "<?php echo ($purPlansAppLists); ?>";
+</script>
+<div class="layui-fluid" id="LAY-Purchases-PurchasePlans-purchasePlansList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">项目名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="plans_apply_project"  placeholder="请输入项目名称" name="project_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上报科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="purPlansAppListsDepartment" xm-select-search="">
+                                        <option value="">请选择上报科室</option>
+                                        <?php if(is_array($departments)): $i = 0; $__LIST__ = $departments;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["departid"]); ?>"><?php echo ($vo["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">审核状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="approve_status" lay-search="" >
+                                        <option value=""></option>
+                                        <option value="0">未审核</option>
+                                        <option value="1">已通过</option>
+                                        <option value="2">未通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="purPlansAppListsSearch" id="plansListSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 年度采购计划
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="purPlansAppLists" lay-filter="purPlansAppData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('purchases/plans/purPlansAppLists', layui.factory('purchases/plans/purPlansAppLists'));
+</script>

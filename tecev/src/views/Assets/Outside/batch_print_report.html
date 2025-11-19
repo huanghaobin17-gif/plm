@@ -1,0 +1,316 @@
+<style>
+    td, th {
+        text-align: center !important;
+    }
+
+    th {
+        font-weight: bold !important;
+    }
+
+    .no-padding-td .layui-input {
+        border: none;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    em {
+        font-size: 12px;
+    }
+
+    .layui-form-checkbox[lay-skin=primary] i {
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+    }
+
+    .layui-form-checkbox span {
+        font-size: 12px;
+    }
+
+    .layui-form-checkbox[lay-skin=primary] span {
+        line-height: 16px;
+        padding-right: 0 !important;
+    }
+
+    .layui-form-checkbox span {
+        padding: 0 3px;
+    }
+
+    .text-align-left {
+        text-align: left !important;
+    }
+
+    .layui-table[lay-size=sm] td,
+    .layui-table[lay-size=sm] th {
+        padding: 5px !important;
+    }
+
+    .layui-table[lay-size=sm] td.text-align-left {
+        padding-left: 15px !important;
+    }
+
+    .logo {
+        height: 60px;
+        position: absolute;
+        top: 35px;
+    }
+
+</style>
+<div class="layui-fluid" style="min-height: 1120px;margin-top: {$marget_top}px;">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;">{$title}外调审批单</h2>
+        <notempty name="imageUrl">
+            <img src="{$imageUrl}" class="logo">
+        </notempty>
+        <div class="clear"></div>
+        <div class="fr" style="width: 230px;">
+            <span>制表日期:<em>{$date}</em></span>
+        </div>
+        <br/>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="120">
+                <col width="260">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="4" class="text-align-left">一、设备基本信息</th>
+            </tr>
+            <tr>
+                <th>设备名称</th>
+                <td>{$assets.assets}</td>
+                <th>设备编号</th>
+                <td>{$assets.assnum}</td>
+            </tr>
+            <tr>
+                <th>规格/型号</th>
+                <td>{$assets.model}</td>
+                <th>品牌</th>
+                <td>{$assets.brand}</td>
+            </tr>
+            <tr>
+                <th>生产厂家</th>
+                <td>{$assets.factory}</td>
+                <th>分类名称</th>
+                <td>{$asArr.category}</td>
+            </tr>
+            <tr>
+                <th>所属科室</th>
+                <td>{$assets.department}</td>
+                <th>设备管理员</th>
+                <td>{$assets.assetsrespon}</td>
+            </tr>
+            <tr>
+                <th>单位</th>
+                <td>{$asArr.unit}</td>
+                <th>保修截止日期</th>
+                <td>{$asArr.guarantee_date}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="150">
+                <col width="140">
+                <col width="">
+                <col width="100">
+                <col width="100">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="7" class="text-align-left">二、附属设备外调明细</th>
+            </tr>
+            <tr>
+                <th>序号</th>
+                <th>附属设备名称</th>
+                <th>设备编号</th>
+                <th>规格型号</th>
+                <th>单位</th>
+                <th>原值</th>
+            </tr>
+            <empty name="subsidiary">
+                <tr>
+                    <td colspan="7">无记录</td>
+                </tr>
+                <else/>
+                <volist name="subsidiary" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.assets}</td>
+                        <td>{$vo.assnum}</td>
+                        <td>{$vo.model}</td>
+                        <td>{$vo.unit}</td>
+                        <td>{$vo.buy_price}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="110">
+                <col width="120">
+                <col width="150">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" class="text-align-left">三、设备外调申请单信息</th>
+            </tr>
+
+            <tr>
+                <th>申请类型</th>
+                <td>{$outside.apply_type_name}</td>
+                <if condition="$outside['apply_type'] EQ C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                    <th>外售金额</th>
+                    <td>{$outside.price}元</td>
+                    <else/>
+                    <th>外调目的地</th>
+                    <td>{$outside.accept}</td>
+                </if>
+            </tr>
+            <tr>
+                <if condition="$outside['apply_type'] EQ C('OUTSIDE_OUTSIDE_SALE_TYPE')">
+                    <th>外调目的地</th>
+                    <td>{$outside.accept}</td>
+                    <th>外调原因</th>
+                    <td>{$outside.reason}</td>
+                    <else/>
+                    <th>外调原因</th>
+                    <td colspan="3" class="text-align-left">{$outside.reason}</td>
+                </if>
+            </tr>
+            <tr>
+                <th>联系人</th>
+                <td>{$outside.person}</td>
+                <th>联系电话</th>
+                <td>{$outside.phone}</td>
+            </tr>
+            <tr>
+                <th>申请人</th>
+                <td>{$outside.apply_username}</td>
+                <th>申请时间</th>
+                <td>{$outside.apply_time}</td>
+            </tr>
+            <tr>
+                <th>预计调出日期</th>
+                <td colspan="3" class="text-align-left">{$outside.outside_date}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="120">
+                <col width="140">
+                <col width="70">
+                <col width="">
+            </colgroup>
+            <tr>
+                <th colspan="5" class="text-align-left">四、审核信息</th>
+            </tr>
+            <tr>
+                <th style="text-align: center">序号</th>
+                <th>审核人</th>
+                <th>审核时间</th>
+                <th>审核状态</th>
+                <th>审核意见</th>
+            </tr>
+            <tbody>
+            <empty name="approve">
+                <tr>
+                    <td colspan="5">无审批记录</td>
+                </tr>
+                <else/>
+                <volist name="approve" id="vo">
+                    <tr>
+                        <td>{$key+1}</td>
+                        <td>{$vo.approver}</td>
+                        <td>{$vo.approve_time}</td>
+                        <td>{$vo.is_adoptNameNoColor}</td>
+                        <td class="text-align-left">{$vo.remark}</td>
+                    </tr>
+                </volist>
+            </empty>
+            </tbody>
+        </table>
+
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col width="120">
+                <col width="">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="6" class="text-align-left">五、验收信息</th>
+            </tr>
+            <tr>
+                <th>验收人</th>
+                <td>{$outside.person}</td>
+                <th>联系方式</th>
+                <td>{$outside.phone}</td>
+                <th>验收日期</th>
+                <td>{$outside.check_date}</td>
+            </tr>
+            <tr>
+                <th>验收备注</th>
+                <td colspan="5" class="text-align-left">{$outside.check_remark}</td>
+            </tr>
+            <tr>
+            </tbody>
+        </table>
+        <table class="layui-table" lay-size="sm" style="margin-top: -12px;">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th colspan="3" class="text-align-left">六、经办人员及验收人员意见及签字</th>
+            </tr>
+            <tr>
+                <th>申请人员意见及签字 </th>
+                <th>设备科意见及签字</th>
+                <th>验收科室意见及签字</th>
+            </tr>
+            <tr>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$apply_autograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$apply_autograph}">
+                        <span>日期：{$apply_autograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span <if condition="$departautograph"><else/>style="padding-right: 100px;"</if>>签字：</span><img src="{$departautograph}">
+                        <span>日期：{$departautograph_time}</span>
+                    </p>
+                </td>
+                <td>
+                    <p style="height: 60px"></p>
+                    <p style="text-align: left">
+                        <span style="padding-right: 100px;">签字：</span>
+                        <span style="padding-right: 80px;">日期：</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

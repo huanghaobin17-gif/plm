@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 18%;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">基本信息</div>
+        <table class="layui-table read-table" lay-even lay-size="sm">
+            <tbody>
+            <tr>
+                <th>入库人：</th>
+                <td>{$inWareInfo.in_user}</td>
+            </tr>
+            <tr>
+                <th>入库日期：</th>
+                <td>{$inWareInfo.in_date}</td>
+            </tr>
+            <tr>
+                <th>入库单号：</th>
+                <td>{$inWareInfo.in_num}</td>
+            </tr>
+            <tr>
+                <th>入库数量：</th>
+                <td>{$inWareInfo.nums}</td>
+            </tr>
+            <tr>
+                <th>入库金额：</th>
+                <td>{$inWareInfo.total_price}</td>
+            </tr>
+            <tr>
+                <th>供应商：</th>
+                <td>{$inWareInfo.supplier}</td>
+            </tr>
+            <tr>
+                <th>备注：</th>
+                <td>{$inWareInfo.in_desc}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote">
+            设备明细
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="10%">
+                <col width="30%">
+                <col width="10%">
+                <col width="10%">
+                <col width="15%">
+                <col width="15%">
+                <col width="10%">
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">设备名称</th>
+                <th style="text-align: left !important;">单位</th>
+                <th style="text-align: left !important;">数量</th>
+                <th style="text-align: left !important;">单价</th>
+                <th style="text-align: left !important;">总价</th>
+                <th style="text-align: left !important;">是否进口</th>
+            </tr>
+            <tbody>
+            <volist name="assets" id="vo">
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>{$vo.assets_name}</td>
+                    <td>{$vo.unit}</td>
+                    <td>{$vo.nums}</td>
+                    <td>{$vo.buy_price}</td>
+                    <td>{$vo.total_price}</td>
+                    <td>
+                        <if condition="$vo.is_import eq 1">
+                            是
+                            <else/>
+                            否
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="margin-bottom-15">
+        <div class="layui-elem-quote" style="margin-bottom: 0px;">
+            审批信息
+        </div>
+        <table class="layui-table read-table-l" style="margin-top: 0" lay-even lay-size="sm">
+            <colgroup>
+                <col width="10%">
+                <col width="15%">
+                <col width="25%">
+                <col width="15%">
+                <col>
+            </colgroup>
+            <tr>
+                <th style="text-align: left !important;">序号</th>
+                <th style="text-align: left !important;">审批人</th>
+                <th style="text-align: left !important;">审批时间</th>
+                <th style="text-align: left !important;">审批结果</th>
+                <th style="text-align: left !important;">审批意见</th>
+            </tr>
+            <tbody>
+            <if condition="$inWareInfo.approve_status neq 0">
+                <tr>
+                    <td>1</td>
+                    <td>{$inWareInfo.approve_user}</td>
+                    <td>{$inWareInfo.approve_time}</td>
+                    <td>
+                        <if condition="$inWareInfo.approve_status eq 1">
+                            通过
+                        <else/>
+                            不通过
+                        </if>
+                    </td>
+                    <td>{$inWareInfo.approve_desc}</td>
+                </tr>
+                <else/>
+                <td colspan="5" style="text-align: center !important;">暂无相关数据</td>
+            </if>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<style>
+    #print_box .batch_content{
+        color:#000000;
+        font-size: 12px;
+    }
+    @page{
+        margin:0;
+        font-family: "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", STHeiti, simsun, sans-serif, Arial;
+    }
+    .boximg{
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .boxnum{
+        width: 100px;
+        margin: 0 auto;
+        font-size: 12px;
+        text-align: center;
+    }
+</style>
+<div class="batch_content">
+    <div class="boximg"><img src="{$boxInfo[code_url]}" style="width:70px;"/> </div>
+    <div class="boxnum">{$boxInfo.box_num}</div>
+</div>
+

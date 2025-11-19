@@ -1,0 +1,170 @@
+<style>
+    #LAY-Assets-Transfer-progress .layui-inline .layui-input{width: 190px;}
+</style>
+<?php if($menuData = get_menu_name('Assets','Transfer','progress')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var progress = "{$progress}";
+</script>
+<div class="layui-fluid" id="LAY-Assets-Transfer-progress" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssetsNum" placeholder="请输入设备编号" name="progressAssetsNum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssets" placeholder="请输入设备名称" name="progressAssets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressCategory"  placeholder="请输入设备分类" name="progressCategory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">转出科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssetsDepartmentOut"  placeholder="请输入转出科室名称" name="progressAssetsDepartmentOut">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" >原编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssetsOrnum" placeholder="请输入设备原编号" name="progressAssetsOrnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">转科日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="progressTransferdate" readonly style="cursor: pointer;" name="progressTransferdate" value="" placeholder="请选择转科日期" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">转入科室：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="progressAssetsDepartmentIn" placeholder="请输入转入科室名称" name="progressAssetsDepartmentIn">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请日期：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="progressApplicantdate" readonly style="cursor: pointer;" id="progressApplicantdate" value="" placeholder="请选择申请日期" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请人员：</label>
+                                <div class="layui-input-inline">
+                                    <select name="progressAssetsUser"  lay-search="">
+                                        <option value="">请选择申请人员</option>
+                                        <volist name="users" id="vo">
+                                            <option value="{$vo.username}">{$vo.username}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <if condition="$isOpenApprove eq 1">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">审核状态：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="progressExamineStatus"  lay-search="">
+                                            <option value="">请选择</option>
+                                            <option value="0">未审核</option>
+                                            <option value="1">已通过</option>
+                                            <option value="2">不通过</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </if>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">验收状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="progressCheckStatus"  lay-search="">
+                                        <option value="">请选择</option>
+                                        <option value="0">未验收</option>
+                                        <option value="1">已验收</option>
+                                        <option value="2">不通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="text-align: center;">
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn" lay-submit="" lay-filter="progressSearch" ><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="progress" lay-filter="progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('assets/transfer/progress', layui.factory('assets/transfer/progress'));
+</script>

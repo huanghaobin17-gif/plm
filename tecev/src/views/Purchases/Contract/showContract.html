@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="Public:layerHeader"/>
+    <style>
+        .read-table th{
+            width: 15%;
+        }
+    </style>
+</head>
+<body>
+<div class="containDiv">
+    <div class="layui-row">
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">基本信息</blockquote>
+            <table class="layui-table read-table" lay-even lay-size="sm">
+                <tbody>
+                <tr>
+                    <th>合同编号：</th>
+                    <td>SW-SQ18090008</td>
+                    <th>合同名称：</th>
+                    <td>外科二区采购计划</td>
+                    <th>合同类型：</th>
+                    <td>采购合同</td>
+                </tr>
+                <tr>
+                    <th>乙方单位：</th>
+                    <td>{$Think.config.COMPANY_NAME}</td>
+                    <th>乙方联系人：</th>
+                    <td>邓生</td>
+                    <th>联系电话：</th>
+                    <td>13560498629</td>
+                </tr>
+                <tr>
+                    <th>签订日期：</th>
+                    <td>2018-09-12</td>
+                    <th>保修截止日期：</th>
+                    <td>2021-09-12</td>
+                    <th>验收日期：</th>
+                    <td>2018-09-12</td>
+                </tr>
+                <tr>
+                    <th>档案编号：</th>
+                    <td>DA566534-24</td>
+                    <th>档案管理员：</th>
+                    <td>张三</td>
+                    <th>院方联系人：</th>
+                    <td>李院长</td>
+                </tr>
+                <tr>
+                    <th>合同内容：</th>
+                    <td colspan="5">合同内容</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">合同付款信息</blockquote>
+            <table class="layui-table read-table-l" lay-skin="line" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">期数</th>
+                    <th style="text-align: left !important;">付款金额</th>
+                    <th style="text-align: left !important;">预计付款日期</th>
+                    <th style="text-align: left !important;">付款日期</th>
+                    <th style="text-align: left !important;">状态</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2000.00</td>
+                    <td>2018-09-12</td>
+                    <td>2018-09-12</td>
+                    <td>未付款</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2000.00</td>
+                    <td>2018-09-12</td>
+                    <td>2018-09-12</td>
+                    <td>未付款</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;">
+                合同附件信息
+            </blockquote>
+            <table class="layui-table read-table-l" lay-skin="line" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="30%">
+                    <col width="30%">
+                    <col width="30%">
+                    <col>
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">文件名称</th>
+                    <th style="text-align: left !important;">提交人</th>
+                    <th style="text-align: left !important;">上传时间</th>
+                    <th style="text-align: left !important;">操作</th>
+                </tr>
+                <tr>
+                    <td><a href="#" style="color: #0a8ddf">招标说明书.jpg</a></td>
+                    <td>张三</td>
+                    <td>2018-09-11 12:20:20</td>
+                    <td><a href="#" style="color: #0a8ddf">下载</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="margin-bottom-15">
+            <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin-bottom: 10px;">
+                设备明细
+            </blockquote>
+            <table class="layui-table read-table-l" lay-skin="line" lay-even lay-size="sm">
+                <tbody>
+                <colgroup>
+                    <col width="25%">
+                    <col width="15%">
+                    <col width="30%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <tr>
+                    <th style="text-align: left !important;">设备名称</th>
+                    <th style="text-align: left !important;">设备型号</th>
+                    <th style="text-align: left !important;">生产厂家</th>
+                    <th style="text-align: left !important;">单价</th>
+                    <th style="text-align: left !important;">数量</th>
+                    <th style="text-align: left !important;">总金额</th>
+                </tr>
+                <tr>
+                    <td>心电图机</td>
+                    <td>YU-6789</td>
+                    <td>广州方统生物技术有限公司</td>
+                    <td>4000.00</td>
+                    <td>2</td>
+                    <td>8000.00</td>
+                </tr>
+                <tr>
+                    <td>心电图机</td>
+                    <td>YU-6789</td>
+                    <td>广州方统生物技术有限公司</td>
+                    <td>4000.00</td>
+                    <td>2</td>
+                    <td>8000.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var handleTender = "{$handleTender}";
+    layui.use('controller/purchases/tenderRecord/handleTender', layui.factory('controller/purchases/tenderRecord/handleTender'));
+</script>

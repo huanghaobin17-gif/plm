@@ -1,0 +1,235 @@
+<?php if (!defined('THINK_PATH')) exit();?><style>
+    #LAY-Assets-Lookup-getAssetsList #fields{
+        width: 200px;
+        margin-left: 20px;
+        margin-bottom: 2px;
+        height:32px;
+    }
+    #LAY-Assets-Lookup-getAssetsList .timeStyle{width: 83px !important;}
+
+    #LAY-Assets-Lookup-getAssetsList .highLightSearchText {
+        font-weight: bold;
+        color: #333;
+    }
+    #LAY-Assets-Lookup-getAssetsList .layui-form-label{width: 90px;}
+    .layui-table-fixed-l{
+        overflow: hidden;
+    }
+</style>
+<?php if($menuData = get_menu_name('Assets','Lookup','getAssetsList')):?>
+<title><?php echo ($menuData['actionname']); ?></title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){$('input, textarea').placeholder();});
+    var getAssetsList = "<?php echo ($getAssetsList); ?>";
+    var expect_assid = "<?php echo ($expect_assid); ?>";
+    var header = '<?php echo ($header); ?>';
+</script>
+<div class="layui-fluid" id="LAY-Assets-Lookup-getAssetsList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe615;</i> 查询
+                    </div>
+                    <div class="fl">
+                        <a class="highSearch">高级查询</a>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListAssets"  placeholder="请输入设备名称" name="assets">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备编号：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListAssnum"  placeholder="请输入设备编号" name="assnum">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备分类：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListCategory" placeholder="请输入设备分类" name="category">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">所属科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="department" xm-select="getAssetsListDepartment" xm-select-search="">
+                                        <option value="">请选择所属科室</option>
+                                        <?php if(is_array($departmentInfo)): $i = 0; $__LIST__ = $departmentInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><option value="<?php echo ($v["departid"]); ?>"><?php echo ($v["department"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备状态：</label>
+                                <div class="layui-input-inline">
+                                    <select name="status" lay-search="" >
+                                        <option value="">请选择设备状态</option>
+                                        <option value="0">在用</option>
+                                        <option value="1">维修中</option>
+                                        <option value="2">已报废</option>
+                                        <option value="5">报废中</option>
+                                        <option value="6">转科中</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <?php if(!empty($is_showPrice)): ?><div class="layui-inline" style="margin-right: 0;">
+                                <label class="layui-form-label">设备原值：</label>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input" placeholder="区间（小）" name="buy_priceMin">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input" placeholder="区间（大）" name="buy_priceMax">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux" style="margin-right: 0;">元</div>
+                            </div><?php endif; ?>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">付款日期：</label>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input formatDate" style="cursor: pointer;" placeholder="开始日期" readonly name="paytimeStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input formatDate" style="cursor: pointer;" placeholder="结束日期" readonly name="paytimeEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">启用日期：</label>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input formatDate" style="cursor: pointer;" placeholder="开始日期" readonly name="openDateStartDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline timeStyle">
+                                    <input class="layui-input formatDate" style="cursor: pointer;" placeholder="结束日期" readonly name="openDateEndDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">档案盒编号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input"  placeholder="请输入档案盒编号" name="file_number">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备序列号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入设备序列号" name="serialnum">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">国产&进口：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="is_domestic" value="0" title="全部" checked>
+                                    <input type="radio" name="is_domestic" value="1" title="国产">
+                                    <input type="radio" name="is_domestic" value="2" title="进口">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否付清：</label>
+                                <div class="layui-input-inline" style="width: auto">
+                                    <input type="radio" name="pay_status" value="0" title="全部" checked>
+                                    <input type="radio" name="pay_status" value="1" title="已付清">
+                                    <input type="radio" name="pay_status" value="2" title="未付清">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <div class="fl">
+                                    <button class="layui-btn" lay-submit="" lay-filter="assetsListsSearch" ><i class="layui-icon">&#xe615;</i> 搜 索 </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list" style="display: none;">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon layui-icon-find-fill"></i> 列表高级查询筛选条件
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <p class="getAssetsListHighSearchStr"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div id="assetsLists" lay-filter="assetsLists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="assidStr" value="<?php echo ($assidArr); ?>">
+</div>
+<script type="text/html" id="LAY-Assets-Lookup-getAssetsListToolbar">
+    <div class="layui-btn-container">
+
+        <?php if($menuData = get_menu('Assets','Lookup','addAssets')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="addAssets" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon">&#xe654;</i><?php echo ($menuData['actionname']); ?>
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Assets','Lookup','batchAddAssets')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchAddAssets" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="iconfont icon-piliangtianjia3"></i> <?php echo ($menuData['actionname']); ?>
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Assets','Lookup','batchEditAssets')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="batchEditAssets" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="iconfont icon-piliangxiugai1"></i> <?php echo ($menuData['actionname']); ?>
+        </button>
+        <?php endif?>
+        <?php if($menuData = get_menu('Assets','Lookup','exportAssets')):?>
+        <button class="layui-btn layui-btn-sm" lay-event="exportAssets" data-url="<?php echo ($menuData['actionurl']); ?>">
+            <i class="layui-icon iconfont icon-download"></i><?php echo ($menuData['actionname']); ?>
+        </button>
+        <?php endif?>
+        <button class="layui-btn layui-btn-sm" lay-event="test_1" data-url="<?php echo ($menuData['actionurl']); ?>">
+            手工推送
+        </button>
+    </div>
+</script>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+
+    layui.use('assets/lookup/getAssetsList', layui.factory('assets/lookup/getAssetsList'));
+</script>

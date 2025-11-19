@@ -1,0 +1,567 @@
+<?php if($menuData = get_menu_name('Strategy','Stramonitor','monitorsur')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+    var mosur = "{$mosur}";
+</script>
+<style>
+    th,td{
+        text-align: center !important;
+    }
+    .keyword{
+        font-family: '微软雅黑 Bold', '微软雅黑';
+        font-weight: 700;
+        color: #0099FF;
+    }
+    .monitor-div{
+        height: auto;
+        min-height: 280px;
+        text-align: center;
+    }
+</style>
+<div class="layui-fluid" id="LAY-Strategy-Stramonitor-monitorsur">
+    <!--搜索部分-->
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <div class="layui-form-item spacingBalance">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest" id="getAssetsListsAssetsName" placeholder="请输入设备名称" name="assetsName">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">时间阶段：</label>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input formatDate" readonly placeholder="开始日期" style="cursor: pointer;"
+                                           name="startDate">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 83px;">
+                                    <input class="layui-input formatDate" readonly placeholder="结束日期" style="cursor: pointer;"
+                                           name="endDate">
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="margin-left: 10px;">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="getAssetsSearch" id="getAssetsSearch"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--内容部分-->
+    <div class="layui-row" style="margin-top: 15px">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 决策报表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <blockquote class="layui-elem-quote" style="margin-bottom: 5px;">全院监护仪科室分布Top5</blockquote>
+                    <div class="layui-row layui-col-space5">
+                        <div class="layui-col-md4">
+                            <div class="layui-form" style="margin-top: -5px;">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="60">
+                                        <col width="">
+                                        <col width="65">
+                                        <col width="130">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>科室</th>
+                                        <th>台次</th>
+                                        <th>资产总值(万元)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>普通内科</td>
+                                        <td>24</td>
+                                        <td>61.97</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>麻醉手术科</td>
+                                        <td>16</td>
+                                        <td>41.31</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>急诊科</td>
+                                        <td>15</td>
+                                        <td>38.73</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>儿科</td>
+                                        <td>12</td>
+                                        <td>31.98</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>康复科</td>
+                                        <td>6</td>
+                                        <td>15.49</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>合计：</td>
+                                        <td>73</td>
+                                        <td>189.48</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="grid-demo grid-demo-bg1" style="text-align: center;margin-top: 10px;margin-bottom: 20px;"><span class="keyword">监护仪</span>资产分布表 Top5</div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title"><span class="keyword">监护仪</span>资产科室分布Top5台次占比</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="monitor_department_nums" class="monitor-div"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="div-chart-show">
+                                <div class="div-chart-show-title"><span class="keyword">监护仪</span>资产科室分布Top5总金额占比</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="monitor_department_prices" class="monitor-div"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <blockquote class="layui-elem-quote" style="margin-bottom: 5px;margin-top: 60px;">2014~2018年全院监护仪增减分析</blockquote>
+                    <div class="layui-row">
+                        <div class="layui-col-md6">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="140">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                    <col width="120">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>2014年</th>
+                                    <th>2015年</th>
+                                    <th>2016年</th>
+                                    <th>2017年</th>
+                                    <th>2018年</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>报废</td>
+                                    <td>-1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>-3</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>新增</td>
+                                    <td>3</td>
+                                    <td>6</td>
+                                    <td>8</td>
+                                    <td>11</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>现有</td>
+                                    <td>4</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td>总数量</td>
+                                    <td>6</td>
+                                    <td>8</td>
+                                    <td>11</td>
+                                    <td>13</td>
+                                    <td>18</td>
+                                </tr>
+                                <tr>
+                                    <td>总金额(万元)</td>
+                                    <td>15.49</td>
+                                    <td>20.66</td>
+                                    <td>28.40</td>
+                                    <td>33.57</td>
+                                    <td>46.48</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="grid-demo grid-demo-bg1" style="text-align: center;margin-top: 10px;">2014~2018 全院<span class="keyword">监护仪</span>增减分析</div>
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="div-chart-show" style="margin-left: 10px;">
+                                <div class="div-chart-show-title">2014~2018年全院<span class="keyword">监护仪</span>增减分析</div>
+                                <div class="div-chart-show-pic-workjob">
+                                    <div id="monitor_add_scrap_year" class="monitor-div" style="height: 330px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <blockquote class="layui-elem-quote" style="margin-bottom: 5px;margin-top: 60px;">2014~2018年全院各品牌监护仪故障成本状况分析Top5</blockquote>
+
+                    <div>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="80">
+                                <col width="180">
+                                <col width="130">
+                                <col width="160">
+                                <col width="130">
+                                <col width="180">
+                                <col width="130">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>品牌名称</th>
+                                <th>设备台次</th>
+                                <th>设备总值（万元）</th>
+                                <th>总报障次数</th>
+                                <th>零配件成本（万元）</th>
+                                <th>成本费率</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>迈瑞</td>
+                                <td>65</td>
+                                <td>117.2</td>
+                                <td>86</td>
+                                <td>10.99</td>
+                                <td>9.38%</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>理邦</td>
+                                <td>112</td>
+                                <td>179.57</td>
+                                <td>128</td>
+                                <td>14.98</td>
+                                <td>8.34%</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>飞利浦</td>
+                                <td>36</td>
+                                <td>257.38</td>
+                                <td>37</td>
+                                <td>22.56</td>
+                                <td>8.77%</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>康达八方</td>
+                                <td>26</td>
+                                <td>66.64</td>
+                                <td>48</td>
+                                <td>6.83</td>
+                                <td>10.25%</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>三瑞</td>
+                                <td>6</td>
+                                <td>11.88</td>
+                                <td>10</td>
+                                <td>0.93</td>
+                                <td>7.87%</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>合计：</td>
+                                <td>245</td>
+                                <td>632.59</td>
+                                <td>309</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="grid-demo grid-demo-bg1" style="text-align: center;margin-top: 10px;margin-bottom: 20px;">2014~2018 各品牌<span class="keyword">监护仪</span>故障成本状况分析</div>
+                        <div class="layui-row">
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show" style="margin-right: 10px;">
+                                    <div class="div-chart-show-title">2014~2018 全院<span class="keyword">监护仪</span>品牌占有率</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_brand_market" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show">
+                                    <div class="div-chart-show-title">2014~2018 全院<span class="keyword">监护仪</span>品牌金额占比</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_brand_price" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <blockquote class="layui-elem-quote" style="margin-bottom: 5px;margin-top: 60px;">2014~2018年全院监护仪品牌（Top5）维修数据分析对比</blockquote>
+
+                    <div>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="100">
+                                <col width="120">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                                <col width="160">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th colspan="5">设备品牌</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>迈瑞</td>
+                                <td>理邦</td>
+                                <td>飞利浦</td>
+                                <td>康达八方</td>
+                                <td>三瑞</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">保修期内</td>
+                                <td>台次</td>
+                                <td>60</td>
+                                <td>100</td>
+                                <td>34</td>
+                                <td>26</td>
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td>故障率</td>
+                                <td>0%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>7.69%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td>维修费率</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">第二年</td>
+                                <td>台次</td>
+                                <td>20</td>
+                                <td>32</td>
+                                <td>12</td>
+                                <td>9</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>故障率</td>
+                                <td>20%</td>
+                                <td>25%</td>
+                                <td>25%</td>
+                                <td>44.44%</td>
+                                <td>25%</td>
+                            </tr>
+                            <tr>
+                                <td>维修费率</td>
+                                <td>2.6%</td>
+                                <td>3.21%</td>
+                                <td>2.3%</td>
+                                <td>2.94%</td>
+                                <td>1.96%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">第三年</td>
+                                <td>台次</td>
+                                <td>40</td>
+                                <td>44</td>
+                                <td>20</td>
+                                <td>15</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>故障率</td>
+                                <td>45%</td>
+                                <td>47.73%</td>
+                                <td>35%</td>
+                                <td>66.67%</td>
+                                <td>80%</td>
+                            </tr>
+                            <tr>
+                                <td>维修费率</td>
+                                <td>2.8%</td>
+                                <td>2.95%</td>
+                                <td>2.68%</td>
+                                <td>3.42%</td>
+                                <td>3.67%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">第四年</td>
+                                <td>台次</td>
+                                <td>57</td>
+                                <td>92</td>
+                                <td>28</td>
+                                <td>20</td>
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td>故障率</td>
+                                <td>45.61%</td>
+                                <td>46.46%</td>
+                                <td>38.65%</td>
+                                <td>68.54%</td>
+                                <td>78.88%</td>
+                            </tr>
+                            <tr>
+                                <td>维修费率</td>
+                                <td>3.8%</td>
+                                <td>3.56%</td>
+                                <td>3.67%</td>
+                                <td>3.84%</td>
+                                <td>3.5%</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">第五年</td>
+                                <td>台次</td>
+                                <td>60</td>
+                                <td>100</td>
+                                <td>34</td>
+                                <td>26</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>故障率</td>
+                                <td>63.33%</td>
+                                <td>52.76%</td>
+                                <td>48.04%</td>
+                                <td>69.13%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td>维修费率</td>
+                                <td>3.82%</td>
+                                <td>3.74%</td>
+                                <td>3.87%</td>
+                                <td>4.31%</td>
+                                <td>0%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">保外年均故障率</td>
+                                <td>43.49%</td>
+                                <td>42.99%</td>
+                                <td>36.67%</td>
+                                <td>62.2%</td>
+                                <td>45.97%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">保外年均费率</td>
+                                <td>3.26%</td>
+                                <td>3.37%</td>
+                                <td>3.13%</td>
+                                <td>3.63%</td>
+                                <td>2.28%</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="grid-demo grid-demo-bg1" style="text-align: center;margin-top: 10px;margin-bottom: 20px;">2014~2018 全院<span class="keyword">监护仪</span>（top5）品牌维修报表</div>
+                        <div class="layui-row">
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show" style="margin-right: 10px;margin-bottom: 20px;">
+                                    <div class="div-chart-show-title">2014~2018年全院（Top5）品牌<span class="keyword">监护仪</span>保外第2年维修数据分析</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_protection_2" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show" style="margin-bottom: 20px;">
+                                    <div class="div-chart-show-title">2014~2018年全院（Top5）品牌<span class="keyword">监护仪</span>保外第3年维修数据分析</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_protection_3" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show" style="margin-right: 10px;margin-bottom: 20px;">
+                                    <div class="div-chart-show-title">2014~2018年全院（Top5）品牌<span class="keyword">监护仪</span>保外第4年维修数据分析</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_protection_4" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="div-chart-show" style="margin-bottom: 20px;">
+                                    <div class="div-chart-show-title">2014~2018年全院（Top5）品牌<span class="keyword">监护仪</span>保外第5年维修数据分析</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_protection_5" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md12">
+                                <div class="div-chart-show" style="margin-right: 10px;margin-bottom: 20px;">
+                                    <div class="div-chart-show-title">2014~2018年全院（Top5）品牌<span class="keyword">监护仪</span>保外年均维修数据分析</div>
+                                    <div class="div-chart-show-pic-workjob">
+                                        <div id="monitor_protection_year_repair" class="monitor-div" style="height: 330px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var userid="<?php echo session('userid'); ?>";
+    var cookie_url = window.location.hash;
+    layui.use('strategy/stramonitor/monitorsur', layui.factory('strategy/stramonitor/monitorsur'));
+</script>

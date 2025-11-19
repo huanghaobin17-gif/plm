@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        #departData tr td{padding:5px 8px;}
+        .styled-select select {
+            background: transparent;
+            width: 130px;
+            padding: 2px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            height: 25px;
+            -webkit-appearance: none; /*for chrome*/
+        }
+        .cusquote1 {
+            padding: 5px !important;
+            width: 100%;
+            margin: 0 auto;
+            font-size: 12px;
+            color: red;
+        }
+        .tdcenter{
+            text-align: center;
+        }
+    </style>
+</head>
+<script>
+    var batchAddAssets = "{$batchAddAssets}";
+</script>
+<body>
+<div class="containDiv">
+    <div style="margin: 20px 0;">
+        <div class="layui-inline">
+            <div class="toolbar-move">
+                <button class="layui-btn" id="exploreAssetsModel"><i class="layui-icon">&#xe61e;</i> 导出设备模板</button>
+            </div>
+            <?php if($menuData = get_menu('Assets','Lookup','batchAddAssets')):?>
+            <div class="toolbar-move">
+                <button class="layui-btn" id="uploadAssetsFile" data-url="{$menuData['actionurl']}" lay-data="{accept: 'file'}"><i class="layui-icon layui-icon-uploadfile"></i>上传文件</button>
+            </div>
+            <?php endif?>
+        </div>
+    </div>
+        <blockquote class="layui-elem-quote cusquote1" style="width: auto;">
+            <span style="color: #000;">待入库设备信息</span>（列表中数据尚未入库，红色字体数据为不合法数据，可直接点击进行修改操作！）（未修改正确直接进行保存操作的，系统会自动忽略此设备数据，不进行入库操作）
+        </blockquote>
+        <div class="layui-card-body">
+            <div id="batchAssetsLists" lay-filter="batchAssetsData"></div>
+        </div>
+
+    <div class="layui-form-item">
+        <div style="text-align: center">
+            <button class="layui-btn layui-btn-danger" id="batchDel" lay-submit lay-filter="batchDel"><i class="layui-icon" >&#xe640;</i> 删除选中数据</button>
+            <button class="layui-btn layui-btn-normal" id="uploadSel" lay-submit lay-filter="uploadSel"><i class="layui-icon" >&#xe609;</i> 保存选中数据</button>
+            <button class="layui-btn" id="uploadAll" lay-submit lay-filter="uploadAll"><i class="layui-icon" >&#xe609;</i> 保存当页数据</button>
+        </div>
+    </div>
+</div>
+</body>
+<div id="cateList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备分类</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">设备分类 <span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="catid" lay-search>
+                                <option value="">请选择设备分类</option>
+                                <volist name="category" id="vo">
+                                    <option value="{$vo.catid}">{$vo.html}{$vo.category}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveCate">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="assets_level_name" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择管理类别</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 130px;">管理类别：</label>
+                        <div class="layui-input-inline">
+                            <select name="assets_level" lay-search>
+                                <option value="">请选择管理类别</option>
+                                <volist name="assetsLevel" id="v">
+                                    <option value="{$v.value}">{$v.name}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveAssetsLevel">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="departList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备使用科室</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">使用科室：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="department" lay-search>
+                                <option value="">请选择设备使用科室</option>
+                                <volist name="department" id="vo">
+                                    <option value="{$vo.departid}">{$vo.department}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveDepart">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="helpcatList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备辅助分类</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">辅助分类：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="helpcat" lay-search>
+                                <option value="">请选择辅助分类</option>
+                                <volist name="helpcat" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveHelpcat">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="financeList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备财务分类</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">财务分类：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="finance" lay-search>
+                                <option value="">请选择财务分类</option>
+                                <volist name="finance" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveFinance">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="capitalfromList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择资金来源</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">资金来源：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="capitalfrom" lay-search>
+                                <option value="">请选择资金来源</option>
+                                <volist name="capitalfrom" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveCapitalfrom">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="assfromList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择设备来源</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">设备来源：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="assfrom" lay-search>
+                                <option value="">请选择设备来源</option>
+                                <volist name="assfrom" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveAssfrom">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="methodList" style="display: none;">
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-form-pane" action="">
+                <blockquote class="layui-elem-quote" style="padding: 5px 15px;margin: 15px 0;">选择折旧方法</blockquote>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 110px;">折旧方法：<span class="rquireCoin">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="depreciation_method" lay-search>
+                                <option value="">请选择折旧方法</option>
+                                <volist name="depreciation_method" id="vo">
+                                    <option value="{$vo}">{$vo}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center; margin-top: 30px;">
+                    <button class="layui-btn" type="button" value="" lay-submit lay-filter="saveMethod">
+                        <i class="layui-icon" >&#xe609;</i> 确认
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary">
+                        <i class="layui-icon">ဂ</i> 重置
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>
+<script>
+    layui.use('controller/assets/lookup/batchaddassets', layui.factory('controller/assets/lookup/batchaddassets'));
+</script>
+

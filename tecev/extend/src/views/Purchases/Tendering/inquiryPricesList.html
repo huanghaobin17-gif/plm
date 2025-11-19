@@ -1,0 +1,110 @@
+<?php if($menuData = get_menu_name('Purchases','Tendering','inquiryPricesList')):?>
+<title>{$menuData['actionname']}</title>
+<?php endif?>
+<script>
+    //解决ie placeholder兼容性
+    $(function(){ $('input, textarea').placeholder(); });
+</script>
+<div class="layui-fluid" id="LAY-Purchases-Tendering-inquiryPricesList" >
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"><i class="layui-icon">&#xe615;</i> 查询</div>
+                <div class="layui-card-body">
+                    <form action="" class="layui-form">
+                        <div class="layui-form-item" style="margin-bottom: 0px; margin-top: 10px;">
+                            <include file="Public:hospital_search"/>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">申请科室：</label>
+                                <div class="layui-input-inline">
+                                    <select name="departids" xm-select="inquiryPricesListDepartment" xm-select-search="">
+                                        <option value="">请选择申请科室</option>
+                                        <volist name="departments" id="vo">
+                                            <option value="{$vo.departid}">{$vo.department}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">设备名称：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="dicAssetsName" placeholder="请输入设备名称" name="assets_name">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">供应商：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="supName" placeholder="请输入供应商名称" name="supplier">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label cuslabelwidth">生产厂商：</label>
+                                <div class="layui-input-inline">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bsSuggest"  id="facName" placeholder="请输入生产厂商名称" name="factory">
+                                        <div class="input-group-btn">
+                                            <ul class="dropdown-menu dropdown-menu-right ulwidth" role="menu"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">询价记录：</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="inquiry_record" value="" title="全部" checked>
+                                    <input type="radio" name="inquiry_record" value="1" title="有">
+                                    <input type="radio" name="inquiry_record" value="0" title="无">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">确认供货：</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="final_supplier" value="" title="全部" checked>
+                                    <input type="radio" name="final_supplier" value="1" title="是">
+                                    <input type="radio" name="final_supplier" value="0" title="否">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn" type="button" lay-submit="" lay-filter="inquiryPricesSearch" id="inquiryPricesSearch">
+                                    <i class="layui-icon">&#xe615;</i> 搜 索
+                                </button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row table-list">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <div class="fl">
+                        <i class="layui-icon">&#xe62d;</i> 询价记录列表
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <table id="getInquiryPricesList" lay-filter="getInquiryPricesData"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var inquiryPricesList = "{$inquiryPricesList}";
+</script>
+<script>
+    layui.use('purchases/tendering/inquiryPricesList', layui.factory('purchases/tendering/inquiryPricesList'));
+</script>

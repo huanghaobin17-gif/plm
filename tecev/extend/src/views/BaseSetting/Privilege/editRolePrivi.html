@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<include file="Public:layerHeader"/>
+<style>
+    #LAY-BaseSetting-Privilege-editRolePrivi .layui-form-label {
+        width: 240px;
+        border: none;
+        background: none;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .layui-form-checkbox {
+        float: left;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tisp {
+        float: left;
+        margin-top: 3px;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tbcenterSpan {
+        float: left;
+        line-height: 26px;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tooltip-inner {
+        width: 100%;
+        color: #000000;
+        background-color: #fff;
+        background-clip: padding-box;
+        border-radius: 4px;
+        box-shadow: 0 1px 6px rgba(0,0,0,.2);
+        white-space: nowrap;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tooltip.in{
+        opacity:1!important;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tooltip.right .tooltip-arrow{
+        top: 50%;
+        margin-top: -5px;
+        left: 0;
+        border-width: 5px 5px 5px 0;
+        border-right-color: hsla(0,0%,85%,.5);
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tooltip-arrow, #LAY-BaseSetting-Privilege-editRolePrivi .tooltip-arrow:after{
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        border-color: transparent;
+        border-style: solid;
+    }
+
+    #LAY-BaseSetting-Privilege-editRolePrivi .tooltip.right .tooltip-arrow:after{
+        content: " ";
+        left: -3px;
+        bottom: -5px;
+        border-right-color: #fff;
+        border-width: 5px;
+     }
+    .layui-table td, .layui-table th {
+        padding: 9px 10px;
+    }
+
+
+
+</style>
+
+<body>
+<form class="layui-form layui-form-pane">
+    <input type="hidden" value="{$roleid}" name="roleid"/>
+    <div class="containDiv" id="LAY-BaseSetting-Privilege-editRolePrivi">
+        <notempty name="is_defaultRole">
+            <div class="layui-inline">
+                <label class="layui-form-label"> 快速选择系统默认建议角色权限：</label>
+                <div class="layui-input-inline" style="width: auto">
+                    <volist name="is_defaultRole" id="role">
+                        <input lay-filter="defaultRole" type="radio" name="defaultRole" value="{$key}" title="{$role.name}">
+                    </volist>
+                </div>
+            </div>
+        </notempty>
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="180">
+                <col width="360">
+                <col width="">
+
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="tbheader">模块</th>
+                <th class="tbheader">类别</th>
+                <th class="tbheader">列表</th>
+                <th class="tbheader">权限</th>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="data" id="vo">
+                <tr class="{$vo.parentid}">
+                    <if condition="$vo[hasRowSpan]">
+                        <td class="tbcenter" rowspan="{$vo.rowSpan}">
+                            <div>
+                                <span class="tbcenterSpan">{$vo.modulename}</span>
+                                <input type="checkbox" name="" class="" lay-skin="primary" lay-filter="allmenu"/>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </if>
+                    <td class="tbcenter">
+                        <div>
+                            <span class="tbcenterSpan">{$vo.title}</span>
+                            <input type="checkbox" name="" class="" lay-skin="primary" lay-filter="allChoose"/>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                    <td class="tblist">
+                        <ul class="privi">
+                            <volist name="vo[menus]" id="menu">
+                                <if condition="$menu[leftShow] eq 1">
+                                    <if condition="$menu[Selected]">
+                                        <li>
+                                            <input id="menuids_{$menu[menuid]}" lay-filter="choose_parent" type="checkbox" name="menuids" lay-skin="primary" value="{$menu[menuid]}" title="{$menu.title}" checked="checked"/>
+                                            <notempty name="menu.tips">
+                                                <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='{$menu.tips}'>&#xe702;</i>
+                                            </notempty>
+                                        </li>
+                                        <else/>
+                                        <li>
+                                            <input id="menuids_{$menu[menuid]}" lay-filter="choose_parent" type="checkbox" name="menuids" lay-skin="primary" value="{$menu[menuid]}" title="{$menu.title}"/>
+                                            <notempty name="menu.tips">
+                                                <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='{$menu.tips}'>&#xe702;</i>
+                                            </notempty>
+                                        </li>
+                                    </if>
+                                </if>
+                            </volist>
+                        </ul>
+                    </td>
+                    <td class="tboperation">
+                        <ul class="privi">
+                            <volist name="vo[menus]" id="menu">
+                                <if condition="$menu[leftShow] eq 0">
+                                    <if condition="$menu[Selected]">
+                                        <li>
+                                            <input id="menuids_{$menu[menuid]}" lay-filter="choose_op" type="checkbox" name="menuids" lay-skin="primary" data-partid="{$menu[op_parentid]}" value="{$menu[menuid]}" title="{$menu.title}" checked="checked"/>
+                                            <notempty name="menu.tips">
+                                                <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='{$menu.tips}'>&#xe702;</i>
+                                            </notempty>
+                                        </li>
+                                        <else/>
+                                        <li>
+                                            <input id="menuids_{$menu[menuid]}" lay-filter="choose_op" type="checkbox" name="menuids" lay-skin="primary" data-partid="{$menu[op_parentid]}" value="{$menu[menuid]}" title="{$menu.title}"/>
+                                            <notempty name="menu.tips">
+                                                <i class="layui-icon tisp" lay-direction="2" tips-type="2" lay-tips='{$menu.tips}'>&#xe702;</i>
+                                            </notempty>
+                                        </li>
+                                    </if>
+                                </if>
+                            </volist>
+                        </ul>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form-item">
+        <div style="text-align: center">
+            <button class="layui-btn custom-submit-color" lay-submit lay-filter="editRolePrivi"><i class="layui-icon">&#xe609;</i>
+                保 存
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">ဂ</i> 重置</button>
+        </div>
+    </div>
+    <br/>
+</form>
+</body>
+</html>
+<script> 
+    layui.use('controller/basesetting/privilege/editRolePrivi', layui.factory('controller/basesetting/privilege/editRolePrivi'));
+</script>

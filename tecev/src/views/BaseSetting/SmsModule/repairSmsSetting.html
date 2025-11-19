@@ -1,0 +1,150 @@
+<style>
+    #LAY-BaseSetting-SmsModule-SmsSetting-repair .layui-form-item .layui-form-label{
+        width:196px;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-repair .layui-elem-quote-sm span{
+         display: block;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-repair .layui-input-block input[type='text'] {
+        width: 75%;
+        float: left;
+    }
+    #LAY-BaseSetting-SmsModule-SmsSetting-repair .layui-input-block .layui-form-radio{
+        float: left;
+        margin-right: 0;
+        margin-left: 5px;
+        padding-right:0;
+    }
+
+</style>
+<div id="LAY-BaseSetting-SmsModule-SmsSetting-repair">
+
+    <div class="layui-form-item">
+        <div class="layui-elem-quote-sm" style="color: red">
+            <div>建议参数:</div>
+            <span>维修单编号 {repnum}</span>
+            <span>设备名称 {assets}</span>
+            <span>设备编号 {assnum}</span>
+            <span>报修科室 {department}</span>
+            <span>申报人 {applicant}</span>
+            <span>申报人号码 {applicant_tel}</span>
+            <span>接单人 {response}</span>
+            <span>接单人号码 {response_tel}</span>
+            <span>审批结果 {approve_status}</span>
+            <span>验收结果 {over_status}</span>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="rquireCoin">*</span>维修模块短信开关：</label>
+        <div class="layui-input-block">
+            <input class="status_radio" type="radio" lay-filter="repair_sms_open" name="Repair[status]"  value="1" title="开启" <if condition="$settings[Repair][status] EQ C('OPEN_STATUS')">checked</if> >
+            <input class="status_radio" type="radio" lay-filter="repair_sms_open" name="Repair[status]"  value="0" title="关闭" <if condition="$settings[Repair][status] EQ C('SHUT_STATUS')">checked</if> >
+        </div>
+    </div>
+    <div class="repair_sms_setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知工程师接单：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[applyRepair][content]" value="{$settings[Repair][applyRepair][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[applyRepair][status]"  value="1" title="开启" <if condition="$settings[Repair][applyRepair][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[applyRepair][status]"  value="0" title="关闭" <if condition="$settings[Repair][applyRepair][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知派工员分配维修单：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[assigned][content]" value="{$settings[Repair][assigned][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[assigned][status]"  value="1" title="开启" <if condition="$settings[Repair][assigned][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[assigned][status]"  value="0" title="关闭" <if condition="$settings[Repair][assigned][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知报修用户已有工程师接单：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[acceptOrder][content]" value="{$settings[Repair][acceptOrder][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[acceptOrder][status]"  value="1" title="开启" <if condition="$settings[Repair][acceptOrder][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[acceptOrder][status]"  value="0" title="关闭" <if condition="$settings[Repair][acceptOrder][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知库管处理出库申请：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairPartsOutApply][content]" value="{$settings[Repair][repairPartsOutApply][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairPartsOutApply][status]"  value="1" title="开启" <if condition="$settings[Repair][repairPartsOutApply][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairPartsOutApply][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairPartsOutApply][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知工程师配件已出库：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairPartsOut][content]" value="{$settings[Repair][repairPartsOut][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairPartsOut][status]"  value="1" title="开启" <if condition="$settings[Repair][repairPartsOut][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairPartsOut][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairPartsOut][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知审批人员审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[doApprove][content]" value="{$settings[Repair][doApprove][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[doApprove][status]"  value="1" title="开启" <if condition="$settings[Repair][doApprove][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[doApprove][status]"  value="0" title="关闭" <if condition="$settings[Repair][doApprove][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知工程师已审批：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairApproveOver][content]" value="{$settings[Repair][repairApproveOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairApproveOver][status]"  value="1" title="开启" <if condition="$settings[Repair][repairApproveOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairApproveOver][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairApproveOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知报修用户重新申报：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairApproveOverFAIL][content]" value="{$settings[Repair][repairApproveOverFAIL][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairApproveOverFAIL][status]"  value="1" title="开启" <if condition="$settings[Repair][repairApproveOverFAIL][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairApproveOverFAIL][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairApproveOverFAIL][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知选择最终厂商：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairOffer][content]" value="{$settings[Repair][repairOffer][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairOffer][status]"  value="1" title="开启" <if condition="$settings[Repair][repairOffer][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairOffer][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairOffer][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知已选最终厂商：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[repairOfferOver][content]" value="{$settings[Repair][repairOfferOver][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[repairOfferOver][status]"  value="1" title="开启" <if condition="$settings[Repair][repairOfferOver][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[repairOfferOver][status]"  value="0" title="关闭" <if condition="$settings[Repair][repairOfferOver][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知报修用户验收：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[checkRepair][content]" value="{$settings[Repair][checkRepair][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[checkRepair][status]"  value="1" title="开启" <if condition="$settings[Repair][checkRepair][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[checkRepair][status]"  value="0" title="关闭" <if condition="$settings[Repair][checkRepair][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通知工程师验收结果：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Repair[checkRepairStatus][content]" value="{$settings[Repair][checkRepairStatus][content]}"  lay-verify="required" placeholder="请输入短信内容" autocomplete="off" class="layui-input">
+                <input class="status_radio" type="radio" name="Repair[checkRepairStatus][status]"  value="1" title="开启" <if condition="$settings[Repair][checkRepairStatus][status] EQ C('OPEN_STATUS')">checked</if> >
+                <input class="status_radio" type="radio" name="Repair[checkRepairStatus][status]"  value="0" title="关闭" <if condition="$settings[Repair][checkRepairStatus][status] EQ C('SHUT_STATUS')">checked</if> >
+            </div>
+        </div>
+    </div>
+</div>

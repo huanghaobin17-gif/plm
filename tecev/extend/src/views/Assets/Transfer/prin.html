@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <include file="Public:layerHeader"/>
+    <style>
+        td, th {
+            text-align: center !important;
+        }
+
+        th {
+            font-weight: bold !important;
+        }
+
+        .no-padding-td .layui-input {
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        em {
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] i {
+            width: 12px;
+            height: 12px;
+            line-height: 12px;
+        }
+
+        .layui-form-checkbox span {
+            font-size: 12px;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] span {
+            line-height: 16px;
+            padding-right: 0 !important;
+        }
+
+        .layui-form-checkbox span {
+            padding: 0 3px;
+        }
+
+        .text-align-left {
+            text-align: left !important;
+        }
+
+        .layui-table[lay-size=sm] td,
+        .layui-table[lay-size=sm] th {
+            padding: 5px !important;
+        }
+
+        .layui-table[lay-size=sm] td.text-align-left {
+            padding-left: 15px !important;
+        }
+
+
+    </style>
+</head>
+<body style="width: 794px!important; margin: auto;">
+<div class="layui-fluid">
+    <div class="layui-row">
+        <h2 style="text-align: center; margin-bottom: 25px;"><!--中山大学附属第一医院东院-->转科审批单</h2>
+        <div>
+            <span class="fl">转科单号：<em>{$zkInfo.transfernum}</em></span>
+            <span class="fr">制表日期：<em>{$date}</em></span>
+        </div>
+
+    </div>
+</div>
+<div class="ilayui-form-item tbcenter printbtn" style=" margin: 30px auto;">
+    <button class="layui-btn" id="print" lay-submit lay-filter="print"><i class="layui-icon layui-icon-zprinter-l"
+                                                                          style="font-size: 16px;"></i>打印审批单
+    </button>
+</div>
+</body>
+</html>
+<script>
+    layui.use('controller/qualities/quality/scanTemplate', layui.factory('controller/qualities/quality/scanTemplate'));
+</script>
